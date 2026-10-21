@@ -1,8 +1,8 @@
-"""Synchronise les affiches TMDB avec les entrées du catalogue index.html."""
+"""Synchronise les affiches TMDB du catalogue JavaScript, ancien et nouveau format."""
+import json
 import os
 import re
 import unicodedata
-import json
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -16,7 +16,14 @@ source = INDEX.read_text(encoding='utf-8')
 start = source.index('const catalogue=[')
 end = source.index('];', start)
 head, catalogue, tail = source[:start], source[start:end], source[end:]
-entries = re.compile(r"\{\s*title:\s*'(?P<title>[^']+)'\s*,\s*kind:\s*'(?P<kind>[^']+)'\s*,\s*year:\s*(?P<year>\d{4})(?P<rest>.*?)\}", re.UNICODE | re.DOTALL)
+
+# Accepte title:'...', title:"...", "title":"..." et leurs équivalents kind/year.
+entries = re.compile(
+    r'\{\s*(?P<q>[\'\"]?)title(?P=q)\s*:\s*(?P<tq>[\'\"])(?P<title>.*?)(?P=tq)'
+    r'\s*,\s*(?P<kq>[\'\"]?)kind(?P=kq)\s*:\s*(?P<kv>[\'\"])(?P<kind>.*?)(?P=kv)'
+    r'\s*,\s*(?P<yq>[\'\"]?)year(?P=yq)\s*:\s*(?P<year>\d{4})(?P<rest>.*?)\}',
+    re.DOTALL,
+)
 
 def slugify(value):
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode().lower()
@@ -27,11 +34,11 @@ def fetch(url):
         return response.read()
 
 def update(match):
-    title, kind, year, rest = match.group('title', 'kind', 'year', 'rest')
+    title, kind, year = match.group('title', 'kind', 'year')
     filename = slugify(title) + '.jpg'
     path = IMAGES / filename
     if not path.exists():
-        category = 'tv' if kind == 'Série' else 'movie'
+        category = 'tv' if kind.casefold() in ('série', 'serie') else 'movie'
         params = {'api_key': API_KEY, 'query': title, 'language': 'fr-FR'}
         params['first_air_date_year' if category == 'tv' else 'year'] = year
         url = f'https://api.themoviedb.org/3/search/{category}?' + urlencode(params)
@@ -47,11 +54,15 @@ def update(match):
             print('Échec TMDB pour', title, ':', exc)
     if path.exists():
         local = 'affiches/' + filename
-        if re.search(r",\s*poster\s*:\s*'[^']*'", rest):
-            rest = re.sub(r",\s*poster\s*:\s*'[^']*'", ",poster:'" + local + "'", rest)
+        # Conserver intact le format d'origine, modifier uniquement poster si nécessaire.
+        full = match.group(0)
+        poster_field = re.compile(r'(?P<key>[\'\"]?poster[\'\"]?\s*:\s*)(?P<quote>[\'\"])(?P<value>.*?)(?P=quote)', re.DOTALL)
+        if poster_field.search(full):
+            full = poster_field.sub(lambda m: m.group('key') + m.group('quote') + local + m.group('quote'), full, count=1)
         else:
-            rest += ",poster:'" + local + "'"
-    return "{title:'" + title + "',kind:'" + kind + "',year:" + year + rest + "}"
+            full = full[:-1].rstrip() + ('' if full[:-1].rstrip().endswith(',') else ',') + 'poster:' + json.dumps(local) + '}'
+        return full
+    return match.group(0)
 
 updated, count = entries.subn(update, catalogue)
 if count == 0:
