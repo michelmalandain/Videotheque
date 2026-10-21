@@ -1,0 +1,92 @@
+name: Ajouter un film ou une série
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: videotheque-ajout
+  cancel-in-progress: false
+
+jobs:
+  ajouter:
+    if: startsWith(github.event.issue.title, '[VIDEOTHEQUE] Ajouter :')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Ajouter au catalogue
+        id: ajout
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          body = os.environ.get('ISSUE_BODY', '')
+          block = re.search(r'```json\s*(\{.*?\})\s*```', body, re.S | re.I)
+          if not block:
+              raise SystemExit('Aucun bloc JSON valide dans la demande.')
+          data = json.loads(block.group(1))
+          title = str(data.get('title', '')).strip()
+          kind = str(data.get('kind', '')).strip().casefold()
+          year = int(data.get('year'))
+          if not title or len(title) > 200 or kind not in ('film', 'série', 'serie') or not 1888 <= year <= 2100:
+              raise SystemExit('Titre, type ou année invalide.')
+          kind = 'Film' if kind == 'film' else 'Série'
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          start = html.find('const catalogue=[')
+          if start == -1:
+              raise SystemExit('Catalogue introuvable dans index.html.')
+          end = html.find('];', start)
+          if end == -1:
+              raise SystemExit('Fin du catalogue introuvable.')
+          current = html[start:end]
+          # Vérifier les titres déjà présents sans évaluer le JavaScript.
+          names = re.findall(r"\btitle\s*:\s*(['\"])(.*?)\1", current, re.S)
+          if any(existing.casefold() == title.casefold() for _, existing in names):
+              print('Titre déjà présent : aucun changement.')
+              Path(os.environ['GITHUB_OUTPUT']).open('a').write('changed=false\n')
+          else:
+              slug = re.sub(r'[^a-z0-9]+', '-', __import__('unicodedata').normalize('NFKD', title).encode('ascii','ignore').decode().lower()).strip('-')
+              entry = {
+                  'title': title, 'kind': kind, 'year': year,
+                  'period': str(year), 'genre': 'À compléter',
+                  'description': 'Description à compléter.',
+                  'poster': 'affiches/' + slug + '.jpg',
+                  'wiki': 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=' + __import__('urllib.parse', fromlist=['quote']).quote(title)
+              }
+              # Les clés JSON entre guillemets sont acceptées dans un objet JavaScript.
+              insertion = json.dumps(entry, ensure_ascii=False)
+              previous = html[start+len('const catalogue=['):end].rstrip()
+              separator = '' if not previous.strip() else ('' if previous.endswith(',') else ',')
+              replacement = previous + separator + '\n' + insertion + '\n'
+              html = html[:start+len('const catalogue=[')] + replacement + html[end:]
+              path.write_text(html, encoding='utf-8')
+              Path(os.environ['GITHUB_OUTPUT']).open('a').write('changed=true\n')
+          PY
+
+      - name: Enregistrer la modification
+        if: steps.ajout.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Ajouter un titre depuis l'administration (issue #${{ github.event.issue.number }})"
+          git push
+
+      - name: Confirmer la demande
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "Demande traitée : le titre est ajouté au catalogue, ou il y figurait déjà. La publication GitHub Pages peut prendre quelques minutes."
+          gh issue close "${{ github.event.issue.number }}"
