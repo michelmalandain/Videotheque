@@ -16,7 +16,7 @@ source = INDEX.read_text(encoding='utf-8')
 start = source.index('const catalogue=[')
 end = source.index('];', start)
 head, catalogue, tail = source[:start], source[start:end], source[end:]
-entries = re.compile(r'\{title:\s*\x27(?P<title>[^\x27]+)\x27,kind:\s*\x27(?P<kind>[^\x27]+)\x27,year:\s*(?P<year>\d{4})(?P<rest>[^\n]*?)\}', re.UNICODE)
+entries = re.compile(r"\{\s*title:\s*'(?P<title>[^']+)'\s*,\s*kind:\s*'(?P<kind>[^']+)'\s*,\s*year:\s*(?P<year>\d{4})(?P<rest>.*?)\}", re.UNICODE | re.DOTALL)
 
 def slugify(value):
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode().lower()
@@ -47,8 +47,8 @@ def update(match):
             print('Échec TMDB pour', title, ':', exc)
     if path.exists():
         local = 'affiches/' + filename
-        if re.search(r",poster:'[^']*'", rest):
-            rest = re.sub(r",poster:'[^']*'", ",poster:'" + local + "'", rest)
+        if re.search(r",\s*poster\s*:\s*'[^']*'", rest):
+            rest = re.sub(r",\s*poster\s*:\s*'[^']*'", ",poster:'" + local + "'", rest)
         else:
             rest += ",poster:'" + local + "'"
     return "{title:'" + title + "',kind:'" + kind + "',year:" + year + rest + "}"
