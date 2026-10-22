@@ -397,4 +397,3 @@ if(!actors.children.length){const li=document.createElement('li');li.textContent
 credits.append(heading,names,actorsTitle,actors);
 article.append(title,poster,info,credits);poster.tabIndex=0;poster.setAttribute('role','button');poster.setAttribute('aria-label','Voir la fiche de '+x.title);poster.addEventListener('click',()=>openFilm(x));poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openFilm(x)}});cards.append(article)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
 </script></body></html>
-
