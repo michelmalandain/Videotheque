@@ -422,4 +422,55 @@ for(const person of (x.cast||[]).slice(0,5)){const li=document.createElement('li
 if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
 credits.append(heading,names,actorsTitle,actors);
 article.append(title,poster,info,credits);cards.append(article)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
+</script><script>
+/* Fiches des films : ouverture dans un nouvel onglet */
+
+(function () {
+  const ancienShowPerson = showPerson;
+
+  showPerson = async function (name) {
+    await ancienShowPerson(name);
+
+    const liste = document.getElementById('person-films');
+
+    const observateur = new MutationObserver(() => {
+      liste.querySelectorAll('.person-film').forEach(ligne => {
+        if (ligne.dataset.cliquable) return;
+
+        ligne.dataset.cliquable = 'oui';
+        ligne.style.cursor = 'pointer';
+
+        ligne.addEventListener('click', () => {
+          const titre = ligne.querySelector('strong')?.textContent;
+          if (!titre) return;
+
+          const film = catalogue.find(x =>
+            x.title.toLowerCase() === titre.toLowerCase()
+          );
+
+          if (film) {
+            const onglet = window.open('', '_blank');
+            if (!onglet) return;
+
+            const fiche = document.createElement('div');
+            const titreFilm = document.createElement('h1');
+            titreFilm.textContent = film.title;
+            const synopsis = document.createElement('p');
+            synopsis.textContent = film.summary || film.description;
+            fiche.append(titreFilm, synopsis);
+
+            onglet.document.title = film.title;
+            onglet.document.body.style.cssText =
+              'background:#17090d;color:#f6e8cf;font:20px Georgia;padding:40px';
+            onglet.document.body.append(fiche);
+          } else {
+            alert('Ce film ne figure pas encore dans notre collection.');
+          }
+        });
+      });
+    });
+
+    observateur.observe(liste, { childList: true });
+  };
+})();
 </script></body></html>
