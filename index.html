@@ -382,7 +382,16 @@ const catalogue=[
         "character": "Bubba Blue"
       }
     ]
-  }
+  },
+  {
+    "title": "L'art du crime",
+    "kind": "Série",
+    "year": 2017,
+    "period": "2017",
+    "genre": "Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-art-du-crime.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'art%20du%20crime",summary:"Viré de la PJ pour insubordination, Antoine Verlay, excellent flic mais un brin sanguin et ayant du mal à travailler en équipe, est rattaché à l’OCBC (Office Central de lutte contre le trafic des Biens Culturels) grâce à l’entremise du commandant Pardo, son ami qui devient, de ce fait, son nouveau supérieur. Enquêteur malin, mais étranger à tout ce qui touche à la culture, Antoine va devoir travailler avec Florence Chassagne, historienne de l’art réputée, qui vit, parle et respire culture, au point que – fruit de sa grande imagination – il lui arrive, dans le cadre de rêveries, de voir et de parler aux grands artistes disparus comme s’ils lui étaient familiers."}
 ];let previousFilm=null;
 function personName(p){return typeof p==='string'?p:(p?.name||'');}
 function filmographyLink(name){const a=document.createElement('a');a.textContent=name;a.href='#filmographie-'+encodeURIComponent(name);a.title='Voir les films de '+name+' dans notre vidéothèque';a.addEventListener('click',e=>{e.preventDefault();showPerson(name)});return a;}
