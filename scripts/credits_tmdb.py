@@ -1,4 +1,4 @@
-"""Complète les crédits TMDB des films et séries, sans toucher aux autres champs."""
+"""Enrichit les crédits TMDB du catalogue, y compris les fiches sur plusieurs lignes."""
 import json
 import os
 import re
@@ -16,7 +16,12 @@ source = index.read_text(encoding='utf-8')
 start = source.index('const catalogue=[') + len('const catalogue=[')
 end = source.index('];', start)
 body = source[start:end]
-
+# Certaines anciennes entrées utilisent des clés JavaScript sans guillemets.
+normalized = re.sub(r'(?<=[,{])\s*([A-Za-z_][A-Za-z_0-9]*)\s*:', lambda m: '\n"' + m.group(1) + '":', body)
+try:
+    catalogue = json.loads('[' + normalized + ']')
+except json.JSONDecodeError as exc:
+    raise SystemExit(f'Catalogue illisible : {exc}') from exc
 
 def get(endpoint, params=None):
     query = {'api_key': key, 'language': 'fr-FR', **(params or {})}
@@ -24,50 +29,35 @@ def get(endpoint, params=None):
     with urlopen(Request(url, headers={'User-Agent': 'VideothequeMichel/1.0'}), timeout=25) as response:
         return json.load(response)
 
-
-def normalize(raw):
-    return re.sub(r'(?<=[,{])\s*([a-zA-Z_][a-zA-Z_0-9]*)\s*:', r'"\1":', raw)
-
-
 def find_title(title, typ, year):
     results = get('search/' + typ, {'query': title, 'include_adult': 'false'}).get('results', [])
     field = 'first_air_date' if typ == 'tv' else 'release_date'
-    matches = [r for r in results if str(r.get(field, '')).startswith(str(year))]
-    return matches[0]['id'] if matches else None
+    exact = [r for r in results if str(r.get(field, '')).startswith(str(year))]
+    return (exact[0] if exact else None)
 
-
-lines = body.splitlines(keepends=True)
 updated = 0
-seen = 0
-for i, line in enumerate(lines):
-    raw_line = line.rstrip('\r\n')
-    match = re.fullmatch(r'(\s*)(\{.*\})(,?)(\s*)', raw_line)
-    if not match:
+missing = 0
+for obj in catalogue:
+    if obj.get('directors') and obj.get('cast'):
         continue
+    missing += 1
+    title = obj.get('title', '')
+    typ = 'tv' if obj.get('kind') == 'Série' else 'movie'
     try:
-        obj = json.loads(normalize(match.group(2)))
-        seen += 1
-        if obj.get('directors') and obj.get('cast'):
+        result = find_title(title, typ, obj.get('year', ''))
+        if not result:
+            print('Correspondance non trouvée :', title)
             continue
-        typ = 'tv' if obj.get('kind') == 'Série' else 'movie'
-        tmdb_id = find_title(obj['title'], typ, obj['year'])
-        if not tmdb_id:
-            print('Correspondance TMDB non trouvée :', obj['title'])
-            continue
-        details = get(f'{typ}/{tmdb_id}', {'append_to_response': 'credits'})
+        details = get(f"{typ}/{result['id']}", {'append_to_response': 'credits'})
         credits = details.get('credits') or {}
         if typ == 'tv':
             directors = [p['name'] for p in details.get('created_by', []) if p.get('name')]
             if not directors:
-                directors = list(dict.fromkeys(
-                    p['name'] for p in credits.get('crew', [])
-                    if p.get('name') and p.get('job') in ('Executive Producer', 'Creator')
-                ))[:3]
+                directors = list(dict.fromkeys(p['name'] for p in credits.get('crew', [])
+                    if p.get('name') and p.get('job') in ('Executive Producer', 'Creator')))[:3]
         else:
-            directors = list(dict.fromkeys(
-                p['name'] for p in credits.get('crew', [])
-                if p.get('name') and p.get('job') == 'Director'
-            ))
+            directors = list(dict.fromkeys(p['name'] for p in credits.get('crew', [])
+                if p.get('name') and p.get('job') == 'Director'))
         cast = [{'name': p['name'], 'character': p.get('character', '')}
                 for p in credits.get('cast', [])[:5] if p.get('name')]
         changed = False
@@ -78,14 +68,15 @@ for i, line in enumerate(lines):
             obj['cast'] = cast
             changed = True
         if changed:
-            ending = line[len(raw_line):]
-            lines[i] = (match.group(1) + json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
-                        + match.group(3) + match.group(4) + ending)
             updated += 1
-            print('Fiche complétée :', obj['title'])
+            print('Fiche complétée :', title)
+        else:
+            print('Aucun crédit disponible :', title)
         time.sleep(0.2)
     except Exception as exc:
-        print('Fiche ignorée :', str(exc))
+        print('Erreur TMDB pour', title, ':', exc)
+
 if updated:
-    index.write_text(source[:start] + ''.join(lines) + source[end:], encoding='utf-8')
-print(f'{seen} fiche(s) examinée(s), {updated} fiche(s) enrichie(s).')
+    replacement = '\n' + ',\n'.join('  ' + json.dumps(obj, ensure_ascii=False, indent=2).replace('\n', '\n  ') for obj in catalogue) + '\n'
+    index.write_text(source[:start] + replacement + source[end:], encoding='utf-8')
+print(f'{missing} fiche(s) à compléter ; {updated} fiche(s) enrichie(s).')
