@@ -1,4 +1,4 @@
-name: Ajouter un film ou une série
+name: Ajouter ou supprimer un film ou une série
 
 on:
   issues:
@@ -13,89 +13,188 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  ajouter:
-    if: startsWith(github.event.issue.title, '[VIDEOTHEQUE] Ajouter :')
+  catalogue:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      (startsWith(github.event.issue.title, '[VIDEOTHEQUE] Ajouter :') ||
+       startsWith(github.event.issue.title, '[VIDEOTHEQUE] Supprimer :'))
     runs-on: ubuntu-latest
+
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
 
-      - name: Ajouter au catalogue
-        id: ajout
+      - name: Modifier le catalogue
+        id: modification
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
-          python3 - <<'PY'
-          import json, os, re, unicodedata
-          from pathlib import Path
-          from urllib.parse import quote
+          node <<'JS'
+          const fs = require('node:fs');
+          const vm = require('node:vm');
 
-          body = os.environ.get('ISSUE_BODY', '')
-          block = re.search(r'```json\s*(\{.*?\})\s*```', body, re.S | re.I)
-          if not block:
-              raise SystemExit('Aucun bloc JSON valide dans la demande.')
-          data = json.loads(block.group(1))
-          title = str(data.get('title', '')).strip()
-          kind = str(data.get('kind', '')).strip().casefold()
-          year = int(data.get('year'))
-          if not title or len(title) > 200 or kind not in ('film', 'série', 'serie') or not 1888 <= year <= 2100:
-              raise SystemExit('Titre, type ou année invalide.')
-          kind = 'Film' if kind == 'film' else 'Série'
-          path = Path('index.html')
-          html = path.read_text(encoding='utf-8')
-          start = html.find('const catalogue=[')
-          if start == -1:
-              raise SystemExit('Catalogue introuvable dans index.html.')
-          end = html.find('];', start)
-          if end == -1:
-              raise SystemExit('Fin du catalogue introuvable.')
-          current = html[start:end]
-          names = re.findall(r'\b["\']?title["\']?\s*:\s*(["\'])(.*?)\1', current, re.S)
-          if any(existing.casefold() == title.casefold() for _, existing in names):
-              print('Titre déjà présent : aucun changement.')
-              changed = False
-          else:
-              slug = re.sub(r'[^a-z0-9]+', '-', unicodedata.normalize('NFKD', title).encode('ascii', 'ignore').decode().lower()).strip('-')
-              entry = {
-                  'title': title, 'kind': kind, 'year': year,
-                  'period': str(year), 'genre': 'À compléter',
-                  'description': 'Description à compléter.',
-                  'poster': 'affiches/' + slug + '.jpg',
-                  'wiki': 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=' + quote(title)
-              }
-              insertion = json.dumps(entry, ensure_ascii=False)
-              previous = html[start + len('const catalogue=['):end].rstrip()
-              separator = '' if not previous.strip() or previous.endswith(',') else ','
-              replacement = previous + separator + '\n' + insertion + '\n'
-              html = html[:start + len('const catalogue=[')] + replacement + html[end:]
-              path.write_text(html, encoding='utf-8')
-              changed = True
-          with Path(os.environ['GITHUB_OUTPUT']).open('a') as output:
-              output.write(f'changed={str(changed).lower()}\n')
-          PY
+          const body = process.env.ISSUE_BODY || '';
+          const block = body.match(/```json\s*(\{[\s\S]*?\})\s*```/i);
+          const data = JSON.parse(block ? block[1] : body.trim());
+
+          const deleting = process.env.ISSUE_TITLE.startsWith(
+            '[VIDEOTHEQUE] Supprimer :'
+          );
+          const action = deleting ? 'delete' : 'add';
+
+          if (data.action && data.action !== action) {
+            throw new Error('Action incohérente avec le titre de la demande.');
+          }
+
+          const title = String(data.title || '').trim();
+          const normalize = value => String(value || '')
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .trim().toLocaleLowerCase('fr');
+          const kindValue = normalize(data.kind);
+          const year = Number(data.year);
+
+          if (!title || title.length > 200 ||
+              !['film', 'serie'].includes(kindValue) ||
+              !Number.isInteger(year) || year < 1888 || year > 2100) {
+            throw new Error('Titre, type ou année invalide.');
+          }
+
+          const kind = kindValue === 'film' ? 'Film' : 'Série';
+          const path = 'index.html';
+          const html = fs.readFileSync(path, 'utf8');
+          const marker = /const\s+catalogue\s*=\s*\[/g;
+          const match = marker.exec(html);
+
+          if (!match) throw new Error('Catalogue introuvable.');
+
+          const start = marker.lastIndex - 1;
+          let depth = 0;
+          let quote = null;
+          let escaped = false;
+          let end = -1;
+
+          for (let i = start; i < html.length; i++) {
+            const c = html[i];
+            if (quote) {
+              if (escaped) escaped = false;
+              else if (c === '\\') escaped = true;
+              else if (c === quote) quote = null;
+              continue;
+            }
+            if (c === '"' || c === "'" || c === '`') {
+              quote = c;
+            } else if (c === '[') {
+              depth++;
+            } else if (c === ']' && --depth === 0) {
+              end = i + 1;
+              break;
+            }
+          }
+
+          if (end < 0) throw new Error('Fin du catalogue introuvable.');
+
+          let catalogue = vm.runInNewContext(
+            '(' + html.slice(start, end) + ')',
+            Object.create(null),
+            { timeout: 1000 }
+          );
+
+          if (!Array.isArray(catalogue)) {
+            throw new Error('Format du catalogue invalide.');
+          }
+
+          let changed = false;
+          let message;
+
+          if (deleting) {
+            const matches = catalogue.filter(item =>
+              normalize(item.title) === normalize(title) &&
+              normalize(item.kind) === kindValue &&
+              Number(item.year) === year
+            );
+
+            if (matches.length > 1) {
+              throw new Error('Plusieurs entrées identiques : suppression interrompue.');
+            }
+
+            if (matches.length === 1) {
+              catalogue = catalogue.filter(item => item !== matches[0]);
+              changed = true;
+              message = `Suppression effectuée : ${title} (${year}).`;
+            } else {
+              message = `Aucun changement : ${title} (${year}) est absent du catalogue.`;
+            }
+          } else {
+            const exists = catalogue.some(item =>
+              normalize(item.title) === normalize(title)
+            );
+
+            if (exists) {
+              message = `Aucun changement : ${title} figure déjà au catalogue.`;
+            } else {
+              const slug = normalize(title)
+                .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+              catalogue.push({
+                title, kind, year,
+                period: String(year),
+                genre: 'À compléter',
+                description: 'Description à compléter.',
+                poster: 'affiches/' + slug + '.jpg',
+                wiki: 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search='
+                  + encodeURIComponent(title)
+              });
+
+              changed = true;
+              message = `Ajout effectué : ${title} (${year}).`;
+            }
+          }
+
+          if (changed) {
+            fs.writeFileSync(
+              path,
+              html.slice(0, start) +
+              JSON.stringify(catalogue, null, 2) +
+              html.slice(end),
+              'utf8'
+            );
+          }
+
+          fs.writeFileSync('resultat-demande.txt', message, 'utf8');
+          fs.appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            `changed=${changed}\naction=${action}\n`
+          );
+          JS
 
       - name: Installer Python
-        if: steps.ajout.outputs.changed == 'true'
+        if: steps.modification.outputs.changed == 'true' && steps.modification.outputs.action == 'add'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Récupérer l'affiche TMDB
-        if: steps.ajout.outputs.changed == 'true'
+      - name: Récupérer les affiches TMDB
+        if: steps.modification.outputs.changed == 'true' && steps.modification.outputs.action == 'add'
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: python scripts/affiches.py
 
-      - name: Enregistrer la modification et les affiches
-        if: steps.ajout.outputs.changed == 'true'
+      - name: Enregistrer la modification
+        if: steps.modification.outputs.changed == 'true'
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html affiches/
+          git add index.html
+          if [ -d affiches ]; then
+            git add affiches/
+          fi
           if ! git diff --cached --quiet; then
-            git commit -m "Ajouter un titre et synchroniser son affiche (issue #${{ github.event.issue.number }})"
+            git commit -m "Modifier le catalogue (issue #${ISSUE_NUMBER})"
             git push
           fi
 
@@ -103,6 +202,7 @@ jobs:
         if: success()
         env:
           GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "Demande traitée : le titre est ajouté au catalogue, ou il y figurait déjà. L'affiche TMDB a été vérifiée lors d'un nouvel ajout. La publication GitHub Pages peut prendre quelques minutes."
-          gh issue close "${{ github.event.issue.number }}"
+          gh issue comment "$ISSUE_NUMBER" --body-file resultat-demande.txt
+          gh issue close "$ISSUE_NUMBER"
