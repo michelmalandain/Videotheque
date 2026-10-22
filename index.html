@@ -89,6 +89,17 @@ const catalogue=[
     "genre": "Drame",
     "description": "Description à compléter.",
     "poster": "affiches/l-abandon.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=l'abandon",summary:"Tout le monde connaît le nom de Samuel Paty, mais peu de gens connaissent réellement son histoire. Le 16 octobre 2020, Samuel Paty, professeur d’Histoire-Géographie, est assassiné (décapité) à la sortie de son collège. À la lumière des enquêtes et des procès, ce film revient sur ses onze derniers jours, et l’engrenage qui a conduit à sa mort tragique."}
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=l'abandon",
+    "summary": "Tout le monde connaît le nom de Samuel Paty, mais peu de gens connaissent réellement son histoire. Le 16 octobre 2020, Samuel Paty, professeur d’Histoire-Géographie, est assassiné (décapité) à la sortie de son collège. À la lumière des enquêtes et des procès, ce film revient sur ses onze derniers jours, et l’engrenage qui a conduit à sa mort tragique."
+  },
+  {
+    "title": "la maison des femmes",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-maison-des-femmes.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20maison%20des%20femmes",summary:"À la Maison des femmes, entre soin, écoute et solidarité, une équipe se bat chaque jour pour accompagner les femmes victimes de violences dans leur reconstruction. Dans ce lieu unique, Diane, Manon, Inès, Awa et leurs collègues accueillent, soutiennent, redonnent confiance. Ensemble, avec leurs forces, leurs fragilités, leurs convictions et une énergie inépuisable."}
 ];let kind='Tous';const cards=document.getElementById('cards');function render(){const q=document.getElementById('search').value.toLocaleLowerCase('fr');const g=document.getElementById('genre').value;const s=document.getElementById('sort').value;const list=catalogue.filter(x=>(kind==='Tous'||x.kind===kind)&&(!g||x.genre.includes(g))&&(x.title+' '+x.genre+' '+x.description).toLocaleLowerCase('fr').includes(q)).sort((a,b)=>s==='year'?a.year-b.year:a.title.localeCompare(b.title,'fr'));cards.replaceChildren();for(const x of list){const article=document.createElement('article');article.className='card';const poster=document.createElement('div');poster.className='poster';const posterTitle=document.createElement('span');posterTitle.textContent=x.title.toUpperCase();const img=document.createElement('img');img.src=x.poster;img.alt='Affiche de '+x.title;img.loading='lazy';img.style.cssText='width:100%;height:100%;object-fit:contain;position:absolute;inset:0';img.onerror=()=>{img.remove();poster.append(posterTitle)};poster.append(img);const info=document.createElement('div');info.className='info';const h=document.createElement('h2');h.textContent=x.title;const meta=document.createElement('div');meta.className='meta';meta.textContent=x.period+' · '+x.genre;const p=document.createElement('p');p.textContent=x.summary || x.description;const a=document.createElement('a');a.href=x.wiki;a.target='_blank';a.rel='noopener noreferrer';a.textContent='🌐 Voir sur Wikipédia ↗';info.append(h,meta,p,a);article.append(poster,info);cards.append(article)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
 </script></body></html>
