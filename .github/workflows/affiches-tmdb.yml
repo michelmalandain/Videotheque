@@ -22,6 +22,10 @@ jobs:
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: python scripts/affiches.py
+      - name: Récupérer acteurs et réalisateurs TMDB
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python scripts/credits_tmdb.py
       - name: Enregistrer les affiches et les liens
         run: |
           git config user.name 'github-actions[bot]'
