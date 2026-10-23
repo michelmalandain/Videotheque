@@ -1,7 +1,6 @@
 name: Ajouter ou supprimer un film ou une série
 
 on:
-  workflow_dispatch:
   issues:
     types: [opened, edited, reopened]
 
@@ -42,8 +41,11 @@ jobs:
           const action = deleting ? 'delete' : 'add';
           if (data.action && data.action !== action) throw new Error('Action incohérente avec le titre.');
           const title = String(data.title || '').trim();
-          const normalize = value => String(value || '').normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '').trim().toLocaleLowerCase('fr');
+          const normalize = value => String(value ?? '')
+            .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[’‘`´]/g, "'")
+            .replace(/[^\p{L}\p{N}]+/gu, ' ')
+            .trim().replace(/\s+/g, ' ').toLocaleLowerCase('fr');
           const kindValue = normalize(data.kind);
           const year = Number(data.year);
           if (!title || title.length > 200 || !['film', 'serie'].includes(kindValue) ||
@@ -81,8 +83,18 @@ jobs:
           const sameEntry = item => sameTitle(item) && normalize(item.kind) === kindValue &&
             Number(item.year) === year;
           const occurrences = files.flatMap(f => f.catalogue.filter(sameEntry));
-          if (deleting && !occurrences.length)
-            throw new Error(`Titre absent des deux catalogues : ${title} (${year}).`);
+          console.log('Demande :', JSON.stringify({title, kind, year, action}));
+          for (const f of files) {
+            const close = f.catalogue.filter(x => sameTitle(x));
+            console.log(`${f.path} : ${f.catalogue.length} fiches ; titre correspondant :`,
+              JSON.stringify(close.map(x => ({title:x.title, kind:x.kind, year:x.year}))));
+          }
+          if (deleting && !occurrences.length) {
+            const close = files.flatMap(f => f.catalogue.filter(x =>
+              normalize(x.title).includes(normalize(title)) || normalize(title).includes(normalize(x.title))));
+            throw new Error(`Titre absent des deux catalogues : ${title} (${year}). ` +
+              `Fiches proches : ${JSON.stringify(close.map(x => ({title:x.title, kind:x.kind, year:x.year})))}`);
+          }
           if (!deleting && files.some(f => f.catalogue.some(sameTitle)))
             throw new Error(`Titre déjà présent dans au moins un catalogue : ${title}.`);
           const slug = normalize(title).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
