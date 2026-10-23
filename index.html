@@ -382,16 +382,7 @@ const catalogue=[
         "character": "Bubba Blue"
       }
     ]
-  },
-  {
-    "title": "L'art du crime",
-    "kind": "Série",
-    "year": 2017,
-    "period": "2017",
-    "genre": "Crime, Drame",
-    "description": "Description à compléter.",
-    "poster": "affiches/l-art-du-crime.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'art%20du%20crime",summary:"Viré de la PJ pour insubordination, Antoine Verlay, excellent flic mais un brin sanguin et ayant du mal à travailler en équipe, est rattaché à l’OCBC (Office Central de lutte contre le trafic des Biens Culturels) grâce à l’entremise du commandant Pardo, son ami qui devient, de ce fait, son nouveau supérieur. Enquêteur malin, mais étranger à tout ce qui touche à la culture, Antoine va devoir travailler avec Florence Chassagne, historienne de l’art réputée, qui vit, parle et respire culture, au point que – fruit de sa grande imagination – il lui arrive, dans le cadre de rêveries, de voir et de parler aux grands artistes disparus comme s’ils lui étaient familiers."}
+  }
 ];let previousFilm=null;
 function personName(p){return typeof p==='string'?p:(p?.name||'');}
 function filmographyLink(name){const a=document.createElement('a');a.textContent=name;a.href='#filmographie-'+encodeURIComponent(name);a.title='Voir les films de '+name+' dans notre vidéothèque';a.addEventListener('click',e=>{e.preventDefault();showPerson(name)});return a;}
@@ -411,7 +402,7 @@ async function showPerson(name){
   if(!dlg.open)return;
   document.getElementById('person-count').textContent=data.credits.length+' films et séries';
   for(const x of data.credits){
-   const row=document.createElement('div');row.className='person-film';row.style.cursor='default';
+   const row=document.createElement('div');row.className='person-film';row.style.cursor='default';row.dataset.tmdbId=x.id||'';row.dataset.mediaType=x.media_type==='tv'?'tv':'movie';row.dataset.credit=encodeURIComponent(JSON.stringify(x));
    if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;img.loading='lazy';row.append(img)}
    const info=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small');
    title.textContent=x.title;meta.textContent=(x.date||'').slice(0,4)+' · '+(x.media_type==='tv'?'Série':'Film')+(x.job?' · '+x.job:'');
@@ -506,16 +497,42 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     doc.body.append(entete,main);
   }
 
+  // Fiche intégrée pour toutes les œuvres de la filmographie, y compris hors collection.
+  function ficheTMDB(ligne, image) {
+    const credit=JSON.parse(decodeURIComponent(ligne.dataset.credit||'%7B%7D'));
+    const titre=credit.title||ligne.querySelector('strong')?.textContent||'Film';
+    const id=ligne.dataset.tmdbId;
+    const type=ligne.dataset.mediaType==='tv'?'tv':'movie';
+    const lien=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR':'https://www.themoviedb.org/search?query='+encodeURIComponent(titre);
+    const d=document.createElement('dialog');d.className='film-dialog';
+    d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:#160d11;color:#f6e8cf;border:3px double #e8b85b;border-radius:10px;padding:24px';
+    const close=document.createElement('button');close.textContent='✕ Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
+    const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
+    const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
+    const poster=document.createElement('img');poster.src=image.src.replace('/w154','/w500');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';
+    const info=document.createElement('div');info.style.cssText='flex:1;min-width:220px;line-height:1.6';
+    const meta=document.createElement('p');meta.textContent=(credit.date||'').slice(0,4)+' · '+(type==='tv'?'Série':'Film')+(credit.job?' · '+credit.job:'');
+    const label=document.createElement('h3');label.textContent='Synopsis';label.style.color='#f5cc7b';
+    const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué dans la filmographie.';
+    const source=document.createElement('a');source.href=lien;source.target='_blank';source.rel='noopener noreferrer';source.textContent='🎬 Consulter la fiche complète sur TMDB ↗';source.style.color='#f5cc7b';
+    info.append(meta,label,overview,source);grid.append(poster,info);d.append(close,h,grid);
+    document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
+    // Complète la fiche si le Worker propose déjà une route de détails.
+    if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id))
+      .then(r=>{if(!r.ok)throw Error('non disponible');return r.json()})
+      .then(data=>{const detail=data.details||data;const synopsis=detail.overview||detail.summary||detail.description;if(synopsis)overview.textContent=synopsis;
+        const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';
+        if(genres){const p=document.createElement('p');p.textContent='Genres : '+genres;info.insertBefore(p,label)}
+      }).catch(()=>{});
+  }
   liste.addEventListener('click', function (evenement) {
-    const image = evenement.target.closest('.person-film img');
-    if (!image || !liste.contains(image)) return;
-    const ligne = image.closest('.person-film');
-    const titre = ligne?.querySelector('strong')?.textContent;
-    if (!titre) return;
-    const film = catalogue.find(x => normaliser(x.title) === normaliser(titre));
-    if (film) ouvrirFiche(film, image.src);
-    else alert('Ce film ne figure pas encore dans notre collection. Sa fiche TMDB pourra être ajoutée ensuite.');
-  });
+    const img=evenement.target.closest('.person-film img');
+    if(!img||!liste.contains(img))return;
+    evenement.preventDefault();evenement.stopPropagation();
+    const ligne=img.closest('.person-film');
+    // Priorité aux données TMDB de l'œuvre exacte : pas de confusion entre homonymes.
+    ficheTMDB(ligne,img);
+  },true);
   const style=document.createElement('style');
   style.textContent='#person-films .person-film img{cursor:pointer;transition:transform .2s}#person-films .person-film img:hover{transform:scale(1.06);outline:2px solid #f5cc7b}';
   document.head.append(style);
