@@ -541,7 +541,16 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     const label=document.createElement('h3');label.textContent='Synopsis';label.style.color='#f5cc7b';
     const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué dans la filmographie.';
     const source=document.createElement('a');source.href=lien;source.target='_blank';source.rel='noopener noreferrer';source.textContent='🎬 Consulter la fiche complète sur TMDB ↗';source.style.color='#f5cc7b';
-    info.append(meta,label,overview,source);grid.append(poster,info);d.append(close,h,grid);
+    // Bouton d'ajout : transmet les données exactes de la fiche TMDB à l'administration.
+    const annee=(credit.date||'').slice(0,4);
+    const ajouter=document.createElement('a');
+    ajouter.textContent='➕ Ajouter à ma vidéothèque';
+    ajouter.style.cssText='display:inline-block;margin-top:18px;padding:12px 16px;background:#7e101a;color:#ffe2a0;border:2px solid #e8b85b;border-radius:6px;text-decoration:none;font-weight:bold';
+    const params=new URLSearchParams({title:titre,year:annee,kind:type==='tv'?'Série':'Film'});
+    ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
+    ajouter.target='_blank';ajouter.rel='noopener noreferrer';
+    if(!/^\d{4}$/.test(annee)){ajouter.style.display='none';}
+    info.append(meta,label,overview,source,ajouter);grid.append(poster,info);d.append(close,h,grid);
     document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
     // Complète la fiche si le Worker propose déjà une route de détails.
     if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id))
