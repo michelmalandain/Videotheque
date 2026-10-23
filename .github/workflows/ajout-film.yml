@@ -114,6 +114,12 @@ jobs:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: python scripts/affiches.py
 
+      - name: Compléter réalisateurs et acteurs TMDB
+        if: steps.modification.outputs.changed == 'true' && steps.modification.outputs.action == 'add'
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python scripts/credits_tmdb.py
+
       - name: Enregistrer la modification
         if: steps.modification.outputs.changed == 'true'
         env:
