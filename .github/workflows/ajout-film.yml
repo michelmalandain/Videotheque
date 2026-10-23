@@ -1,6 +1,7 @@
 name: Ajouter ou supprimer un film ou une série
 
 on:
+  workflow_dispatch:
   issues:
     types: [opened, edited, reopened]
 
