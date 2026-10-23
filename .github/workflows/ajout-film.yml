@@ -19,14 +19,13 @@ jobs:
       (startsWith(github.event.issue.title, '[VIDEOTHEQUE] Ajouter :') ||
        startsWith(github.event.issue.title, '[VIDEOTHEQUE] Supprimer :'))
     runs-on: ubuntu-latest
-
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
 
-      - name: Modifier le catalogue
+      - name: Modifier les catalogues
         id: modification
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -35,139 +34,72 @@ jobs:
           node <<'JS'
           const fs = require('node:fs');
           const vm = require('node:vm');
-
           const body = process.env.ISSUE_BODY || '';
           const block = body.match(/```json\s*(\{[\s\S]*?\})\s*```/i);
           const data = JSON.parse(block ? block[1] : body.trim());
-
-          const deleting = process.env.ISSUE_TITLE.startsWith(
-            '[VIDEOTHEQUE] Supprimer :'
-          );
+          const deleting = process.env.ISSUE_TITLE.startsWith('[VIDEOTHEQUE] Supprimer :');
           const action = deleting ? 'delete' : 'add';
-
-          if (data.action && data.action !== action) {
-            throw new Error('Action incohérente avec le titre de la demande.');
-          }
-
+          if (data.action && data.action !== action) throw new Error('Action incohérente avec le titre.');
           const title = String(data.title || '').trim();
-          const normalize = value => String(value || '')
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .trim().toLocaleLowerCase('fr');
+          const normalize = value => String(value || '').normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '').trim().toLocaleLowerCase('fr');
           const kindValue = normalize(data.kind);
           const year = Number(data.year);
-
-          if (!title || title.length > 200 ||
-              !['film', 'serie'].includes(kindValue) ||
-              !Number.isInteger(year) || year < 1888 || year > 2100) {
+          if (!title || title.length > 200 || !['film', 'serie'].includes(kindValue) ||
+              !Number.isInteger(year) || year < 1888 || year > 2100)
             throw new Error('Titre, type ou année invalide.');
-          }
-
           const kind = kindValue === 'film' ? 'Film' : 'Série';
-          const path = 'index.html';
-          const html = fs.readFileSync(path, 'utf8');
-          const marker = /const\s+catalogue\s*=\s*\[/g;
-          const match = marker.exec(html);
-
-          if (!match) throw new Error('Catalogue introuvable.');
-
-          const start = marker.lastIndex - 1;
-          let depth = 0;
-          let quote = null;
-          let escaped = false;
-          let end = -1;
-
-          for (let i = start; i < html.length; i++) {
-            const c = html[i];
-            if (quote) {
-              if (escaped) escaped = false;
-              else if (c === '\\') escaped = true;
-              else if (c === quote) quote = null;
-              continue;
+          const paths = ['films.html', 'series.html'];
+          const files = [];
+          for (const path of paths) {
+            const html = fs.readFileSync(path, 'utf8');
+            const marker = /const\s+catalogue\s*=\s*\[/g;
+            const match = marker.exec(html);
+            if (!match) throw new Error(`Catalogue introuvable dans ${path}.`);
+            const start = marker.lastIndex - 1;
+            let depth = 0, quote = null, escaped = false, end = -1;
+            for (let i = start; i < html.length; i++) {
+              const c = html[i];
+              if (quote) {
+                if (escaped) escaped = false;
+                else if (c === '\\') escaped = true;
+                else if (c === quote) quote = null;
+                continue;
+              }
+              if (c === '"' || c === "'" || c === '`') quote = c;
+              else if (c === '[') depth++;
+              else if (c === ']' && --depth === 0) { end = i + 1; break; }
             }
-            if (c === '"' || c === "'" || c === '`') {
-              quote = c;
-            } else if (c === '[') {
-              depth++;
-            } else if (c === ']' && --depth === 0) {
-              end = i + 1;
-              break;
-            }
+            if (end < 0) throw new Error(`Fin du catalogue introuvable dans ${path}.`);
+            const catalogue = vm.runInNewContext('(' + html.slice(start, end) + ')',
+              Object.create(null), {timeout: 1000});
+            if (!Array.isArray(catalogue)) throw new Error(`Catalogue invalide dans ${path}.`);
+            files.push({path, html, start, end, catalogue});
           }
-
-          if (end < 0) throw new Error('Fin du catalogue introuvable.');
-
-          let catalogue = vm.runInNewContext(
-            '(' + html.slice(start, end) + ')',
-            Object.create(null),
-            { timeout: 1000 }
-          );
-
-          if (!Array.isArray(catalogue)) {
-            throw new Error('Format du catalogue invalide.');
-          }
-
+          const sameTitle = item => normalize(item.title) === normalize(title);
+          const sameEntry = item => sameTitle(item) && normalize(item.kind) === kindValue &&
+            Number(item.year) === year;
+          const occurrences = files.flatMap(f => f.catalogue.filter(sameEntry));
+          if (deleting && !occurrences.length)
+            throw new Error(`Titre absent des deux catalogues : ${title} (${year}).`);
+          if (!deleting && files.some(f => f.catalogue.some(sameTitle)))
+            throw new Error(`Titre déjà présent dans au moins un catalogue : ${title}.`);
+          const slug = normalize(title).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const entry = {title, kind, year, period: String(year), genre: 'À compléter',
+            description: 'Description à compléter.', poster: 'affiches/' + slug + '.jpg',
+            wiki: 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=' + encodeURIComponent(title)};
           let changed = false;
-          let message;
-
-          if (deleting) {
-            const matches = catalogue.filter(item =>
-              normalize(item.title) === normalize(title) &&
-              normalize(item.kind) === kindValue &&
-              Number(item.year) === year
-            );
-
-            if (matches.length > 1) {
-              throw new Error('Plusieurs entrées identiques : suppression interrompue.');
-            }
-
-            if (matches.length === 1) {
-              catalogue = catalogue.filter(item => item !== matches[0]);
+          for (const f of files) {
+            const updated = deleting ? f.catalogue.filter(item => !sameEntry(item)) : [...f.catalogue, entry];
+            if (updated.length !== f.catalogue.length) {
+              fs.writeFileSync(f.path, f.html.slice(0, f.start) +
+                JSON.stringify(updated, null, 2) + f.html.slice(f.end), 'utf8');
               changed = true;
-              message = `Suppression effectuée : ${title} (${year}).`;
-            } else {
-              message = `Aucun changement : ${title} (${year}) est absent du catalogue.`;
-            }
-          } else {
-            const exists = catalogue.some(item =>
-              normalize(item.title) === normalize(title)
-            );
-
-            if (exists) {
-              message = `Aucun changement : ${title} figure déjà au catalogue.`;
-            } else {
-              const slug = normalize(title)
-                .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-              catalogue.push({
-                title, kind, year,
-                period: String(year),
-                genre: 'À compléter',
-                description: 'Description à compléter.',
-                poster: 'affiches/' + slug + '.jpg',
-                wiki: 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search='
-                  + encodeURIComponent(title)
-              });
-
-              changed = true;
-              message = `Ajout effectué : ${title} (${year}).`;
             }
           }
-
-          if (changed) {
-            fs.writeFileSync(
-              path,
-              html.slice(0, start) +
-              JSON.stringify(catalogue, null, 2) +
-              html.slice(end),
-              'utf8'
-            );
-          }
-
+          const message = `${deleting ? 'Suppression' : 'Ajout'} effectué : ${title} (${year}).`;
           fs.writeFileSync('resultat-demande.txt', message, 'utf8');
-          fs.appendFileSync(
-            process.env.GITHUB_OUTPUT,
-            `changed=${changed}\naction=${action}\n`
-          );
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${changed}\naction=${action}\n`);
           JS
 
       - name: Installer Python
@@ -189,12 +121,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          if [ -d affiches ]; then
-            git add affiches/
-          fi
+          git add films.html series.html
+          if [ -d affiches ]; then git add affiches/; fi
           if ! git diff --cached --quiet; then
-            git commit -m "Modifier le catalogue (issue #${ISSUE_NUMBER})"
+            git commit -m "Modifier les catalogues (issue #${ISSUE_NUMBER})"
             git push
           fi
 
