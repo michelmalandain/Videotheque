@@ -1,4 +1,4 @@
-"""Synchronise les affiches et métadonnées TMDB de films.html et series.html.
+"""Synchronise les affiches et métadonnées TMDB de catalogue.js.
 Conserve les données en cas d'absence de correspondance exacte ou d'erreur réseau.
 """
 import json
@@ -10,13 +10,13 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent if Path(__file__).resolve().parent.name == 'scripts' else Path(__file__).resolve().parent
-PAGES = [ROOT / 'films.html', ROOT / 'series.html']
+CATALOGUE_FILE = ROOT / 'catalogue.js'
 IMAGES = ROOT / 'affiches'
 API_KEY = os.environ.get('TMDB_API_KEY')
 if not API_KEY:
     raise SystemExit('Secret TMDB_API_KEY manquant dans GitHub Actions.')
 IMAGES.mkdir(exist_ok=True)
-CATALOGUE = re.compile(r'(const\s+catalogue\s*=\s*)(\[.*?\])(\s*;)', re.S)
+CATALOGUE = re.compile(r'(window\.CINEMALAND_CATALOGUE\s*=\s*)(\[.*?\])(\s*;)', re.S)
 
 def normalize(value):
     value = unicodedata.normalize('NFKD', value or '').encode('ascii', 'ignore').decode().casefold()
@@ -65,35 +65,21 @@ def sync(entry):
     except Exception as error:
         print(f'Conservé (erreur TMDB) : {title} ({year}) — {error}')
 
-pages = []
-unique = {}
-for page in PAGES:
-    if not page.exists():
-        print(f'Page absente, ignorée : {page.name}')
-        continue
-    content = page.read_text(encoding='utf-8')
-    match = CATALOGUE.search(content)
-    if not match:
-        raise SystemExit(f'Catalogue introuvable dans {page.name} : aucune modification effectuée.')
-    try:
-        entries = json.loads(match.group(2))
-    except json.JSONDecodeError as error:
-        raise SystemExit(f'Catalogue non JSON dans {page.name} : {error}')
-    if not isinstance(entries, list):
-        raise SystemExit(f'Catalogue incorrect dans {page.name}')
-    pages.append((page, content, match, entries))
-    for entry in entries:
-        key = (normalize(entry.get('title', '')), str(entry.get('year', '')), normalize(entry.get('kind', '')))
-        unique.setdefault(key, entry)
-if not pages:
-    raise SystemExit('Ni films.html ni series.html trouvé.')
-for entry in unique.values():
+if not CATALOGUE_FILE.is_file():
+    raise SystemExit('Fichier catalogue.js introuvable.')
+content = CATALOGUE_FILE.read_text(encoding='utf-8')
+match = CATALOGUE.search(content)
+if not match:
+    raise SystemExit('Catalogue introuvable dans catalogue.js.')
+try:
+    entries = json.loads(match.group(2))
+except json.JSONDecodeError as error:
+    raise SystemExit(f'Catalogue non JSON dans catalogue.js : {error}')
+if not isinstance(entries, list):
+    raise SystemExit('Catalogue incorrect dans catalogue.js.')
+for entry in entries:
     sync(entry)
-for page, content, match, entries in pages:
-    for entry in entries:
-        key = (normalize(entry.get('title', '')), str(entry.get('year', '')), normalize(entry.get('kind', '')))
-        entry.update(unique[key])
-    updated = content[:match.start(2)] + json.dumps(entries, ensure_ascii=False, indent=2) + content[match.end(2):]
-    if updated != content:
-        page.write_text(updated, encoding='utf-8')
-    print(f'{page.name} : {len(entries)} fiches contrôlées')
+updated = content[:match.start(2)] + json.dumps(entries, ensure_ascii=False, indent=2) + content[match.end(2):]
+if updated != content:
+    CATALOGUE_FILE.write_text(updated, encoding='utf-8')
+print(f'catalogue.js : {len(entries)} fiches contrôlées')

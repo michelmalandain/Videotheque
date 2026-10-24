@@ -1,4 +1,4 @@
-"""Complète les crédits TMDB des catalogues CINEMANLAND films.html et series.html.
+"""Complète les crédits TMDB du catalogue unique CINEMALAND catalogue.js.
 Ne touche pas à index.html ni aux fiches déjà complètes.
 """
 import json
@@ -11,11 +11,11 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent if Path(__file__).resolve().parent.name == 'scripts' else Path(__file__).resolve().parent
-PAGES = (ROOT / 'films.html', ROOT / 'series.html')
+CATALOGUE_FILE = ROOT / 'catalogue.js'
 KEY = os.environ.get('TMDB_API_KEY')
 if not KEY:
     raise SystemExit('Secret TMDB_API_KEY manquant.')
-CATALOGUE = re.compile(r'(const\s+catalogue\s*=\s*)(\[.*?\])(\s*;)', re.S)
+CATALOGUE = re.compile(r'(window\.CINEMALAND_CATALOGUE\s*=\s*)(\[.*?\])(\s*;)', re.S)
 
 def normalize(value):
     value = unicodedata.normalize('NFKD', str(value or '')).encode('ascii', 'ignore').decode().casefold()
@@ -68,38 +68,20 @@ def enrich(obj):
         print(f'Erreur TMDB pour {title} ({year}) : {exc}')
         return False
 
-# Les deux pages peuvent contenir des fiches communes : on interroge TMDB une seule fois.
-cache = {}
-total = 0
-for page in PAGES:
-    if not page.is_file():
-        raise SystemExit(f'Fichier manquant : {page.name}')
-    source = page.read_text(encoding='utf-8')
-    match = CATALOGUE.search(source)
-    if not match:
-        raise SystemExit(f'Catalogue introuvable dans {page.name}')
-    try:
-        catalogue = json.loads(match.group(2))
-    except json.JSONDecodeError as exc:
-        raise SystemExit(f'Catalogue illisible dans {page.name} : {exc}') from exc
-    changed = 0
-    for obj in catalogue:
-        if obj.get('directors') and obj.get('cast'):
-            continue
-        identity = (normalize(obj.get('title')), str(obj.get('year')), normalize(obj.get('kind')))
-        if identity in cache:
-            reference = cache[identity]
-            for field in ('directors', 'cast'):
-                if not obj.get(field) and reference.get(field):
-                    obj[field] = reference[field]
-                    changed += 1
-        else:
-            if enrich(obj):
-                changed += 1
-            cache[identity] = obj
-    if changed:
-        replacement = json.dumps(catalogue, ensure_ascii=False, indent=2)
-        page.write_text(source[:match.start(2)] + replacement + source[match.end(2):], encoding='utf-8')
-    total += changed
-    print(f'{page.name} : {changed} ajout(s) de crédits.')
-print(f'Terminé : {total} ajout(s) au total.')
+if not CATALOGUE_FILE.is_file():
+    raise SystemExit('Fichier catalogue.js introuvable.')
+source = CATALOGUE_FILE.read_text(encoding='utf-8')
+match = CATALOGUE.search(source)
+if not match:
+    raise SystemExit('Catalogue introuvable dans catalogue.js.')
+try:
+    catalogue = json.loads(match.group(2))
+except json.JSONDecodeError as exc:
+    raise SystemExit(f'Catalogue illisible dans catalogue.js : {exc}') from exc
+if not isinstance(catalogue, list):
+    raise SystemExit('Catalogue invalide dans catalogue.js.')
+total = sum(bool(enrich(obj)) for obj in catalogue if not (obj.get('directors') and obj.get('cast')))
+if total:
+    replacement = json.dumps(catalogue, ensure_ascii=False, indent=2)
+    CATALOGUE_FILE.write_text(source[:match.start(2)] + replacement + source[match.end(2):], encoding='utf-8')
+print(f'catalogue.js : {total} fiche(s) enrichie(s).')
