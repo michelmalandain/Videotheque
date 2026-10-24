@@ -476,5 +476,15 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pamela Moreau"
       }
     ]
+  },
+  {
+    "title": "Singapura",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/singapura.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Singapura"
   }
 ];
