@@ -15,18 +15,23 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .compteurs{position:absolute;left:49.9%;top:75.5%;width:18.3%;height:4.8%;display:grid;grid-template-columns:repeat(3,1fr);gap:8%;pointer-events:none}
 .compteur{display:flex;align-items:center;justify-content:center;color:#ffe4a1;background:#200b06;font:clamp(8px,1.5vw,23px) Georgia,serif;letter-spacing:.04em;text-shadow:0 0 6px #d68b2d;border-radius:3px}
 
-/* Masquer l’ancien bouton Administration peint dans le décor. */
-.scene::before{content:"";position:absolute;left:3.1%;top:68.5%;width:23.1%;height:16.4%;background:linear-gradient(145deg,#240b0a,#4a1915);border:1px solid #956b3d;border-radius:5px;z-index:2;pointer-events:none}
-/* Nouveaux accès sans icônes. */
-.person-buttons{position:absolute;left:3.1%;top:68.5%;width:23.1%;display:flex;gap:5px;z-index:3}
-.person-buttons button{flex:1;min-width:0;padding:clamp(4px,.8vw,11px) 2px;background:linear-gradient(#37130e,#130706);color:#ffe5a9;border:3px double #e4ae55;border-radius:8px;box-shadow:0 0 12px #d89436, inset 0 0 12px #7a3519;text-shadow:0 0 5px #f5c56b;font:bold clamp(10px,1.05vw,16px) Georgia,serif;cursor:pointer}
-.person-buttons button:hover,.person-buttons button:focus-visible{background:#7e101a;box-shadow:0 0 20px #e2ae57}
-.admin-small{position:absolute;left:78.2%;top:89%;width:17.5%;text-align:center;color:#d8b77e;font:clamp(9px,.9vw,13px) Georgia,serif;text-decoration:underline;text-underline-offset:3px;z-index:3}
+/* Enseignes présentes dans le PNG : zones cliquables entièrement transparentes. */
+.films{left:3.1%;top:30.5%;width:23.1%;height:17.5%}
+.series{left:3.1%;top:49%;width:23.1%;height:17.5%}
+.person-buttons{display:contents}
+.person-buttons button{position:absolute;left:3.1%;width:23.1%;height:15%;border:0;padding:0;background:transparent;color:transparent;font-size:0;cursor:pointer;z-index:3;box-shadow:none;appearance:none}
+.person-buttons button:first-child{top:66%}
+.person-buttons button:last-child{top:81%}
+.person-buttons button:hover{background:transparent;box-shadow:none;filter:brightness(1.08)}
+.person-buttons button:focus-visible{outline:2px solid #ffe5a9;outline-offset:-5px}
+/* Le texte Administration est déjà dessiné sur le décor. */
+.admin-small{position:absolute;left:78.2%;top:87.3%;width:17.5%;height:3.5%;z-index:3;color:transparent;font-size:0;text-decoration:none}
+.admin-small:focus-visible{outline:2px solid #ffe5a9}
 .bio-photo{display:block;max-width:190px;max-height:260px;object-fit:contain;border:1px solid #c49a54;border-radius:5px;cursor:pointer;margin:10px auto}
 .bio-photo:hover{outline:2px solid #f8d38d}.bio-results button{display:block;width:100%;text-align:left;margin:8px 0;background:#301419;color:#ffedce;border:1px solid #c49a54}
 .bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
 .bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
-@media(max-width:700px){.person-buttons{top:68.5%}.admin-small{top:89%}}
+
 </style>
 </head>
 <body>
