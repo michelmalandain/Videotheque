@@ -66,6 +66,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 <dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
 <dialog id="bioCard" aria-labelledby="bioCardTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioCard').close()">Retour à la recherche</button><h2 id="bioCardTitle"></h2><div id="bioCardBody"></div></dialog>
 <dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
+<script src="catalogue.js"></script>
 <script>
 let bioRole='Acteur', bioPerson='';
 const el=id=>document.getElementById(id);
@@ -132,43 +133,22 @@ el('bioForm').addEventListener('submit',async e=>{e.preventDefault();const name=
 const ids=[...new Set(pages.map(p=>p.pageprops?.wikibase_item).filter(Boolean))];
 if(ids.length){const u='https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+encodeURIComponent(ids.join('|'))+'&props=claims&format=json&origin=*';const response=await fetch(u);if(response.ok){const entities=(await response.json()).entities||{};pages=pages.filter(p=>{const entity=entities[p.pageprops?.wikibase_item];return (entity?.claims?.P31||[]).some(c=>c.mainsnak?.datavalue?.value?.id==='Q5')});}}
 el('bioStatus').textContent=pages.length?'Sélectionnez la bonne personne :':'Aucune personnalité trouvée.';pages.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.title;b.onclick=()=>showBio(p);el('bioResults').append(b)})}catch(err){el('bioStatus').textContent=err.message}});
-(async function(){
- const ids=['totalTitres','totalRealisateurs','totalActeurs'];
- const show=(a)=>a.forEach((n,i)=>document.getElementById(ids[i]).textContent=String(n).padStart(4,'0'));
- function extractArray(source){
-   const m=/\b(?:const|let|var)\s+catalogue\s*=\s*\[/i.exec(source);
-   if(!m)return null;
-   const start=m.index+m[0].lastIndexOf('[');let depth=0,quote='',escaped=false;
-   for(let i=start;i<source.length;i++){
-     const c=source[i];
-     if(quote){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c===quote)quote='';continue;}
-     if(c==='"'||c==="'"){quote=c;continue;}
-     if(c==='[')depth++;else if(c===']'&&!--depth)return source.slice(start,i+1);
-   }
-   return null;
- }
- try{
-   const sources=await Promise.all(['films.html','series.html'].map(async file=>{
-     const r=await fetch(file+'?stats='+Date.now(),{cache:'no-store'});
-     if(!r.ok)throw new Error(file+': '+r.status);
-     const array=extractArray(await r.text());
-     if(!array)throw new Error('Catalogue absent : '+file);
-     return JSON.parse(array);
-   }));
-   const unique=new Map();
-   for(const item of sources.flat()){
-     if(!item||!item.title)continue;
-     const key=[item.kind||'',item.title,item.year||''].map(s=>String(s).trim().toLocaleLowerCase('fr')).join('|');
-     unique.set(key,item);
-   }
-   const directors=new Set(),actors=new Set();
-   const add=(set,value)=>{if(typeof value==='string'&&value.trim())set.add(value.trim().toLocaleLowerCase('fr'));};
-   for(const item of unique.values()){
-     for(const d of (Array.isArray(item.directors)?item.directors:[]))add(directors,typeof d==='string'?d:d?.name);
-     for(const a of (Array.isArray(item.cast)?item.cast:[]))add(actors,typeof a==='string'?a:a?.name);
-   }
-   show([unique.size,directors.size,actors.size]);
- }catch(error){console.error('Compteurs CINEMALAND :',error);ids.forEach(id=>document.getElementById(id).textContent='----');}
+(function(){
+  const ids=['totalTitres','totalRealisateurs','totalActeurs'];
+  function update(){
+    const items=window.CINEMALAND_CATALOGUE;
+    if(!Array.isArray(items))return;
+    const titles=new Set(),directors=new Set(),actors=new Set();
+    const add=(set,value)=>{if(typeof value==='string'&&value.trim())set.add(value.trim().toLocaleLowerCase('fr'));};
+    for(const item of items){
+      if(!item||!item.title)continue;
+      titles.add([item.kind||'',item.title,item.year||''].map(v=>String(v).trim().toLocaleLowerCase('fr')).join('|'));
+      for(const d of (Array.isArray(item.directors)?item.directors:[]))add(directors,typeof d==='string'?d:d?.name);
+      for(const a of (Array.isArray(item.cast)?item.cast:[]))add(actors,typeof a==='string'?a:a?.name);
+    }
+    [titles.size,directors.size,actors.size].forEach((n,i)=>document.getElementById(ids[i]).textContent=String(n).padStart(4,'0'));
+  }
+  update();
 })();
 </script>
 </body>
