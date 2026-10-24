@@ -84,7 +84,7 @@ if(data.thumbnail?.source){const hint=document.createElement('p');hint.textConte
 }catch(e){body.replaceChildren(para('Erreur',e.message));}}
 function openBioFilmDetail(credit){
  const title=credit.title||'Sans titre', type=credit.media_type==='tv'?'tv':'movie';
- const id=credit.id, year=String(credit.date||'').slice(0,4);
+ const id=/^\d+$/.test(String(credit.id||''))?String(credit.id):null, year=String(credit.date||'').slice(0,4);
  const d=document.createElement('dialog');d.className='bio-film-detail';
  const close=document.createElement('button');close.type='button';close.textContent='Retour à la filmographie';close.onclick=()=>d.close();
  const h=document.createElement('h2');h.textContent=title;
@@ -94,7 +94,7 @@ function openBioFilmDetail(credit){
  info.append(para('Type',type==='tv'?'Série':'Film'),para('Année',year||'Non renseignée'));
  const h3=document.createElement('h3');h3.textContent='Synopsis';info.append(h3);
  const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué.';info.append(overview);
- const source=document.createElement('a');source.href=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id):'https://www.themoviedb.org/search?query='+encodeURIComponent(title);source.target='_blank';source.rel='noopener noreferrer';source.textContent='Consulter la fiche sur TMDB';info.append(source);
+ /* La fiche reste dans CINEMALAND : aucun renvoi externe automatique vers TMDB. */
  if(/^\d{4}$/.test(year)){
   const add=document.createElement('a');add.className='bio-add';add.textContent='Ajouter à ma vidéothèque';
   add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'}).toString();
