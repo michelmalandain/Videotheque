@@ -187,7 +187,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/le-parrain.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=le%20parrain",
-    "summary": "La Seconde Guerre mondiale vient de s'achever. À New York, le « parrain » Don Corleone, l'un des chefs respectés de la mafia, se sent vieillir. Il refuse de s'adapter à son temps et de se lancer, comme ses pairs, dans le trafic de drogue. Une frilosité qui entrave la bonne marche des affaires des autres « familles » et qui lui vaut d'être la cible d'un attentat. Don Corleone survit à ses blessures, mais reste très diminué. Mike, son plus jeune fils, qui jusque-là se tenait à l'écart des affaires de son père, devient le plus dévoué de ses héritiers. Plus efficace que ses frères, Sonny et Fredo, il venge son père et organise l'élimination de ses adversaires…",
+    "summary": "La Seconde Guerre mondiale vient de s'achever. À New York, le « parrain » Don Corleone, l'un des chefs respectés de la mafia, se sent vieillir. Il refuse de s'adapter à son temps et de se lancer, comme ses pairs, dans le trafic de drogue. Une frilosité qui entrave la bonne marche des affaires des autres « familles » et qui lui vaut d'être la cible d'un attentat. Don Corleone survit à ses blessures, mais reste très diminué. Mike, son plus jeune fils, qui jusque-là se tenait à l'écart des affaires de son père, devient le plus dévoué de ses héritiers. Plus efficace que ses frères, Sonny et Fredo, il venge son père et organise l'élimination de ses adversaires…",
     "directors": [
       "Francis Ford Coppola"
     ],
@@ -259,7 +259,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/forrest-gump.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=forrest%20gump",
-    "summary": "À Savannah, État de Géorgie, Forrest Gump, assis sur un banc public, livre à qui veut l’entendre, l’étrange récit de sa vie mouvementée sur trois décennies. Il naît dans un bourg de l’Alabama, affecté d’un quotient intellectuel inférieur à la moyenne et d’une paralysie partielle des jambes. Souvent raillé à l’école, le jeune Forrest se lie d'amitié avec Jenny. Propulsé de l'état d'handicapé physique à celui de vedette du football, de héros du Vietnam au roi de la crevette, des honneurs de la Maison Blanche au bonheur d'une histoire d'amour, Forrest est le symbole d'une époque, un candide dans une Amérique qui a perdu son innocence.",
+    "summary": "À Savannah, État de Géorgie, Forrest Gump, assis sur un banc public, livre à qui veut l’entendre, l’étrange récit de sa vie mouvementée sur trois décennies. Il naît dans un bourg de l’Alabama, affecté d’un quotient intellectuel inférieur à la moyenne et d’une paralysie partielle des jambes. Souvent raillé à l’école, le jeune Forrest se lie d’amitié avec Jenny. Propulsé de l'état d'handicapé physique à celui de vedette du football, de héros du Vietnam au roi de la crevette, des honneurs de la Maison Blanche au bonheur d'une histoire d'amour, Forrest est le symbole d'une époque, un candide dans une Amérique qui a perdu son innocence.",
     "directors": [
       "Robert Zemeckis"
     ],
@@ -441,6 +441,39 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Arriles Amrani",
         "character": ""
+      }
+    ]
+  },
+  {
+    "title": "alter ego",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/alter-ego.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=alter%20ego",
+    "summary": "Joseph Batista, flic taiseux et humaniste, est de retour à Marseille après trente ans d’une brillante carrière à Paris. Il a une bonne raison de revenir : il vient d’apprendre qu’il avait une fille et un petit-fils qu’il n’a jamais vus. Lyna, devenue juge d’instruction, est bien décidée à lui faire payer son absence. De son côté, Samy Kaddourian, avocat brillant mais bordélique à la charge mentale XXL puisqu’il élève seul ses trois enfants, défend les suspects que Batista veut coffrer. Ce pot de colle hypersensible et ce flic trop fier pour montrer ses émotions, ne vont cesser de se croiser sur des affaires criminelles, chacun dans son camp mais luttant tous les deux pour rendre la Justice. Ils vont se découvrir, se disputer, et peu à peu, s’adorer... jusqu'à constater qu’ils ont peut-être trouvé leur alter ego.",
+    "cast": [
+      {
+        "name": "Éric Cantona",
+        "character": "Joseph Batista"
+      },
+      {
+        "name": "Bruno Sanches",
+        "character": "Samy Kaddourian"
+      },
+      {
+        "name": "Adèle Galloy",
+        "character": "Lyna Rochefort"
+      },
+      {
+        "name": "Maxence Danet-Fauvel",
+        "character": "Berthier"
+      },
+      {
+        "name": "Juliet Lemonnier",
+        "character": "Pamela Moreau"
       }
     ]
   }
