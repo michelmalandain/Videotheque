@@ -76,7 +76,7 @@ jobs:
           if (!Array.isArray(catalogue)) throw new Error('Catalogue invalide.');
           const files = [{path, source, start, end, catalogue}];
           const sameTitle = item => normalize(item.title) === normalize(title);
-          const sameEntry = item => sameTitle(item) && normalize(item.kind) === kindValue &&
+          const sameEntry = item => sameTitle(item) && normalize(item.kind) === normalize(kind) &&
             Number(item.year) === year;
           const occurrences = files.flatMap(f => f.catalogue.filter(sameEntry));
           console.log('Demande :', JSON.stringify({title, kind, year, action}));
