@@ -83,16 +83,12 @@ body.append(para('Nom et prénom',page.title),para('Date de naissance',formatDat
 const a=document.createElement('a');a.href=data.fullurl||'https://fr.wikipedia.org/wiki/'+encodeURIComponent(page.title.replaceAll(' ','_'));a.target='_blank';a.rel='noopener';a.textContent='Lire la biographie sur Wikipédia';body.append(a);
 if(data.thumbnail?.source){const hint=document.createElement('p');hint.textContent='Cliquez sur la photographie pour voir la filmographie.';body.append(hint);}
 }catch(e){body.replaceChildren(para('Erreur',e.message));}}
-const cataloguePromise=Promise.all(['films.html','series.html'].map(async file=>{
- const response=await fetch(file+'?catalogue='+Date.now(),{cache:'no-store'});
- if(!response.ok)throw Error('Catalogue indisponible : '+file);
- const html=await response.text();
- const marker=/\b(?:const|let|var)\s+catalogue\s*=\s*\[/i.exec(html);
- if(!marker)throw Error('Catalogue introuvable : '+file);
- const begin=marker.index+marker[0].lastIndexOf('[');let depth=0,quote='',escaped=false;
- for(let i=begin;i<html.length;i++){const c=html[i];if(quote){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c===quote)quote='';continue;}if(c==='"'||c==="'"){quote=c;continue;}if(c==='[')depth++;else if(c===']'&&!--depth)return JSON.parse(html.slice(begin,i+1));}
- throw Error('Catalogue illisible : '+file);
-})).then(parts=>parts.flat());
+// Catalogue unique, déjà chargé par catalogue.js pour les compteurs.
+const cataloguePromise=Promise.resolve().then(()=>{
+ const items=window.CINEMALAND_CATALOGUE;
+ if(!Array.isArray(items))throw Error('Catalogue CINEMALAND indisponible');
+ return items;
+});
 function cleTitre(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/^(le|la|les|the|l) /,'');}
 function trouverDansCatalogue(items,credit){
  const kind=credit.media_type==='tv'?'Série':'Film';const year=String(credit.date||'').slice(0,4);
@@ -117,6 +113,7 @@ function openBioFilmDetail(credit){
  cataloguePromise.then(items=>{
   if(!d.isConnected)return;
   const present=trouverDansCatalogue(items,credit);
+  if(present && (present.summary||present.description))overview.textContent=present.summary||present.description;
   if(present){
    add.textContent='Déjà dans ma vidéothèque';add.removeAttribute('href');add.style.cssText='pointer-events:none;background:#555;color:#ddd;border-color:#888;cursor:not-allowed;';add.setAttribute('aria-disabled','true');
    if(poster){poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';poster.tabIndex=0;poster.setAttribute('role','link');const go=()=>location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(present.year||'');poster.onclick=go;poster.onkeydown=e=>{if(e.key==='Enter')go();};}
@@ -125,7 +122,7 @@ function openBioFilmDetail(credit){
    add.textContent='Ajouter à ma vidéothèque';add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'});add.target='_blank';add.rel='noopener noreferrer';add.style.pointerEvents='auto';add.style.opacity='1';
   }else{add.textContent='Année manquante — ajout indisponible';}
  }).catch(err=>{add.textContent='Vérification du catalogue impossible';add.title=err.message;});
- if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id)).then(r=>{if(!r.ok)throw Error('Détails indisponibles');return r.json()}).then(data=>{if(!d.isConnected)return;const detail=data.details||data;overview.textContent=detail.overview||detail.summary||detail.description||overview.textContent;const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';if(genres)info.insertBefore(para('Genres',genres),h3);}).catch(()=>{});
+ if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id)).then(r=>{if(!r.ok)throw Error('Détails indisponibles');return r.json()}).then(data=>{if(!d.isConnected)return;const detail=data.details||data;if(!trouverDansCatalogue(window.CINEMALAND_CATALOGUE||[],credit))overview.textContent=detail.overview||detail.summary||detail.description||overview.textContent;const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';if(genres)info.insertBefore(para('Genres',genres),h3);}).catch(()=>{});
 }
 
 async function showBioFilms(name){el('bioFilmsTitle').textContent='Filmographie de '+name;el('bioFilmsStatus').textContent='Chargement…';el('bioFilmsList').replaceChildren();el('bioFilms').showModal();try{const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?name='+encodeURIComponent(name));if(!r.ok)throw Error('Service de filmographie indisponible');const d=await r.json();if(!Array.isArray(d.credits))throw Error('Réponse du service incorrecte');el('bioFilmsStatus').textContent=d.credits.length+' films et séries';for(const x of d.credits){const row=document.createElement('button');row.type='button';row.className='bio-credit';row.title='Ouvrir la fiche de '+(x.title||'ce titre');row.onclick=()=>openBioFilmDetail(x);if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;row.append(img)}const label=document.createElement('span');label.textContent=(x.title||'Sans titre')+' ('+(x.date||'').slice(0,4)+')';row.append(label);el('bioFilmsList').append(row)}}catch(e){el('bioFilmsStatus').textContent=e.message;}}
