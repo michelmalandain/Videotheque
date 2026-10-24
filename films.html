@@ -635,6 +635,22 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
     ajouter.target='_blank';ajouter.rel='noopener noreferrer';
     if(!/^\d{4}$/.test(annee)){ajouter.style.display='none';}
+    // Vérification du catalogue local avant toute proposition d'ajout.
+    const normaliser=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const present=catalogue.find(x=>normaliser(x.title)===normaliser(titre)
+      && String(x.year)===annee && (x.kind==='Série'?'tv':'movie')===type);
+    if(present){
+      ajouter.textContent='Déjà dans ma vidéothèque';
+      ajouter.removeAttribute('href');ajouter.removeAttribute('target');
+      ajouter.setAttribute('aria-disabled','true');
+      ajouter.style.cssText='display:inline-block;margin-top:18px;padding:12px 16px;background:#555;color:#ddd;border:2px solid #999;border-radius:6px;text-decoration:none;font-weight:bold;cursor:not-allowed;pointer-events:none';
+      poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';
+      poster.tabIndex=0;poster.setAttribute('role','button');
+      const ouvrirCatalogue=()=>{window.location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(annee)};
+      poster.addEventListener('click',ouvrirCatalogue);
+      poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ouvrirCatalogue()}});
+    }
+
     info.append(meta,label,overview,source,ajouter);grid.append(poster,info);d.append(close,h,grid);
     document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
     // Complète la fiche si le Worker propose déjà une route de détails.
@@ -656,5 +672,16 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
   const style=document.createElement('style');
   style.textContent='#person-films .person-film img{cursor:pointer;transition:transform .2s}#person-films .person-film img:hover{transform:scale(1.06);outline:2px solid #f5cc7b}';
   document.head.append(style);
+})();
+<script>
+// Ouvre la fiche d'une œuvre présente dans notre catalogue après navigation.
+(function(){
+ const params=new URLSearchParams(location.search),titre=params.get('fiche'),annee=params.get('annee');
+ if(!titre)return;
+ const norm=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const x=catalogue.find(f=>norm(f.title)===norm(titre)&&(!annee||String(f.year)===annee));
+ if(!x)return;
+ const search=document.getElementById('search');search.value=x.title;search.dispatchEvent(new Event('input'));
+ setTimeout(()=>{if(typeof openFilm==='function')openFilm(x)},100);
 })();
 </script></body></html>
