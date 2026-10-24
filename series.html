@@ -83,7 +83,7 @@ nav{background:#180609ed!important}
 .credits-box .credit-names,.credits-box ul{font-size:13px!important;line-height:1.35!important}
 @media(max-width:950px){.wrap{width:calc(100% - 55px)!important}.card{grid-template-columns:145px minmax(0,1fr)!important}.credits-box{grid-column:1/-1!important;grid-row:3!important}.card .poster{height:210px!important}}
 @media(max-width:580px){.wrap{width:calc(100% - 30px)!important}.card{grid-template-columns:1fr!important}.card .poster{grid-column:1!important;grid-row:2!important;width:170px!important;height:225px!important;justify-self:center}.card .info{grid-column:1!important;grid-row:3!important}.credits-box{grid-column:1!important;grid-row:4!important}}
-</style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>Le pays du cinéma · NOS SÉRIES</p></header><nav><a class="admin-link" href="accueil.html">⌂ ACCUEIL</a><a class="admin-link" href="films.html">FILMS</a><a class="admin-link" href="https://videotheque-admin.michelmalandain.workers.dev/">🔐 ADMINISTRATION</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Michel et Christiane · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">✕ Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">✕ Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>
+</style><style id="cinemaland-navigation-fixe">nav{position:sticky;top:0;z-index:20;box-shadow:0 3px 15px #000b}.film-dialog .close{position:sticky;top:0;z-index:10;float:none;display:block;margin-left:auto;box-shadow:0 3px 10px #000b}</style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>Le pays du cinéma · NOS SÉRIES</p></header><nav><a class="admin-link" href="index.html">ACCUEIL</a><a class="admin-link" href="films.html">FILMS</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Michel et Christiane · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>
 // Pour ajouter un titre, dupliquer une ligne dans ce catalogue.
 const catalogue=[
   {
@@ -493,79 +493,6 @@ const catalogue=[
         "character": "Marie Germain"
       }
     ]
-  },
-  {
-    "title": "la nirvana",
-    "kind": "Film",
-    "year": 2026,
-    "period": "2026",
-    "genre": "Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/la-nirvana.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20nirvana",
-    "summary": "Jean, un agriculteur en faillite, croule sous les dettes, les huissiers… et la solitude depuis que Sylvie l’a largué. Un soir, lorsqu’il s’apprête à commettre l’irréparable dans sa grange, un \"miracle\" lui tombe littéralement dessus : Foued, un jeune de cité en cavale, encastre son 4x4 rempli de drogue dans le mur de sa grange, lui sauvant la vie… par accident. Mais quand Jean, paniqué par la police qui rôde, brûle la voiture et sans le savoir la cargaison avec… les deux hommes se retrouvent piégés : l’un risque de perdre sa ferme et ses bêtes, l’autre sa tête. Pour rembourser la dette de Foued et sauver la ferme de Jean, ils décident de faire ce qu’aucun des deux n’aurait imaginé : cultiver du cannabis « bio », discrètement, au milieu des chèvres et des champs.",
-    "directors": [
-      "Hakim Bougheraba"
-    ],
-    "cast": [
-      {
-        "name": "Jean-Baptiste Brucker",
-        "character": "Jean"
-      },
-      {
-        "name": "Ichem Bougheraba",
-        "character": "Foued"
-      },
-      {
-        "name": "Éric Cantona",
-        "character": ""
-      },
-      {
-        "name": "Emma Smet",
-        "character": ""
-      },
-      {
-        "name": "Arriles Amrani",
-        "character": ""
-      }
-    ]
-  },
-  {
-    "title": "alter ego",
-    "kind": "Film",
-    "year": 2026,
-    "period": "2026",
-    "genre": "Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/alter-ego.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=alter%20ego",
-    "summary": "Alex a un problème : son nouveau voisin est son sosie parfait. Avec des cheveux. Un double en mieux, qui va totalement bouleverser son existence.",
-    "directors": [
-      "Nicolas Charlet",
-      "Bruno Lavaine"
-    ],
-    "cast": [
-      {
-        "name": "Laurent Lafitte",
-        "character": "Alex Floutard / Axel Chambon"
-      },
-      {
-        "name": "Olga Kurylenko",
-        "character": "Tatiana Chambon"
-      },
-      {
-        "name": "Blanche Gardin",
-        "character": "Nathalie Floutard"
-      },
-      {
-        "name": "Monsieur Fraize",
-        "character": "Denis Moulard"
-      },
-      {
-        "name": "Zabou Breitman",
-        "character": "Nicole Lecovec"
-      }
-    ]
   }
 ];let previousFilm=null;
 function personName(p){return typeof p==='string'?p:(p?.name||'');}
@@ -674,7 +601,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     section('Acteurs principaux', (film.cast || []).map(a => personName(a) + (a.character ? ' — ' + a.character : '')).join('\n'));
     layout.append(img,contenu); main.append(layout);
     const actions=doc.createElement('div');actions.className='actions';
-    const fermer=doc.createElement('button');fermer.type='button';fermer.textContent='✕ Fermer la fiche';
+    const fermer=doc.createElement('button');fermer.type='button';fermer.textContent='Fermer la fiche';
     fermer.onclick=()=>onglet.close();
     const retour=doc.createElement('a');retour.textContent='🎬 Retour à la vidéothèque';retour.href=location.href;
     actions.append(fermer,retour);main.append(actions);
@@ -690,7 +617,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     const lien=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR':'https://www.themoviedb.org/search?query='+encodeURIComponent(titre);
     const d=document.createElement('dialog');d.className='film-dialog';
     d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:#160d11;color:#f6e8cf;border:3px double #e8b85b;border-radius:10px;padding:24px';
-    const close=document.createElement('button');close.textContent='✕ Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
+    const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
     const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
     const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
     const poster=document.createElement('img');poster.src=image.src.replace('/w154','/w500');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';
