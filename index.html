@@ -14,6 +14,19 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 /* Compteurs dynamiques : les valeurs sont calculées à partir de films.html et series.html. */
 .compteurs{position:absolute;left:49.9%;top:75.5%;width:18.3%;height:4.8%;display:grid;grid-template-columns:repeat(3,1fr);gap:8%;pointer-events:none}
 .compteur{display:flex;align-items:center;justify-content:center;color:#ffe4a1;background:#200b06;font:clamp(8px,1.5vw,23px) Georgia,serif;letter-spacing:.04em;text-shadow:0 0 6px #d68b2d;border-radius:3px}
+
+/* Masquer l’ancien bouton Administration peint dans le décor. */
+.scene::before{content:"";position:absolute;left:3.1%;top:68.5%;width:23.1%;height:16.4%;background:linear-gradient(145deg,#240b0a,#4a1915);border:1px solid #956b3d;border-radius:5px;z-index:2;pointer-events:none}
+/* Nouveaux accès sans icônes. */
+.person-buttons{position:absolute;left:3.1%;top:68.5%;width:23.1%;display:flex;gap:5px;z-index:3}
+.person-buttons button{flex:1;min-width:0;padding:clamp(4px,.8vw,11px) 2px;background:#36120e;color:#ffe2a0;border:1px solid #d6a34d;border-radius:4px;font:clamp(9px,1.05vw,16px) Georgia,serif;cursor:pointer}
+.person-buttons button:hover,.person-buttons button:focus-visible{background:#7e101a}
+.admin-small{position:absolute;left:78.2%;top:89%;width:17.5%;text-align:center;color:#d8b77e;font:clamp(9px,.9vw,13px) Georgia,serif;text-decoration:underline;text-underline-offset:3px;z-index:3}
+.bio-photo{display:block;max-width:190px;max-height:260px;object-fit:contain;border:1px solid #c49a54;border-radius:5px;cursor:pointer;margin:10px auto}
+.bio-photo:hover{outline:2px solid #f8d38d}.bio-results button{display:block;width:100%;text-align:left;margin:8px 0;background:#301419;color:#ffedce;border:1px solid #c49a54}
+.bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
+.bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
+@media(max-width:700px){.person-buttons{top:68.5%}.admin-small{top:89%}}
 </style>
 </head>
 <body>
@@ -21,8 +34,10 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 <h1 class="visually-hidden">Cinemaland — Le pays du cinéma</h1>
 <a aria-label="Consulter les films" class="zone films" href="films.html" title="Voir notre collection de films"><span class="visually-hidden">Films</span></a>
 <a aria-label="Consulter les séries" class="zone series" href="series.html" title="Voir notre collection de séries"><span class="visually-hidden">Séries</span></a>
-<a aria-label="Ouvrir l'administration" class="zone admin" href="https://videotheque-admin.michelmalandain.workers.dev" title="Administration"><span class="visually-hidden">Administration</span></a>
+
 <button aria-label="Malandain : nous écrire" class="zone contact" onclick="document.getElementById('contactDialog').showModal()" title="Nous écrire" type="button"><span class="visually-hidden">Malandain — Nous écrire</span></button>
+<div class="person-buttons"><button type="button" onclick="openBioSearch('Acteur')">ACTEURS</button><button type="button" onclick="openBioSearch('Réalisateur')">RÉALISATEURS</button></div>
+<a class="admin-small" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
 <div class="compteurs" aria-label="Statistiques du catalogue"><output class="compteur" id="totalTitres" title="Titres">····</output><output class="compteur" id="totalRealisateurs" title="Réalisateurs">····</output><output class="compteur" id="totalActeurs" title="Acteurs">····</output></div>
 </main>
 <footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
@@ -42,7 +57,27 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 </form>
 </dialog>
 
+<dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
+<dialog id="bioCard" aria-labelledby="bioCardTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioCard').close()">Retour à la recherche</button><h2 id="bioCardTitle"></h2><div id="bioCardBody"></div></dialog>
+<dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
 <script>
+let bioRole='Acteur', bioPerson='';
+const el=id=>document.getElementById(id);
+function openBioSearch(role){bioRole=role;el('bioTitle').textContent='Rechercher un '+role.toLowerCase();el('bioResults').replaceChildren();el('bioStatus').textContent='';el('bioDialog').showModal();}
+async function wikiAPI(params){const u=new URL('https://fr.wikipedia.org/w/api.php');Object.entries({origin:'*',format:'json',...params}).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u);if(!r.ok)throw Error('Wikipédia indisponible');return r.json();}
+const para=(label,value)=>{const p=document.createElement('p');p.textContent=label+' : '+(value||'Non renseigné');return p;};
+function formatDate(v){if(!v)return 'Non renseignée';const m=v.match(/^[+-]?(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:v;}
+async function showBio(page){bioPerson=page.title;el('bioDialog').close();el('bioCardTitle').textContent=page.title;const body=el('bioCardBody');body.replaceChildren(para('Chargement','en cours'));el('bioCard').showModal();try{
+const result=await wikiAPI({action:'query',prop:'pageprops|pageimages|info',inprop:'url',piprop:'thumbnail',pithumbsize:'400',pageids:page.pageid});const data=Object.values(result.query.pages)[0];const qid=data.pageprops?.wikibase_item;let claims={},labels={};
+if(qid){const url='https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+encodeURIComponent(qid)+'&props=claims&format=json&origin=*';const r=await fetch(url);if(r.ok){claims=(await r.json()).entities[qid]?.claims||{};const ids=(claims.P27||[]).map(x=>x.mainsnak?.datavalue?.value?.id).filter(Boolean);if(ids.length){const lr=await fetch('https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+ids.join('|')+'&props=labels&languages=fr&format=json&origin=*');if(lr.ok){const j=await lr.json();ids.forEach(id=>labels[id]=j.entities?.[id]?.labels?.fr?.value||id);}}}}
+const val=key=>claims[key]?.[0]?.mainsnak?.datavalue?.value;
+body.replaceChildren();if(data.thumbnail?.source){const img=document.createElement('img');img.className='bio-photo';img.src=data.thumbnail.source;img.alt='Portrait de '+page.title;img.title='Voir la filmographie';img.tabIndex=0;img.onclick=()=>showBioFilms(page.title);img.onkeydown=e=>{if(e.key==='Enter')showBioFilms(page.title)};body.append(img);}else body.append(para('Photographie','Non disponible'));
+body.append(para('Nom et prénom',page.title),para('Date de naissance',formatDate(val('P569')?.time)),para('Date de décès',formatDate(val('P570')?.time)),para('Nationalité',(claims.P27||[]).map(x=>labels[x.mainsnak?.datavalue?.value?.id]).filter(Boolean).join(', ')||'Non renseignée'));
+const a=document.createElement('a');a.href=data.fullurl||'https://fr.wikipedia.org/wiki/'+encodeURIComponent(page.title.replaceAll(' ','_'));a.target='_blank';a.rel='noopener';a.textContent='Lire la biographie sur Wikipédia';body.append(a);
+const b=document.createElement('button');b.type='button';b.textContent='Voir la filmographie';b.style.display='block';b.style.marginTop='16px';b.onclick=()=>showBioFilms(page.title);body.append(b);
+}catch(e){body.replaceChildren(para('Erreur',e.message));}}
+async function showBioFilms(name){el('bioFilmsTitle').textContent='Filmographie de '+name;el('bioFilmsStatus').textContent='Chargement…';el('bioFilmsList').replaceChildren();el('bioFilms').showModal();try{const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?name='+encodeURIComponent(name));if(!r.ok)throw Error('Service de filmographie indisponible');const d=await r.json();if(!Array.isArray(d.credits))throw Error('Réponse du service incorrecte');el('bioFilmsStatus').textContent=d.credits.length+' films et séries';for(const x of d.credits){const row=document.createElement('div');row.className='bio-credit';if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;row.append(img)}const a=document.createElement('a');a.href='https://www.themoviedb.org/'+(x.media_type==='tv'?'tv':'movie')+'/'+encodeURIComponent(x.id||'');a.target='_blank';a.rel='noopener';a.textContent=(x.title||'Sans titre')+' ('+(x.date||'').slice(0,4)+')';row.append(a);el('bioFilmsList').append(row)}}catch(e){el('bioFilmsStatus').textContent=e.message;}}
+el('bioForm').addEventListener('submit',async e=>{e.preventDefault();const name=(el('bioFirst').value+' '+el('bioLast').value).trim();el('bioStatus').textContent='Recherche en cours…';el('bioResults').replaceChildren();try{const d=await wikiAPI({action:'query',generator:'search',gsrsearch:name,gsrlimit:'10',prop:'pageprops'});const pages=Object.values(d.query?.pages||{}).sort((a,b)=>a.index-b.index);el('bioStatus').textContent=pages.length?'Sélectionnez la bonne personne :':'Aucun résultat trouvé.';pages.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.title;b.onclick=()=>showBio(p);el('bioResults').append(b)})}catch(err){el('bioStatus').textContent=err.message}});
 (async function(){
  const ids=['totalTitres','totalRealisateurs','totalActeurs'];
  const show=(a)=>a.forEach((n,i)=>document.getElementById(ids[i]).textContent=String(n).padStart(4,'0'));
