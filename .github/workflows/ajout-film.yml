@@ -52,33 +52,29 @@ jobs:
               !Number.isInteger(year) || year < 1888 || year > 2100)
             throw new Error('Titre, type ou année invalide.');
           const kind = kindValue === 'film' ? 'Film' : 'Série';
-          const paths = ['films.html', 'series.html'];
-          const files = [];
-          for (const path of paths) {
-            const html = fs.readFileSync(path, 'utf8');
-            const marker = /const\s+catalogue\s*=\s*\[/g;
-            const match = marker.exec(html);
-            if (!match) throw new Error(`Catalogue introuvable dans ${path}.`);
-            const start = marker.lastIndex - 1;
-            let depth = 0, quote = null, escaped = false, end = -1;
-            for (let i = start; i < html.length; i++) {
-              const c = html[i];
-              if (quote) {
-                if (escaped) escaped = false;
-                else if (c === '\\') escaped = true;
-                else if (c === quote) quote = null;
-                continue;
-              }
-              if (c === '"' || c === "'" || c === '`') quote = c;
-              else if (c === '[') depth++;
-              else if (c === ']' && --depth === 0) { end = i + 1; break; }
+          const path = 'catalogue.js';
+          const source = fs.readFileSync(path, 'utf8');
+          const marker = /window\.CINEMALAND_CATALOGUE\s*=\s*\[/g;
+          const match = marker.exec(source);
+          if (!match) throw new Error('Catalogue introuvable dans catalogue.js.');
+          const start = marker.lastIndex - 1;
+          let depth = 0, quote = null, escaped = false, end = -1;
+          for (let i = start; i < source.length; i++) {
+            const c = source[i];
+            if (quote) {
+              if (escaped) escaped = false;
+              else if (c === '\\') escaped = true;
+              else if (c === quote) quote = null;
+              continue;
             }
-            if (end < 0) throw new Error(`Fin du catalogue introuvable dans ${path}.`);
-            const catalogue = vm.runInNewContext('(' + html.slice(start, end) + ')',
-              Object.create(null), {timeout: 1000});
-            if (!Array.isArray(catalogue)) throw new Error(`Catalogue invalide dans ${path}.`);
-            files.push({path, html, start, end, catalogue});
+            if (c === '"' || c === "'" || c === '`') quote = c;
+            else if (c === '[') depth++;
+            else if (c === ']' && --depth === 0) { end = i + 1; break; }
           }
+          if (end < 0) throw new Error('Fin du catalogue introuvable.');
+          const catalogue = vm.runInNewContext('(' + source.slice(start, end) + ')', Object.create(null), {timeout: 1000});
+          if (!Array.isArray(catalogue)) throw new Error('Catalogue invalide.');
+          const files = [{path, source, start, end, catalogue}];
           const sameTitle = item => normalize(item.title) === normalize(title);
           const sameEntry = item => sameTitle(item) && normalize(item.kind) === kindValue &&
             Number(item.year) === year;
@@ -92,7 +88,7 @@ jobs:
           if (deleting && !occurrences.length) {
             const close = files.flatMap(f => f.catalogue.filter(x =>
               normalize(x.title).includes(normalize(title)) || normalize(title).includes(normalize(x.title))));
-            throw new Error(`Titre absent des deux catalogues : ${title} (${year}). ` +
+            throw new Error(`Titre absent du catalogue : ${title} (${year}). ` +
               `Fiches proches : ${JSON.stringify(close.map(x => ({title:x.title, kind:x.kind, year:x.year})))}`);
           }
           if (!deleting && files.some(f => f.catalogue.some(sameTitle)))
@@ -105,8 +101,8 @@ jobs:
           for (const f of files) {
             const updated = deleting ? f.catalogue.filter(item => !sameEntry(item)) : [...f.catalogue, entry];
             if (updated.length !== f.catalogue.length) {
-              fs.writeFileSync(f.path, f.html.slice(0, f.start) +
-                JSON.stringify(updated, null, 2) + f.html.slice(f.end), 'utf8');
+              fs.writeFileSync(f.path, f.source.slice(0, f.start) +
+                JSON.stringify(updated, null, 2) + f.source.slice(f.end), 'utf8');
               changed = true;
             }
           }
@@ -140,7 +136,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add films.html series.html
+          git add catalogue.js
           if [ -d affiches ]; then git add affiches/; fi
           if ! git diff --cached --quiet; then
             git commit -m "Modifier les catalogues (issue #${ISSUE_NUMBER})"
