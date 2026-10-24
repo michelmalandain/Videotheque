@@ -1,697 +1,175 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CINEMALAND — Nos séries</title><style>
-:root{--gold:#e8b85b;--red:#7e101a;--dark:#090c10}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#53151c,#14090c 52%,#07080b);color:#f6e8cf;font:17px Georgia,serif}header{text-align:center;padding:48px 15px 36px;border-bottom:3px double var(--gold);background:linear-gradient(90deg,#240509aa,#6d1220aa,#240509aa)}h1{font-size:clamp(30px,5vw,60px);color:#f5cc7b;text-shadow:2px 3px #210707;margin:0;letter-spacing:2px}header p{font-style:italic;font-size:25px;margin:12px}nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px;background:#080c12;border-bottom:1px solid var(--gold)}button,select,input{font:inherit}nav button,.toolbar select{background:#14171b;color:#f4dcae;border:1px solid #a77730;padding:11px 22px;cursor:pointer}nav button.active,nav button:hover{background:#7e101a}.wrap{max-width:1250px;margin:30px auto;padding:0 20px}.toolbar{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}input{flex:1;min-width:200px;padding:14px;background:#f7e4c2;border:2px solid var(--gold);border-radius:6px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:25px}.card{background:linear-gradient(#141a1e,#070a0d);border:3px double #c89442;border-radius:9px;overflow:hidden;box-shadow:0 10px 30px #0009}.poster{height:290px;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;background:linear-gradient(145deg,#303e4a,#0b151c 65%,#4d2521);font-size:38px;letter-spacing:3px;font-weight:bold;color:#f6dba6;text-shadow:2px 3px 6px #000}.card:nth-child(2) .poster{background:linear-gradient(145deg,#765039,#2c1a15 65%,#120d0a)}.card:nth-child(3) .poster{background:linear-gradient(145deg,#6a3a19,#17110d 65%,#292b2a)}.info{padding:18px}.info h2{color:var(--gold);margin:0 0 10px;font-size:24px}.meta{color:#d5c4a4;font-size:15px}.info p{line-height:1.5}.info a{color:#f4cf85;text-decoration:underline}footer{text-align:center;padding:40px;color:#d8b982;font-style:italic}#empty{display:none;text-align:center;padding:40px}@media(max-width:600px){.poster{height:210px}header{padding:30px 12px}}
-header{position:relative;border-bottom:7px ridge #b9893e;box-shadow:0 12px 30px #000a}header:before,header:after{content:'❧';position:absolute;top:30px;color:#c99b52;font-size:48px}header:before{left:5%}header:after{right:5%;transform:scaleX(-1)}.card{position:relative}.card:before{content:'✦';position:absolute;top:9px;left:13px;color:#f2ce82;z-index:1}.poster{height:330px;position:relative;flex-direction:column;gap:18px;border-bottom:2px solid #c89442}.poster:before{content:none}.poster:after{content:'';display:none;font:12px Georgia,serif;letter-spacing:2px;color:#ead5b0;border:1px solid #b18c53;padding:9px 12px;background:#0b0a0a99}.poster span{font-size:clamp(25px,3vw,36px)}.curtain{height:34px;background:repeating-linear-gradient(90deg,#490810 0px,#a5202d 22px,#590b15 42px);border-bottom:5px solid #c69a51;box-shadow:0 6px 12px #0009}.info a{display:inline-block;margin-top:8px}footer{border-top:1px solid #ab7d38} @media(max-width:600px){header:before,header:after{display:none}}
-nav .admin-link{display:inline-flex;align-items:center;background:#14171b;color:#f4dcae;border:1px solid #a77730;padding:11px 22px;text-decoration:none;font:inherit}nav .admin-link:hover{background:#7e101a}</style><style>
-.card{cursor:pointer}.card:focus-visible{outline:3px solid #f5cc7b}.film-dialog{border:2px solid #d6a452;border-radius:12px;background:linear-gradient(#37131b,#100d12);color:#f8e7ce;max-width:680px;width:calc(100% - 30px);max-height:90vh;overflow:auto;padding:28px;box-shadow:0 20px 70px #000}.film-dialog::backdrop{background:#000c}.film-dialog h2{color:#f5cc7b;font-size:30px}.film-dialog h3{color:#e8b85b}.film-dialog p{line-height:1.6}.film-dialog .close{float:right;background:#7e101a;color:white;border:1px solid #e8b85b;border-radius:5px;padding:8px 14px;cursor:pointer}.film-dialog .cast{padding-left:20px}.film-dialog .credit{color:#ead1a0}
+<!DOCTYPE html>
 
-/* Présentation horizontale : titre au-dessus, affiche à gauche, synopsis à droite. */
-.cards{display:flex;flex-direction:column;gap:26px}
-.card{display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:28px;padding:22px 26px;background:linear-gradient(115deg,#271017,#111319 60%,#0b0b0f);border:2px solid #bb8d48;border-radius:12px}
-.card:before{top:22px;left:13px}
-.card-title{grid-column:1/-1;margin:0 0 18px;padding:0 0 13px;border-bottom:1px solid #8e693b;text-align:center;font-size:clamp(25px,3vw,35px);color:#f5cc7b;letter-spacing:1px}
-.card .poster{grid-column:1;grid-row:2;height:360px;min-height:0;padding:0;border:1px solid #bd9353;border-radius:6px;overflow:hidden;background:#08090b}
-.card .poster img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0}
-.card .info{grid-column:2;grid-row:2;padding:3px 0;display:flex;flex-direction:column;align-items:flex-start}
-.card .info .meta{font-size:16px;color:#e2bc79;margin-bottom:14px}
-.card .info p{font-size:17px;line-height:1.7;white-space:pre-line;margin:0 0 14px}
-.card .info a{margin-top:auto}
-.card .info .details-hint{margin-top:12px;color:#d9ae65;font-size:14px;font-style:italic}
-@media(max-width:650px){.card{grid-template-columns:1fr;padding:17px;gap:12px}.card-title{grid-column:1;margin:0}.card .poster{grid-column:1;grid-row:2;height:330px;width:min(100%,260px);justify-self:center}.card .info{grid-column:1;grid-row:3}.card .info p{font-size:16px}}
-</style>
-<style id="nouvelle-maquette">
-.wrap{max-width:1440px}
-.cards{display:flex;flex-direction:column;gap:15px}
-.card{display:grid;grid-template-columns:215px minmax(0,1fr) 325px;gap:14px 30px;padding:18px 28px;background:linear-gradient(110deg,#110b0b,#070606 65%,#100909);border:2px solid #c79b4a;border-radius:4px}
-.card-title{grid-column:1/-1;grid-row:1;margin:0;color:#f5cc7b;font-size:32px;line-height:1.1;text-align:left;white-space:nowrap;border:0;padding:0}
-.card .poster{grid-column:1;grid-row:2;height:290px;padding:0;border:1px solid #c79b4a;border-radius:3px;overflow:hidden}
-.card .info{grid-column:2;grid-row:2;padding:6px 0;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
-.card .info .meta{color:#ead5b0;font-size:16px;margin-bottom:16px}
-.card .info p{font-size:17px;line-height:1.45;margin:0 0 14px}
-.card .info a{margin-top:auto;color:#f4cf85}
-.card .info .details-hint{display:none}
-.credits-box{grid-column:3;grid-row:2;align-self:stretch;border:1px solid #c79b4a;border-radius:7px;background:linear-gradient(145deg,#1b1310,#080707);padding:17px 19px;box-shadow:inset 0 0 0 3px #080707,inset 0 0 0 4px #6b4c28}
-.credits-box h3{font-size:18px;color:#f3c86f;margin:0 0 9px}
-.credits-box .credit-names{margin:0 0 18px 30px;font-size:16px;line-height:1.4}
-.credits-box ul{padding-left:24px;margin:0;color:#f1e5d3;font-size:15px;line-height:1.5}
-.credits-box li::marker{color:#f3c86f}
-@media(max-width:950px){.card{grid-template-columns:180px minmax(0,1fr)}.credits-box{grid-column:1/-1;grid-row:3}.card .poster{height:270px}}
-@media(max-width:580px){.card{grid-template-columns:1fr;padding:16px}.card-title{grid-column:1;white-space:normal;font-size:27px}.card .poster{grid-column:1;grid-row:2;width:210px;height:285px;justify-self:center}.card .info{grid-column:1;grid-row:3}.credits-box{grid-column:1;grid-row:4}}
-</style>
+<html lang="fr">
+<meta name="description" content="Découvrez CINEMALAND, la vidéothèque de Michel et Christiane : films cultes, séries incontournables, affiches, synopsis et filmographies.">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Cinemaland — Le pays du cinéma</title>
+<meta content="Cinemaland, le pays du cinéma de Michel et Christiane : films d'autrefois, classiques oubliés et pépites du septième art." name="description"/>
 <style>
-/* Bandeau de théâtre : rideaux rouges, galons et bobines dorées. */
-.curtain{display:none}
-header{isolation:isolate;overflow:hidden;min-height:180px;padding:18px 220px 20px!important;background:radial-gradient(ellipse at center,#27090a 0%,#090304 73%)!important;border-bottom:3px solid #d6a34d!important}
-header h1{position:relative;z-index:3;font-size:clamp(27px,3.5vw,58px);line-height:1.03;margin:0;text-shadow:0 3px 5px #000}
-header p{position:relative;z-index:3;margin:7px 0 0;font-size:clamp(16px,1.7vw,25px);color:#efc76b}
-header::before,header::after{content:''!important;display:block!important;position:absolute;top:-24px;width:220px;height:235px;z-index:2;background:repeating-linear-gradient(95deg,#310006 0px,#920d1a 18px,#d01d2c 28px,#5a0610 43px,#250006 54px);border:3px solid #d2a14b;box-shadow:inset -15px -15px 35px #160002,10px 6px 30px #000;transform:none!important}
-header::before{left:-24px!important;border-radius:0 0 100% 0;clip-path:polygon(0 0,100% 0,85% 30%,60% 58%,28% 78%,0 85%)}
-header::after{right:-24px!important;border-radius:0 0 0 100%;clip-path:polygon(0 0,100% 0,100% 85%,72% 78%,40% 58%,15% 30%)}
-.reel{position:absolute;top:23px;z-index:1;width:82px;height:82px;border:5px double #e2b45b;border-radius:50%;background:radial-gradient(circle,#0c0605 0 9%,#d6a54c 10% 17%,transparent 18%),repeating-conic-gradient(#b98a36 0 25deg,#130909 26deg 58deg,#b98a36 59deg 72deg);box-shadow:0 0 0 2px #100607,0 0 18px #000}
-.reel.left{left:22%}.reel.right{right:22%}
-.card{cursor:default!important}.card .poster{cursor:pointer}.card .poster:focus-visible{outline:3px solid #f5cc7b;outline-offset:3px}.card .info a{position:relative;z-index:5;pointer-events:auto}
-@media(max-width:850px){header{padding:25px 95px!important}.reel{display:none}header::before,header::after{width:100px;height:170px}}
-@media(max-width:520px){header{padding:28px 42px!important}header::before,header::after{width:58px;height:130px}header h1{font-size:24px}}
+:root{color-scheme:dark;--or:#ffdc89}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#130604;color:#fff0cf;font-family:Georgia,serif}body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh}.scene{width:min(100vw,1536px);aspect-ratio:3/2;position:relative;background:url('cinemanland-decor.png') center/100% 100% no-repeat;box-shadow:0 0 80px #000}.zone{position:absolute;display:block;border:2px solid transparent;border-radius:12px;cursor:pointer;transition:box-shadow .18s,background .18s,border-color .18s}.zone:hover,.zone:focus-visible{outline:none;border-color:transparent;box-shadow:none;background:transparent;filter:brightness(1.12)}.films{left:3.1%;top:30.5%;width:23.1%;height:17.5%}.series{left:3.1%;top:50.5%;width:23.1%;height:16.8%}.admin{left:3.1%;top:69.2%;width:23.1%;height:15.7%}.contact{left:78.2%;top:80.2%;width:17.5%;height:7.7%;appearance:none;-webkit-appearance:none;padding:0;background:transparent;color:inherit;font:inherit}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.foot{font:14px Georgia,serif;color:#d8b77e;text-align:center;padding:12px 16px}.foot a{color:#fbe4ac}dialog{max-width:min(92vw,540px);background:linear-gradient(145deg,#3b1513,#170909);border:3px solid #c49a54;border-radius:12px;color:#ffedce;box-shadow:0 20px 100px #000;padding:24px}dialog::backdrop{background:#000b}dialog h2{color:#f8d38d;margin-top:0}dialog p{line-height:1.5}dialog button{background:#eed29b;color:#3c1411;border:0;border-radius:5px;padding:10px 18px;font-weight:bold;cursor:pointer}@media(max-width:700px){body{justify-content:flex-start}.scene{width:100%;min-height:0}.foot{font-size:12px;padding:14px 10px}.zone{border-radius:4px}}
+dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:11px;border:1px solid #c49a54;border-radius:5px;background:#fff3db;color:#29120d;font:16px Georgia,serif}dialog label{display:block;color:#f8d38d}dialog textarea{min-height:125px;resize:vertical}.contact-actions{display:flex;gap:12px;flex-wrap:wrap}.contact-actions button{margin-top:8px}#contactStatus{min-height:1.4em}
 
-/* Rideaux latéraux permanents : visibles pendant tout le défilement. */
-body::before,body::after{content:"";position:fixed;top:0;bottom:0;width:clamp(36px,5.1vw,90px);z-index:8;pointer-events:none;background:repeating-linear-gradient(90deg,#260005 0%,#680711 12%,#c4192a 24%,#e02a38 32%,#7e0715 46%,#2b0007 59%,#9c1020 76%,#3b0008 100%);box-shadow:inset 0 0 22px #170002,0 0 25px #000b;opacity:.98}
-body::before{left:0;border-right:3px solid #c69a51;clip-path:polygon(0 0,100% 0,85% 10%,96% 25%,84% 45%,95% 65%,86% 82%,100% 100%,0 100%)}
-body::after{right:0;border-left:3px solid #c69a51;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,14% 82%,5% 65%,16% 45%,4% 25%,15% 10%)}
-@media(max-width:700px){body::before,body::after{width:20px;opacity:.85}}
-.credits-box a,.film-dialog a{color:#f4cf85;text-decoration:underline;text-underline-offset:3px}.credits-box a:hover,.film-dialog a:hover{color:#fff2cc}
-.card .poster{cursor:default!important}</style><style>
-/* CINEMALAND : décor de salle, sans modification des fiches ni du catalogue. */
-body{background:linear-gradient(#090304b8,#090304e6),url('cinemanland-salle.png') center top/cover fixed no-repeat!important}
-header{background:linear-gradient(#200509d9,#350a10d9)!important;border-bottom:4px double #f3c66b!important}
-header h1{font-size:clamp(36px,6vw,68px)!important;color:#ffe2a0!important;text-shadow:0 3px 12px #000}
-header p{font-size:clamp(19px,2.5vw,27px);color:#f8d18b}
-.wrap{background:#100609d9;border:2px solid #cda052;border-radius:12px;box-shadow:0 12px 45px #000c;padding:20px}
-.card{background:#17090eea!important;border:1px solid #bd9353!important}
-nav{background:#180609ed!important}
-@media(max-width:700px){body{background-attachment:scroll!important}.wrap{padding:10px}}
-</style><style id="cinemanland-ajustements-series">
-/* Décor plus visible et fiches plus compactes. */
-.reel{display:none!important}
-.wrap{max-width:1120px!important;width:calc(100% - 120px)!important;background:#100609bd!important;padding:14px!important}
-.cards{gap:12px!important}
-.card{grid-template-columns:150px minmax(0,1fr) 240px!important;gap:10px 18px!important;padding:12px 16px!important;background:#17090ed9!important}
-.card-title{font-size:25px!important}
-.card .poster{height:215px!important}
-.card .info .meta{font-size:14px!important;margin-bottom:8px!important}
-.card .info p{font-size:15px!important;line-height:1.35!important;margin-bottom:8px!important}
-.credits-box{padding:10px 12px!important}
-.credits-box h3{font-size:16px!important;margin-bottom:6px!important}
-.credits-box .credit-names,.credits-box ul{font-size:13px!important;line-height:1.35!important}
-@media(max-width:950px){.wrap{width:calc(100% - 55px)!important}.card{grid-template-columns:145px minmax(0,1fr)!important}.credits-box{grid-column:1/-1!important;grid-row:3!important}.card .poster{height:210px!important}}
-@media(max-width:580px){.wrap{width:calc(100% - 30px)!important}.card{grid-template-columns:1fr!important}.card .poster{grid-column:1!important;grid-row:2!important;width:170px!important;height:225px!important;justify-self:center}.card .info{grid-column:1!important;grid-row:3!important}.credits-box{grid-column:1!important;grid-row:4!important}}
-</style><style id="cinemaland-navigation-fixe">nav{position:sticky;top:0;z-index:20;box-shadow:0 3px 15px #000b}.film-dialog .close{position:sticky;top:0;z-index:10;float:none;display:block;margin-left:auto;box-shadow:0 3px 10px #000b}</style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>Le pays du cinéma · NOS FILMS</p></header><nav><a class="admin-link" href="index.html">ACCUEIL</a><a class="admin-link" href="series.html">SÉRIES</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher un film…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Michel et Christiane · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>
-// Pour ajouter un titre, dupliquer une ligne dans ce catalogue.
-const catalogue=[
-  {
-    "title": "Peaky Blinders",
-    "kind": "Série",
-    "year": 2013,
-    "period": "2013–2022 · 6 saisons",
-    "genre": "Drame, Crime",
-    "description": "L’ascension de la famille Shelby dans le Birmingham de l’après-Première Guerre mondiale.",
-    "poster": "affiches/peaky-blinders.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Peaky_Blinders_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e)",
-    "summary": "En 1919, à Birmingham, soldats, révolutionnaires politiques et criminels combattent pour se faire une place dans le paysage industriel de l'après-Guerre. Le Parlement s'attend à une violente révolte, et Winston Churchill mobilise des forces spéciales pour contenir les menaces. La famille Shelby compte parmi les membres les plus redoutables. Surnommés les \"Peaky Blinders\" par rapport à leur utilisation de lames de rasoir cachées dans leurs casquettes, ils tirent principalement leur argent de paris et de vol. Tommy Shelby, le plus dangereux de tous, va devoir faire face à l'arrivée de Campbell, un impitoyable chef de la police qui a pour mission de nettoyer la ville. Ne doit-il pas se méfier tout autant de la ravissante Grace Burgess ? Fraîchement installée dans le voisinage, celle-ci semble cacher un mystérieux passé et un dangereux secret.",
-    "directors": [
-      "Steven Knight"
-    ],
-    "cast": [
-      {
-        "name": "Cillian Murphy",
-        "character": "Thomas Shelby"
-      },
-      {
-        "name": "Paul Anderson",
-        "character": "Arthur Shelby"
-      },
-      {
-        "name": "Sophie Rundle",
-        "character": "Ada Shelby"
-      },
-      {
-        "name": "Natasha O'Keeffe",
-        "character": "Lizzie Stark"
-      }
-    ]
-  },
-  {
-    "title": "Spartacus",
-    "kind": "Série",
-    "year": 2010,
-    "period": "2010–2013",
-    "genre": "Drame",
-    "description": "Un gladiateur devient le symbole d’une révolte contre Rome.",
-    "poster": "affiches/spartacus.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Spartacus_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e)",
-    "summary": "C’est dans le sang et le sable des arènes que s’écrit la légende de Spartacus. Puissant guerrier Thrace trahi par un ambitieux légat romain, Spartacus est réduit en esclavage, contraint de devenir gladiateur s’il veut un jour revoir sa femme. Au sein de l’école de gladiateurs du machiavélique Batiatus et de son épouse Lucretia, Spartacus recevra l’enseignement de l’impitoyable Doctore pour devenir le plus redoutable des combattants. Mais entre l’hostilité des autres gladiateurs et les manigances de Lucretia, Spartacus devra tout sacrifier pour pouvoir survivre...",
-    "directors": [
-      "Steven S. DeKnight"
-    ],
-    "cast": [
-      {
-        "name": "Liam McIntyre",
-        "character": "Spartacus"
-      },
-      {
-        "name": "Manu Bennett",
-        "character": "Crixus"
-      },
-      {
-        "name": "Dustin Clare",
-        "character": "Gannicus"
-      },
-      {
-        "name": "Cynthia Addai-Robinson",
-        "character": "Naevia"
-      },
-      {
-        "name": "Jaime Murray",
-        "character": "Gaia"
-      }
-    ]
-  },
-  {
-    "title": "Rome",
-    "kind": "Série",
-    "year": 2005,
-    "period": "2005–2007 · 2 saisons",
-    "genre": "Action & Adventure, Drame",
-    "description": "Une fresque sur la fin de la République romaine et l’ascension de l’Empire.",
-    "poster": "affiches/rome.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Rome_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e)",
-    "summary": "Les destins de deux soldats romains et de leurs familles alors que la République Romaine est en train de s'effondrer en laissant peu à peu la place à un Empire.",
-    "directors": [
-      "John Milius",
-      "Bruno Heller",
-      "William J. MacDonald"
-    ],
-    "cast": [
-      {
-        "name": "Kevin McKidd",
-        "character": "Lucius Vorenus"
-      },
-      {
-        "name": "Ray Stevenson",
-        "character": "Titus Pullo"
-      },
-      {
-        "name": "Ciarán Hinds",
-        "character": "Julius Caesar"
-      },
-      {
-        "name": "James Purefoy",
-        "character": "Mark Antony"
-      },
-      {
-        "name": "Polly Walker",
-        "character": "Atia of the Julii"
-      }
-    ]
-  },
-  {
-    "title": "Gladiator",
-    "kind": "Film",
-    "year": 2000,
-    "period": "2000 · 2 h 35",
-    "genre": "Action, Drame, Aventure",
-    "description": "Un général romain déchu devient gladiateur et cherche à venger sa famille.",
-    "poster": "affiches/gladiator.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Gladiator_(film,_2000)",
-    "summary": "Le général romain Maximus est le plus fidèle soutien de l'empereur Marc Aurèle, qu'il a conduit de victoire en victoire avec une bravoure et un dévouement exemplaires. Jaloux du prestige de Maximus, et plus encore de l'amour que lui voue l'empereur, le fils de Marc Aurèle, Commode, s'arroge brutalement le pouvoir, puis ordonne l'arrestation du général et son exécution. Maximus échappe à ses assassins mais ne peut empêcher le massacre de sa famille. Capturé par un marchand d'esclaves, il devient gladiateur et prépare sa vengeance.",
-    "directors": [
-      "Ridley Scott"
-    ],
-    "cast": [
-      {
-        "name": "Russell Crowe",
-        "character": "Maximus"
-      },
-      {
-        "name": "Joaquin Phoenix",
-        "character": "Commodus"
-      },
-      {
-        "name": "Connie Nielsen",
-        "character": "Lucilla"
-      },
-      {
-        "name": "Oliver Reed",
-        "character": "Proximo"
-      },
-      {
-        "name": "Richard Harris",
-        "character": "Marcus Aurelius"
-      }
-    ]
-  },
-  {
-    "title": "six feet under",
-    "kind": "Série",
-    "year": 2001,
-    "period": "2001",
-    "genre": "Drame",
-    "description": "Description à compléter.",
-    "poster": "affiches/six-feet-under.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=six%20feet%20under",
-    "summary": "À Los Angeles, la famille Fisher est à la tête d'une société indépendante de pompes funèbres « Fisher & Fils », fondée par le père de famille, Nathaniel Samuel Fisher. À la mort accidentelle de ce dernier, ses deux fils, Nathaniel Jr. qui a toujours refusé de gérer cette activité funeste et s'était éloigné de la famille, et David, organisé, très investi mais aussi très introverti, reprennent l'entreprise familiale dont ils viennent d'hériter. Claire, la benjamine de la famille, s'efforce de trouver sa voie et leur mère Ruth qui n'avait été qu'une épouse et une mère, doit assumer son rôle de femme. Ils affrontent au quotidien le décès de leurs client et leurs difficultés de vivre.\n\nCe n'est pas une ode à la mort, mais à la vie.",
-    "directors": [
-      "Alan Ball"
-    ],
-    "cast": [
-      {
-        "name": "Peter Krause",
-        "character": "Nate Fisher"
-      },
-      {
-        "name": "Michael C. Hall",
-        "character": "David Fisher"
-      },
-      {
-        "name": "Frances Conroy",
-        "character": "Ruth Fisher"
-      },
-      {
-        "name": "Lauren Ambrose",
-        "character": "Claire Fisher"
-      },
-      {
-        "name": "Freddy Rodríguez",
-        "character": "Federico Diaz"
-      }
-    ]
-  },
-  {
-    "title": "le parrain",
-    "kind": "Film",
-    "year": 1972,
-    "period": "1972",
-    "genre": "Drame, Crime",
-    "description": "Description à compléter.",
-    "poster": "affiches/le-parrain.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=le%20parrain",
-    "summary": "La Seconde Guerre mondiale vient de s'achever. À New York, le « parrain » Don Corleone, l'un des chefs respectés de la mafia, se sent vieillir. Il refuse de s'adapter à son temps et de se lancer, comme ses pairs, dans le trafic de drogue. Une frilosité qui entrave la bonne marche des affaires des autres « familles » et qui lui vaut d'être la cible d'un attentat. Don Corleone survit à ses blessures, mais reste très diminué. Mike, son plus jeune fils, qui jusque-là se tenait à l'écart des affaires de son père, devient le plus dévoué de ses héritiers. Plus efficace que ses frères, Sonny et Fredo, il venge son père et organise l'élimination de ses adversaires…",
-    "directors": [
-      "Francis Ford Coppola"
-    ],
-    "cast": [
-      {
-        "name": "Marlon Brando",
-        "character": "Don Vito Corleone"
-      },
-      {
-        "name": "Al Pacino",
-        "character": "Michael Corleone"
-      },
-      {
-        "name": "James Caan",
-        "character": "Sonny Corleone"
-      },
-      {
-        "name": "Robert Duvall",
-        "character": "Tom Hagen"
-      },
-      {
-        "name": "Richard S. Castellano",
-        "character": "Clemenza"
-      }
-    ]
-  },
-  {
-    "title": "nocturne",
-    "kind": "Série",
-    "year": 2026,
-    "period": "2026",
-    "genre": "Crime, Mystère",
-    "description": "Description à compléter.",
-    "poster": "affiches/nocturne.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=nocturne",
-    "summary": "Lorsqu’une victime du célèbre tueur en série Jurek Walter refait surface en vie, l’enquêteur Jonah Lynn entame une course contre la montre pour retrouver sa dernière proie encore portée disparue. Sa protégée Saga Bauer travaille sous couverture pour faire parler le tueur.",
-    "directors": [
-      "Rowan Joffé"
-    ],
-    "cast": [
-      {
-        "name": "Liev Schreiber",
-        "character": "Jonah Lynn"
-      },
-      {
-        "name": "Zazie Beetz",
-        "character": "FBI Agent Saga Bauer"
-      },
-      {
-        "name": "Stephen Graham",
-        "character": "Jurek Walter"
-      },
-      {
-        "name": "Bill Camp",
-        "character": "Chief Dave Ellison"
-      },
-      {
-        "name": "Rory Culkin",
-        "character": "Karl Anders"
-      }
-    ]
-  },
-  {
-    "title": "forrest gump",
-    "kind": "Film",
-    "year": 1994,
-    "period": "1994",
-    "genre": "Comédie, Drame, Romance",
-    "description": "Description à compléter.",
-    "poster": "affiches/forrest-gump.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=forrest%20gump",
-    "summary": "À Savannah, État de Géorgie, Forrest Gump, assis sur un banc public, livre à qui veut l’entendre, l’étrange récit de sa vie mouvementée sur trois décennies. Il naît dans un bourg de l’Alabama, affecté d’un quotient intellectuel inférieur à la moyenne et d’une paralysie partielle des jambes. Souvent raillé à l’école, le jeune Forrest se lie d’amitié avec Jenny. Propulsé de l'état d'handicapé physique à celui de vedette du football, de héros du Vietnam au roi de la crevette, des honneurs de la Maison Blanche au bonheur d'une histoire d'amour, Forrest est le symbole d'une époque, un candide dans une Amérique qui a perdu son innocence.",
-    "directors": [
-      "Robert Zemeckis"
-    ],
-    "cast": [
-      {
-        "name": "Tom Hanks",
-        "character": "Forrest Gump"
-      },
-      {
-        "name": "Robin Wright",
-        "character": "Jenny Curran"
-      },
-      {
-        "name": "Gary Sinise",
-        "character": "Lieutenant Dan Taylor"
-      },
-      {
-        "name": "Sally Field",
-        "character": "Mrs. Gump"
-      },
-      {
-        "name": "Mykelti Williamson",
-        "character": "Bubba Blue"
-      }
-    ]
-  },
-  {
-    "title": "l'art du crime",
-    "kind": "Série",
-    "year": 2017,
-    "period": "2017",
-    "genre": "Crime, Drame",
-    "description": "Description à compléter.",
-    "poster": "affiches/l-art-du-crime.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=l'art%20du%20crime",
-    "summary": "Viré de la PJ pour insubordination, Antoine Verlay, excellent flic mais un brin sanguin et ayant du mal à travailler en équipe, est rattaché à l’OCBC (Office Central de lutte contre le trafic des Biens Culturels) grâce à l’entremise du commandant Pardo, son ami qui devient, de ce fait, son nouveau supérieur. Enquêteur malin, mais étranger à tout ce qui touche à la culture, Antoine va devoir travailler avec Florence Chassagne, historienne de l’art réputée, qui vit, parle et respire culture, au point que – fruit de sa grande imagination – il lui arrive, dans le cadre de rêveries, de voir et de parler aux grands artistes disparus comme s’ils lui étaient familiers.",
-    "directors": [
-      "Angèle Herry-Leclerc",
-      "Pierre-Yves Mora"
-    ],
-    "cast": [
-      {
-        "name": "Nicolas Gob",
-        "character": "Antoine Verlay"
-      },
-      {
-        "name": "Éléonore Bernheim",
-        "character": "Florence Chassagne"
-      },
-      {
-        "name": "Philippe Duclos",
-        "character": "Pierre Chassagne"
-      },
-      {
-        "name": "Benjamin Egner",
-        "character": "Commandant Alexandre Pardo"
-      },
-      {
-        "name": "Salomé Partouche",
-        "character": "Adèle Attias"
-      }
-    ]
-  },
-  {
-    "title": "la vallee fracturee",
-    "kind": "Série",
-    "year": 2025,
-    "period": "2025",
-    "genre": "Drame",
-    "description": "Description à compléter.",
-    "poster": "affiches/la-vallee-fracturee.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20vallee%20fracturee",
-    "summary": "Le village de Salvérac, au coeur d’une vallée encaissée, est menacé par un projet de forage de gaz de schiste. À l’origine de l'entreprise : Charles Kaskia, un ingénieur multimilliardaire originaire de la vallée, associé au consortium international SETH, qui finance le projet.\n\nLe village est divisé entre ceux qui soutiennent ce projet, et les autres qui s’y opposent fermement. Ces derniers sont menés par la maire du village, Floriane Bourdieu. Floriane va tout faire pour empêcher ce forage en s’exposant au pire des menaces des industriels, aidée par l’ingénieur Pierre Donjon.",
-    "directors": [
-      "Michel Bussi",
-      "Christian Clères"
-    ],
-    "cast": [
-      {
-        "name": "Anne Charrier",
-        "character": "Floriane Bourdieu"
-      },
-      {
-        "name": "Thierry Godard",
-        "character": "Pierre Donjon"
-      },
-      {
-        "name": "Nicolas Gob",
-        "character": "Rodolphe Durand"
-      },
-      {
-        "name": "Anna Cervinka",
-        "character": "Jana Kaskia"
-      },
-      {
-        "name": "Théo Augier",
-        "character": "Samuel Duval"
-      }
-    ]
-  },
-  {
-    "title": "meurtres a...",
-    "kind": "Film",
-    "year": 2013,
-    "period": "2013",
-    "genre": "À compléter",
-    "description": "Description à compléter.",
-    "poster": "affiches/meurtres-a.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=meurtres%20a..."
-  },
-  {
-    "title": "un village francais",
-    "kind": "Série",
-    "year": 2009,
-    "period": "2009",
-    "genre": "Drame, War & Politics",
-    "description": "Description à compléter.",
-    "poster": "affiches/un-village-francais.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=un%20village%20francais",
-    "summary": "En juin 40, Villeneuve, petite ville du centre de la France, est bouleversée par l'arrivée de l'armée allemande. L'Occupation vient de commencer et va durer cinq ans. Hortense, Jean, Raymond, Marie étaient des Françaises et des Français ordinaires, maris, femmes, notables ou paysans... ils deviendront patriotes, traîtres, collaborateurs ou résistants. Après s'être effondrée, la France se reconstruit jour après jour, mais à l'heure allemande. Avec cette période incertaine et dangereuse de notre histoire s'ouvre une ère nouvelle : aux règles imposées par l'occupant répondent celles de la désobéissance civile ou de la clandestinité. On y a peur, on y a faim, on s'y déchire au nom des valeurs et d'une certaine idée de la France... ou parfois simplement par amour.",
-    "directors": [
-      "Frédéric Krivine",
-      "Philippe Triboit",
-      "Emmanuel Daucé"
-    ],
-    "cast": [
-      {
-        "name": "Robin Renucci",
-        "character": "Daniel Larcher"
-      },
-      {
-        "name": "Audrey Fleurot",
-        "character": "Hortense Larcher"
-      },
-      {
-        "name": "Nicolas Gob",
-        "character": "Jean Marchetti"
-      },
-      {
-        "name": "Thierry Godard",
-        "character": "Raymond Schwartz"
-      },
-      {
-        "name": "Nade Dieu",
-        "character": "Marie Germain"
-      }
-    ]
-  },
-  {
-    "title": "La Nirvana",
-    "kind": "Film",
-    "year": 2026,
-    "period": "2026",
-    "genre": "À compléter",
-    "description": "Description à compléter.",
-    "poster": "affiches/la-nirvana.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20nirvanz"
-  }
-];let previousFilm=null;
-function personName(p){return typeof p==='string'?p:(p?.name||'');}
-function filmographyLink(name){const a=document.createElement('a');a.textContent=name;a.href='#filmographie-'+encodeURIComponent(name);a.title='Voir les films de '+name+' dans notre vidéothèque';a.addEventListener('click',e=>{e.preventDefault();showPerson(name)});return a;}
-document.getElementById('close-person').addEventListener('click',()=>document.getElementById('person-dialog').close());
-async function showPerson(name){
- const film=document.getElementById('film-dialog');if(film.open)film.close();
- const dlg=document.getElementById('person-dialog'),list=document.getElementById('person-films');
- document.getElementById('person-title').textContent=name;
- document.getElementById('person-count').textContent='Chargement de la filmographie complète…';
- document.querySelector('.person-note').textContent='Données TMDB — les œuvres ne sont pas nécessairement dans notre collection.';
- list.replaceChildren();dlg.showModal();
- try{
-  const response=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?name='+encodeURIComponent(name));
-  if(!response.ok)throw new Error('Service non activé');
-  const data=await response.json();
-  if(!Array.isArray(data.credits))throw new Error('Réponse invalide');
-  if(!dlg.open)return;
-  document.getElementById('person-count').textContent=data.credits.length+' films et séries';
-  for(const x of data.credits){
-   const row=document.createElement('div');row.className='person-film';row.style.cursor='default';row.dataset.tmdbId=x.id||'';row.dataset.mediaType=x.media_type==='tv'?'tv':'movie';row.dataset.credit=encodeURIComponent(JSON.stringify(x));
-   if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;img.loading='lazy';row.append(img)}
-   const info=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small');
-   title.textContent=x.title;meta.textContent=(x.date||'').slice(0,4)+' · '+(x.media_type==='tv'?'Série':'Film')+(x.job?' · '+x.job:'');
-   info.append(title,meta);row.append(info);list.append(row);
-  }
- }catch(error){document.getElementById('person-count').textContent='Activation du service de filmographie nécessaire sur notre Worker.'}
-}
-function appendNames(node,names){node.replaceChildren();if(!names||!names.length){node.textContent='À compléter';return;}names.forEach((person,i)=>{if(i)node.append(document.createTextNode(', '));node.append(filmographyLink(typeof person==='string'?person:person.name));});}
-function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre;document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[]);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(typeof a==='string'?a:a.name));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal()}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
-let kind='Film';const cards=document.getElementById('cards');function render(){const q=document.getElementById('search').value.toLocaleLowerCase('fr');const g=document.getElementById('genre').value;const s=document.getElementById('sort').value;const list=catalogue.filter(x=>(kind==='Tous'||x.kind===kind)&&(!g||x.genre.includes(g))&&(x.title+' '+x.genre+' '+x.description).toLocaleLowerCase('fr').includes(q)).sort((a,b)=>s==='year'?a.year-b.year:a.title.localeCompare(b.title,'fr'));cards.replaceChildren();for(const x of list){const article=document.createElement('article');article.className='card';const title=document.createElement('h2');title.className='card-title';title.textContent=x.title;const poster=document.createElement('div');poster.className='poster';const posterTitle=document.createElement('span');posterTitle.textContent=x.title.toUpperCase();const img=document.createElement('img');img.src=x.poster;img.alt='Affiche de '+x.title;img.loading='lazy';img.style.cssText='width:100%;height:100%;object-fit:contain;position:absolute;inset:0';img.onerror=()=>{img.remove();poster.append(posterTitle)};poster.append(img);const info=document.createElement('div');info.className='info';const meta=document.createElement('div');meta.className='meta';meta.textContent=x.period+' · '+x.genre;const p=document.createElement('p');p.textContent=x.summary || x.description;const a=document.createElement('a');a.href=x.wiki;a.target='_blank';a.rel='noopener noreferrer';a.textContent='🌐 Voir sur Wikipédia ↗';const hint=document.createElement('div');hint.className='details-hint';hint.textContent='🎬 Cliquer pour voir les acteurs et la réalisation';info.append(meta,p,a,hint);
-const credits=document.createElement('aside');credits.className='credits-box';
-const heading=document.createElement('h3');heading.textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';
-const names=document.createElement('p');names.className='credit-names';appendNames(names,x.directors||[]);
-const actorsTitle=document.createElement('h3');actorsTitle.textContent='⭐ Acteurs principaux';
-const actors=document.createElement('ul');
-for(const person of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(typeof person==='string'?person:person.name));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
-if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
-credits.append(heading,names,actorsTitle,actors);
-article.append(title,poster,info,credits);cards.append(article)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
-</script><script>
-/* Fiche de film depuis les affiches des filmographies TMDB. */
-(function () {
-  const liste = document.getElementById('person-films');
-  const normaliser = texte => (texte || '').normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '').trim().toLocaleLowerCase('fr');
+/* Compteurs dynamiques : les valeurs sont calculées à partir de films.html et series.html. */
+.compteurs{position:absolute;left:49.9%;top:75.5%;width:18.3%;height:4.8%;display:grid;grid-template-columns:repeat(3,1fr);gap:8%;pointer-events:none}
+.compteur{display:flex;align-items:center;justify-content:center;color:#ffe4a1;background:#200b06;font:clamp(8px,1.5vw,23px) Georgia,serif;letter-spacing:.04em;text-shadow:0 0 6px #d68b2d;border-radius:3px}
 
-  function ouvrirFiche(film, posterClique) {
-    const onglet = window.open('', '_blank');
-    if (!onglet) {
-      alert('Veuillez autoriser les fenêtres surgissantes pour ouvrir la fiche.');
-      return;
-    }
-    const doc = onglet.document;
-    doc.title = film.title + ' — La Vidéothèque de Michel et Christiane';
-    doc.documentElement.lang = 'fr';
-    const viewport = doc.createElement('meta');
-    viewport.name = 'viewport'; viewport.content = 'width=device-width,initial-scale=1';
-    doc.head.append(viewport);
-    const css = doc.createElement('style');
-    css.textContent = `
-      *{box-sizing:border-box}
-      body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#53151c,#14090c 52%,#07080b);color:#f6e8cf;font:18px Georgia,serif}
-      body::before,body::after{content:"";position:fixed;top:0;bottom:0;width:clamp(12px,4vw,65px);pointer-events:none;background:repeating-linear-gradient(90deg,#330006,#a5202d 35%,#560914 65%,#250006);z-index:5}
-      body::before{left:0;border-right:3px solid #c69a51}body::after{right:0;border-left:3px solid #c69a51}
-      header{text-align:center;padding:30px 16px;border-bottom:5px ridge #b9893e;background:#25090e}
-      header h1{color:#f5cc7b;font-size:clamp(27px,5vw,46px);margin:0}
-      header p{color:#d9b775;font-style:italic;margin:9px 0 0}
-      main{max-width:1000px;margin:30px auto;padding:28px;border:3px double #e8b85b;background:#110b0f;position:relative}
-      .layout{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:26px;align-items:start}
-      .affiche{width:100%;height:auto;max-height:420px;object-fit:contain;border:2px solid #e8b85b;background:#080808}
-      h2{color:#f5cc7b;font-size:24px;margin:20px 0 7px}p{line-height:1.65;white-space:pre-line}
-      .badge{display:inline-block;padding:10px 14px;border:1px solid #9dd89d;color:#b3edb3;margin:10px 0}
-      .actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:28px}
-      .actions button,.actions a{background:#7e101a;color:#fff;border:2px solid #e8b85b;padding:13px 19px;cursor:pointer;font:17px Georgia,serif;text-decoration:none}
-      .actions a{background:#302015;color:#f5cc7b}
-      @media(max-width:650px){main{margin:14px 23px;padding:18px}.layout{grid-template-columns:1fr}.affiche{max-width:230px;margin:auto}}
-    `;
-    doc.head.append(css);
-    const entete = doc.createElement('header');
-    const h1 = doc.createElement('h1'); h1.textContent = film.title;
-    const sousTitre = doc.createElement('p'); sousTitre.textContent = '🎬 La Vidéothèque de Michel et Christiane';
-    entete.append(h1,sousTitre);
-    const main = doc.createElement('main');
-    const layout = doc.createElement('div'); layout.className = 'layout';
-    const img = doc.createElement('img'); img.className='affiche'; img.alt='Affiche de '+film.title;
-    const afficheLocale = new URL(film.poster, location.href).href;
-    const afficheTMDB = posterClique ? posterClique.replace('/w154/','/w500/') : '';
-    img.src = afficheTMDB || afficheLocale;
-    img.onerror = () => {
-      if (img.src !== afficheLocale) { img.onerror = null; img.src = afficheLocale; }
-      else { img.onerror = null; img.style.display = 'none'; }
-    };
-    const contenu = doc.createElement('div');
-    const badge = doc.createElement('p'); badge.className='badge';
-    badge.textContent = '✓ Ce titre est dans notre collection'; contenu.append(badge);
-    function section(titre, valeur) {
-      if (!valeur) return;
-      const h = doc.createElement('h2');h.textContent=titre;
-      const p = doc.createElement('p');p.textContent=valeur;
-      contenu.append(h,p);
-    }
-    section('Année et genres', (film.period || film.year || '') + ' · ' + (film.genre || ''));
-    section('Synopsis', film.summary || film.description);
-    section(film.kind === 'Série' ? 'Création' : 'Réalisation', (film.directors || []).map(personName).join(', '));
-    section('Acteurs principaux', (film.cast || []).map(a => personName(a) + (a.character ? ' — ' + a.character : '')).join('\n'));
-    layout.append(img,contenu); main.append(layout);
-    const actions=doc.createElement('div');actions.className='actions';
-    const fermer=doc.createElement('button');fermer.type='button';fermer.textContent='Fermer la fiche';
-    fermer.onclick=()=>onglet.close();
-    const retour=doc.createElement('a');retour.textContent='🎬 Retour à la vidéothèque';retour.href=location.href;
-    actions.append(fermer,retour);main.append(actions);
-    doc.body.append(entete,main);
-  }
+/* Enseignes présentes dans le PNG : zones cliquables entièrement transparentes. */
+.films{left:3.1%;top:30.5%;width:23.1%;height:17.5%}
+.series{left:3.1%;top:49%;width:23.1%;height:17.5%}
+.person-buttons{display:contents}
+.person-buttons button{position:absolute;left:3.1%;width:23.1%;height:15%;border:0;padding:0;background:transparent;color:transparent;font-size:0;cursor:pointer;z-index:3;box-shadow:none;appearance:none}
+.person-buttons button:first-child{top:66%}
+.person-buttons button:last-child{top:81%}
+.person-buttons button:hover{background:transparent;box-shadow:none;filter:brightness(1.08)}
+.person-buttons button:focus-visible{outline:2px solid #ffe5a9;outline-offset:-5px}
+/* Le texte Administration est déjà dessiné sur le décor. */
+.admin-small{position:absolute;left:78.2%;top:87.3%;width:17.5%;height:3.5%;z-index:3;color:transparent;font-size:0;text-decoration:none}
+.admin-small:focus-visible{outline:2px solid #ffe5a9}
+.bio-photo{display:block;max-width:190px;max-height:260px;object-fit:contain;border:1px solid #c49a54;border-radius:5px;cursor:pointer;margin:10px auto}
+.bio-photo:hover{outline:2px solid #f8d38d}.bio-results button{display:block;width:100%;text-align:left;margin:8px 0;background:#301419;color:#ffedce;border:1px solid #c49a54}
+.bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
+.bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
 
-  // Fiche intégrée pour toutes les œuvres de la filmographie, y compris hors collection.
-  function ficheTMDB(ligne, image) {
-    const credit=JSON.parse(decodeURIComponent(ligne.dataset.credit||'%7B%7D'));
-    const titre=credit.title||ligne.querySelector('strong')?.textContent||'Film';
-    const id=ligne.dataset.tmdbId;
-    const type=ligne.dataset.mediaType==='tv'?'tv':'movie';
-    const lien=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR':'https://www.themoviedb.org/search?query='+encodeURIComponent(titre);
-    const d=document.createElement('dialog');d.className='film-dialog';
-    d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:#160d11;color:#f6e8cf;border:3px double #e8b85b;border-radius:10px;padding:24px';
-    const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
-    const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
-    const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
-    const poster=document.createElement('img');poster.src=image.src.replace('/w154','/w500');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';
-    const info=document.createElement('div');info.style.cssText='flex:1;min-width:220px;line-height:1.6';
-    const meta=document.createElement('p');meta.textContent=(credit.date||'').slice(0,4)+' · '+(type==='tv'?'Série':'Film')+(credit.job?' · '+credit.job:'');
-    const label=document.createElement('h3');label.textContent='Synopsis';label.style.color='#f5cc7b';
-    const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué dans la filmographie.';
-    const source=document.createElement('a');source.href=lien;source.target='_blank';source.rel='noopener noreferrer';source.textContent='🎬 Consulter la fiche complète sur TMDB ↗';source.style.color='#f5cc7b';
-    // Bouton d'ajout : transmet les données exactes de la fiche TMDB à l'administration.
-    const annee=(credit.date||'').slice(0,4);
-    const ajouter=document.createElement('a');
-    ajouter.textContent='➕ Ajouter à ma vidéothèque';
-    ajouter.style.cssText='display:inline-block;margin-top:18px;padding:12px 16px;background:#7e101a;color:#ffe2a0;border:2px solid #e8b85b;border-radius:6px;text-decoration:none;font-weight:bold';
-    const params=new URLSearchParams({title:titre,year:annee,kind:type==='tv'?'Série':'Film'});
-    ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
-    ajouter.target='_blank';ajouter.rel='noopener noreferrer';
-    if(!/^\d{4}$/.test(annee)){ajouter.style.display='none';}
-    // Vérification du catalogue local avant toute proposition d'ajout.
-    const normaliser=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
-    const present=catalogue.find(x=>normaliser(x.title)===normaliser(titre)
-      && String(x.year)===annee && (x.kind==='Série'?'tv':'movie')===type);
-    if(present){
-      ajouter.textContent='Déjà dans ma vidéothèque';
-      ajouter.removeAttribute('href');ajouter.removeAttribute('target');
-      ajouter.setAttribute('aria-disabled','true');
-      ajouter.style.cssText='display:inline-block;margin-top:18px;padding:12px 16px;background:#555;color:#ddd;border:2px solid #999;border-radius:6px;text-decoration:none;font-weight:bold;cursor:not-allowed;pointer-events:none';
-      poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';
-      poster.tabIndex=0;poster.setAttribute('role','button');
-      const ouvrirCatalogue=()=>{window.location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(annee)};
-      poster.addEventListener('click',ouvrirCatalogue);
-      poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ouvrirCatalogue()}});
-    }
+.bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:block;width:max-content;max-width:100%;margin-top:18px;padding:12px 16px;background:#7e101a;border:2px solid #e8b85b;border-radius:6px;text-decoration:none;font-weight:bold}
+</style>
+</head>
+<body>
+<main aria-label="Cinemaland : entrée du cinéma" class="scene">
+<h1 class="visually-hidden">Cinemaland — Le pays du cinéma</h1>
+<a aria-label="Consulter les films" class="zone films" href="films.html" title="Voir notre collection de films"><span class="visually-hidden">Films</span></a>
+<a aria-label="Consulter les séries" class="zone series" href="series.html" title="Voir notre collection de séries"><span class="visually-hidden">Séries</span></a>
 
-    info.append(meta,label,overview,source,ajouter);grid.append(poster,info);d.append(close,h,grid);
-    document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
-    // Complète la fiche si le Worker propose déjà une route de détails.
-    if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id))
-      .then(r=>{if(!r.ok)throw Error('non disponible');return r.json()})
-      .then(data=>{const detail=data.details||data;const synopsis=detail.overview||detail.summary||detail.description;if(synopsis)overview.textContent=synopsis;
-        const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';
-        if(genres){const p=document.createElement('p');p.textContent='Genres : '+genres;info.insertBefore(p,label)}
-      }).catch(()=>{});
-  }
-  liste.addEventListener('click', function (evenement) {
-    const img=evenement.target.closest('.person-film img');
-    if(!img||!liste.contains(img))return;
-    evenement.preventDefault();evenement.stopPropagation();
-    const ligne=img.closest('.person-film');
-    // Priorité aux données TMDB de l'œuvre exacte : pas de confusion entre homonymes.
-    ficheTMDB(ligne,img);
-  },true);
-  const style=document.createElement('style');
-  style.textContent='#person-films .person-film img{cursor:pointer;transition:transform .2s}#person-films .person-film img:hover{transform:scale(1.06);outline:2px solid #f5cc7b}';
-  document.head.append(style);
-})();
+<button aria-label="Malandain : nous écrire" class="zone contact" onclick="document.getElementById('contactDialog').showModal()" title="Nous écrire" type="button"><span class="visually-hidden">Malandain — Nous écrire</span></button>
+<div class="person-buttons"><button type="button" onclick="openBioSearch('Acteur')">ACTEURS</button><button type="button" onclick="openBioSearch('Réalisateur')">RÉALISATEURS</button></div>
+<a class="admin-small" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
+<div class="compteurs" aria-label="Statistiques du catalogue"><output class="compteur" id="totalTitres" title="Titres">····</output><output class="compteur" id="totalRealisateurs" title="Réalisateurs">····</output><output class="compteur" id="totalActeurs" title="Acteurs">····</output></div>
+</main>
+<footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
+<dialog aria-labelledby="contactTitle" id="contactDialog">
+<h2 id="contactTitle">MALANDAIN — Nous écrire</h2>
+<p>Un mot pour Michel et Christiane ? Écrivez-nous ici.</p>
+<form id="contactForm" action="https://formsubmit.co/michelmalandain@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="CINEMALAND — Nouveau message">
+<input type="hidden" name="_captcha" value="true">
+<input type="hidden" name="_template" value="table">
+<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<label for="visitorName">Votre nom</label><input id="visitorName" name="name" maxlength="100" required autocomplete="name">
+<label for="visitorEmail">Votre adresse e-mail</label><input id="visitorEmail" name="email" type="email" maxlength="200" required autocomplete="email">
+<label for="visitorMessage">Votre message</label><textarea id="visitorMessage" name="message" maxlength="5000" required></textarea>
+<p id="contactStatus" role="status" aria-live="polite">Après l’envoi, une confirmation peut être demandée. Lors du premier message, Michel devra activer la réception depuis son e-mail.</p>
+<div class="contact-actions"><button type="submit">Envoyer</button><button type="button" onclick="document.getElementById('contactDialog').close()">Fermer</button></div>
+</form>
+</dialog>
+
+<dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
+<dialog id="bioCard" aria-labelledby="bioCardTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioCard').close()">Retour à la recherche</button><h2 id="bioCardTitle"></h2><div id="bioCardBody"></div></dialog>
+<dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
 <script>
-// Ouvre la fiche d'une œuvre présente dans notre catalogue après navigation.
-(function(){
- const params=new URLSearchParams(location.search),titre=params.get('fiche'),annee=params.get('annee');
- if(!titre)return;
- const norm=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
- const x=catalogue.find(f=>norm(f.title)===norm(titre)&&(!annee||String(f.year)===annee));
- if(!x)return;
- const search=document.getElementById('search');search.value=x.title;search.dispatchEvent(new Event('input'));
- setTimeout(()=>{if(typeof openFilm==='function')openFilm(x)},100);
+let bioRole='Acteur', bioPerson='';
+const el=id=>document.getElementById(id);
+function openBioSearch(role){bioRole=role;el('bioTitle').textContent='Rechercher un '+role.toLowerCase();el('bioResults').replaceChildren();el('bioStatus').textContent='';el('bioDialog').showModal();}
+async function wikiAPI(params){const u=new URL('https://fr.wikipedia.org/w/api.php');Object.entries({origin:'*',format:'json',...params}).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u);if(!r.ok)throw Error('Wikipédia indisponible');return r.json();}
+const para=(label,value)=>{const p=document.createElement('p');p.textContent=label+' : '+(value||'Non renseigné');return p;};
+function formatDate(v){if(!v)return 'Non renseignée';const m=v.match(/^[+-]?(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:v;}
+async function showBio(page){bioPerson=page.title;el('bioDialog').close();el('bioCardTitle').textContent=page.title;const body=el('bioCardBody');body.replaceChildren(para('Chargement','en cours'));el('bioCard').showModal();try{
+const result=await wikiAPI({action:'query',prop:'pageprops|pageimages|info',inprop:'url',piprop:'thumbnail',pithumbsize:'400',pageids:page.pageid});const data=Object.values(result.query.pages)[0];const qid=data.pageprops?.wikibase_item;let claims={},labels={};
+if(qid){const url='https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+encodeURIComponent(qid)+'&props=claims&format=json&origin=*';const r=await fetch(url);if(r.ok){claims=(await r.json()).entities[qid]?.claims||{};const ids=(claims.P27||[]).map(x=>x.mainsnak?.datavalue?.value?.id).filter(Boolean);if(ids.length){const lr=await fetch('https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+ids.join('|')+'&props=labels&languages=fr&format=json&origin=*');if(lr.ok){const j=await lr.json();ids.forEach(id=>labels[id]=j.entities?.[id]?.labels?.fr?.value||id);}}}}
+const val=key=>claims[key]?.[0]?.mainsnak?.datavalue?.value;
+body.replaceChildren();if(data.thumbnail?.source){const img=document.createElement('img');img.className='bio-photo';img.src=data.thumbnail.source;img.alt='Portrait de '+page.title;img.title='Voir la filmographie';img.tabIndex=0;img.onclick=()=>showBioFilms(page.title);img.onkeydown=e=>{if(e.key==='Enter')showBioFilms(page.title)};body.append(img);}else body.append(para('Photographie','Non disponible'));
+body.append(para('Nom et prénom',page.title),para('Date de naissance',formatDate(val('P569')?.time)),para('Date de décès',formatDate(val('P570')?.time)),para('Nationalité',(claims.P27||[]).map(x=>labels[x.mainsnak?.datavalue?.value?.id]).filter(Boolean).join(', ')||'Non renseignée'));
+const a=document.createElement('a');a.href=data.fullurl||'https://fr.wikipedia.org/wiki/'+encodeURIComponent(page.title.replaceAll(' ','_'));a.target='_blank';a.rel='noopener';a.textContent='Lire la biographie sur Wikipédia';body.append(a);
+if(data.thumbnail?.source){const hint=document.createElement('p');hint.textContent='Cliquez sur la photographie pour voir la filmographie.';body.append(hint);}
+}catch(e){body.replaceChildren(para('Erreur',e.message));}}
+const cataloguePromise=Promise.all(['films.html','series.html'].map(async file=>{
+ const response=await fetch(file+'?catalogue='+Date.now(),{cache:'no-store'});
+ if(!response.ok)throw Error('Catalogue indisponible : '+file);
+ const html=await response.text();
+ const marker=/\b(?:const|let|var)\s+catalogue\s*=\s*\[/i.exec(html);
+ if(!marker)throw Error('Catalogue introuvable : '+file);
+ const begin=marker.index+marker[0].lastIndexOf('[');let depth=0,quote='',escaped=false;
+ for(let i=begin;i<html.length;i++){const c=html[i];if(quote){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c===quote)quote='';continue;}if(c==='"'||c==="'"){quote=c;continue;}if(c==='[')depth++;else if(c===']'&&!--depth)return JSON.parse(html.slice(begin,i+1));}
+ throw Error('Catalogue illisible : '+file);
+})).then(parts=>parts.flat());
+function cleTitre(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/^(le|la|les|the|l) /,'');}
+function trouverDansCatalogue(items,credit){
+ const kind=credit.media_type==='tv'?'Série':'Film';const year=String(credit.date||'').slice(0,4);
+ const title=cleTitre(credit.title||credit.name);
+ const candidats=items.filter(x=>x.kind===kind&&cleTitre(x.title)===title);
+ return candidats.find(x=>String(x.year)===year)|| (candidats.length===1?candidats[0]:null);
+}
+function openBioFilmDetail(credit){
+ const title=credit.title||credit.name||'Sans titre',type=credit.media_type==='tv'?'tv':'movie';
+ const id=/^\d+$/.test(String(credit.id||''))?String(credit.id):null,year=String(credit.date||'').slice(0,4);
+ const d=document.createElement('dialog');d.className='bio-film-detail';
+ const close=document.createElement('button');close.type='button';close.textContent='Retour à la filmographie';close.onclick=()=>d.close();
+ const h=document.createElement('h2');h.textContent=title;
+ const grid=document.createElement('div');grid.className='bio-film-layout';
+ let poster=null;
+ if(credit.poster_path){poster=document.createElement('img');poster.src='https://image.tmdb.org/t/p/w500'+credit.poster_path;poster.alt='Affiche de '+title;grid.append(poster);}
+ const info=document.createElement('div');info.append(para('Type',type==='tv'?'Série':'Film'),para('Année',year||'Non renseignée'));
+ const h3=document.createElement('h3');h3.textContent='Synopsis';info.append(h3);
+ const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué.';info.append(overview);
+ const add=document.createElement('a');add.className='bio-add';add.textContent='Vérification de la vidéothèque…';add.style.pointerEvents='none';add.style.opacity='.65';info.append(add);
+ grid.append(info);d.append(close,h,grid);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
+ cataloguePromise.then(items=>{
+  if(!d.isConnected)return;
+  const present=trouverDansCatalogue(items,credit);
+  if(present){
+   add.textContent='Déjà dans ma vidéothèque';add.removeAttribute('href');add.style.cssText='pointer-events:none;background:#555;color:#ddd;border-color:#888;cursor:not-allowed;';add.setAttribute('aria-disabled','true');
+   if(poster){poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';poster.tabIndex=0;poster.setAttribute('role','link');const go=()=>location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(present.year||'');poster.onclick=go;poster.onkeydown=e=>{if(e.key==='Enter')go();};}
+   const hint=document.createElement('p');hint.textContent='Cliquez sur l’affiche pour consulter la fiche dans notre vidéothèque.';info.append(hint);
+  }else if(/^\d{4}$/.test(year)){
+   add.textContent='Ajouter à ma vidéothèque';add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'});add.target='_blank';add.rel='noopener noreferrer';add.style.pointerEvents='auto';add.style.opacity='1';
+  }else{add.textContent='Année manquante — ajout indisponible';}
+ }).catch(err=>{add.textContent='Vérification du catalogue impossible';add.title=err.message;});
+ if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id)).then(r=>{if(!r.ok)throw Error('Détails indisponibles');return r.json()}).then(data=>{if(!d.isConnected)return;const detail=data.details||data;overview.textContent=detail.overview||detail.summary||detail.description||overview.textContent;const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';if(genres)info.insertBefore(para('Genres',genres),h3);}).catch(()=>{});
+}
+
+async function showBioFilms(name){el('bioFilmsTitle').textContent='Filmographie de '+name;el('bioFilmsStatus').textContent='Chargement…';el('bioFilmsList').replaceChildren();el('bioFilms').showModal();try{const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?name='+encodeURIComponent(name));if(!r.ok)throw Error('Service de filmographie indisponible');const d=await r.json();if(!Array.isArray(d.credits))throw Error('Réponse du service incorrecte');el('bioFilmsStatus').textContent=d.credits.length+' films et séries';for(const x of d.credits){const row=document.createElement('button');row.type='button';row.className='bio-credit';row.title='Ouvrir la fiche de '+(x.title||'ce titre');row.onclick=()=>openBioFilmDetail(x);if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;row.append(img)}const label=document.createElement('span');label.textContent=(x.title||'Sans titre')+' ('+(x.date||'').slice(0,4)+')';row.append(label);el('bioFilmsList').append(row)}}catch(e){el('bioFilmsStatus').textContent=e.message;}}
+el('bioForm').addEventListener('submit',async e=>{e.preventDefault();const name=(el('bioFirst').value+' '+el('bioLast').value).trim();el('bioStatus').textContent='Recherche en cours…';el('bioResults').replaceChildren();try{const d=await wikiAPI({action:'query',generator:'search',gsrsearch:name,gsrlimit:'10',prop:'pageprops'});let pages=Object.values(d.query?.pages||{}).sort((a,b)=>a.index-b.index);
+const ids=[...new Set(pages.map(p=>p.pageprops?.wikibase_item).filter(Boolean))];
+if(ids.length){const u='https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+encodeURIComponent(ids.join('|'))+'&props=claims&format=json&origin=*';const response=await fetch(u);if(response.ok){const entities=(await response.json()).entities||{};pages=pages.filter(p=>{const entity=entities[p.pageprops?.wikibase_item];return (entity?.claims?.P31||[]).some(c=>c.mainsnak?.datavalue?.value?.id==='Q5')});}}
+el('bioStatus').textContent=pages.length?'Sélectionnez la bonne personne :':'Aucune personnalité trouvée.';pages.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.title;b.onclick=()=>showBio(p);el('bioResults').append(b)})}catch(err){el('bioStatus').textContent=err.message}});
+(async function(){
+ const ids=['totalTitres','totalRealisateurs','totalActeurs'];
+ const show=(a)=>a.forEach((n,i)=>document.getElementById(ids[i]).textContent=String(n).padStart(4,'0'));
+ function extractArray(source){
+   const m=/\b(?:const|let|var)\s+catalogue\s*=\s*\[/i.exec(source);
+   if(!m)return null;
+   const start=m.index+m[0].lastIndexOf('[');let depth=0,quote='',escaped=false;
+   for(let i=start;i<source.length;i++){
+     const c=source[i];
+     if(quote){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c===quote)quote='';continue;}
+     if(c==='"'||c==="'"){quote=c;continue;}
+     if(c==='[')depth++;else if(c===']'&&!--depth)return source.slice(start,i+1);
+   }
+   return null;
+ }
+ try{
+   const sources=await Promise.all(['films.html','series.html'].map(async file=>{
+     const r=await fetch(file+'?stats='+Date.now(),{cache:'no-store'});
+     if(!r.ok)throw new Error(file+': '+r.status);
+     const array=extractArray(await r.text());
+     if(!array)throw new Error('Catalogue absent : '+file);
+     return JSON.parse(array);
+   }));
+   const unique=new Map();
+   for(const item of sources.flat()){
+     if(!item||!item.title)continue;
+     const key=[item.kind||'',item.title,item.year||''].map(s=>String(s).trim().toLocaleLowerCase('fr')).join('|');
+     unique.set(key,item);
+   }
+   const directors=new Set(),actors=new Set();
+   const add=(set,value)=>{if(typeof value==='string'&&value.trim())set.add(value.trim().toLocaleLowerCase('fr'));};
+   for(const item of unique.values()){
+     for(const d of (Array.isArray(item.directors)?item.directors:[]))add(directors,typeof d==='string'?d:d?.name);
+     for(const a of (Array.isArray(item.cast)?item.cast:[]))add(actors,typeof a==='string'?a:a?.name);
+   }
+   show([unique.size,directors.size,actors.size]);
+ }catch(error){console.error('Compteurs CINEMALAND :',error);ids.forEach(id=>document.getElementById(id).textContent='----');}
 })();
-</script></body></html>
+</script>
+</body>
+</html>
