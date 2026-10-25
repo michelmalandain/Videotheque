@@ -466,5 +466,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Bernard (1991)"
       }
     ]
+  },
+  {
+    "title": "les insoumis",
+    "kind": "Film",
+    "year": 2008,
+    "period": "2008",
+    "genre": "Thriller, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-insoumis.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20insoumis",
+    "summary": "Drieu est un policier en fin de parcours usé, brisé, grillé. Ce mystérieux Capitaine de la B.R.B. se retrouve muté dans un improbable commissariat de province promis à une démolition dans les six mois, au cœur d'une ville industrielle perdue au bout de l'Étang de Berre, entre pollution et canicule. Ici, le Commissaire Vasseur et son équipe Jean-Ba / Wazeme / Katiha, sont démobilisés. Plus personne n'y croit. Laxisme et désillusion sont de règle, ce qui arrange les \"affaires\" de la pègre locale rendue insaisissable et toute puissante. Entre l'envie d'en finir avec lui-même et celle de se battre pour sa propre survie, Drieu choisit de s'accrocher comme à une bouée à la Main Courante du Commissariat, cet épais recueil des PV et des interventions de la police urbaine. Délits minables et dépôts sans espoir de plaignants, la Main Courante est un échantillon de la misère humaine et du mal de vivre d'un monde à la dérive. Tout y paraît insignifiant... Et pourtant...",
+    "directors": [
+      "Claude-Michel Rome"
+    ],
+    "cast": [
+      {
+        "name": "Richard Berry",
+        "character": "Drieu"
+      },
+      {
+        "name": "Aïssa Maïga",
+        "character": "Kathia"
+      },
+      {
+        "name": "Zabou Breitman",
+        "character": "Commissaire Vasseur"
+      },
+      {
+        "name": "Pascal Elbé",
+        "character": "Jean-Ba"
+      },
+      {
+        "name": "Bernard Blancan",
+        "character": "Pierre Wazemme"
+      }
+    ]
   }
 ];
