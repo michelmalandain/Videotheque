@@ -601,5 +601,40 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Prince Majeb Bin Faheem"
       }
     ]
+  },
+  {
+    "title": "Malice",
+    "kind": "Film",
+    "year": 2025,
+    "period": "2025",
+    "genre": "Horreur, Mystère",
+    "description": "Description à compléter.",
+    "poster": "affiches/malice.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Malice",
+    "directors": [
+      "Michael Crum"
+    ],
+    "cast": [
+      {
+        "name": "Donny Boaz",
+        "character": ""
+      },
+      {
+        "name": "Mark Anthony Baca",
+        "character": ""
+      },
+      {
+        "name": "Joshua Winch",
+        "character": ""
+      },
+      {
+        "name": "Shanon Snedden",
+        "character": ""
+      },
+      {
+        "name": "Jimmie Sanders",
+        "character": ""
+      }
+    ]
   }
 ];
