@@ -502,5 +502,32 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pierre Wazemme"
       }
     ]
+  },
+  {
+    "title": "la sentinelle",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-sentinelle.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20sentinelle",
+    "directors": [
+      "Ali Cherri"
+    ],
+    "cast": [
+      {
+        "name": "Nahuel Pérez Biscayart",
+        "character": ""
+      },
+      {
+        "name": "Éric Cantona",
+        "character": ""
+      },
+      {
+        "name": "Georges Torbey",
+        "character": "Loula"
+      }
+    ]
   }
 ];
