@@ -565,5 +565,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "the killer",
+    "kind": "Film",
+    "year": 2024,
+    "period": "2024",
+    "genre": "Action, Thriller, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/the-killer.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=the%20killer",
+    "summary": "Zee, une mystérieuse célèbre tueuse à gages surnommée la « Reine des morts » dans le milieu criminel parisien, devient le centre d’une chasse à l’homme lorsqu’elle refuse une mission de son mystérieux agent consistant à assassiner une femme aveugle.",
+    "directors": [
+      "John Woo"
+    ],
+    "cast": [
+      {
+        "name": "Nathalie Emmanuel",
+        "character": "Zee"
+      },
+      {
+        "name": "Omar Sy",
+        "character": "Sey"
+      },
+      {
+        "name": "Sam Worthington",
+        "character": "Finn"
+      },
+      {
+        "name": "Diana Silvers",
+        "character": "Jenn"
+      },
+      {
+        "name": "Saïd Taghmaoui",
+        "character": "Prince Majeb Bin Faheem"
+      }
+    ]
   }
 ];
