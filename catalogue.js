@@ -361,16 +361,6 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
-    "title": "meurtres a...",
-    "kind": "Film",
-    "year": 2013,
-    "period": "2013",
-    "genre": "À compléter",
-    "description": "Description à compléter.",
-    "poster": "affiches/meurtres-a.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=meurtres%20a..."
-  },
-  {
     "title": "un village francais",
     "kind": "Série",
     "year": 2009,
