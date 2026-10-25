@@ -399,42 +399,6 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
-    "title": "la nirvana",
-    "kind": "Film",
-    "year": 2026,
-    "period": "2026",
-    "genre": "Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/la-nirvana.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=la%20nirvana",
-    "summary": "Jean, un agriculteur en faillite, croule sous les dettes, les huissiers… et la solitude depuis que Sylvie l’a largué. Un soir, lorsqu’il s’apprête à commettre l’irréparable dans sa grange, un \"miracle\" lui tombe littéralement dessus : Foued, un jeune de cité en cavale, encastre son 4x4 rempli de drogue dans le mur de sa grange, lui sauvant la vie… par accident. Mais quand Jean, paniqué par la police qui rôde, brûle la voiture et sans le savoir la cargaison avec… les deux hommes se retrouvent piégés : l’un risque de perdre sa ferme et ses bêtes, l’autre sa tête. Pour rembourser la dette de Foued et sauver la ferme de Jean, ils décident de faire ce qu’aucun des deux n’aurait imaginé : cultiver du cannabis « bio », discrètement, au milieu des chèvres et des champs.",
-    "directors": [
-      "Hakim Bougheraba"
-    ],
-    "cast": [
-      {
-        "name": "Jean-Baptiste Brucker",
-        "character": "Jean"
-      },
-      {
-        "name": "Ichem Bougheraba",
-        "character": "Foued"
-      },
-      {
-        "name": "Éric Cantona",
-        "character": ""
-      },
-      {
-        "name": "Emma Smet",
-        "character": ""
-      },
-      {
-        "name": "Arriles Amrani",
-        "character": ""
-      }
-    ]
-  },
-  {
     "title": "alter ego",
     "kind": "Série",
     "year": 2026,
