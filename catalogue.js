@@ -529,5 +529,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Loula"
       }
     ]
+  },
+  {
+    "title": "les matins merveilleux",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Romance, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-matins-merveilleux.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20matins%20merveilleux",
+    "summary": "De vieux vinyles disco dans le coffre de sa Twingo, à peine remise de la mort de sa grand-mère, Charlie roule. Elle ne sait pas encore que ces disques ressusciteront les pas de danse de sa mère dans les yeux humides de Titou, caviste rêveur, ni qu’une plage méditerranéenne désertée sera le théâtre de sa rencontre avec Marina, qui rêve son idéal de liberté dans la pizzeria du village. Pour l’instant, elle roule.",
+    "directors": [
+      "Avril Besson"
+    ],
+    "cast": [
+      {
+        "name": "India Hair",
+        "character": "Charlie"
+      },
+      {
+        "name": "Raya Martigny",
+        "character": "Marina"
+      },
+      {
+        "name": "Éric Cantona",
+        "character": "Titou"
+      },
+      {
+        "name": "Mathias Minne",
+        "character": "Maxime"
+      },
+      {
+        "name": "Jean Vincentelli",
+        "character": ""
+      }
+    ]
   }
 ];
