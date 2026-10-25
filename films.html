@@ -84,6 +84,28 @@ nav{background:#180609ed!important}
 @media(max-width:950px){.wrap{width:calc(100% - 55px)!important}.card{grid-template-columns:145px minmax(0,1fr)!important}.credits-box{grid-column:1/-1!important;grid-row:3!important}.card .poster{height:210px!important}}
 @media(max-width:580px){.wrap{width:calc(100% - 30px)!important}.card{grid-template-columns:1fr!important}.card .poster{grid-column:1!important;grid-row:2!important;width:170px!important;height:225px!important;justify-self:center}.card .info{grid-column:1!important;grid-row:3!important}.credits-box{grid-column:1!important;grid-row:4!important}}
 </style><style id="cinemaland-navigation-fixe">nav{position:sticky;top:0;z-index:20;box-shadow:0 3px 15px #000b}.film-dialog .close{position:sticky;top:0;z-index:10;float:none;display:block;margin-left:auto;box-shadow:0 3px 10px #000b}</style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>Le pays du cinéma · NOS FILMS</p></header><nav><a class="admin-link" href="index.html">ACCUEIL</a><a class="admin-link" href="series.html">SÉRIES</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher un film…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Michel et Christiane · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script src="catalogue.js"></script><script>
+/* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
+(function(){
+ const initial=JSON.stringify(window.CINEMALAND_CATALOGUE || []);
+ let checking=false;
+ async function checkCatalogue(){
+  if(checking || document.hidden) return;
+  checking=true;
+  try{
+   const r=await fetch('catalogue.js?actualisation='+Date.now(),{cache:'no-store'});
+   if(!r.ok)return;
+   const source=await r.text();
+   const m=source.match(/window\.CINEMALAND_CATALOGUE\s*=\s*(\[[\s\S]*?\])\s*;/);
+   if(!m)return;
+   const current=JSON.stringify(JSON.parse(m[1]));
+   if(current!==initial) location.reload();
+  }catch(e){/* réseau momentanément indisponible */}
+  finally{checking=false;}
+ }
+ setInterval(checkCatalogue,20000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkCatalogue();});
+})();
+</script><script>
 // Pour ajouter un titre, dupliquer une ligne dans ce catalogue.
 const catalogue=window.CINEMALAND_CATALOGUE;let previousFilm=null;
 function personName(p){return typeof p==='string'?p:(p?.name||'');}

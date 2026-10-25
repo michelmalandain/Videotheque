@@ -66,7 +66,29 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 <dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
 <dialog id="bioCard" aria-labelledby="bioCardTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioCard').close()">Retour à la recherche</button><h2 id="bioCardTitle"></h2><div id="bioCardBody"></div></dialog>
 <dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
-<script src="catalogue.js"></script>
+<script src="catalogue.js"></script><script>
+/* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
+(function(){
+ const initial=JSON.stringify(window.CINEMALAND_CATALOGUE || []);
+ let checking=false;
+ async function checkCatalogue(){
+  if(checking || document.hidden) return;
+  checking=true;
+  try{
+   const r=await fetch('catalogue.js?actualisation='+Date.now(),{cache:'no-store'});
+   if(!r.ok)return;
+   const source=await r.text();
+   const m=source.match(/window\.CINEMALAND_CATALOGUE\s*=\s*(\[[\s\S]*?\])\s*;/);
+   if(!m)return;
+   const current=JSON.stringify(JSON.parse(m[1]));
+   if(current!==initial) location.reload();
+  }catch(e){/* réseau momentanément indisponible */}
+  finally{checking=false;}
+ }
+ setInterval(checkCatalogue,20000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkCatalogue();});
+})();
+</script>
 <script>
 let bioRole='Acteur', bioPerson='';
 const el=id=>document.getElementById(id);
