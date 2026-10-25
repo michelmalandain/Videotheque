@@ -1,0 +1,11 @@
+{
+  "Film|1994|forrest gump": {
+    "title": "forrest gump",
+    "kind": "Film",
+    "year": 1994,
+    "stars": 5,
+    "comment": "trop fort lieutenant Dan !!!",
+    "watch": true,
+    "updated": "2026-10-25T08:55:11.613Z"
+  }
+}
