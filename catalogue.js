@@ -430,5 +430,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pamela Moreau"
       }
     ]
+  },
+  {
+    "title": "le colosse aux pieds d'argile",
+    "kind": "Film",
+    "year": 2022,
+    "period": "2022",
+    "genre": "Drame, Téléfilm",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-colosse-aux-pieds-d-argile.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=le%20colosse%20aux%20pieds%20d'argile",
+    "summary": "Sébastien est un ancien rugbyman. Lorsqu'il avait entre 12 et 16 ans, tout le monde le voit comme un enfant plein de joie de vivre. Une caractéristique de son Sud-Ouest natal. Mais cette joie de vivre n'est qu'un écran de fumée destiné à protéger l'équilibre de sa famille. Cela fait quatre ans que Sébastien est violé. Quatre ans qu'il souffre et crie en silence car son prédateur n'est autre qu’un proche de ses parents, aimé de tous. Trente ans plus tard, Sébastien n'a pas réussi à parler, et ses démons le détruisent.",
+    "directors": [
+      "Stéphanie Murat"
+    ],
+    "cast": [
+      {
+        "name": "Éric Cantona",
+        "character": "Sébastien"
+      },
+      {
+        "name": "Françoise Fabian",
+        "character": "Josy"
+      },
+      {
+        "name": "Aure Atika",
+        "character": "Farah"
+      },
+      {
+        "name": "Alix Poisson",
+        "character": "Josy (1991)"
+      },
+      {
+        "name": "Éric Caravaca",
+        "character": "Bernard (1991)"
+      }
+    ]
   }
 ];
