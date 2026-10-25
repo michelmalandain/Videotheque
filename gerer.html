@@ -5,11 +5,11 @@
  const params=new URLSearchParams(location.search),title=params.get('title'),kind=params.get('kind'),year=Number(params.get('year'));
  const msg=document.getElementById('message');
  const catalogue=window.CINEMALAND_CATALOGUE||[];
- const item=catalogue.find(x=>x.title===title&&x.kind===kind&&x.year===year);
+ const item=catalogue.find(x=>x.title===title&&x.kind===kind&&Number(x.year)===year);
  const back=document.getElementById('back');back.href=kind==='Série'?'series.html':'films.html';back.textContent=kind==='Série'?'← Retour aux séries':'← Retour aux films';
- if(!item){document.getElementById('title').textContent='Titre introuvable';document.getElementById('form').hidden=true;return;}
- document.getElementById('title').textContent=item.title;document.getElementById('meta').textContent=item.period+' · '+item.genre;
- if(item.poster){const img=document.getElementById('poster');img.src=item.poster;img.alt='Affiche de '+item.title;img.hidden=false;}
+ if(!title||!kind||!Number.isFinite(year)||!year){document.getElementById('title').textContent='Lien incomplet';document.getElementById('form').hidden=true;return;}
+ document.getElementById('title').textContent=item?.title||title;document.getElementById('meta').textContent=item?(item.period+' · '+item.genre):(kind+' · '+year);
+ if(item?.poster){const img=document.getElementById('poster');img.src=item.poster;img.alt='Affiche de '+item.title;img.hidden=false;}
  const key=kind+'|'+year+'|'+title.normalize('NFC').toLocaleLowerCase('fr');
  async function load(){try{const response=await fetch(api+'?t='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error();const data=await response.json();const r=(data.reviews||{})[key];if(r){document.getElementById('watch').checked=!!r.watch;document.querySelector('input[name="stars"][value="'+(r.stars||0)+'"]').checked=true;document.getElementById('comment').value=r.comment||'';}}catch{msg.textContent='Impossible de charger les avis actuels. Vérifiez la connexion avant de modifier.';}}
  load();
