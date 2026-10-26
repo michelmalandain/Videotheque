@@ -708,5 +708,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pee Wee"
       }
     ]
+  },
+  {
+    "title": "elizabeth",
+    "kind": "Film",
+    "year": 1998,
+    "period": "1998",
+    "genre": "Drame, Histoire",
+    "description": "Description à compléter.",
+    "poster": "affiches/elizabeth.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=elizabeth",
+    "summary": "Évocation du règne d'Elizabeth 1ère d'Angleterre, fille du puissant Henri VIII et d'Anne Boylen. À la mort de sa mère, qui fut décapitée par ordre du roi, Elizabeth quitte la cour pour Hatfield House où elle reçoit une éducation adaptée a son rang. C'est sous la protection de la sixième et dernière épouse du roi Henri qu'elle regagnera peu a peu une place a la cour royale. Proclamée reine en 1558, elle régna dans un monde domine par les hommes. Elle sut diriger le royaume, maitrisant le jeu du pouvoir. Son règne offrit a son pays l'une des plus fastueuses périodes de son histoire.",
+    "directors": [
+      "Shekhar Kapur"
+    ],
+    "cast": [
+      {
+        "name": "Cate Blanchett",
+        "character": "Elizabeth I"
+      },
+      {
+        "name": "Joseph Fiennes",
+        "character": "Robert Dudley, Earl of Leicester"
+      },
+      {
+        "name": "Geoffrey Rush",
+        "character": "Sir Francis Walsingham"
+      },
+      {
+        "name": "Christopher Eccleston",
+        "character": "Duke of Norfolk"
+      },
+      {
+        "name": "John Gielgud",
+        "character": "The Pope"
+      }
+    ]
   }
 ];
