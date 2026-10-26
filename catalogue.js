@@ -744,5 +744,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "The Pope"
       }
     ]
+  },
+  {
+    "title": "le bonheur est dans le pre",
+    "kind": "Film",
+    "year": 1995,
+    "period": "1995",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-bonheur-est-dans-le-pre.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=le%20bonheur%20est%20dans%20le%20pre",
+    "summary": "Le jour de ses 65 ans, Francis Bergeade, industriel dans la balayette et siège de toilettes, a bien cru qu'il allait mourir. Et ça serait bien fait pour ses ingrats d'employés et ses emmerdeuses de femme et fille. Mais tout a recommencé comme avant, jusqu'au jour où une coïncidence incroyable qu'il va saisir, avec la complicité de son fidèle ami Gérard. La mort n'avait pas voulu de lui, le bonheur arrivait dans le Gers en prétendant être un homme disparu, dont il est le sosie physique parfait et pour lequel un avis de recherche a été lancé par une émission télévisée.",
+    "directors": [
+      "Étienne Chatiliez"
+    ],
+    "cast": [
+      {
+        "name": "Michel Serrault",
+        "character": "Francis Bergeade"
+      },
+      {
+        "name": "Eddy Mitchell",
+        "character": "Gérard 'Gégé' Tilier"
+      },
+      {
+        "name": "Sabine Azéma",
+        "character": "Nicole Bergeade"
+      },
+      {
+        "name": "Carmen Maura",
+        "character": "Dolores Thivart"
+      },
+      {
+        "name": "François Morel",
+        "character": "Pouillaud"
+      }
+    ]
   }
 ];
