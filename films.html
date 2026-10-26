@@ -369,4 +369,41 @@ window.cinemalandLienGerer=function(x){
 };
 })();
 </script>
+<style id="cinemaland-trailers-css">
+#trailer-button{display:none;background:#a77730;color:#17090b;border:2px solid #f5cc7b;border-radius:6px;padding:11px 17px;font:700 17px Georgia,serif;cursor:pointer;margin:12px 0}
+#trailer-button:hover{background:#f5cc7b}
+#trailer-dialog{width:min(900px,calc(100% - 25px));max-width:900px;background:#160b10;border:2px solid #d6a452;border-radius:12px;color:#f5cc7b;padding:18px}
+#trailer-dialog::backdrop{background:#000e}
+#trailer-close{display:block;margin:0 0 14px auto;background:#7e101a;color:#fff;border:1px solid #e8b85b;border-radius:5px;padding:9px 15px;cursor:pointer}
+#trailer-frame{width:100%;aspect-ratio:16/9;border:0;background:#000}
+</style>
+<script id="cinemaland-trailers-js">
+(function(){
+ const fiche=document.getElementById('film-dialog');
+ const btn=document.createElement('button');btn.id='trailer-button';btn.type='button';btn.textContent='▶ Voir la bande-annonce';
+ document.getElementById('film-source').before(btn);
+ const dialog=document.createElement('dialog');dialog.id='trailer-dialog';
+ const close=document.createElement('button');close.id='trailer-close';close.type='button';close.textContent='Fermer la vidéo';
+ const frame=document.createElement('iframe');frame.id='trailer-frame';frame.title='Bande-annonce';frame.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;
+ dialog.append(close,frame);document.body.append(dialog);
+ function stop(){frame.removeAttribute('src')}
+ close.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',stop);
+ dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+ let token=0,key=null;
+ const original=window.openFilm;
+ window.openFilm=function(x){
+  original(x);const current=++token;key=null;btn.style.display='none';
+  const year=String(x.year||'');const type=x.kind==='Série'?'tv':'movie';
+  if(!/^\d{4}$/.test(year))return;
+  const params=new URLSearchParams({title:x.title,year,type});
+  fetch('https://videotheque-admin.michelmalandain.workers.dev/trailer?'+params)
+   .then(r=>{if(!r.ok)throw Error('Service indisponible');return r.json()})
+   .then(data=>{if(current!==token||!fiche.open||fiche.dataset.currentTitle!==x.title)return;
+    if(/^[a-zA-Z0-9_-]{11}$/.test(data.key||'')){key=data.key;btn.style.display='inline-block'}
+   }).catch(()=>{});
+ };
+ btn.addEventListener('click',()=>{if(!key)return;frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(key)+'?autoplay=1&rel=0';dialog.showModal()});
+ fiche.addEventListener('close',()=>{++token;btn.style.display='none';if(dialog.open)dialog.close()});
+})();
+</script>
 </body></html>
