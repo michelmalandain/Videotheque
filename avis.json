@@ -79,5 +79,14 @@
     "comment": "ne pas regarder la derniere saison",
     "watch": false,
     "updated": "2026-10-26T17:56:26.413Z"
+  },
+  "Film|2026|l'espèce explosive": {
+    "title": "L'Espèce explosive",
+    "kind": "Film",
+    "year": 2026,
+    "stars": 0,
+    "comment": "",
+    "watch": true,
+    "updated": "2026-10-26T17:57:03.771Z"
   }
 }
