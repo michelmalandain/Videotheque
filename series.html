@@ -120,7 +120,7 @@ async function showPerson(person,source,role){
  document.querySelector('.person-note').textContent='Données TMDB — les œuvres ne sont pas nécessairement dans notre collection.';
  list.replaceChildren();dlg.showModal();
  try{
-  const params=new URLSearchParams({role:role||'all'});
+  const params=new URLSearchParams({role:role||'all',name:name});
   const id=typeof person==='object'?(person.tmdb_id||person.id):null;
   if(id)params.set('id',id);
   else if(source){params.set('name',name);params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie');}
