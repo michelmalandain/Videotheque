@@ -818,16 +818,6 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
-    "title": "arnaques en famiile",
-    "kind": "Film",
-    "year": 2026,
-    "period": "2026",
-    "genre": "À compléter",
-    "description": "Description à compléter.",
-    "poster": "affiches/arnaques-en-famiile.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=arnaques%20en%20famiile"
-  },
-  {
     "title": "l'ideal",
     "kind": "Film",
     "year": 2016,
