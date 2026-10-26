@@ -636,5 +636,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "silent night",
+    "kind": "Film",
+    "year": 2023,
+    "period": "2023",
+    "genre": "Action, Thriller, Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/silent-night.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=silent%20night",
+    "summary": "L'histoire de vengeance d’un père tourmenté ayant été témoin de la mort de son fils, victime d’une balle perdue lors d’un affrontement entre gangs la veille de Noël. Alors qu’il se remet d’une blessure lui ayant couté la parole, il s’entraîne sans relâche afin de venger la mort de son fils.",
+    "directors": [
+      "John Woo"
+    ],
+    "cast": [
+      {
+        "name": "Joel Kinnaman",
+        "character": "Brian Godlock"
+      },
+      {
+        "name": "Kid Cudi",
+        "character": "Detective Dennis Vassel"
+      },
+      {
+        "name": "Harold Torres",
+        "character": "Playa"
+      },
+      {
+        "name": "Catalina Sandino Moreno",
+        "character": "Saya"
+      },
+      {
+        "name": "Valeria Santaella",
+        "character": "Venus"
+      }
+    ]
   }
 ];
