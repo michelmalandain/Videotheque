@@ -70,5 +70,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-10-26T17:22:07.164Z"
+  },
+  "Série|2009|un village francais": {
+    "title": "un village francais",
+    "kind": "Série",
+    "year": 2009,
+    "stars": 4,
+    "comment": "ne pas regarder la derniere saison",
+    "watch": false,
+    "updated": "2026-10-26T17:56:26.413Z"
   }
 }
