@@ -872,5 +872,15 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/les-parfaits.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20parfaits"
+  },
+  {
+    "title": "les parfait'sà : arnaques en famille",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-parfait-sa-arnaques-en-famille.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20parfait's%C3%A0%20%3A%20arnaques%20en%20famille"
   }
 ];
