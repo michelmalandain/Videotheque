@@ -888,5 +888,15 @@ window.CINEMALAND_CATALOGUE = [
         "character": "André"
       }
     ]
+  },
+  {
+    "title": "the good fight",
+    "kind": "Film",
+    "year": 2017,
+    "period": "2017",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/the-good-fight.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=the%20good%20fight"
   }
 ];
