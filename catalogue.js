@@ -672,5 +672,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Venus"
       }
     ]
+  },
+  {
+    "title": "aka",
+    "kind": "Film",
+    "year": 2023,
+    "period": "2023",
+    "genre": "Action",
+    "description": "Description à compléter.",
+    "poster": "affiches/aka.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=aka",
+    "summary": "Adam Franco est un agent infiltré, effectuant le sale boulot partout où il est nécessaire. Sa nouvelle mission, intégrer une organisation mafieuse en France pour déjouer un attentat terroriste imninent dans la capitale.",
+    "directors": [
+      "Morgan S. Dalibert"
+    ],
+    "cast": [
+      {
+        "name": "Alban Lenoir",
+        "character": "Adam Franco"
+      },
+      {
+        "name": "Éric Cantona",
+        "character": "Victor Pastore"
+      },
+      {
+        "name": "Thibault de Montalembert",
+        "character": "Kruger"
+      },
+      {
+        "name": "Sveva Alviti",
+        "character": "Natalya"
+      },
+      {
+        "name": "Saïdou Camara",
+        "character": "Pee Wee"
+      }
+    ]
   }
 ];
