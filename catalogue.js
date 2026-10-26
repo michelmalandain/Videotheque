@@ -780,5 +780,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pouillaud"
       }
     ]
+  },
+  {
+    "title": "looking for eric",
+    "kind": "Film",
+    "year": 2009,
+    "period": "2009",
+    "genre": "Drame, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/looking-for-eric.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=looking%20for%20eric",
+    "summary": "Eric Bishop, postier à Manchester, traverse une mauvaise passe. Sous son nez, ses deux beaux fils excellent dans des petits trafics en tous genres, sa fille lui reproche de ne pas être à la hauteur et sa vie sentimentale est un désert. Malgré la joyeuse amitié et la bonne humeur de ses collègues postiers qui font tout pour lui redonner le sourire, rien n'y fait... Un soir, Eric s'adresse à son idole qui, du poster sur le mur de sa chambre, semble l'observer d'un œil malicieux. Que ferait à sa place le plus grand joueur de Manchester United ? Eric en est persuadé, le King Cantona peut l'aider à reprendre sa vie en main...",
+    "directors": [
+      "Ken Loach"
+    ],
+    "cast": [
+      {
+        "name": "Steve Evets",
+        "character": "Eric Bishop"
+      },
+      {
+        "name": "Éric Cantona",
+        "character": "Éric Cantona"
+      },
+      {
+        "name": "Stephanie Bishop",
+        "character": "Lily"
+      },
+      {
+        "name": "Gerard Kearns",
+        "character": "Ryan"
+      },
+      {
+        "name": "Stefan Gumbs",
+        "character": "Jess"
+      }
+    ]
   }
 ];
