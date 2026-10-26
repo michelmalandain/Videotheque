@@ -898,5 +898,41 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/the-good-fight.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=the%20good%20fight"
+  },
+  {
+    "title": "L'Espèce explosive",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-espece-explosive.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'Esp%C3%A8ce%20explosive",
+    "summary": "Dans le Nord-Est de la France, agriculteurs et chasseurs se font la guerre. Les sangliers, trop gros et trop nombreux, dévastent les cultures. Brun, céréalier au bord du gouffre, craque et disparaît. Un an plus tard, Fulda, un gendarme explosif et Stéphane, une psy en crise, enquêtent. Ce qu’ils découvrent les dépasse. Ce qui naît entre eux aussi.",
+    "directors": [
+      "Sarah Arnold"
+    ],
+    "cast": [
+      {
+        "name": "Alexis Manenti",
+        "character": "Fulda"
+      },
+      {
+        "name": "Ella Rumpf",
+        "character": "Stéphane"
+      },
+      {
+        "name": "Vincent Dedienne",
+        "character": "Victor"
+      },
+      {
+        "name": "Jean-Louis Coulloc'h",
+        "character": "Brun"
+      },
+      {
+        "name": "Pascal Rénéric",
+        "character": "Alain"
+      }
+    ]
   }
 ];
