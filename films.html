@@ -109,9 +109,10 @@ nav{background:#180609ed!important}
 // Pour ajouter un titre, dupliquer une ligne dans ce catalogue.
 const catalogue=window.CINEMALAND_CATALOGUE;let previousFilm=null;
 function personName(p){return typeof p==='string'?p:(p?.name||'');}
-function filmographyLink(name){const a=document.createElement('a');a.textContent=name;a.href='#filmographie-'+encodeURIComponent(name);a.title='Voir les films de '+name+' dans notre vidéothèque';a.addEventListener('click',e=>{e.preventDefault();showPerson(name)});return a;}
+function filmographyLink(person,source,role){const name=personName(person),a=document.createElement('a');a.textContent=name;a.href='#filmographie-'+encodeURIComponent(name);a.title='Voir la filmographie de '+name;a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();showPerson(person,source,role)});return a;}
 document.getElementById('close-person').addEventListener('click',()=>document.getElementById('person-dialog').close());
-async function showPerson(name){
+async function showPerson(person,source,role){
+ const name=personName(person);
  const film=document.getElementById('film-dialog');if(film.open)film.close();
  const dlg=document.getElementById('person-dialog'),list=document.getElementById('person-films');
  document.getElementById('person-title').textContent=name;
@@ -119,7 +120,12 @@ async function showPerson(name){
  document.querySelector('.person-note').textContent='Données TMDB — les œuvres ne sont pas nécessairement dans notre collection.';
  list.replaceChildren();dlg.showModal();
  try{
-  const response=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?name='+encodeURIComponent(name));
+  const params=new URLSearchParams({role:role||'all'});
+  const id=typeof person==='object'?(person.tmdb_id||person.id):null;
+  if(id)params.set('id',id);
+  else if(source){params.set('name',name);params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie');}
+  const response=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?'+params);
+  if(!response.ok){const error=await response.json();throw Error(error.message||'Filmographie indisponible');}
   if(!response.ok)throw new Error('Service non activé');
   const data=await response.json();
   if(!Array.isArray(data.credits))throw new Error('Réponse invalide');
@@ -132,17 +138,17 @@ async function showPerson(name){
    title.textContent=x.title;meta.textContent=(x.date||'').slice(0,4)+' · '+(x.media_type==='tv'?'Série':'Film')+(x.job?' · '+x.job:'');
    info.append(title,meta);row.append(info);list.append(row);
   }
- }catch(error){document.getElementById('person-count').textContent='Activation du service de filmographie nécessaire sur notre Worker.'}
+ }catch(error){document.getElementById('person-count').textContent=error.message||'Filmographie indisponible'}
 }
-function appendNames(node,names){node.replaceChildren();if(!names||!names.length){node.textContent='À compléter';return;}names.forEach((person,i)=>{if(i)node.append(document.createTextNode(', '));node.append(filmographyLink(typeof person==='string'?person:person.name));});}
-function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre;document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[]);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(typeof a==='string'?a:a.name));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal();window.cinemalandAfficherAvisFiche?.(x);window.cinemalandLienGerer?.(x)}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
+function appendNames(node,names,source){node.replaceChildren();if(!names||!names.length){node.textContent='À compléter';return;}names.forEach((person,i)=>{if(i)node.append(document.createTextNode(', '));node.append(filmographyLink(person,source,source?.kind==='Série'?'creator':'director'));});}
+function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre;document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[],x);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(a,x,'actor'));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal();window.cinemalandAfficherAvisFiche?.(x);window.cinemalandLienGerer?.(x)}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
 let kind='Film';const cards=document.getElementById('cards');function render(){const q=document.getElementById('search').value.toLocaleLowerCase('fr');const g=document.getElementById('genre').value;const s=document.getElementById('sort').value;const list=catalogue.filter(x=>(kind==='Tous'||x.kind===kind)&&(!g||x.genre.includes(g))&&(x.title+' '+x.genre+' '+x.description).toLocaleLowerCase('fr').includes(q)).sort((a,b)=>s==='year'?a.year-b.year:a.title.localeCompare(b.title,'fr'));cards.replaceChildren();for(const x of list){const article=document.createElement('article');article.className='card';const title=document.createElement('h2');title.className='card-title';title.textContent=x.title;const poster=document.createElement('div');poster.className='poster';const posterTitle=document.createElement('span');posterTitle.textContent=x.title.toUpperCase();const img=document.createElement('img');img.src=x.poster;img.alt='Affiche de '+x.title;img.loading='lazy';img.style.cssText='width:100%;height:100%;object-fit:contain;position:absolute;inset:0';img.onerror=()=>{img.remove();poster.append(posterTitle)};poster.append(img);poster.style.cursor='pointer';poster.title='Ouvrir la fiche de '+x.title;poster.tabIndex=0;poster.setAttribute('role','button');poster.setAttribute('aria-label','Ouvrir la fiche de '+x.title);poster.addEventListener('click',()=>openFilm(x));poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openFilm(x)}});const info=document.createElement('div');info.className='info';const meta=document.createElement('div');meta.className='meta';meta.textContent=x.period+' · '+x.genre;const p=document.createElement('p');p.textContent=x.summary || x.description;const hint=document.createElement('div');hint.className='details-hint';hint.textContent='';info.append(meta,p,hint);
 const credits=document.createElement('aside');credits.className='credits-box';
 const heading=document.createElement('h3');heading.textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';
-const names=document.createElement('p');names.className='credit-names';appendNames(names,x.directors||[]);
+const names=document.createElement('p');names.className='credit-names';appendNames(names,x.directors||[],x);
 const actorsTitle=document.createElement('h3');actorsTitle.textContent='⭐ Acteurs principaux';
 const actors=document.createElement('ul');
-for(const person of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(typeof person==='string'?person:person.name));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
+for(const person of (x.cast||[]).slice(0,5)){const li=document.createElement('li');li.append(filmographyLink(person,x,'actor'));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
 if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
 credits.append(heading,names,actorsTitle,actors);
 article.append(title,poster,info,credits);cards.append(article)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
