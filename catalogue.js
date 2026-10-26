@@ -872,5 +872,41 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/les-parfait-sa-arnaques-en-famille.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20parfait's%C3%A0%20%3A%20arnaques%20en%20famille"
+  },
+  {
+    "title": "Les Parfait(s) : Arnaques en Famille",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-parfait-s-arnaques-en-famille.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Parfait(s)%20%3A%20Arnaques%20en%20Famille",
+    "summary": "Chez les Toussaint, du grand-père au petit dernier, l’arnaque est un art qui rapporte. Poursuivis, ils doivent fuir. Seule option : emprunter l’identité d’une famille sans histoire, les Parfait, et se réfugier en Écosse. Entre des collègues trop curieux et une mystérieuse voisine, leur double vie se complique et les faux Parfait se retrouvent face au coup d’une vie. Plans démentiels, déguisements fous, gadgets étonnants… pour réussir, cette famille pas comme les autres devra prouver qu’elle est plus que parfaite.",
+    "directors": [
+      "Ludovic Bernard"
+    ],
+    "cast": [
+      {
+        "name": "Audrey Fleurot",
+        "character": "Magalie Toussaint"
+      },
+      {
+        "name": "Ramzy Bedia",
+        "character": "Sam Toussaint"
+      },
+      {
+        "name": "Alan Cumming",
+        "character": "Sean Mac Callaghan"
+      },
+      {
+        "name": "Alexandre Desrousseaux",
+        "character": "Alex / Stef. de Loze"
+      },
+      {
+        "name": "Bernard Farcy",
+        "character": "André"
+      }
+    ]
   }
 ];
