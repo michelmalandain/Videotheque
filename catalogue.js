@@ -862,5 +862,15 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Monica Pynchon"
       }
     ]
+  },
+  {
+    "title": "les parfaits",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-parfaits.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20parfaits"
   }
 ];
