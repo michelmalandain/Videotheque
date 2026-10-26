@@ -826,5 +826,41 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/arnaques-en-famiile.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=arnaques%20en%20famiile"
+  },
+  {
+    "title": "l'ideal",
+    "kind": "Film",
+    "year": 2016,
+    "period": "2016",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-ideal.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=l'ideal",
+    "summary": "L’ancien concepteur‐rédacteur Octave Parango de « 99 francs » s’est reconverti dans le « model scouting » à Moscou. Cet hédoniste cynique mène une vie très agréable dans les bras de jeunes mannequins russes et les jets privés de ses amis oligarques… jusqu’au jour où il est contacté par L’Idéal, la première entreprise de cosmétiques au monde, secouée par un gigantesque scandale médiatique. Notre antihéros aura sept jours pour trouver une nouvelle égérie en sillonnant les confins de la Russie post‐communiste, sous les ordres de Valentine Winfeld, une directrice visuelle sèche et autoritaire. Entre les réunions de crise à Paris, les castings à Moscou, une élection de Miss en Sibérie, une fête chez un milliardaire poutinien et une quête des « new faces » aux quatre coins de l’ex‐URSS, le fêtard paresseux et la workaholic frigide vont apprendre à se supporter et peut‐être même à se sauver.",
+    "directors": [
+      "Frédéric Beigbeder"
+    ],
+    "cast": [
+      {
+        "name": "Gaspard Proust",
+        "character": "Octave Parango"
+      },
+      {
+        "name": "Audrey Fleurot",
+        "character": "Valentine Winfeld"
+      },
+      {
+        "name": "Anamaria Vartolomei",
+        "character": "Lena"
+      },
+      {
+        "name": "Jonathan Lambert",
+        "character": "Carine Wang"
+      },
+      {
+        "name": "Camille Rowe",
+        "character": "Monica Pynchon"
+      }
+    ]
   }
 ];
