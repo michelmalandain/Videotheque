@@ -52,5 +52,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-10-26T13:16:24.023Z"
+  },
+  "Film|2016|l'ideal": {
+    "title": "l'ideal",
+    "kind": "Film",
+    "year": 2016,
+    "stars": 0,
+    "comment": "",
+    "watch": true,
+    "updated": "2026-10-26T16:54:14.110Z"
   }
 }
