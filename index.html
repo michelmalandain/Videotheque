@@ -32,7 +32,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
 .bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
 
-.bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:block;width:max-content;max-width:100%;margin-top:18px;padding:12px 16px;background:#7e101a;border:2px solid #e8b85b;border-radius:6px;text-decoration:none;font-weight:bold}
+.bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:inline-block;margin-top:12px;color:#f5cc7b!important;font:inherit;text-decoration:underline;background:transparent;border:0;padding:0}.bio-propose{display:block;width:max-content;max-width:100%;margin-top:14px;padding:12px 16px;background:#7e101a;color:#f5cc7b;border:2px solid #e8b85b;border-radius:6px;font:inherit;font-weight:bold;cursor:pointer}.bio-propose:hover{filter:brightness(1.2)}.bio-film-detail>button:first-child{color:#f5cc7b!important;background:#7e101a;border:1px solid #e8b85b;border-radius:5px;padding:9px 13px;font:inherit;cursor:pointer}.bio-proposal-dialog{background:#231016;color:#f6e8cf;border:2px solid #c89442;max-width:550px;width:90%;padding:24px;font:inherit}.bio-proposal-dialog input,.bio-proposal-dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:9px;background:#fff1d9;color:#23130e;border:1px solid #c89442;font:inherit}.bio-proposal-dialog button{background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;padding:9px 14px;cursor:pointer;font:inherit}.bio-proposal-dialog label{display:block;margin-top:10px}
 </style>
 </head>
 <body>
@@ -119,6 +119,34 @@ function trouverDansCatalogue(items,credit){
  const candidats=items.filter(x=>x.kind===kind&&cleTitre(x.title)===title);
  return candidats.find(x=>String(x.year)===year)|| (candidats.length===1?candidats[0]:null);
 }
+function openBioProposal(title,year,kind){
+ const d=document.createElement('dialog');d.className='bio-proposal-dialog';
+ const heading=document.createElement('h2');heading.textContent='Proposer '+(kind==='Série'?'cette série':'ce film');
+ const note=document.createElement('p');note.textContent='Votre proposition sera soumise à la modération.';
+ const form=document.createElement('form');
+ function field(label,name,value,tag='input'){const l=document.createElement('label');l.textContent=label;const x=document.createElement(tag);x.name=name;x.required=true;if(tag==='input')x.type='text';x.value=value||'';l.append(x);form.append(l);return x;}
+ const pseudo=field('Votre pseudonyme','pseudo','');pseudo.maxLength=50;
+ const t=field('Titre','title',title);t.maxLength=160;
+ const y=field('Année','year',year);y.type='number';y.min='1888';y.max='2100';
+ const reason=field('Pourquoi proposer ce titre ?','comment','','textarea');reason.maxLength=1500;
+ const trap=document.createElement('input');trap.name='website';trap.tabIndex=-1;trap.style.display='none';form.append(trap);
+ const widget=document.createElement('div');form.append(widget);
+ const status=document.createElement('p');status.setAttribute('role','status');
+ const submit=document.createElement('button');submit.type='submit';submit.textContent='Envoyer pour validation';submit.disabled=true;
+ const close=document.createElement('button');close.type='button';close.textContent='Fermer';close.onclick=()=>d.close();
+ form.append(submit,status);d.append(close,heading,note,form);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
+ let widgetId=null;
+ (async()=>{try{
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/config');if(!r.ok)throw Error('Service indisponible');const c=await r.json();if(!c.enabled)throw Error('Protection antispam indisponible');
+ if(!window.turnstile){await new Promise((resolve,reject)=>{const existing=document.querySelector('script[data-bio-turnstile]');if(existing){const poll=setInterval(()=>{if(window.turnstile){clearInterval(poll);resolve();}},100);setTimeout(()=>{clearInterval(poll);if(!window.turnstile)reject(Error('Antispam indisponible'));},10000);return;}const script=document.createElement('script');script.dataset.bioTurnstile='1';script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.onload=resolve;script.onerror=()=>reject(Error('Antispam indisponible'));document.head.append(script);});}
+ if(!d.isConnected)return;widgetId=window.turnstile.render(widget,{sitekey:c.sitekey});submit.disabled=false;
+ }catch(e){status.textContent=e.message;}})();
+ form.addEventListener('submit',async e=>{e.preventDefault();if(widgetId===null)return;const token=window.turnstile.getResponse(widgetId);if(!token){status.textContent='Validez la protection antispam.';return;}submit.disabled=true;status.textContent='Envoi…';try{
+ const payload={type:'suggestion',kind,title:t.value,year:Number(y.value),pseudo:pseudo.value,comment:reason.value,stars:0,website:trap.value,token};
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw Error(data.message||'Envoi impossible');status.textContent=data.message;form.reset();t.value=title;y.value=year;
+ }catch(err){status.textContent=err.message;}finally{window.turnstile.reset(widgetId);submit.disabled=false;}});
+}
+
 function openBioFilmDetail(credit){
  const title=credit.title||credit.name||'Sans titre',type=credit.media_type==='tv'?'tv':'movie';
  const id=/^\d+$/.test(String(credit.id||''))?String(credit.id):null,year=String(credit.date||'').slice(0,4);
@@ -131,6 +159,7 @@ function openBioFilmDetail(credit){
  const info=document.createElement('div');info.append(para('Type',type==='tv'?'Série':'Film'),para('Année',year||'Non renseignée'));
  const h3=document.createElement('h3');h3.textContent='Synopsis';info.append(h3);
  const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué.';info.append(overview);
+ const propose=document.createElement('button');propose.type='button';propose.className='bio-propose';propose.textContent='Proposer ce '+(type==='tv'?'programme':'film');propose.onclick=()=>openBioProposal(title,year,type==='tv'?'Série':'Film');info.append(propose);
  const add=document.createElement('a');add.className='bio-add';add.textContent='Vérification de la vidéothèque…';add.style.pointerEvents='none';add.style.opacity='.65';info.append(add);
  grid.append(info);d.append(close,h,grid);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
  cataloguePromise.then(items=>{
@@ -138,12 +167,12 @@ function openBioFilmDetail(credit){
   const present=trouverDansCatalogue(items,credit);
   if(present && (present.summary||present.description))overview.textContent=present.summary||present.description;
   if(present){
-   add.textContent='Déjà dans ma vidéothèque';add.removeAttribute('href');add.style.cssText='pointer-events:none;background:#555;color:#ddd;border-color:#888;cursor:not-allowed;';add.setAttribute('aria-disabled','true');
+   add.textContent='Déjà dans ma vidéothèque';add.removeAttribute('href');add.style.cssText='pointer-events:none;opacity:.7;';add.setAttribute('aria-disabled','true');propose.remove();
    if(poster){poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';poster.tabIndex=0;poster.setAttribute('role','link');const go=()=>location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(present.year||'');poster.onclick=go;poster.onkeydown=e=>{if(e.key==='Enter')go();};}
    const hint=document.createElement('p');hint.textContent='Cliquez sur l’affiche pour consulter la fiche dans notre vidéothèque.';info.append(hint);
   }else if(/^\d{4}$/.test(year)){
-   add.textContent='Ajouter à ma vidéothèque';add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'});add.target='_blank';add.rel='noopener noreferrer';add.style.pointerEvents='auto';add.style.opacity='1';
-  }else{add.textContent='Année manquante — ajout indisponible';}
+   add.textContent='Ajouter à ma vidéothèque (administration)';add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'});add.target='_blank';add.rel='noopener noreferrer';add.style.pointerEvents='auto';add.style.opacity='1';
+  }else{add.textContent='Année manquante — ajout indisponible';propose.disabled=true;}
  }).catch(err=>{add.textContent='Vérification du catalogue impossible';add.title=err.message;});
  if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id)).then(r=>{if(!r.ok)throw Error('Détails indisponibles');return r.json()}).then(data=>{if(!d.isConnected)return;const detail=data.details||data;if(!trouverDansCatalogue(window.CINEMALAND_CATALOGUE||[],credit))overview.textContent=detail.overview||detail.summary||detail.description||overview.textContent;const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';if(genres)info.insertBefore(para('Genres',genres),h3);}).catch(()=>{});
 }
