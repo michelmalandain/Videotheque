@@ -1005,5 +1005,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Sudac"
       }
     ]
+  },
+  {
+    "title": "Regarde",
+    "kind": "Film",
+    "year": 2025,
+    "period": "2025",
+    "genre": "Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/regarde.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Regarde",
+    "summary": "Chris et Antoine ont bien du mal à s’entendre depuis leur divorce. Mais, lorsqu’on leur annonce que leur fils de 16 ans est atteint d’une maladie rare, qui va lui faire perdre la vue, ils s’efforcent de mettre leurs rancœurs de côté. Les ex-conjoints embarquent leur fils pour des vacances inoubliables, bien décidés à lui offrir ses plus beaux souvenirs.",
+    "directors": [
+      "Emmanuel Poulain-Arnaud"
+    ],
+    "cast": [
+      {
+        "name": "Audrey Fleurot",
+        "character": "Chris"
+      },
+      {
+        "name": "Dany Boon",
+        "character": "Antoine"
+      },
+      {
+        "name": "Nicolas Marié",
+        "character": "Papichou"
+      },
+      {
+        "name": "Manon Villa",
+        "character": ""
+      },
+      {
+        "name": "Ewan Bourdelles",
+        "character": "Milo"
+      }
+    ]
   }
 ];
