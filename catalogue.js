@@ -1214,5 +1214,37 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Adolphe Amédée Delafoy"
       }
     ]
+  },
+  {
+    "title": "Les Dames",
+    "kind": "Série",
+    "year": 2011,
+    "period": "2011",
+    "genre": "Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-dames.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Dames",
+    "summary": "Chef de groupe à la brigade criminelle de la PJ de Paris, le commissaire Martin est un flic lassé par le métier, mais toujours sur la brèche. Secondé par ses collègues féminines Jeannette et Bélier, il tente d'élucider une série de meurtres commis sur des femmes. Parallèlement, Martin est miné par ses histoires personnelles pour le moins bancales. Il est souvent amené à venir en aide à son ancienne épouse, Myriam Sonnen, à sa fille, Isabelle et à sa nouvelle compagne, Marion Delambre qui lui demandent d'enquêter sur des affaires privées...",
+    "directors": [
+      "Alexis Lecaye"
+    ],
+    "cast": [
+      {
+        "name": "Sophie-Charlotte Husson",
+        "character": "Marie-Laure Bélier"
+      },
+      {
+        "name": "Thierry Godard",
+        "character": "Martin"
+      },
+      {
+        "name": "Jean-Toussaint Bernard",
+        "character": "Olivier Roche"
+      },
+      {
+        "name": "Charley Fouquet",
+        "character": "Marion Delambre"
+      }
+    ]
   }
 ];
