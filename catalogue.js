@@ -1041,5 +1041,33 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Milo"
       }
     ]
+  },
+  {
+    "title": "Chapitre perdu : La vengeance de Yuki",
+    "kind": "Film",
+    "year": 2025,
+    "period": "2025",
+    "genre": "Action, Animation, Fantastique, Crime, Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/chapitre-perdu-la-vengeance-de-yuki.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Chapitre%20perdu%20%3A%20La%20vengeance%20de%20Yuki",
+    "summary": "Quentin Tarantino a rêvé d'un chapitre légendaire intitulé « La vengeance de Yuki » pour son film Kill Bill. Hélas, cette vision n'a jamais été portée sur grand écran. Plus de 20 ans plus tard, Tarantino et Epic s'unissent pour donner vie à cette histoire dans Fortnite.",
+    "directors": [
+      "Quentin Tarantino"
+    ],
+    "cast": [
+      {
+        "name": "Uma Thurman",
+        "character": "The Bride (voice)"
+      },
+      {
+        "name": "Miyu Ishidate Roberts",
+        "character": "Yuki (voice)"
+      },
+      {
+        "name": "Quentin Tarantino",
+        "character": "Bill (voice) (uncredited)"
+      }
+    ]
   }
 ];
