@@ -970,5 +970,40 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pilot"
       }
     ]
+  },
+  {
+    "title": "Anka",
+    "kind": "Film",
+    "year": 2017,
+    "period": "2017",
+    "genre": "Aventure, Familial, Fantastique, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/anka.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Anka",
+    "directors": [
+      "Dejan Aćimović"
+    ],
+    "cast": [
+      {
+        "name": "Cvita Viljač",
+        "character": "Anka"
+      },
+      {
+        "name": "Éric Cantona",
+        "character": "Brazilian"
+      },
+      {
+        "name": "Anđela Ramljak",
+        "character": "Milka"
+      },
+      {
+        "name": "Linda Begonja",
+        "character": "Milostiva / Sena"
+      },
+      {
+        "name": "Goran Grgić",
+        "character": "Sudac"
+      }
+    ]
   }
 ];
