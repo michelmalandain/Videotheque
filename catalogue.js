@@ -1105,5 +1105,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Bergamotte"
       }
     ]
+  },
+  {
+    "title": "La Faute de l'abbé Mouret",
+    "kind": "Film",
+    "year": 1970,
+    "period": "1970",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-faute-de-l-abbe-mouret.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Faute%20de%20l'abb%C3%A9%20Mouret",
+    "summary": "Serge Mouret, le jeune curé d'un petit village, se heurte au frère Archangias, véritable monument de fanatisme. Épuisé, Mouret tombe malade et son médecin le fait transporter au Paradou, où il sera soigné par la belle Albine. Amnésique, l'abbé qui a oublié jusqu'à ses vœux, tombe amoureux de la jeune femme.",
+    "directors": [
+      "Georges Franju"
+    ],
+    "cast": [
+      {
+        "name": "Francis Huster",
+        "character": "Serge Mouret"
+      },
+      {
+        "name": "Gillian Hills",
+        "character": "Albine"
+      },
+      {
+        "name": "André Lacombe",
+        "character": "Archangias"
+      },
+      {
+        "name": "Margo Lion",
+        "character": "La Teuse"
+      },
+      {
+        "name": "Lucien Barjon",
+        "character": "Barberousse"
+      }
+    ]
   }
 ];
