@@ -934,5 +934,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Alain"
       }
     ]
+  },
+  {
+    "title": "Lisa et le pilote d'avion",
+    "kind": "Film",
+    "year": 2006,
+    "period": "2006",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/lisa-et-le-pilote-d-avion.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Lisa%20et%20le%20pilote%20d'avion",
+    "summary": "Lisa et Corinne sont accompagnatrices d'handicapés et de grands malades sur longs courriers. Lisa est mariée et mère de deux enfants. Son couple est un exemple de réussite conjugale et familiale qui force l'admiration de sa copine Corinne, laquelle continue à errer d'homme en homme, à la recherche de son double idéal. Un jour, alors qu'elle vient d'apprendre qu'elle attend un troisième enfant, Lisa tombe sur un pilote d'avion qui la subjugue, et à l'emprise duquel elle ne parvient à résister. En cachette de tous, ils se revoient...",
+    "directors": [
+      "Philippe Barassat"
+    ],
+    "cast": [
+      {
+        "name": "Rachida Brakni",
+        "character": "Lisa"
+      },
+      {
+        "name": "Éric Cantona",
+        "character": "Fando"
+      },
+      {
+        "name": "Marilou Berry",
+        "character": "Corinne"
+      },
+      {
+        "name": "Mathieu Demy",
+        "character": "Paul"
+      },
+      {
+        "name": "Jean-Christophe Bouvet",
+        "character": "Pilot"
+      }
+    ]
   }
 ];
