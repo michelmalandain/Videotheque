@@ -115,5 +115,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-10-27T13:21:17.789Z"
+  },
+  "Film|1970|la faute de l'abbé mouret": {
+    "title": "La Faute de l'abbé Mouret",
+    "kind": "Film",
+    "year": 1970,
+    "stars": 0,
+    "comment": "",
+    "watch": true,
+    "updated": "2026-10-27T13:26:48.698Z"
   }
 }
