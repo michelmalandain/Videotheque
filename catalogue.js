@@ -1141,5 +1141,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Barberousse"
       }
     ]
+  },
+  {
+    "title": "L'Allée du roi",
+    "kind": "Série",
+    "year": 1996,
+    "period": "1996",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-allee-du-roi.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'All%C3%A9e%20du%20roi",
+    "summary": "A plus de quatre-vingts ans, la marquise de Maintenon, epouse de Louis XIV, s'est retiree a Saint-Cyr. Elle s'est prise d'affection pour une enfant de sept ans, Marie de La Tour. A son intention, elle decide de mettre par ecrit les souvenirs de sa vie.",
+    "directors": [
+      "Françoise Chandernagor",
+      "Nina Companéez"
+    ],
+    "cast": [
+      {
+        "name": "Agathe de La Boulaye",
+        "character": "Duchesse de Bourgogne"
+      },
+      {
+        "name": "Claude Aufaure",
+        "character": "Cabart de Villemont"
+      },
+      {
+        "name": "Dominique Blanc",
+        "character": "Françoise d'Aubigné, Marquise de Maintenon"
+      },
+      {
+        "name": "Didier Sandre",
+        "character": "Louis XIV"
+      },
+      {
+        "name": "Michel Duchaussoy",
+        "character": "Paul Scarron"
+      }
+    ]
   }
 ];
