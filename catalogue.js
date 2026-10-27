@@ -1178,5 +1178,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Paul Scarron"
       }
     ]
+  },
+  {
+    "title": "les tontons flingueurs",
+    "kind": "Film",
+    "year": 1963,
+    "period": "1963",
+    "genre": "Comédie, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-tontons-flingueurs.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20tontons%20flingueurs",
+    "summary": "Propriétaire d’une petite usine de tracteurs, Fernand Naudin mène une vie tranquille et sans histoire quand un télégramme l’appelle à Paris. Il arrive à temps pour recueillir le dernier soupir d’un ami de jeunesse, Louis dit « le Mexicain », qui lui confie ses affaires louches en même temps que la garde de sa fille Patricia. Épaulé par maître Folace, un curieux notaire et Pascal, première gâchette du « Mexicain », les ennuis commencent…",
+    "directors": [
+      "Georges Lautner"
+    ],
+    "cast": [
+      {
+        "name": "Lino Ventura",
+        "character": "Fernand Naudin"
+      },
+      {
+        "name": "Bernard Blier",
+        "character": "Raoul Volfoni"
+      },
+      {
+        "name": "Francis Blanche",
+        "character": "Maître Folace"
+      },
+      {
+        "name": "Claude Rich",
+        "character": "Antoine Delafoy"
+      },
+      {
+        "name": "Pierre Bertin",
+        "character": "Adolphe Amédée Delafoy"
+      }
+    ]
   }
 ];
