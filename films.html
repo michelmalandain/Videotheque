@@ -248,7 +248,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     const lien=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR':'https://www.themoviedb.org/search?query='+encodeURIComponent(titre);
     const d=document.createElement('dialog');d.className='film-dialog';
     d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:#160d11;color:#f6e8cf;border:3px double #e8b85b;border-radius:10px;padding:24px';
-    const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
+    const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.style.color='#f5cc7b';close.addEventListener('click',()=>d.close());
     const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
     const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
     const poster=document.createElement('img');poster.src=image ? image.src.replace('/w154','/w500') : (credit.poster_path ? 'https://image.tmdb.org/t/p/w500'+credit.poster_path : '');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';
@@ -260,8 +260,21 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     // Bouton d'ajout : transmet les données exactes de la fiche TMDB à l'administration.
     const annee=(credit.date||'').slice(0,4);
     const ajouter=document.createElement('a');
-    ajouter.textContent='➕ Ajouter à ma vidéothèque';
-    ajouter.style.cssText='display:inline-block;margin-top:18px;padding:12px 16px;background:#7e101a;color:#ffe2a0;border:2px solid #e8b85b;border-radius:6px;text-decoration:none;font-weight:bold';
+    ajouter.textContent='Ajouter à ma vidéothèque (administration)';
+    ajouter.style.cssText='display:inline-block;margin-top:12px;color:#e8b85b;text-decoration:underline;font-size:14px;background:transparent;border:0;padding:0';
+    const proposer=document.createElement('button');proposer.type='button';proposer.textContent='Proposer ce '+(type==='tv'?'programme':'film');
+    proposer.style.cssText='display:block;margin-top:16px;padding:10px 16px;background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;border-radius:5px;font:inherit;cursor:pointer';
+    proposer.addEventListener('click',()=>{
+      const bouton=[...document.querySelectorAll('nav button')].find(b=>b.textContent.includes('Proposer un titre'));
+      if(!bouton){alert('Formulaire de proposition indisponible.');return;}
+      bouton.click();
+      const dialogue=[...document.querySelectorAll('dialog')].find(x=>x.open&&x.querySelector('form.public-suggest'));
+      if(!dialogue)return;
+      const form=dialogue.querySelector('form.public-suggest');
+      const champTitre=form.querySelector('[name="title"]');if(champTitre)champTitre.value=titre;
+      const champAnnee=form.querySelector('[name="year"]');if(champAnnee)champAnnee.value=(credit.date||'').slice(0,4);
+      const choix=form.querySelector('select');if(choix)choix.value=type==='tv'?'Série':'Film';
+    });
     const params=new URLSearchParams({title:titre,year:annee,kind:type==='tv'?'Série':'Film'});
     ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
     ajouter.target='_blank';ajouter.rel='noopener noreferrer';
@@ -271,6 +284,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     const present=catalogue.find(x=>normaliser(x.title)===normaliser(titre)
       && String(x.year)===annee && (x.kind==='Série'?'tv':'movie')===type);
     if(present){
+      proposer.remove();
       ajouter.textContent='Déjà dans ma vidéothèque';
       ajouter.removeAttribute('href');ajouter.removeAttribute('target');
       ajouter.setAttribute('aria-disabled','true');
@@ -282,7 +296,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
       poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ouvrirCatalogue()}});
     }
 
-    info.append(meta,label,overview,source,ajouter);grid.append(poster,info);d.append(close,h,grid);
+    info.append(meta,label,overview,source,proposer,ajouter);grid.append(poster,info);d.append(close,h,grid);
     document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
     // Complète la fiche si le Worker propose déjà une route de détails.
     if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id))
