@@ -1178,15 +1178,5 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Paul Scarron"
       }
     ]
-  },
-  {
-    "title": "les tontons flingeurs",
-    "kind": "Film",
-    "year": 1963,
-    "period": "1963",
-    "genre": "À compléter",
-    "description": "Description à compléter.",
-    "poster": "affiches/les-tontons-flingeurs.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=les%20tontons%20flingeurs"
   }
 ];
