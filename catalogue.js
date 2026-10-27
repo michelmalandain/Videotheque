@@ -1069,5 +1069,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Bill (voice) (uncredited)"
       }
     ]
+  },
+  {
+    "title": "L'Histoire très bonne et très joyeuse de Colinot Trousse-Chemise",
+    "kind": "Film",
+    "year": 1973,
+    "period": "1973",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-histoire-tres-bonne-et-tres-joyeuse-de-colinot-trousse-chemise.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'Histoire%20tr%C3%A8s%20bonne%20et%20tr%C3%A8s%20joyeuse%20de%20Colinot%20Trousse-Chemise",
+    "summary": "Colinot, un jeune homme heureux, voit sa fiancée enlevée par trois bandits de grand chemin. Il part à sa recherche. Une quête qui le conduit vers un grand nombre de jeunes et jolies femmes.",
+    "directors": [
+      "Nina Companéez"
+    ],
+    "cast": [
+      {
+        "name": "Francis Huster",
+        "character": "Colinot"
+      },
+      {
+        "name": "Nathalie Delon",
+        "character": "Bertrade"
+      },
+      {
+        "name": "Brigitte Bardot",
+        "character": "Arabelle"
+      },
+      {
+        "name": "Bernadette Lafont",
+        "character": "Rosemonde"
+      },
+      {
+        "name": "Ottavia Piccolo",
+        "character": "Bergamotte"
+      }
+    ]
   }
 ];
