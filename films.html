@@ -136,7 +136,8 @@ async function showPerson(person,source,role){
    if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;img.loading='lazy';row.append(img)}
    const info=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small');
    title.textContent=x.title;meta.textContent=(x.date||'').slice(0,4)+' · '+(x.media_type==='tv'?'Série':'Film')+(x.job?' · '+x.job:'');
-   info.append(title,meta);row.append(info);list.append(row);
+   const lienTitre=document.createElement('a');lienTitre.href='#fiche-tmdb-'+(x.id||'');lienTitre.textContent=x.title;lienTitre.title='Ouvrir la fiche de '+x.title;lienTitre.style.cssText='color:#f5cc7b;text-decoration:underline;text-underline-offset:3px;cursor:pointer';title.textContent='';title.append(lienTitre);
+    info.append(title,meta);row.append(info);list.append(row);
   }
  }catch(error){document.getElementById('person-count').textContent=error.message||'Filmographie indisponible'}
 }
@@ -239,7 +240,7 @@ article.append(title,poster,info,credits);cards.append(article)}document.getElem
     const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.addEventListener('click',()=>d.close());
     const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
     const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
-    const poster=document.createElement('img');poster.src=image ? image.src.replace('/w154','/w500') : (credit.poster_path ? 'https://image.tmdb.org/t/p/w500'+credit.poster_path : '');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';
+    const poster=document.createElement('img');poster.src=image ? image.src.replace('/w154','/w500') : (credit.poster_path ? 'https://image.tmdb.org/t/p/w500'+credit.poster_path : '');poster.alt='Affiche de '+titre;poster.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b';if(!poster.src||(!image&&!credit.poster_path)){poster.style.display='none'}else{poster.onerror=()=>{poster.style.display='none'}};
     const info=document.createElement('div');info.style.cssText='flex:1;min-width:220px;line-height:1.6';
     const meta=document.createElement('p');meta.textContent=(credit.date||'').slice(0,4)+' · '+(type==='tv'?'Série':'Film')+(credit.job?' · '+credit.job:'');
     const label=document.createElement('h3');label.textContent='Synopsis';label.style.color='#f5cc7b';
