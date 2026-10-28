@@ -119,6 +119,18 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 #bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:3}
 #bioDialog .bio-results{max-width:100%}
 @media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog #bioForm{width:100%!important}#bioDialog .cinema-chair{display:none!important}#bioDialog .cinema-projector{display:none!important}}
+
+/* Version avec vrai PNG : projecteur et fauteuil photographiques */
+#bioDialog{width:min(94vw,760px)!important;max-width:760px!important;min-height:575px!important;padding:26px 35px 34px!important;isolation:isolate;background:linear-gradient(125deg,#270b0c,#170708)!important}
+#bioDialog::before{left:31%!important;width:40%!important}
+#bioDialog .cinema-chair,#bioDialog .cinema-projector{display:none!important}
+#bioDialog::after{content:""!important;display:block!important;position:absolute!important;right:5px!important;top:92px!important;width:270px!important;height:455px!important;z-index:0!important;opacity:1!important;background:url("decor-recherche-cinemaland.png") center / contain no-repeat!important;pointer-events:none!important}
+#bioDialog #bioForm{width:63%!important;position:relative;z-index:2}
+#bioDialog h2{position:relative;z-index:2;text-align:left!important;margin:32px 0 28px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2;max-width:100%}
+#bioDialog>button:first-child{background:linear-gradient(#a9222c,#650b13)!important;color:#ffe0a0!important;border:2px solid #d8a04e!important;font-weight:bold!important;padding:10px 19px!important}
+#bioDialog>button:first-child:hover{filter:brightness(1.2)}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog::after{opacity:.18!important;right:0!important;width:55%!important}#bioDialog #bioForm{width:100%!important}#bioDialog h2{text-align:center!important}}
 </style>
 </head>
 <body>
