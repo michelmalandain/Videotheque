@@ -48,6 +48,11 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .bio-story h3{color:#f4c66e;font:30px Georgia,serif;margin:0 0 14px}
 .bio-story p{white-space:pre-line;font:18px/1.65 Georgia,serif;text-align:justify;margin:0}
 @media(max-width:620px){.bio-profile{grid-template-columns:1fr}#bioCardTitle{text-align:center}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
+
+/* Fiche biographique plein écran : bandeau du décor visible en haut */
+#bioCard{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:100dvh;margin:0;border-radius:0;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;padding:clamp(125px,14vw,205px) clamp(18px,4vw,65px) 35px;background-size:100% auto;background-position:center top;background-attachment:local}
+#bioCardBody{max-width:1370px;margin:0 auto}
+@media(max-width:620px){#bioCard{padding:105px 14px 25px;background-size:auto 520px;background-position:center top}}
 </style>
 </head>
 <body>
