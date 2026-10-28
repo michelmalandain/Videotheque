@@ -105,6 +105,13 @@ nav .proposer-titre-harmonise{font-weight:bold!important;letter-spacing:.065em;a
 .cinema-portraits img:nth-child(2),.cinema-portraits img:nth-child(3){opacity:.35}
 @media(max-width:900px){.cinema-portraits{padding:0 3%}.cinema-portraits img{width:65px;height:100px;opacity:.28!important}}
 @media(max-width:560px){.cinema-portraits img:nth-child(n+3){display:none}.cinema-portraits img{width:48px;height:78px}}
+</style><style id="cinemaland-bandeau-valide">
+/* Bandeau illustré approuvé : uniquement la partie supérieure de la maquette. */
+header{height:auto!important;min-height:0!important;aspect-ratio:1765/290;padding:0!important;background:#20070c url('bandeau-cinemaland.png') center center/100% 100% no-repeat!important;border-bottom:3px solid #e6b968!important}
+header::before,header::after{display:none!important;content:none!important}
+header h1,header p{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;margin:0!important;padding:0!important}
+.cinema-portraits{display:none!important}
+@media(max-width:650px){header{aspect-ratio:1765/350;background-size:100% 100%!important}}
 </style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>LE CINÉMA DES MALANDAIN</p></header><nav><a class="admin-link" href="index.html">ACCUEIL</a><a class="admin-link" href="films.html">FILMS</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
 (function(){
@@ -451,23 +458,5 @@ window.cinemalandLienGerer=function(x){
 (function(){
  function ajuster(){const nav=document.querySelector('nav');if(!nav)return;for(const b of nav.querySelectorAll('button')){if((b.textContent.includes('Proposer un titre')||b.textContent.includes('PROPOSER UNE SÉRIE'))){b.textContent='PROPOSER UNE SÉRIE';b.classList.add('proposer-titre-harmonise');}}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ajuster);else ajuster();
-})();
-</script><script id="cinemaland-portraits-authentiques">
-(function(){
- const header=document.querySelector('header');if(!header)return;
- const people=[],seen=new Set();
- for(const film of (window.CINEMALAND_CATALOGUE||[]))for(const person of (film.cast||[])){
-  if(!person||typeof person!=='object')continue;
-  const path=person.profile_path||person.profile||'';
-  if(!/^\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/i.test(path))continue;
-  const id=person.tmdb_id||person.id||person.name;
-  if(seen.has(id))continue;seen.add(id);people.push({path,name:person.name||'Acteur'});
- }
- if(!people.length)return;
- const strip=document.createElement('div');strip.className='cinema-portraits';strip.setAttribute('aria-hidden','true');
- for(const person of people.slice(0,4)){
-  const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w185'+person.path;img.alt='';img.loading='eager';img.onerror=()=>img.remove();strip.append(img);
- }
- header.prepend(strip);
 })();
 </script></body></html>
