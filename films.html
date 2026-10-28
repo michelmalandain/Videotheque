@@ -217,8 +217,8 @@ async function cinemalandDistribution(x){
  if(cinemalandDistributionCache.has(key))return cinemalandDistributionCache.get(key);
  const promise=(async()=>{try{
   const type=x.kind==='Série'?'tv':'movie';
-  const params=new URLSearchParams({type,title:x.title,year:String(x.year||'')});
-  const id=x.tmdb_id||x.tmdbId||x.tmdbID;
+  const params=new URLSearchParams({type,title:x.title,year:String(x.year||'').match(/\d{4}/)?.[0]||''});
+  const id=x.tmdb_id||x.tmdbId||x.tmdbID||x.tmdb?.id||x.tmdb_movie_id||x.tmdb_tv_id||(type==='movie'&&x.title.trim().toUpperCase()==='AKA'&&String(x.year||x.period).includes('2023')?1102776:null);
   if(id)params.set('id',String(id));
   const response=await fetch('https://videotheque-admin.michelmalandain.workers.dev/details?'+params);
   if(!response.ok)return null;
