@@ -1282,5 +1282,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Madame de Volanges"
       }
     ]
+  },
+  {
+    "title": "existenz",
+    "kind": "Film",
+    "year": 1999,
+    "period": "1999",
+    "genre": "Action, Thriller, Science-Fiction",
+    "description": "Description à compléter.",
+    "poster": "affiches/existenz.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=existenz",
+    "summary": "Dans un avenir proche, une créatrice de génie, Allegra Geller, a inventé une nouvelle génération de jeu qui se connecte directement au système nerveux : eXistenZ. Lors de la séance de présentation du jeu, un fanatique cherche à la tuer. Un jeune stagiaire en marketing, Ted Pikul, sauve la vie d’Allegra. Une poursuite effrénée s’engage autant dans la réalité que dans l’univers trouble et mystérieux du jeu.",
+    "directors": [
+      "David Cronenberg"
+    ],
+    "cast": [
+      {
+        "name": "Jennifer Jason Leigh",
+        "character": "Allegra Geller"
+      },
+      {
+        "name": "Jude Law",
+        "character": "Ted Pikul"
+      },
+      {
+        "name": "Ian Holm",
+        "character": "Kiri Vinokur"
+      },
+      {
+        "name": "Willem Dafoe",
+        "character": "Gas"
+      },
+      {
+        "name": "Don McKellar",
+        "character": "Yevgeny Nourish"
+      }
+    ]
   }
 ];
