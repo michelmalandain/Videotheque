@@ -1318,5 +1318,46 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Yevgeny Nourish"
       }
     ]
+  },
+  {
+    "title": "Objectif Nul",
+    "kind": "Série",
+    "year": 1987,
+    "period": "1987",
+    "genre": "Comédie, Science-Fiction & Fantastique",
+    "description": "Description à compléter.",
+    "poster": "affiches/objectif-nul.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Objectif%20Nul",
+    "summary": "« À des millions d’années burosse de la terre, Zeitoun, Panty, Syntaxerror, le mercenaire et le capitaine Lamar, dérivent à bord du Libérator. Leur objectif ? Nul ! » Cette introduction d’Alain Chabat est le démarrage de tous les épisodes du premier rendez-vous quotidien des Nuls.\n\nÀ l’intérieur du vaisseau spatial, la cohabitation d’une drôle d’équipe n’est pas aisée. Au poste de pilotage, on y croise le capitaine schizophrène Lamar (Alain Chabat), le cuisinier Zeitoun (Bruno Carette) et ses « moukraines à la glaviouse », mais également la jeune Panty (Chantal Lauby), seule femme à bord. L’androïde Syntaxerror (Alexandre Pottier) aide le capitaine, tandis que Le Mercenaire (Blats, alias Jean-Guy Ruff) est un condensé entre brute épaisse et légume sans cervelle.\n\nAu hasard de leurs aventures, parodies de JT, scènes en costumes et fausses publicités (Toniglandyl, l’ami déchiré...) composent un régime d’humour où le comique de l’absurde l’emporte toujours sur l’histoire.",
+    "directors": [
+      "Alain Chabat",
+      "Chantal Lauby",
+      "Dominique Farrugia",
+      "Blats",
+      "Alexandre Pottier",
+      "Bruno Carette"
+    ],
+    "cast": [
+      {
+        "name": "Jean-Guy Ruff",
+        "character": "le Mercenaire"
+      },
+      {
+        "name": "Bruno Carette",
+        "character": "Zeitoun"
+      },
+      {
+        "name": "Alexandre Pottier",
+        "character": "Syntaxerror"
+      },
+      {
+        "name": "Chantal Lauby",
+        "character": "Panty"
+      },
+      {
+        "name": "Alain Chabat",
+        "character": "le capitaine Lamar"
+      }
+    ]
   }
 ];
