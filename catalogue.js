@@ -1359,5 +1359,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "le capitaine Lamar"
       }
     ]
+  },
+  {
+    "title": "Tueurs nés",
+    "kind": "Film",
+    "year": 1994,
+    "period": "1994",
+    "genre": "Crime, Thriller, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/tueurs-nes.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Tueurs%20n%C3%A9s",
+    "summary": "Mickey et Mallory Knox, un jeune couple, décident de s’embarquer dans une virée sanglante, tuant les gens qu’ils rencontrent sur leur route, eux qui ont été victimes de mauvais traitements de la part de leurs parents respectifs. Leur déchéance à travers les États-Unis est détaillée dans les médias.",
+    "directors": [
+      "Oliver Stone"
+    ],
+    "cast": [
+      {
+        "name": "Woody Harrelson",
+        "character": "Mickey Knox"
+      },
+      {
+        "name": "Juliette Lewis",
+        "character": "Mallory Knox"
+      },
+      {
+        "name": "Robert Downey Jr.",
+        "character": "Wayne Gale"
+      },
+      {
+        "name": "Tommy Lee Jones",
+        "character": "Warden Dwight McClusky"
+      },
+      {
+        "name": "Tom Sizemore",
+        "character": "Det. Jack Scagnetti"
+      }
+    ]
   }
 ];
