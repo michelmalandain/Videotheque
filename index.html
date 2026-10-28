@@ -49,16 +49,29 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .bio-story p{white-space:pre-line;font:18px/1.65 Georgia,serif;text-align:justify;margin:0}
 @media(max-width:620px){.bio-profile{grid-template-columns:1fr}#bioCardTitle{text-align:center}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
 
-/* Fiche biographique plein écran : bandeau du décor visible en haut */
-#bioCard{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:100dvh;margin:0;border-radius:0;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;padding:clamp(235px,22vw,300px) clamp(18px,4vw,65px) 35px;background-size:min(100%, 1250px) auto;background-position:center top;background-attachment:scroll;background-color:#170609}
-#bioCardBody{max-width:1370px;margin:0 auto}
-@media(max-width:620px){#bioCard{padding:170px 14px 25px;background-size:100% auto;background-position:center top}}
-
-/* Bandeau décoratif indépendant, toujours visible, contenu défilant dessous */
-#bioCard{padding:0!important;background:#170609!important;overflow-y:auto!important;overflow-x:hidden!important;}
-#bioCard::before{content:"";display:block;position:sticky;top:0;z-index:5;width:100%;height:clamp(75px,10vw,145px);background:#170609 url("decor-fiche-cinemaland.png") center center / 100% 100% no-repeat;border-bottom:2px solid #e8b85b;box-shadow:0 8px 20px #000a;pointer-events:none;}
-#bioCardBody{padding:28px clamp(18px,4vw,65px) 45px;max-width:1370px;margin:auto;background:linear-gradient(90deg,#170609,#290b12,#170609);}
-@media(max-width:620px){#bioCard::before{height:clamp(55px,12vw,85px)}#bioCardBody{padding:18px 14px 28px}}
+/* CINEMALAND — fiche corrigée : bandeau indépendant, jamais déformé */
+#bioCard{
+ position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;
+ max-height:100dvh;margin:0;padding:0!important;border:0;border-radius:0;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ background:#170609!important;box-sizing:border-box;
+}
+#bioCard::before{
+ content:"";display:block;position:sticky;top:0;z-index:5;
+ width:100%;height:auto;aspect-ratio:1721 / 148;
+ background:#170609 url("bandeau-fiche-cinemaland.png") center top / 100% auto no-repeat;
+ border-bottom:2px solid #e8b85b;box-sizing:border-box;
+ box-shadow:0 5px 16px #000a;pointer-events:none;
+}
+#bioCardBody{
+ padding:24px clamp(18px,4vw,65px) 45px;
+ max-width:1370px;margin:0 auto;
+ background:linear-gradient(90deg,#170609,#290b12,#170609);
+}
+@media(max-width:620px){
+ #bioCardBody{padding:18px 14px 28px}
+ .bio-profile{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
