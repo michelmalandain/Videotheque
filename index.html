@@ -56,9 +56,9 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 
 /* Bandeau décoratif indépendant, toujours visible, contenu défilant dessous */
 #bioCard{padding:0!important;background:#170609!important;overflow-y:auto!important;overflow-x:hidden!important;}
-#bioCard::before{content:"";display:block;position:sticky;top:0;z-index:5;width:100%;height:clamp(105px,16.5vw,245px);background:#170609 url("decor-fiche-cinemaland.png") center top / 100% auto no-repeat;border-bottom:2px solid #e8b85b;box-shadow:0 8px 20px #000a;pointer-events:none;}
+#bioCard::before{content:"";display:block;position:sticky;top:0;z-index:5;width:100%;height:clamp(75px,10vw,145px);background:#170609 url("decor-fiche-cinemaland.png") center center / 100% 100% no-repeat;border-bottom:2px solid #e8b85b;box-shadow:0 8px 20px #000a;pointer-events:none;}
 #bioCardBody{padding:28px clamp(18px,4vw,65px) 45px;max-width:1370px;margin:auto;background:linear-gradient(90deg,#170609,#290b12,#170609);}
-@media(max-width:620px){#bioCard::before{height:clamp(65px,18vw,120px)}#bioCardBody{padding:18px 14px 28px}}
+@media(max-width:620px){#bioCard::before{height:clamp(55px,12vw,85px)}#bioCardBody{padding:18px 14px 28px}}
 </style>
 </head>
 <body>
