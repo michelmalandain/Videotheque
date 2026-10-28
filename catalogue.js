@@ -1246,5 +1246,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Marion Delambre"
       }
     ]
+  },
+  {
+    "title": "Les Liaisons dangereuses",
+    "kind": "Film",
+    "year": 1988,
+    "period": "1988",
+    "genre": "Drame, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-liaisons-dangereuses.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Liaisons%20dangereuses",
+    "summary": "Deux aristocrates brillants et spirituels, la marquise de Merteuil et le séduisant Vicomte de Valmont, signent un pacte d'inviolable amitié à la fin de leur liaison. C'est au nom de celui-ci que la marquise demande à Valmont de séduire la candide Cécile de Volanges qui doit prochainement épouser son ex-favori, M. de Bastide. Mais Valmont a entrepris de séduire la vertueuse Mme de Tourvel.",
+    "directors": [
+      "Stephen Frears"
+    ],
+    "cast": [
+      {
+        "name": "Glenn Close",
+        "character": "Marquise Isabelle de Merteuil"
+      },
+      {
+        "name": "John Malkovich",
+        "character": "Vicomte Sébastien de Valmont"
+      },
+      {
+        "name": "Michelle Pfeiffer",
+        "character": "Madame Marie de Tourvel"
+      },
+      {
+        "name": "Uma Thurman",
+        "character": "Cécile de Volanges"
+      },
+      {
+        "name": "Swoosie Kurtz",
+        "character": "Madame de Volanges"
+      }
+    ]
   }
 ];
