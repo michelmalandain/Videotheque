@@ -281,6 +281,13 @@ const actors=document.createElement('ul');
 for(const person of (x.cast||[])){const li=document.createElement('li');li.append(filmographyLink(person,x,'actor'));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
 if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
 credits.append(heading,names,actorsTitle,actors);info.append(credits);
+// AKA uniquement : compléter le pavé « AVEC » à l'ouverture de sa fiche.
+if(x.title.trim().toUpperCase()==='AKA' && String(x.year||x.period).includes('2023')){
+  const ouvrirAKA=()=>cinemalandRemplirDistribution(x,actors,'li');
+  poster.addEventListener('click',ouvrirAKA);
+  poster.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')ouvrirAKA()});
+}
+
 article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(article,x)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
 </script><script>
 /* Fiche de film depuis les affiches des filmographies TMDB. */
