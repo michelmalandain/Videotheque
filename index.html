@@ -104,6 +104,7 @@ async function showBio(page){
   const p=await r.json();if(!r.ok)throw Error(p.message||'Fiche indisponible');
   body.replaceChildren();
   const identity={id:p.id};
+  const btn=document.createElement('button');btn.type='button';btn.textContent='Voir la filmographie';btn.onclick=()=>showBioFilms(p.name,identity);body.append(btn);
   if(p.profile_path){
    const img=document.createElement('img');img.className='bio-photo';img.src='https://image.tmdb.org/t/p/w342'+p.profile_path;img.alt='Portrait de '+p.name;img.title='Voir la filmographie';img.tabIndex=0;
    img.onclick=()=>showBioFilms(p.name,identity);img.onkeydown=e=>{if(e.key==='Enter')showBioFilms(p.name,identity)};
@@ -111,7 +112,6 @@ async function showBio(page){
   }else body.append(para('Photographie','Non disponible'));
   body.append(para('Nom et prénom',p.name),para('Date de naissance',formatDate(p.birthday)),para('Date de décès',formatDate(p.deathday)),para('Lieu de naissance',p.place_of_birth));
   if(p.biography){const bio=document.createElement('p');bio.textContent=p.biography;body.append(bio)}
-  const btn=document.createElement('button');btn.type='button';btn.textContent='Voir la filmographie';btn.onclick=()=>showBioFilms(p.name,identity);body.append(btn);
  }catch(e){body.replaceChildren(para('Erreur',e.message))}
 }
 // Catalogue unique, déjà chargé par catalogue.js pour les compteurs.
