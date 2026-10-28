@@ -229,7 +229,7 @@ async function cinemalandDistribution(x){
 }
 async function cinemalandRemplirDistribution(x,element,tag){
  const cast=await cinemalandDistribution(x);if(!cast)return;
- if(tag==='li'&&document.getElementById('film-dialog').dataset.currentTitle!==x.title)return;
+ if(element.id==='film-cast'&&document.getElementById('film-dialog').dataset.currentTitle!==x.title)return;
  element.replaceChildren();
  for(const a of cast){const li=document.createElement(tag);li.append(filmographyLink(a,x,'actor'));if(a.character)li.append(document.createTextNode(' — '+a.character));element.append(li)}
 }
@@ -280,7 +280,7 @@ const actorsTitle=document.createElement('h3');actorsTitle.textContent='AVEC :';
 const actors=document.createElement('ul');
 for(const person of (x.cast||[])){const li=document.createElement('li');li.append(filmographyLink(person,x,'actor'));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
 if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
-credits.append(heading,names,actorsTitle,actors);info.append(credits);cinemalandRemplirDistribution(x,actors,'li');
+credits.append(heading,names,actorsTitle,actors);info.append(credits);if('IntersectionObserver' in window){const castObserver=new IntersectionObserver((entries,observer)=>{for(const entry of entries){if(entry.isIntersecting){observer.unobserve(entry.target);cinemalandRemplirDistribution(x,actors,'li');}}},{rootMargin:'250px'});castObserver.observe(actors);}else{cinemalandRemplirDistribution(x,actors,'li');}
 article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(article,x)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button[data-kind]').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button[data-kind]').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
 </script><script>
 /* Fiche de film depuis les affiches des filmographies TMDB. */
@@ -566,6 +566,6 @@ window.cinemalandLienGerer=function(x){
  }));
  // Le bouton « proposer » est injecté après le chargement : harmonisation même en cas d'injection différée.
  const nav=document.querySelector('nav');
- if(nav){const update=()=>nav.querySelectorAll('button').forEach(b=>{if(/proposer (un titre|un film|une série)/i.test(b.textContent)){b.classList.add('proposer-titre-harmonise');b.textContent='PROPOSER UN '+(E SÉRIE);}});update();new MutationObserver(update).observe(nav,{childList:true,subtree:true});}
+ if(nav){const update=()=>nav.querySelectorAll('button').forEach(b=>{if(/proposer (un titre|un film|une série)/i.test(b.textContent)){b.classList.add('proposer-titre-harmonise');b.textContent='PROPOSER UNE SÉRIE';}});update();new MutationObserver(update).observe(nav,{childList:true,subtree:true});}
 })();
 </script></body></html>
