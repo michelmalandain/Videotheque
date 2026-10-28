@@ -35,11 +35,11 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:inline-block;margin-top:12px;color:#f5cc7b!important;font:inherit;text-decoration:underline;background:transparent;border:0;padding:0}.bio-propose{display:block;width:max-content;max-width:100%;margin-top:14px;padding:12px 16px;background:#7e101a;color:#f5cc7b;border:2px solid #e8b85b;border-radius:6px;font:inherit;font-weight:bold;cursor:pointer}.bio-propose:hover{filter:brightness(1.2)}.bio-film-detail>button:first-child{color:#f5cc7b!important;background:#7e101a;border:1px solid #e8b85b;border-radius:5px;padding:9px 13px;font:inherit;cursor:pointer}.bio-proposal-dialog{background:#231016;color:#f6e8cf;border:2px solid #c89442;max-width:550px;width:90%;padding:24px;font:inherit}.bio-proposal-dialog input,.bio-proposal-dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:9px;background:#fff1d9;color:#23130e;border:1px solid #c89442;font:inherit}.bio-proposal-dialog button{background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;padding:9px 14px;cursor:pointer;font:inherit}.bio-proposal-dialog label{display:block;margin-top:10px}
 
 /* CINEMALAND — fiche biographique cinéma */
-#bioCard{width:min(1050px,95vw);max-width:1050px;max-height:92vh;overflow:auto;background:radial-gradient(ellipse at top,#541018,#160709 75%);color:#f9e9cf;border:3px double #e8b85b;border-radius:18px;padding:22px 28px;box-shadow:0 0 45px #000}
+#bioCard{width:min(1050px,95vw);max-width:1050px;max-height:92vh;overflow:auto;background:linear-gradient(90deg,rgba(20,3,7,.88),rgba(27,4,8,.82)),url("decor-fiche-cinemaland.png") center center / cover no-repeat;color:#f9e9cf;border:3px double #e8b85b;border-radius:18px;padding:22px 28px;box-shadow:0 0 45px #000}
 #bioCard::backdrop{background:#000c}
-#bioCardTitle{font:clamp(30px,5vw,55px) Georgia,serif;color:#f4c66e;text-align:center;margin:8px 0 20px;text-transform:uppercase;letter-spacing:2px}
-.bio-profile{display:grid;grid-template-columns:minmax(170px,260px) 1fr;gap:26px;align-items:start}
-.bio-profile .bio-photo{width:100%;max-width:260px;max-height:360px;margin:0;border:3px solid #d5a346;box-shadow:0 5px 20px #0008;object-fit:cover}
+#bioCardTitle{font:clamp(30px,4.5vw,54px) Georgia,serif;color:#f4c66e;text-align:left;margin:0 0 16px;text-transform:uppercase;letter-spacing:2px;line-height:1.12}
+.bio-profile{display:grid;grid-template-columns:minmax(170px,280px) minmax(0,1fr);gap:30px;align-items:start}
+.bio-profile .bio-photo{width:100%;max-width:280px;max-height:380px;margin:0;align-self:start;border:3px solid #d5a346;box-shadow:0 5px 20px #0008;object-fit:cover}
 .bio-facts{font-size:18px;line-height:1.5}.bio-facts p{margin:0 0 9px}.bio-facts strong{color:#f4c66e}
 .bio-actions{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
 .bio-actions button{flex:1 1 150px;background:linear-gradient(#6e101b,#33070d);color:#f5cf7d;border:2px solid #e8b85b;border-radius:9px;padding:12px 15px;font:19px Georgia,serif;cursor:pointer}
@@ -47,7 +47,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 .bio-story{border-top:1px solid #c99b4c;margin-top:20px;padding-top:12px}
 .bio-story h3{color:#f4c66e;font:30px Georgia,serif;margin:0 0 14px}
 .bio-story p{white-space:pre-line;font:18px/1.65 Georgia,serif;text-align:justify;margin:0}
-@media(max-width:620px){.bio-profile{grid-template-columns:1fr}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
+@media(max-width:620px){.bio-profile{grid-template-columns:1fr}#bioCardTitle{text-align:center}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
 </style>
 </head>
 <body>
@@ -79,7 +79,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 </dialog>
 
 <dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
-<dialog id="bioCard" aria-labelledby="bioCardTitle"><h2 id="bioCardTitle"></h2><div id="bioCardBody"></div></dialog>
+<dialog id="bioCard" aria-labelledby="bioCardTitle"><div id="bioCardBody"></div></dialog>
 <dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
 <script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
@@ -112,7 +112,7 @@ const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
 const para=(label,value)=>{const p=document.createElement('p');p.textContent=label+' : '+(value||'Non renseigné');return p;};
 function formatDate(v){if(!v)return 'Non renseignée';const m=v.match(/^[+-]?(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:v;}
 async function showBio(page){
- bioPerson=page.name;el('bioDialog').close();el('bioCardTitle').textContent=page.name;
+ bioPerson=page.name;el('bioDialog').close();
  const body=el('bioCardBody');body.replaceChildren(para('Chargement','en cours'));el('bioCard').showModal();
  try{
   const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(page.id));
@@ -125,7 +125,7 @@ async function showBio(page){
    img.onclick=()=>showBioFilms(p.name,identity);img.onkeydown=e=>{if(e.key==='Enter')showBioFilms(p.name,identity)};
    profile.append(img);
   }else{const absent=document.createElement('p');absent.textContent='Photographie non disponible';profile.append(absent)}
-  const facts=document.createElement('div');facts.className='bio-facts';
+  const facts=document.createElement('div');facts.className='bio-facts';const nameHeading=document.createElement('h2');nameHeading.id='bioCardTitle';nameHeading.textContent=p.name;facts.append(nameHeading);
   const fact=(label,value)=>{if(!value)return;const row=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';row.append(strong,document.createTextNode(value));facts.append(row)};
   fact('Nom',p.name);fact('Naissance',p.birthday?formatDate(p.birthday):null);fact('Lieu de naissance',p.place_of_birth);fact('Décès',p.deathday?formatDate(p.deathday):null);
   fact('Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department==='Directing'?'Réalisation':p.known_for_department);
