@@ -89,6 +89,36 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 #bioDialog .bio-results button::after{content:"›";margin-left:auto;font-size:30px;color:#f5c66e}
 #bioDialog .bio-results button:hover{background:#663029;border-color:#ffe1a1}
 @media(max-width:600px){#bioDialog{padding:20px}#bioDialog::before{height:27px}}
+
+/* CINEMALAND — salon de recherche version cinéma : décor et dimensions */
+#bioDialog{width:min(94vw,650px)!important;max-width:650px!important;max-height:94dvh!important;padding:30px 32px 34px!important;border:4px ridge #d7a04b!important;border-radius:18px!important;background:radial-gradient(ellipse at 80% 26%,#6c1b1b 0%,#250b0c 37%,#130708 85%)!important;box-shadow:0 0 0 5px #250c0c,0 24px 90px #000,inset 0 0 60px #000!important;isolation:isolate}
+#bioDialog::before{content:""!important;position:absolute;top:8px;left:25%;width:52%;height:65px!important;margin:0!important;clip-path:none!important;border-radius:0!important;opacity:1!important;pointer-events:none;background:repeating-linear-gradient(125deg,#f5e6c8 0 21px,#1a1311 21px 42px)!important;transform:rotate(-8deg);border:6px solid #21140f;box-shadow:0 4px 8px #0009;z-index:-1}
+#bioDialog::after{content:"";position:absolute;right:0;top:92px;width:45%;height:370px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 92% 4%,#fff0ad 0 2%,#f9b955aa 3%,transparent 9%),linear-gradient(151deg,transparent 28%,#f9bd532c 43%,#f9bd5300 70%);opacity:.9}
+#bioDialog h2{text-align:center!important;margin:36px 0 30px!important;font:bold clamp(26px,3vw,35px) Georgia,serif!important;text-shadow:0 2px 12px #b87128}
+#bioDialog #bioForm{position:relative;width:70%;z-index:2}
+#bioDialog label{font-size:18px!important}
+#bioDialog input{font-size:18px!important;padding:14px!important}
+#bioDialog #bioForm>button{width:100%!important;margin:20px 0 12px!important;font-size:20px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2}
+#bioDialog .bio-results button{min-height:68px!important;font-size:19px!important}
+#bioDialog .bio-results button:hover{transform:translateX(2px)}
+#bioDialog .cinema-chair{position:absolute;right:25px;top:245px;width:170px;height:210px;pointer-events:none;z-index:1;filter:drop-shadow(0 10px 8px #000c)}
+#bioDialog .cinema-chair svg{width:100%;height:100%}
+#bioDialog>button:first-child{position:relative;z-index:3}
+@media(max-width:650px){#bioDialog{padding:18px!important}#bioDialog #bioForm{width:100%}#bioDialog .cinema-chair{display:none}#bioDialog::after{opacity:.35}#bioDialog h2{margin:25px 0!important}}
+
+/* VERSION CORRIGÉE — projecteur et fauteuil réellement visibles */
+#bioDialog{width:min(94vw,690px)!important;max-width:690px!important;min-height:555px!important;padding:24px 30px 34px!important;overflow-x:hidden!important}
+#bioDialog::before{z-index:0!important;top:7px!important;left:29%!important;width:45%!important;height:42px!important;transform:rotate(-4deg)!important}
+#bioDialog::after{display:none!important}
+#bioDialog h2{position:relative;z-index:3;margin:28px 0 26px!important}
+#bioDialog #bioForm{width:66%!important;position:relative;z-index:3}
+#bioDialog .cinema-chair{display:block!important;position:absolute!important;right:22px!important;top:278px!important;width:185px!important;height:225px!important;z-index:2!important;opacity:1!important}
+#bioDialog .cinema-projector{position:absolute;right:12px;top:125px;width:235px;height:360px;z-index:1;pointer-events:none;opacity:1}
+#bioDialog .cinema-projector svg{width:100%;height:100%;display:block}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:3}
+#bioDialog .bio-results{max-width:100%}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog #bioForm{width:100%!important}#bioDialog .cinema-chair{display:none!important}#bioDialog .cinema-projector{display:none!important}}
 </style>
 </head>
 <body>
@@ -119,7 +149,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 </form>
 </dialog>
 
-<dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
+<dialog id="bioDialog" aria-labelledby="bioTitle"><div class="cinema-projector" aria-hidden="true"><svg viewBox="0 0 235 360" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="spot"><stop stop-color="#fff3bf" stop-opacity=".95"/><stop offset=".2" stop-color="#f6bc57" stop-opacity=".65"/><stop offset="1" stop-color="#f6bc57" stop-opacity="0"/></radialGradient><linearGradient id="beam" x1="1" y1="0" x2="0" y2="1"><stop stop-color="#ffe6a0" stop-opacity=".42"/><stop offset="1" stop-color="#f9ba55" stop-opacity="0"/></linearGradient></defs><path d="M214 28 L0 140 L0 340 Z" fill="url(#beam)"/><circle cx="208" cy="31" r="55" fill="url(#spot)"/><path d="M202 8 L225 14 L217 50 L196 42 Z" fill="#4a3023" stroke="#d7a45b" stroke-width="3"/><path d="M204 41 L218 43 L230 58" fill="none" stroke="#ad8246" stroke-width="4"/><circle cx="206" cy="29" r="12" fill="#fff1bd"/><circle cx="206" cy="29" r="20" fill="none" stroke="#d6a15c" stroke-width="3"/></svg></div><div class="cinema-chair" aria-hidden="true"><svg viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#e0b76f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 40 L135 40 L122 132 L54 132 Z" fill="#24150f"/><path d="M48 46 L128 46 L117 122 L59 122 Z" fill="#39231b"/><path d="M35 132 L144 132 L127 153 L53 153 Z" fill="#281910"/><path d="M57 153 L30 210 M122 153 L148 210 M57 153 L122 153 M33 207 L147 207"/><path d="M43 78 L18 141 L55 153 M135 78 L162 141 L125 153"/><path d="M33 165 L146 165" stroke-width="3"/></g><circle cx="91" cy="18" r="8" fill="#d6a35e"/></svg></div><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
 <dialog id="bioCard" aria-labelledby="bioCardTitle"><div id="bioCardBody"></div></dialog>
 <dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
 <script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
