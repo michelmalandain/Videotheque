@@ -1395,5 +1395,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Det. Jack Scagnetti"
       }
     ]
+  },
+  {
+    "title": "L'Écume des jours",
+    "kind": "Film",
+    "year": 2013,
+    "period": "2013",
+    "genre": "Drame, Fantastique",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-ecume-des-jours.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'%C3%89cume%20des%20jours",
+    "summary": "L’histoire surréelle et poétique d’un jeune homme idéaliste et inventif, Colin, qui rencontre Chloé, une jeune femme semblant être l’incarnation d’un blues de Duke Ellington. Leur mariage idyllique tourne à l’amertume quand Chloé tombe malade d’un nénuphar qui grandit dans son poumon. Pour payer ses soins, dans un Paris fantasmatique, Colin doit travailler dans des conditions de plus en plus absurdes, pendant qu’autour d’eux leur appartement se dégrade et que leur groupe d’amis, dont le talentueux Nicolas, et Chick, fanatique du philosophe Jean-Sol Partre, se délite.",
+    "directors": [
+      "Michel Gondry"
+    ],
+    "cast": [
+      {
+        "name": "Romain Duris",
+        "character": "Colin"
+      },
+      {
+        "name": "Audrey Tautou",
+        "character": "Chloë"
+      },
+      {
+        "name": "Gad Elmaleh",
+        "character": "Chick"
+      },
+      {
+        "name": "Omar Sy",
+        "character": "Nicolas"
+      },
+      {
+        "name": "Aïssa Maïga",
+        "character": "Alise"
+      }
+    ]
   }
 ];
