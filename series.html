@@ -829,11 +829,35 @@ function openBioProposal(title,year,kind){
 @media(max-width:1000px){#person-dialog #person-films{grid-template-columns:1fr}}
 @media(max-width:850px){#person-dialog .cm-hero{height:170px;min-height:170px}#person-dialog .cm-columns{height:auto}#person-dialog .cm-panel{max-height:none}#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr));max-height:50vh}}
 @media(max-width:580px){#person-dialog #person-films{grid-template-columns:1fr}}
+
+/* Fiche biographique plein écran — navigation indépendante du bandeau existant */
+#person-dialog{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;border:0!important;margin:0!important;inset:0!important}
+#person-dialog .cm-hero{height:125px!important;min-height:125px!important;padding:0!important;background:#20070c url('bandeau-cinemaland.png') center/100% 100% no-repeat!important}
+#person-dialog .cm-hero>div{display:none!important}
+#person-dialog .cm-columns{height:calc(100% - 185px)!important;grid-template-columns:minmax(0,2fr) minmax(320px,1fr)!important;padding:8px!important}
+#person-dialog .cm-panel{max-height:none!important;min-height:0!important}
+#person-dialog .cm-scroll{white-space:pre-line;font-size:19px;line-height:1.6}
+#person-dialog .cm-scroll .cm-person-name{font-size:36px;color:#ffdb88;margin:0 0 12px}
+#person-dialog .cm-scroll img.cm-portrait{margin:10px 0 18px;max-height:320px;max-width:260px}
+#person-dialog .cm-dialog-nav{height:60px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:8px 20px;background:#12080c;border-bottom:1px solid #b98b3c;position:relative;z-index:9}
+#person-dialog .cm-dialog-nav button{font:17px Georgia,serif;background:linear-gradient(180deg,#69313a,#310c17);color:#ffe4ae;border:1px solid #e0b66c;border-radius:7px;padding:8px 18px;cursor:pointer}
+#person-dialog .cm-dialog-nav button:hover{background:#8b2737}
+#person-dialog .cm-dialog-nav .cm-close{background:#8c1420;color:white;border:2px solid #ffe3a1}
+#person-dialog>.close{display:none!important}
+#person-dialog #person-films{grid-template-columns:1fr!important}
+@media(max-width:760px){#person-dialog{overflow:auto!important}#person-dialog .cm-hero{height:85px!important;min-height:85px!important}#person-dialog .cm-columns{height:auto!important;display:flex!important;flex-direction:column!important}#person-dialog .cm-panel{min-height:350px!important}#person-dialog .cm-dialog-nav{height:auto;flex-wrap:wrap}}
 </style>
 <script id="cinemaland-trois-colonnes-js">
 (function(){
  const dlg=document.getElementById('person-dialog'),list=document.getElementById('person-films');
  const hero=document.createElement('div');hero.className='cm-hero';
+ const nav=document.createElement('div');nav.className='cm-dialog-nav';
+ for(const [label,dest] of [['Accueil','index.html'],['Films','films.html'],['Séries','series.html']]){
+  const b=document.createElement('button');b.type='button';b.textContent=label;
+  b.addEventListener('click',()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());window.location.href=dest});nav.append(b);
+ }
+ const closeBtn=document.createElement('button');closeBtn.type='button';closeBtn.textContent='Fermer';closeBtn.className='cm-close';closeBtn.addEventListener('click',()=>dlg.close());nav.append(closeBtn);
+ dlg.insertBefore(nav,dlg.firstChild);
  const columns=document.createElement('div');columns.className='cm-columns';
  const panel=(title)=>{const p=document.createElement('section');p.className='cm-panel';const h=document.createElement('h3');h.textContent=title;p.append(h);columns.append(p);return p};
  const bio=panel('Biographie'),bioText=document.createElement('div');bioText.className='cm-scroll';bio.append(bioText);
@@ -858,8 +882,8 @@ function openBioProposal(title,year,kind){
   }
  }
  function buttons(){tabs.replaceChildren();for(const [value,label] of [['all','Tous'],['movie','Films'],['tv','Séries']]){const b=document.createElement('button');b.textContent=label+' ('+credits.filter(x=>value==='all'||(value==='tv')===(x.media_type==='tv')).length+')';b.setAttribute('aria-pressed',String(filter===value));b.onclick=()=>{filter=value;buttons();draw()};tabs.append(b)}}
- window.showPerson=async function(person,source,role){const ticket=++generation;const name=personName(person);document.getElementById('film-dialog')?.close();document.getElementById('bioCard')?.close();
- const title=document.getElementById('person-title');title.textContent=name;hero.replaceChildren();const head=document.createElement('div');const h=document.createElement('h2');h.textContent=name;head.append(h);hero.append(head);
+ window.showPerson=async function(person,source,role){const ticket=++generation;const name=personName(person);document.querySelectorAll('dialog[open]').forEach(d=>{if(d!==dlg)d.close()});
+ const title=document.getElementById('person-title');title.textContent=name;hero.replaceChildren();const head=document.createElement('div');
  bioText.textContent='Chargement de la biographie…';credits=[];filter='all';buttons();draw();if(!dlg.open)dlg.showModal();
  const id=typeof person==='object'?(person.tmdb_id||person.id):null;const params=new URLSearchParams({role:role||'all',name});if(id)params.set('id',id);else if(source){params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie')}
  // Utiliser en priorité l’identifiant de la personne, jamais celui d’un film.
@@ -903,7 +927,7 @@ function openBioProposal(title,year,kind){
  const results=[filmResult[0],await Promise.allSettled([loadPersonDetail()]).then(r=>r[0])];
  if(ticket!==generation||!dlg.open)return;
  if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(!credits.length)list.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
- bioText.replaceChildren();const personData=results[1].status==='fulfilled'?results[1].value:null;
+ bioText.replaceChildren();const nameHeading=document.createElement('h2');nameHeading.className='cm-person-name';nameHeading.textContent=name;bioText.append(nameHeading);const personData=results[1].status==='fulfilled'?results[1].value:null;
  if(personData){const portrait=imgUrl(personData.profile_path);if(portrait){const im=document.createElement('img');im.src=portrait;im.alt='Portrait de '+name;const second=im.cloneNode();second.className='cm-portrait';bioText.append(second)}
  p(head,[personData.known_for_department==='Directing'?'Réalisation':'Interprétation',personData.birthday?'Né(e) le '+personData.birthday:'',personData.place_of_birth].filter(Boolean).join(' · '));p(bioText,personData.biography||'Biographie non disponible sur TMDB.');}
  else p(bioText,'Biographie indisponible pour cette recherche.');
