@@ -521,17 +521,7 @@ article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(a
     ajouter.style.cssText='display:inline-block;margin-top:12px;color:#e8b85b;text-decoration:underline;font-size:14px;background:transparent;border:0;padding:0';
     const proposer=document.createElement('button');proposer.type='button';proposer.textContent='Proposer ce '+(type==='tv'?'programme':'film');
     proposer.style.cssText='display:block;margin-top:16px;padding:10px 16px;background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;border-radius:5px;font:inherit;cursor:pointer';
-    proposer.addEventListener('click',()=>{
-      const bouton=[...document.querySelectorAll('nav button')].find(b=>(b.textContent.includes('Proposer un titre')||b.textContent.includes('PROPOSER UN FILM')));
-      if(!bouton){alert('Formulaire de proposition indisponible.');return;}
-      bouton.click();
-      const dialogue=[...document.querySelectorAll('dialog')].find(x=>x.open&&x.querySelector('form.public-suggest'));
-      if(!dialogue)return;
-      const form=dialogue.querySelector('form.public-suggest');
-      const champTitre=form.querySelector('[name="title"]');if(champTitre)champTitre.value=titre;
-      const champAnnee=form.querySelector('[name="year"]');if(champAnnee)champAnnee.value=(credit.date||'').slice(0,4);
-      const choix=form.querySelector('select');if(choix)choix.value=type==='tv'?'Série':'Film';
-    });
+    proposer.addEventListener('click',()=>openBioProposal(titre,annee,type==='tv'?'Série':'Film'));
     const params=new URLSearchParams({title:titre,year:annee,kind:type==='tv'?'Série':'Film'});
     ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
     ajouter.target='_blank';ajouter.rel='noopener noreferrer';
@@ -791,4 +781,35 @@ document.querySelectorAll('.cinemaland-recherche-personne').forEach(btn=>btn.add
  fetch('https://videotheque-admin.michelmalandain.workers.dev/details?'+params).then(r=>r.ok?r.json():null).then(data=>{if(token!==generation)return;if(!data){filmInfoUnavailable();return}const d=data.details||data;fillFilmInfo(d,token);background(d.backdrop_path||d.backdrop);people=[...(d.cast||[]),...(d.directors||[]),...(d.credits?.crew||[]).filter(p=>p.job==='Director'),...people];enrich()}).catch(()=>{if(token===generation)filmInfoUnavailable()});
  };
 })();
-</script></body></html>
+</script>
+<style id="cinemaland-correctif-proposition">.bio-proposal-dialog{background:#231016;color:#f6e8cf;border:2px solid #c89442;max-width:550px;width:90%;padding:24px;font:inherit}.bio-proposal-dialog input,.bio-proposal-dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:9px;background:#fff1d9;color:#23130e;border:1px solid #c89442;font:inherit}.bio-proposal-dialog button{background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;padding:9px 14px;cursor:pointer;font:inherit}.bio-proposal-dialog label{display:block;margin-top:10px}</style>
+<script id="cinemaland-correctif-proposition">
+function openBioProposal(title,year,kind){
+ const d=document.createElement('dialog');d.className='bio-proposal-dialog';
+ const heading=document.createElement('h2');heading.textContent='Proposer '+(kind==='Série'?'cette série':'ce film');
+ const note=document.createElement('p');note.textContent='Votre proposition sera soumise à la modération.';
+ const form=document.createElement('form');
+ function field(label,name,value,tag='input'){const l=document.createElement('label');l.textContent=label;const x=document.createElement(tag);x.name=name;x.required=true;if(tag==='input')x.type='text';x.value=value||'';l.append(x);form.append(l);return x;}
+ const pseudo=field('Votre pseudonyme','pseudo','');pseudo.maxLength=50;
+ const t=field('Titre','title',title);t.maxLength=160;
+ const y=field('Année','year',year);y.type='number';y.min='1888';y.max='2100';
+ const reason=field('Pourquoi proposer ce titre ?','comment','','textarea');reason.maxLength=1500;
+ const trap=document.createElement('input');trap.name='website';trap.tabIndex=-1;trap.style.display='none';form.append(trap);
+ const widget=document.createElement('div');form.append(widget);
+ const status=document.createElement('p');status.setAttribute('role','status');
+ const submit=document.createElement('button');submit.type='submit';submit.textContent='Envoyer pour validation';submit.disabled=true;
+ const close=document.createElement('button');close.type='button';close.textContent='Fermer';close.onclick=()=>d.close();
+ form.append(submit,status);d.append(close,heading,note,form);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
+ let widgetId=null;
+ (async()=>{try{
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/config');if(!r.ok)throw Error('Service indisponible');const c=await r.json();if(!c.enabled)throw Error('Protection antispam indisponible');
+ if(!window.turnstile){await new Promise((resolve,reject)=>{const existing=document.querySelector('script[data-bio-turnstile]');if(existing){const poll=setInterval(()=>{if(window.turnstile){clearInterval(poll);resolve();}},100);setTimeout(()=>{clearInterval(poll);if(!window.turnstile)reject(Error('Antispam indisponible'));},10000);return;}const script=document.createElement('script');script.dataset.bioTurnstile='1';script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.onload=resolve;script.onerror=()=>reject(Error('Antispam indisponible'));document.head.append(script);});}
+ if(!d.isConnected)return;widgetId=window.turnstile.render(widget,{sitekey:c.sitekey});submit.disabled=false;
+ }catch(e){status.textContent=e.message;}})();
+ form.addEventListener('submit',async e=>{e.preventDefault();if(widgetId===null)return;const token=window.turnstile.getResponse(widgetId);if(!token){status.textContent='Validez la protection antispam.';return;}submit.disabled=true;status.textContent='Envoi…';try{
+ const payload={type:'suggestion',kind,title:t.value,year:Number(y.value),pseudo:pseudo.value,comment:reason.value,stars:0,website:trap.value,token};
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw Error(data.message||'Envoi impossible');status.textContent=data.message;form.reset();t.value=title;y.value=year;
+ }catch(err){status.textContent=err.message;}finally{window.turnstile.reset(widgetId);submit.disabled=false;}});
+}
+</script>
+</body></html>
