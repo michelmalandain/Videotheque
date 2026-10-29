@@ -1467,5 +1467,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Gauthier Gouget"
       }
     ]
+  },
+  {
+    "title": "Dérapages",
+    "kind": "Série",
+    "year": 2020,
+    "period": "2020",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/derapages.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=D%C3%A9rapages",
+    "summary": "Alain Delambre est un homme que le chômage a détruit. Contre toute attente, sa candidature est retenue pour un poste de DRH. Alain veut y croire à tout prix, quitte à mettre sa famille en danger. Quand il comprend qu’il n’est qu’un faire-valoir pour conforter une candidature déjà retenue, il profite de l’épreuve finale pour dynamiter le système. Alain n’a alors plus rien à perdre...",
+    "directors": [
+      "Pierre Lemaitre"
+    ],
+    "cast": [
+      {
+        "name": "Éric Cantona",
+        "character": "Alain Delambre"
+      },
+      {
+        "name": "Suzanne Clément",
+        "character": "Nicole Delambre"
+      },
+      {
+        "name": "Alex Lutz",
+        "character": "Alexandre Dorfmann"
+      },
+      {
+        "name": "Gustave Kervern",
+        "character": "Charles"
+      },
+      {
+        "name": "Aleksandra Yermak",
+        "character": "Florence Ancelin"
+      }
+    ]
   }
 ];
