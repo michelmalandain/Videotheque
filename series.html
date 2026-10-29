@@ -158,6 +158,112 @@ nav .proposer-titre-harmonise{position:relative!important;background:linear-grad
 .toolbar select:hover{background:#8b2737}
 .toolbar select:focus-visible{outline:2px solid #ffe4ae;outline-offset:2px}
 .toolbar select option{font:17px Georgia,serif;background:#310c17;color:#ffe4ae}
+</style><style>.bio-photo{display:block;max-width:190px;max-height:260px;object-fit:contain;border:1px solid #c49a54;border-radius:5px;cursor:pointer;margin:10px auto}
+.bio-photo:hover{outline:2px solid #f8d38d}.bio-results button{display:block;width:100%;text-align:left;margin:8px 0;background:#301419;color:#ffedce;border:1px solid #c49a54}
+.bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
+.bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
+
+.bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:inline-block;margin-top:12px;color:#f5cc7b!important;font:inherit;text-decoration:underline;background:transparent;border:0;padding:0}.bio-propose{display:block;width:max-content;max-width:100%;margin-top:14px;padding:12px 16px;background:#7e101a;color:#f5cc7b;border:2px solid #e8b85b;border-radius:6px;font:inherit;font-weight:bold;cursor:pointer}.bio-propose:hover{filter:brightness(1.2)}.bio-film-detail>button:first-child{color:#f5cc7b!important;background:#7e101a;border:1px solid #e8b85b;border-radius:5px;padding:9px 13px;font:inherit;cursor:pointer}.bio-proposal-dialog{background:#231016;color:#f6e8cf;border:2px solid #c89442;max-width:550px;width:90%;padding:24px;font:inherit}.bio-proposal-dialog input,.bio-proposal-dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:9px;background:#fff1d9;color:#23130e;border:1px solid #c89442;font:inherit}.bio-proposal-dialog button{background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;padding:9px 14px;cursor:pointer;font:inherit}.bio-proposal-dialog label{display:block;margin-top:10px}
+
+/* CINEMALAND — fiche biographique cinéma */
+#bioCard{width:min(1050px,95vw);max-width:1050px;max-height:92vh;overflow:auto;background:linear-gradient(90deg,rgba(20,3,7,.88),rgba(27,4,8,.82)),url("decor-fiche-cinemaland.png") center top / 100% auto no-repeat;color:#f9e9cf;border:3px double #e8b85b;border-radius:18px;padding:22px 28px;box-shadow:0 0 45px #000}
+#bioCard::backdrop{background:#000c}
+#bioCardTitle{font:clamp(30px,4.5vw,54px) Georgia,serif;color:#f4c66e;text-align:left;margin:0 0 16px;text-transform:uppercase;letter-spacing:2px;line-height:1.12}
+.bio-profile{display:grid;grid-template-columns:minmax(170px,280px) minmax(0,1fr);gap:30px;align-items:start}
+.bio-profile .bio-photo{width:100%;max-width:280px;max-height:380px;margin:0;align-self:start;border:3px solid #d5a346;box-shadow:0 5px 20px #0008;object-fit:cover}
+.bio-facts{font-size:18px;line-height:1.5}.bio-facts p{margin:0 0 9px}.bio-facts strong{color:#f4c66e}
+.bio-actions{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.bio-actions button{flex:1 1 150px;background:linear-gradient(#6e101b,#33070d);color:#f5cf7d;border:2px solid #e8b85b;border-radius:9px;padding:12px 15px;font:19px Georgia,serif;cursor:pointer}
+.bio-actions button:hover{filter:brightness(1.2)}
+.bio-story{border-top:1px solid #c99b4c;margin-top:20px;padding-top:12px}
+.bio-story h3{color:#f4c66e;font:30px Georgia,serif;margin:0 0 14px}
+.bio-story p{white-space:pre-line;font:18px/1.65 Georgia,serif;text-align:justify;margin:0}
+@media(max-width:620px){.bio-profile{grid-template-columns:1fr}#bioCardTitle{text-align:center}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
+
+/* CINEMALAND — fiche corrigée : bandeau indépendant, jamais déformé */
+#bioCard{
+ position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;
+ max-height:100dvh;margin:0;padding:0!important;border:0;border-radius:0;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ background:#170609!important;box-sizing:border-box;
+}
+#bioCard::before{
+ content:"";display:block;position:sticky;top:0;z-index:5;
+ width:100%;height:auto;aspect-ratio:1721 / 148;
+ background:#170609 url("bandeau-fiche-cinemaland.png") center top / 100% auto no-repeat;
+ border-bottom:2px solid #e8b85b;box-sizing:border-box;
+ box-shadow:0 5px 16px #000a;pointer-events:none;
+}
+#bioCardBody{
+ padding:24px clamp(18px,4vw,65px) 45px;
+ max-width:1370px;margin:0 auto;
+ background:linear-gradient(90deg,#170609,#290b12,#170609);
+}
+@media(max-width:620px){
+ #bioCardBody{padding:18px 14px 28px}
+ .bio-profile{grid-template-columns:1fr}
+}
+
+/* Recherche acteurs / réalisateurs — salon cinéma, sans toucher à la logique TMDB */
+#bioDialog{width:min(92vw,560px);max-width:560px;max-height:90dvh;overflow-y:auto;position:fixed;padding:34px clamp(22px,4vw,42px) 30px;border:3px solid #d9a34e;border-radius:20px;background:radial-gradient(ellipse at 83% 25%,#66271d 0%,transparent 37%),linear-gradient(140deg,#381014,#150608 75%);box-shadow:0 0 0 5px #200b0b,0 22px 90px #000, inset 0 0 55px #0008;color:#ffebc8}
+#bioDialog::before{content:"";display:block;height:42px;margin:-8px 0 8px;background:repeating-linear-gradient(135deg,#f1d7a5 0 22px,#1b1010 22px 44px);clip-path:polygon(0 0,100% 0,100% 75%,0 75%);border-radius:5px;opacity:.95}
+#bioDialog h2{font: bold clamp(26px,3vw,34px) Georgia,serif;text-align:center;margin:10px 0 25px;color:#ffe0a0;text-shadow:0 2px 12px #b87128}
+#bioDialog h2::after{content:"";display:block;font-size:18px;color:#e5b75e;margin:12px auto 0;max-width:250px;border-bottom:1px solid #b88843;padding-bottom:9px}
+#bioDialog>button:first-child{background:#2b0c0d;color:#f6d38f;border:1px solid #a77736;border-radius:6px;font:14px Georgia,serif;padding:9px 15px}
+#bioDialog label{font:18px Georgia,serif;color:#f7dca3;margin:12px 0}
+#bioDialog input{background:#fff3dc;color:#24120d;border:2px solid #bc8b43;border-radius:7px;padding:13px;font:18px Georgia,serif;box-shadow:inset 0 2px 5px #0002}
+#bioDialog input:focus{outline:2px solid #ffe2a1;outline-offset:2px}
+#bioDialog #bioForm>button{display:block;width:min(100%,310px);margin:24px auto 14px;padding:15px 20px;background:linear-gradient(120deg,#ae671b,#ffe2a0 45%,#d4932c);color:#2a1009;border:1px solid #f6d48e;border-radius:10px;font:bold 18px Georgia,serif;box-shadow:0 4px 13px #0009;cursor:pointer}
+#bioDialog #bioForm>button:hover{filter:brightness(1.1)}
+#bioDialog #bioStatus{font-size:16px;color:#ffe3ae}
+#bioDialog .bio-results button{display:flex;align-items:center;gap:12px;padding:12px 15px;background:linear-gradient(100deg,#4c1c1c,#2a1012);color:#fff0d4;border:1px solid #b88948;border-radius:8px;font:18px Georgia,serif;min-height:55px}
+#bioDialog .bio-results button::after{content:"";margin-left:auto;font-size:30px;color:#f5c66e}
+#bioDialog .bio-results button:hover{background:#663029;border-color:#ffe1a1}
+@media(max-width:600px){#bioDialog{padding:20px}#bioDialog::before{height:27px}}
+
+/* CINEMALAND — salon de recherche version cinéma : décor et dimensions */
+#bioDialog{width:min(94vw,650px)!important;max-width:650px!important;max-height:94dvh!important;padding:30px 32px 34px!important;border:4px ridge #d7a04b!important;border-radius:18px!important;background:radial-gradient(ellipse at 80% 26%,#6c1b1b 0%,#250b0c 37%,#130708 85%)!important;box-shadow:0 0 0 5px #250c0c,0 24px 90px #000,inset 0 0 60px #000!important;isolation:isolate}
+#bioDialog::before{content:""!important;position:absolute;top:8px;left:25%;width:52%;height:65px!important;margin:0!important;clip-path:none!important;border-radius:0!important;opacity:1!important;pointer-events:none;background:repeating-linear-gradient(125deg,#f5e6c8 0 21px,#1a1311 21px 42px)!important;transform:rotate(-8deg);border:6px solid #21140f;box-shadow:0 4px 8px #0009;z-index:-1}
+#bioDialog::after{content:"";position:absolute;right:0;top:92px;width:45%;height:370px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 92% 4%,#fff0ad 0 2%,#f9b955aa 3%,transparent 9%),linear-gradient(151deg,transparent 28%,#f9bd532c 43%,#f9bd5300 70%);opacity:.9}
+#bioDialog h2{text-align:center!important;margin:36px 0 30px!important;font:bold clamp(26px,3vw,35px) Georgia,serif!important;text-shadow:0 2px 12px #b87128}
+#bioDialog #bioForm{position:relative;width:70%;z-index:2}
+#bioDialog label{font-size:18px!important}
+#bioDialog input{font-size:18px!important;padding:14px!important}
+#bioDialog #bioForm>button{width:100%!important;margin:20px 0 12px!important;font-size:20px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2}
+#bioDialog .bio-results button{min-height:68px!important;font-size:19px!important}
+#bioDialog .bio-results button:hover{transform:translateX(2px)}
+#bioDialog .cinema-chair{position:absolute;right:25px;top:245px;width:170px;height:210px;pointer-events:none;z-index:1;filter:drop-shadow(0 10px 8px #000c)}
+#bioDialog .cinema-chair svg{width:100%;height:100%}
+#bioDialog>button:first-child{position:relative;z-index:3}
+@media(max-width:650px){#bioDialog{padding:18px!important}#bioDialog #bioForm{width:100%}#bioDialog .cinema-chair{display:none}#bioDialog::after{opacity:.35}#bioDialog h2{margin:25px 0!important}}
+
+/* VERSION CORRIGÉE — projecteur et fauteuil réellement visibles */
+#bioDialog{width:min(94vw,690px)!important;max-width:690px!important;min-height:555px!important;padding:24px 30px 34px!important;overflow-x:hidden!important}
+#bioDialog::before{z-index:0!important;top:7px!important;left:29%!important;width:45%!important;height:42px!important;transform:rotate(-4deg)!important}
+#bioDialog::after{display:none!important}
+#bioDialog h2{position:relative;z-index:3;margin:28px 0 26px!important}
+#bioDialog #bioForm{width:66%!important;position:relative;z-index:3}
+#bioDialog .cinema-chair{display:block!important;position:absolute!important;right:22px!important;top:278px!important;width:185px!important;height:225px!important;z-index:2!important;opacity:1!important}
+#bioDialog .cinema-projector{position:absolute;right:12px;top:125px;width:235px;height:360px;z-index:1;pointer-events:none;opacity:1}
+#bioDialog .cinema-projector svg{width:100%;height:100%;display:block}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:3}
+#bioDialog .bio-results{max-width:100%}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog #bioForm{width:100%!important}#bioDialog .cinema-chair{display:none!important}#bioDialog .cinema-projector{display:none!important}}
+
+/* Version avec vrai PNG : projecteur et fauteuil photographiques */
+#bioDialog{width:min(94vw,760px)!important;max-width:760px!important;min-height:575px!important;padding:26px 35px 34px!important;isolation:isolate;background:linear-gradient(125deg,#270b0c,#170708)!important}
+#bioDialog::before{left:31%!important;width:40%!important}
+#bioDialog .cinema-chair,#bioDialog .cinema-projector{display:none!important}
+#bioDialog::after{content:""!important;display:block!important;position:absolute!important;right:5px!important;top:92px!important;width:270px!important;height:455px!important;z-index:0!important;opacity:1!important;background:url("decor-recherche-cinemaland.png") center / contain no-repeat!important;pointer-events:none!important}
+#bioDialog #bioForm{width:63%!important;position:relative;z-index:2}
+#bioDialog h2{position:relative;z-index:2;text-align:left!important;margin:32px 0 28px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2;max-width:100%}
+#bioDialog>button:first-child{background:linear-gradient(#a9222c,#650b13)!important;color:#ffe0a0!important;border:2px solid #d8a04e!important;font-weight:bold!important;padding:10px 19px!important}
+#bioDialog>button:first-child:hover{filter:brightness(1.2)}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog::after{opacity:.18!important;right:0!important;width:55%!important}#bioDialog #bioForm{width:100%!important}#bioDialog h2{text-align:center!important}}
+
+#bioDialog::backdrop,#bioCard::backdrop{background:#000c}#bioDialog label{display:block}#bioDialog input{display:block;width:100%;min-width:0;margin:8px 0 16px}#bioDialog button{cursor:pointer}#bioCard{font-family:Georgia,serif}
 </style></head><body><div class="curtain" aria-hidden="true"></div><header><h1>CINEMALAND</h1><p>LE CINÉMA DES MALANDAIN</p></header><nav><a class="admin-link" href="index.html">ACCUEIL</a><button type="button" class="cinemaland-recherche-personne" data-role="actor">ACTEURS</button><button type="button" class="cinemaland-recherche-personne" data-role="director">RÉALISATEURS</button><a class="admin-link" href="films.html">FILMS</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="year-filter" aria-label="Année"><option value="">Toutes les années</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
 (function(){
@@ -567,13 +673,57 @@ window.cinemalandLienGerer=function(x){
 })();
 </script><script id="cinemaland-recherche-nav">
 (function(){
- document.querySelectorAll('.cinemaland-recherche-personne').forEach(btn=>btn.addEventListener('click',()=>{
-  const role=btn.dataset.role;
-  const name=window.prompt(role==='actor'?'Nom et prénom de l’acteur :':'Nom et prénom du réalisateur :');
-  if(name&&name.trim()&&typeof showPerson==='function')showPerson(name.trim(),null,role);
- }));
+
  // Le bouton « proposer » est injecté après le chargement : harmonisation même en cas d'injection différée.
  const nav=document.querySelector('nav');
  if(nav){const update=()=>nav.querySelectorAll('button').forEach(b=>{if(/proposer (un titre|un film|une série)/i.test(b.textContent)){b.classList.add('proposer-titre-harmonise');b.textContent='PROPOSER UN '+'E SÉRIE';}});update();new MutationObserver(update).observe(nav,{childList:true,subtree:true});}
 })();
-</script></body></html>
+</script><dialog id="bioDialog" aria-labelledby="bioTitle"><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog><dialog id="bioCard" aria-labelledby="bioCardTitle"><div id="bioCardBody"></div></dialog><script id="cinemaland-formulaire-personnes">(function(){let bioRole='Acteur', bioPerson='';
+const el=id=>document.getElementById(id);
+function openBioSearch(role){bioRole=role;el('bioTitle').textContent='Rechercher un '+role.toLowerCase();el('bioResults').replaceChildren();el('bioStatus').textContent='';el('bioDialog').showModal();}
+const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
+const para=(label,value)=>{const p=document.createElement('p');p.textContent=label+' : '+(value||'Non renseigné');return p;};
+function formatDate(v){if(!v)return 'Non renseignée';const m=v.match(/^[+-]?(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:v;}
+async function showBio(page){
+ bioPerson=page.name;el('bioDialog').close();
+ const body=el('bioCardBody');body.replaceChildren(para('Chargement','en cours'));el('bioCard').showModal();
+ try{
+  const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(page.id));
+  const p=await r.json();if(!r.ok)throw Error(p.message||'Fiche indisponible');
+  body.replaceChildren();
+  const identity={id:p.id};
+  const profile=document.createElement('div');profile.className='bio-profile';
+  if(p.profile_path){
+   const img=document.createElement('img');img.className='bio-photo';img.src='https://image.tmdb.org/t/p/w342'+p.profile_path;img.alt='Portrait de '+p.name;img.title='Voir la filmographie';img.tabIndex=0;
+   img.onclick=()=>showBioFilms(p.name,identity);img.onkeydown=e=>{if(e.key==='Enter')showBioFilms(p.name,identity)};
+   profile.append(img);
+  }else{const absent=document.createElement('p');absent.textContent='Photographie non disponible';profile.append(absent)}
+  const facts=document.createElement('div');facts.className='bio-facts';const nameHeading=document.createElement('h2');nameHeading.id='bioCardTitle';nameHeading.textContent=p.name;facts.append(nameHeading);
+  const fact=(label,value)=>{if(!value)return;const row=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';row.append(strong,document.createTextNode(value));facts.append(row)};
+  fact('Nom',p.name);fact('Naissance',p.birthday?formatDate(p.birthday):null);fact('Lieu de naissance',p.place_of_birth);fact('Décès',p.deathday?formatDate(p.deathday):null);
+  fact('Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department==='Directing'?'Réalisation':p.known_for_department);
+  const actions=document.createElement('div');actions.className='bio-actions';
+  const action=(label,fn)=>{const button=document.createElement('button');button.type='button';button.textContent=label;button.onclick=fn;actions.append(button)};
+  action('FILMOGRAPHIE',()=>showBioFilms(p.name,identity));
+  action('RETOUR',()=>{el('bioCard').close();el('bioDialog').showModal()});
+  action('FERMER',()=>el('bioCard').close());
+  facts.append(actions);profile.append(facts);body.append(profile);
+  const story=document.createElement('section');story.className='bio-story';
+  const heading=document.createElement('h3');heading.textContent='BIOGRAPHIE';story.append(heading);
+  const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';story.append(bio);body.append(story);
+ }catch(e){body.replaceChildren(para('Erreur',e.message))}
+}
+
+function showBioFilms(name,identity){showPerson({name,id:identity.id},null,bioRole==='Acteur'?'actor':'director');}
+el('bioForm').addEventListener('submit',async e=>{
+ e.preventDefault();const first=el('bioFirst').value.trim(),last=el('bioLast').value.trim();
+ el('bioStatus').textContent='Recherche en cours…';el('bioResults').replaceChildren();
+ try{
+  const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  const d=await r.json();if(!r.ok)throw Error(d.message||'Recherche indisponible');
+  el('bioStatus').textContent=d.people.length?'Sélectionnez la bonne personne :':'Aucune personne portant exactement ce nom sur TMDB.';
+  d.people.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.name;b.onclick=()=>showBio(p);el('bioResults').append(b)});
+ }catch(err){el('bioStatus').textContent=err.message}
+});
+
+document.querySelectorAll('.cinemaland-recherche-personne').forEach(btn=>btn.addEventListener('click',()=>openBioSearch(btn.dataset.role==='actor'?'Acteur':'Réalisateur')));})();</script></body></html>
