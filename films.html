@@ -816,19 +816,25 @@ function openBioProposal(title,year,kind){
 #person-dialog{width:min(96vw,1510px)!important;max-width:1510px!important;height:min(94vh,980px)!important;max-height:94vh!important;padding:0!important;overflow:hidden!important;background:#10090c!important;border:3px double #e7b75a!important;border-radius:15px!important;color:#f9e7ce!important}
 #person-dialog::backdrop{background:#000d}
 #person-dialog .close{position:absolute!important;right:16px;top:14px;z-index:6;background:#790d19;color:#fff0cf;border:1px solid #e7b75a;padding:10px 20px}
-.cm-hero{height:220px;position:relative;display:flex;align-items:center;gap:30px;padding:22px 95px 22px 35px;background:radial-gradient(circle at 75% 10%,#6b3226,#210d13 58%,#09070a);border-bottom:2px solid #d8a64c;overflow:hidden}
-.cm-hero:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#15090a8a),repeating-linear-gradient(125deg,transparent 0 110px,#c5942512 111px 113px);pointer-events:none}
+.cm-hero{height:190px;position:relative;display:flex;align-items:center;gap:30px;padding:22px 95px 22px 35px;background:#18080d url("bandeau-fiche-cinemaland.png") center/cover no-repeat;border-bottom:2px solid #d8a64c;overflow:hidden}
+.cm-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#12070bcf,transparent 58%);pointer-events:none}
 .cm-hero img{height:175px;width:135px;object-fit:cover;border:2px solid #e0b35d;border-radius:6px;z-index:1}
-.cm-hero div{z-index:1}.cm-hero h2{font-size:clamp(35px,5vw,70px)!important;margin:0 0 10px!important;color:#ffda83!important}.cm-hero p{font-size:19px;margin:6px 0}
-.cm-columns{height:calc(100% - 220px);display:grid;grid-template-columns:29% 34% 37%;gap:0;padding:10px}
+.cm-hero div{z-index:1}.cm-hero h2{font-size:clamp(29px,4vw,55px)!important;margin:0 0 10px!important;color:#ffda83!important;text-shadow:0 3px 8px #000,0 0 10px #000}.cm-hero p{font-size:19px;margin:6px 0}
+.cm-columns{height:calc(100% - 190px);display:grid;grid-template-columns:32% 68%;gap:0;padding:10px}
 .cm-panel{min-width:0;min-height:0;margin:0 4px;border:1px solid #b98b3c;border-radius:9px;background:linear-gradient(140deg,#300b12,#100d10 55%);display:flex;flex-direction:column;overflow:hidden}
 .cm-panel h3{margin:0!important;padding:13px 17px;background:linear-gradient(90deg,#710d1a,#370b12);border-bottom:1px solid #b98b3c;color:#ffdb88!important;font-size:25px}
 .cm-scroll{overflow:auto;padding:17px 20px;flex:1;line-height:1.55;white-space:pre-line;font-size:17px}.cm-scroll img.cm-portrait{display:block;max-width:80%;max-height:240px;object-fit:contain;margin:20px auto;border:1px solid #c99b52}
 .cm-tabs{display:flex;gap:7px;padding:10px}.cm-tabs button{flex:1;min-width:0;padding:9px 3px;border:1px solid #a87836;border-radius:5px;background:#151113;color:#f8d8a0;cursor:pointer}.cm-tabs button[aria-pressed=true]{background:#7c1421}
-#person-dialog #person-films{display:block!important;overflow:auto!important;flex:1;padding:0 10px 10px;min-height:0}
-#person-dialog .person-film{width:100%;margin:0 0 8px;padding:7px;min-height:65px}.cm-detail{padding:17px 20px;overflow:auto;flex:1}.cm-detail h4{font-size:27px;color:#ffda83;margin:0 0 10px}.cm-detail img{width:110px;max-height:175px;object-fit:contain;float:left;margin:0 18px 10px 0;border:1px solid #b98b3c}.cm-detail p{line-height:1.5}.cm-detail button{background:#7e101a;color:#f9dcab;border:1px solid #cba052;border-radius:5px;padding:10px 15px;cursor:pointer}
+#person-dialog #person-films{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:9px;overflow:auto!important;flex:1;padding:0 10px 10px;min-height:0}
+#person-dialog .person-film{width:100%;margin:0;padding:7px;min-height:65px}.cm-detail{padding:17px 20px;overflow:auto;flex:1}.cm-detail h4{font-size:27px;color:#ffda83;margin:0 0 10px}.cm-detail img{width:110px;max-height:175px;object-fit:contain;float:left;margin:0 18px 10px 0;border:1px solid #b98b3c}.cm-detail p{line-height:1.5}.cm-detail button{background:#7e101a;color:#f9dcab;border:1px solid #cba052;border-radius:5px;padding:10px 15px;cursor:pointer}
 #person-dialog #person-title,#person-dialog #person-count,#person-dialog .person-note{display:none!important}
 @media(max-width:850px){#person-dialog{overflow:auto!important;height:94vh!important}.cm-hero{height:auto;min-height:155px}.cm-hero img{height:110px;width:85px}.cm-columns{height:auto;display:flex;flex-direction:column}.cm-panel{min-height:250px;max-height:450px;margin-bottom:10px}.cm-hero h2{font-size:30px!important}}
+#person-dialog .cm-hero img{display:none!important}
+#person-dialog .cm-hero{padding-top:80px;align-items:flex-end}
+#person-dialog .cm-hero p{font-size:15px;text-shadow:0 2px 5px #000}
+@media(max-width:1000px){#person-dialog #person-films{grid-template-columns:1fr}}
+@media(max-width:850px){#person-dialog .cm-hero{height:170px;min-height:170px}#person-dialog .cm-columns{height:auto}#person-dialog .cm-panel{max-height:none}#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr));max-height:50vh}}
+@media(max-width:580px){#person-dialog #person-films{grid-template-columns:1fr}}
 </style>
 <script id="cinemaland-trois-colonnes-js">
 (function(){
@@ -838,24 +844,29 @@ function openBioProposal(title,year,kind){
  const panel=(title)=>{const p=document.createElement('section');p.className='cm-panel';const h=document.createElement('h3');h.textContent=title;p.append(h);columns.append(p);return p};
  const bio=panel('Biographie'),bioText=document.createElement('div');bioText.className='cm-scroll';bio.append(bioText);
  const film=panel('Filmographie'),tabs=document.createElement('div');tabs.className='cm-tabs';film.append(tabs,list);
- const detail=panel('Détails du titre sélectionné'),detailText=document.createElement('div');detailText.className='cm-detail';detail.append(detailText);
+ 
  dlg.insertBefore(hero,dlg.firstChild);dlg.append(columns);
  let credits=[],generation=0,filter='all';
  const api='https://videotheque-admin.michelmalandain.workers.dev';
  const imgUrl=(path,size='w342')=>path&&String(path).startsWith('/')?'https://image.tmdb.org/t/p/'+size+path:null;
  const p=(parent,text)=>{const node=document.createElement('p');node.textContent=text;parent.append(node);return node};
- function showCredit(x){detailText.replaceChildren();const h=document.createElement('h4');h.textContent=x.title||x.name||'Sans titre';detailText.append(h);const poster=imgUrl(x.poster_path,'w342');if(poster){const im=document.createElement('img');im.src=poster;im.alt='Affiche de '+h.textContent;detailText.append(im)}
- const kind=x.media_type==='tv'?'Série':'Film',year=String(x.date||'').slice(0,4);
- p(detailText,[year,kind,x.character||x.job].filter(Boolean).join(' · '));p(detailText,x.overview||x.description||'Synopsis non communiqué.');
- const b=document.createElement('button');b.textContent='Proposer '+(kind==='Série'?'cette série':'ce film');b.type='button';b.onclick=()=>{if(typeof openBioProposal==='function')openBioProposal(h.textContent,year,kind)};detailText.append(b);
- const items=window.CINEMALAND_CATALOGUE||[];const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();const present=items.find(v=>v.kind===kind&&normalize(v.title)===normalize(h.textContent)&&String(v.year)===year);
- if(present){b.remove();const a=document.createElement('a');a.textContent='Voir dans ma vidéothèque';a.href=(kind==='Série'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(present.year);a.style.color='#f5cc7b';detailText.append(a)}
+ function draw(){
+  list.replaceChildren();
+  const shown=credits.filter(c=>filter==='all'||(filter==='tv')===(c.media_type==='tv'));
+  shown.sort((a,b)=>String(a.title||a.name||'').localeCompare(String(b.title||b.name||''),'fr',{sensitivity:'base',ignorePunctuation:true}));
+  for(const x of shown){
+   const row=document.createElement('button');row.className='person-film';row.type='button';
+   row.dataset.tmdbId=x.id||'';row.dataset.mediaType=x.media_type==='tv'?'tv':'movie';row.dataset.credit=encodeURIComponent(JSON.stringify(x));
+   const url=imgUrl(x.poster_path,'w154');if(url){const im=document.createElement('img');im.src=url;im.loading='lazy';im.alt='';row.append(im)}
+   const box=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');
+   strong.textContent=x.title||x.name||'Sans titre';small.textContent=[String(x.date||'').slice(0,4),x.media_type==='tv'?'Série':'Film',x.character||x.job].filter(Boolean).join(' · ');
+   box.append(strong,small);row.append(box);list.append(row);
+  }
  }
- function draw(){list.replaceChildren();for(const x of credits.filter(c=>filter==='all'||(filter==='tv')===(c.media_type==='tv'))){const row=document.createElement('button');row.className='person-film';row.type='button';const url=imgUrl(x.poster_path,'w154');if(url){const im=document.createElement('img');im.src=url;im.loading='lazy';im.alt='';row.append(im)}const box=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=x.title||x.name||'Sans titre';small.textContent=[String(x.date||'').slice(0,4),x.media_type==='tv'?'Série':'Film',x.character||x.job].filter(Boolean).join(' · ');box.append(strong,small);row.append(box);row.onclick=()=>{showCredit(x);list.querySelectorAll('.person-film').forEach(r=>r.style.background='');row.style.background='#65111d'};list.append(row)} }
  function buttons(){tabs.replaceChildren();for(const [value,label] of [['all','Tous'],['movie','Films'],['tv','Séries']]){const b=document.createElement('button');b.textContent=label+' ('+credits.filter(x=>value==='all'||(value==='tv')===(x.media_type==='tv')).length+')';b.setAttribute('aria-pressed',String(filter===value));b.onclick=()=>{filter=value;buttons();draw()};tabs.append(b)}}
  window.showPerson=async function(person,source,role){const ticket=++generation;const name=personName(person);document.getElementById('film-dialog')?.close();document.getElementById('bioCard')?.close();
  const title=document.getElementById('person-title');title.textContent=name;hero.replaceChildren();const head=document.createElement('div');const h=document.createElement('h2');h.textContent=name;head.append(h);hero.append(head);
- bioText.textContent='Chargement de la biographie…';detailText.textContent='Sélectionnez un titre dans la filmographie.';credits=[];filter='all';buttons();draw();if(!dlg.open)dlg.showModal();
+ bioText.textContent='Chargement de la biographie…';credits=[];filter='all';buttons();draw();if(!dlg.open)dlg.showModal();
  const id=typeof person==='object'?(person.tmdb_id||person.id):null;const params=new URLSearchParams({role:role||'all',name});if(id)params.set('id',id);else if(source){params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie')}
  // Utiliser en priorité l’identifiant de la personne, jamais celui d’un film.
  // La réponse filmography peut aussi contenir l’identifiant résolu par le Worker.
@@ -897,9 +908,9 @@ function openBioProposal(title,year,kind){
  }
  const results=[filmResult[0],await Promise.allSettled([loadPersonDetail()]).then(r=>r[0])];
  if(ticket!==generation||!dlg.open)return;
- if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(credits.length)showCredit(credits[0]);else detailText.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
+ if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(!credits.length)list.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
  bioText.replaceChildren();const personData=results[1].status==='fulfilled'?results[1].value:null;
- if(personData){const portrait=imgUrl(personData.profile_path);if(portrait){const im=document.createElement('img');im.src=portrait;im.alt='Portrait de '+name;hero.prepend(im);const second=im.cloneNode();second.className='cm-portrait';bioText.append(second)}
+ if(personData){const portrait=imgUrl(personData.profile_path);if(portrait){const im=document.createElement('img');im.src=portrait;im.alt='Portrait de '+name;const second=im.cloneNode();second.className='cm-portrait';bioText.append(second)}
  p(head,[personData.known_for_department==='Directing'?'Réalisation':'Interprétation',personData.birthday?'Né(e) le '+personData.birthday:'',personData.place_of_birth].filter(Boolean).join(' · '));p(bioText,personData.biography||'Biographie non disponible sur TMDB.');}
  else p(bioText,'Biographie indisponible pour cette recherche.');
  };
