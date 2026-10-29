@@ -851,8 +851,29 @@ function openBioProposal(title,year,kind){
  const title=document.getElementById('person-title');title.textContent=name;hero.replaceChildren();const head=document.createElement('div');const h=document.createElement('h2');h.textContent=name;head.append(h);hero.append(head);
  bioText.textContent='Chargement de la biographie…';detailText.textContent='Sélectionnez un titre dans la filmographie.';credits=[];filter='all';buttons();draw();if(!dlg.open)dlg.showModal();
  const id=typeof person==='object'?(person.tmdb_id||person.id):null;const params=new URLSearchParams({role:role||'all',name});if(id)params.set('id',id);else if(source){params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie')}
- const bioParams=id?{id}:null;
- const results=await Promise.allSettled([fetch(api+'/filmography?'+params).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.message||'Filmographie indisponible');return d}),bioParams?fetch(api+'/person-detail?id='+encodeURIComponent(id)).then(async r=>{if(!r.ok)throw Error('Biographie indisponible');return r.json()}):Promise.resolve(null)]);
+ // Si les crédits locaux ne comportent pas d'identifiant TMDB, le rechercher
+ // par nom exact avant de demander le portrait et la biographie.
+ const loadPersonDetail=async()=>{
+  let personId=id;
+  if(!personId){
+   const parts=name.trim().split(/\s+/);
+   if(parts.length>=2){
+    const last=parts.pop(),first=parts.join(' ');
+    const search=await fetch(api+'/person-search?'+new URLSearchParams({first,last}));
+    if(search.ok){
+     const found=await search.json();
+     const exact=(found.people||[]).filter(x=>x.name?.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase());
+     // Ne jamais choisir arbitrairement entre deux homonymes.
+     if(exact.length===1)personId=exact[0].tmdb_id||exact[0].id;
+    }
+   }
+  }
+  if(!personId)return null;
+  const response=await fetch(api+'/person-detail?id='+encodeURIComponent(personId));
+  if(!response.ok)throw Error('Biographie indisponible');
+  return response.json();
+ };
+ const results=await Promise.allSettled([fetch(api+'/filmography?'+params).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.message||'Filmographie indisponible');return d}),loadPersonDetail()]);
  if(ticket!==generation||!dlg.open)return;
  if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(credits.length)showCredit(credits[0]);else detailText.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
  bioText.replaceChildren();const personData=results[1].status==='fulfilled'?results[1].value:null;
