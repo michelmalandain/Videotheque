@@ -133,5 +133,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-10-27T17:32:02.410Z"
+  },
+  "Série|1987|objectif nul": {
+    "title": "Objectif Nul",
+    "kind": "Série",
+    "year": 1987,
+    "stars": 5,
+    "comment": "tout simplement inoubliable",
+    "watch": false,
+    "updated": "2026-10-29T07:57:20.842Z"
   }
 }
