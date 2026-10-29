@@ -219,7 +219,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Série",
     "year": 2026,
     "period": "2026",
-    "genre": "Crime, Mystère",
+    "genre": "Crime, Drame, Mystère",
     "description": "Description à compléter.",
     "poster": "affiches/nocturne.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=nocturne",
@@ -1429,6 +1429,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Aïssa Maïga",
         "character": "Alise"
+      }
+    ]
+  },
+  {
+    "title": "Dans de beaux draps",
+    "kind": "Série",
+    "year": 2025,
+    "period": "2025",
+    "genre": "Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/dans-de-beaux-draps.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Dans%20de%20beaux%20draps",
+    "summary": "Quand Justine Blanchet, mère de Capucine et Pierre-Marie, 16 ans, découvre que son mari, Rémi, est au chômage depuis six mois et qu’ils sont au bord de la faillite, son monde \"parfait\" s’écroule. Incapable d’assumer ce déclassement, Justine va entraîner Rémi du côté obscur de la force pour sauver les apparences. À défaut de plan B, Dans de beaux draps ils mettront en œuvre un plan C. C comme cambriolage. Mais pas si simple de s’improviser cambrioleur quand on n’a pas les codes, ni le réseau, que les voisins vigilants veillent au grain et que la police enquête avec zèle… Tirant de cette double vie rocambolesque et dangereuse un épanouissement inattendu, les Blanchet réaliseront l’absurdité de leur vie d’avant et trouveront peu à peu le chemin du bonheur.",
+    "directors": [
+      "Sarah Tissandier"
+    ],
+    "cast": [
+      {
+        "name": "Gil Alma",
+        "character": "Rémi Blanchet"
+      },
+      {
+        "name": "Éléonore Bernheim",
+        "character": "Justine Blanchet"
+      },
+      {
+        "name": "Charlie Bruneau",
+        "character": "Kathy Malinsky"
+      },
+      {
+        "name": "Arié Elmaleh",
+        "character": "Jérôme Malinsky"
+      },
+      {
+        "name": "Amaury de Crayencour",
+        "character": "Gauthier Gouget"
       }
     ]
   }
