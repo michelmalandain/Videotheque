@@ -851,10 +851,24 @@ function openBioProposal(title,year,kind){
  const title=document.getElementById('person-title');title.textContent=name;hero.replaceChildren();const head=document.createElement('div');const h=document.createElement('h2');h.textContent=name;head.append(h);hero.append(head);
  bioText.textContent='Chargement de la biographie…';detailText.textContent='Sélectionnez un titre dans la filmographie.';credits=[];filter='all';buttons();draw();if(!dlg.open)dlg.showModal();
  const id=typeof person==='object'?(person.tmdb_id||person.id):null;const params=new URLSearchParams({role:role||'all',name});if(id)params.set('id',id);else if(source){params.set('title',source.title);params.set('year',source.year);params.set('type',source.kind==='Série'?'tv':'movie')}
- // Si les crédits locaux ne comportent pas d'identifiant TMDB, le rechercher
- // par nom exact avant de demander le portrait et la biographie.
- const loadPersonDetail=async()=>{
+ // Utiliser en priorité l’identifiant de la personne, jamais celui d’un film.
+ // La réponse filmography peut aussi contenir l’identifiant résolu par le Worker.
+ const filmResult=await Promise.allSettled([fetch(api+'/filmography?'+params).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.message||'Filmographie indisponible');return d})]);
+ const filmData=filmResult[0].status==='fulfilled'?filmResult[0].value:null;
+ const normalizeName=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ async function loadPersonDetail(){
   let personId=id;
+  if(!personId && filmData){
+   const candidate=filmData.person||filmData.person_detail||filmData.personData;
+   if(candidate && normalizeName(candidate.name)===normalizeName(name))personId=candidate.tmdb_id||candidate.id;
+   if(!personId && filmData.person_id && (!filmData.name||normalizeName(filmData.name)===normalizeName(name)))personId=filmData.person_id;
+  }
+  if(!personId && source){
+   const persons=[...(source.cast||[]),...(source.directors||[])];
+   const matches=persons.filter(x=>x&&typeof x==='object'&&normalizeName(x.name)===normalizeName(name)&& (x.tmdb_id||x.id));
+   const ids=[...new Set(matches.map(x=>x.tmdb_id||x.id))];
+   if(ids.length===1)personId=ids[0];
+  }
   if(!personId){
    const parts=name.trim().split(/\s+/);
    if(parts.length>=2){
@@ -862,18 +876,20 @@ function openBioProposal(title,year,kind){
     const search=await fetch(api+'/person-search?'+new URLSearchParams({first,last}));
     if(search.ok){
      const found=await search.json();
-     const exact=(found.people||[]).filter(x=>x.name?.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase());
-     // Ne jamais choisir arbitrairement entre deux homonymes.
-     if(exact.length===1)personId=exact[0].tmdb_id||exact[0].id;
+     const exact=(found.people||[]).filter(x=>normalizeName(x.name)===normalizeName(name));
+     const ids=[...new Set(exact.map(x=>x.tmdb_id||x.id).filter(Boolean))];
+     if(ids.length===1)personId=ids[0];
     }
    }
   }
   if(!personId)return null;
   const response=await fetch(api+'/person-detail?id='+encodeURIComponent(personId));
   if(!response.ok)throw Error('Biographie indisponible');
-  return response.json();
- };
- const results=await Promise.allSettled([fetch(api+'/filmography?'+params).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.message||'Filmographie indisponible');return d}),loadPersonDetail()]);
+  const data=await response.json();
+  if(data.name && normalizeName(data.name)!==normalizeName(name))return null;
+  return data;
+ }
+ const results=[filmResult[0],await Promise.allSettled([loadPersonDetail()]).then(r=>r[0])];
  if(ticket!==generation||!dlg.open)return;
  if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(credits.length)showCredit(credits[0]);else detailText.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
  bioText.replaceChildren();const personData=results[1].status==='fulfilled'?results[1].value:null;
