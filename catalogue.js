@@ -1775,5 +1775,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "René"
       }
     ]
+  },
+  {
+    "title": "37°2 Le Matin",
+    "kind": "Film",
+    "year": 1986,
+    "period": "1986",
+    "genre": "Drame, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/37-2-le-matin.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=37%C2%B02%20Le%20Matin",
+    "summary": "Zorg, 35 ans, commence à avoir une certaine expérience de la vie, il est revenu de beaucoup de choses et s'apprête à souffler un peu. C'est ce moment que choisit Betty pour débarquer avec ses valises, son cœur en \"skaï mauve\" et même pas un ticket de train...",
+    "directors": [
+      "Jean-Jacques Beineix"
+    ],
+    "cast": [
+      {
+        "name": "Jean-Hugues Anglade",
+        "character": "Zorg"
+      },
+      {
+        "name": "Béatrice Dalle",
+        "character": "Betty"
+      },
+      {
+        "name": "Gérard Darmon",
+        "character": "Eddy"
+      },
+      {
+        "name": "Consuelo De Haviland",
+        "character": "Lisa"
+      },
+      {
+        "name": "Clémentine Célarié",
+        "character": "Annie"
+      }
+    ]
   }
 ];
