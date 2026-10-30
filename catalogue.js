@@ -1,4 +1,4 @@
-/* Catalogue unique CINEMALAND. */
+/* Catalogue unique CINEMALAND. Pays FR renseigné uniquement pour les titres identifiés ; autres pays à vérifier. */
 window.CINEMALAND_CATALOGUE = [
   {
     "title": "Peaky Blinders",
@@ -321,6 +321,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Salomé Partouche",
         "character": "Adèle Attias"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -358,6 +361,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Théo Augier",
         "character": "Samuel Duval"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -396,6 +402,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Nade Dieu",
         "character": "Marie Germain"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -429,6 +438,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Juliet Lemonnier",
         "character": "Pamela Moreau"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -465,6 +477,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Éric Caravaca",
         "character": "Bernard (1991)"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -501,6 +516,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Bernard Blancan",
         "character": "Pierre Wazemme"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -564,6 +582,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Jean Vincentelli",
         "character": ""
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -707,6 +728,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Saïdou Camara",
         "character": "Pee Wee"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -779,6 +803,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "François Morel",
         "character": "Pouillaud"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -851,6 +878,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Camille Rowe",
         "character": "Monica Pynchon"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -887,6 +917,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Bernard Farcy",
         "character": "André"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -933,6 +966,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Pascal Rénéric",
         "character": "Alain"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -969,6 +1005,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Jean-Christophe Bouvet",
         "character": "Pilot"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1040,6 +1079,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Ewan Bourdelles",
         "character": "Milo"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1104,6 +1146,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Ottavia Piccolo",
         "character": "Bergamotte"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1140,6 +1185,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Lucien Barjon",
         "character": "Barberousse"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1177,6 +1225,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Michel Duchaussoy",
         "character": "Paul Scarron"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1213,6 +1264,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Pierre Bertin",
         "character": "Adolphe Amédée Delafoy"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1245,6 +1299,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Charley Fouquet",
         "character": "Marion Delambre"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1358,6 +1415,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Alain Chabat",
         "character": "le capitaine Lamar"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1430,6 +1490,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Aïssa Maïga",
         "character": "Alise"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1466,6 +1529,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Amaury de Crayencour",
         "character": "Gauthier Gouget"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1502,6 +1568,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Aleksandra Yermak",
         "character": "Florence Ancelin"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1538,6 +1607,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Pierre Dux",
         "character": "Investigating Judge"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1574,6 +1646,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Nino Castelnuovo",
         "character": "Bellhop, room boy"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1610,6 +1685,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Beba Lončar",
         "character": "Ursula, l'auto-stoppeuse"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1646,6 +1724,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Joachim Ledeganck",
         "character": "Leopold Vandevoorde"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1682,6 +1763,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Hella Petri",
         "character": "Georgina, la patronne du bar"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1718,6 +1802,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Marc Michel",
         "character": "Roland Cassard"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1738,6 +1825,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Thierry Ardisson",
         "character": "Self - Host"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1774,6 +1864,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Robert Berri",
         "character": "René"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
@@ -1810,6 +1903,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Clémentine Célarié",
         "character": "Annie"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];

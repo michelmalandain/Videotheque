@@ -605,53 +605,7 @@ function chargerDecorCinemaland(article,x){
 let kind='Série';function cinemalandYear(item){const value=String(item.year||item.period||'');const match=value.match(/\b\d{4}\b/);return match?match[0]:'';}
 const yearFilter=document.getElementById('year-filter');
 [...new Set(catalogue.filter(item=>item.kind===kind).map(cinemalandYear).filter(Boolean))].sort((a,b)=>Number(b)-Number(a)).forEach(year=>yearFilter.add(new Option(year,year)));
-
-/* CINEMALAND — sélection française : films et séries.
-   La base reste complète ; seuls les titres confirmés FR sont affichés.
-   Aucune déduction à partir de la langue, du casting ou du synopsis. */
-const cinemalandPaysProduction = new Map();
-function cinemalandCodesPays(data) {
-  const d = data?.details || data || {};
-  const valeurs = [
-    ...(Array.isArray(d.production_countries) ? d.production_countries : []),
-    ...(Array.isArray(d.origin_country) ? d.origin_country : []),
-    ...(Array.isArray(d.productionCountries) ? d.productionCountries : [])
-  ];
-  return valeurs.map(p => String(typeof p === 'string' ? p : (p.iso_3166_1 || p.iso3166_1 || p.code || p.name || '')).toUpperCase());
-}
-function cinemalandProductionFrancaise(x) {
-  const pays = cinemalandCodesPays(x);
-  if (pays.length) return pays.includes('FR') || pays.includes('FRANCE');
-  return cinemalandPaysProduction.get(x) === true;
-}
-async function cinemalandVerifierProduction(x) {
-  if (cinemalandCodesPays(x).length) return;
-  const type = x.kind === 'Série' ? 'tv' : 'movie';
-  const params = new URLSearchParams({type, title:x.title, year:String(x.year || '')});
-  const id = x.tmdb_id || x.tmdbId || x.tmdb?.id || (type === 'tv' ? x.tmdb_tv_id : x.tmdb_movie_id);
-  if (id) params.set('id', id);
-  try {
-    const r = await fetch('https://videotheque-admin.michelmalandain.workers.dev/details?' + params, {cache:'no-store'});
-    if (!r.ok) return;
-    const d = await r.json();
-    const pays = cinemalandCodesPays(d);
-    if (pays.length) cinemalandPaysProduction.set(x, pays.includes('FR') || pays.includes('FRANCE'));
-  } catch (_) { /* Ne jamais afficher un pays non vérifié comme français. */ }
-}
-async function cinemalandChargerProductions() {
-  const aVerifier = catalogue.filter(x => x.kind === 'Film' || x.kind === 'Série');
-  let suivant = 0;
-  async function travailleur() {
-    while (suivant < aVerifier.length) {
-      const x = aVerifier[suivant++];
-      await cinemalandVerifierProduction(x);
-      if (x.kind === kind) render();
-    }
-  }
-  await Promise.all(Array.from({length:Math.min(4,aVerifier.length)},travailleur));
-}
-
-const cards=document.getElementById('cards');function render(){const q=document.getElementById('search').value.toLocaleLowerCase('fr');const g=document.getElementById('genre').value;const selectedYear=document.getElementById('year-filter').value;const s=document.getElementById('sort').value;const list=catalogue.filter(x=>(kind==='Tous'||x.kind===kind)&&cinemalandProductionFrancaise(x)&&(!selectedYear||cinemalandYear(x)===selectedYear)&&(!g||x.genre.includes(g))&&(x.title+' '+x.genre+' '+x.description).toLocaleLowerCase('fr').includes(q)).sort((a,b)=>s==='year'?a.year-b.year:a.title.localeCompare(b.title,'fr'));cards.replaceChildren();for(const x of list){const article=document.createElement('article');article.className='card';
+const cards=document.getElementById('cards');function render(){const q=document.getElementById('search').value.toLocaleLowerCase('fr');const g=document.getElementById('genre').value;const selectedYear=document.getElementById('year-filter').value;const s=document.getElementById('sort').value;const list=catalogue.filter(x=>(kind==='Tous'||x.kind===kind)&&Array.isArray(x.production_countries)&&x.production_countries.includes('FR')&&(!selectedYear||cinemalandYear(x)===selectedYear)&&(!g||x.genre.includes(g))&&(x.title+' '+x.genre+' '+x.description).toLocaleLowerCase('fr').includes(q)).sort((a,b)=>s==='year'?a.year-b.year:a.title.localeCompare(b.title,'fr'));cards.replaceChildren();for(const x of list){const article=document.createElement('article');article.className='card';
 // Priorité à une véritable image de décor TMDB si elle existe dans le catalogue.
 // Sinon, l'affiche du titre crée une ambiance personnalisée, sans image inventée.
 const fondBrut=x.backdrop_path||x.backdrop||x.backdropPath||x.backdrop_url;
@@ -668,7 +622,7 @@ const actors=document.createElement('ul');
 for(const person of (x.cast||[])){const li=document.createElement('li');li.append(filmographyLink(person,x,'actor'));if(typeof person!=='string'&&person.character)li.append(document.createTextNode(' — '+person.character));actors.append(li)}
 if(!actors.children.length){const li=document.createElement('li');li.textContent='À compléter';actors.append(li)}
 credits.append(heading,names,actorsTitle,actors);info.append(credits);
-article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(article,x)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button[data-kind]').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button[data-kind]').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','year-filter','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();cinemalandChargerProductions();
+article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(article,x)}document.getElementById('empty').style.display=list.length?'none':'block'}document.querySelectorAll('nav button[data-kind]').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;document.querySelectorAll('nav button[data-kind]').forEach(n=>n.classList.toggle('active',n===b));render()}));['search','genre','year-filter','sort'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));render();
 </script><script>
 /* Fiche de film depuis les affiches des filmographies TMDB. */
 (function () {
