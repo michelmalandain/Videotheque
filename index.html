@@ -196,6 +196,12 @@ body.inside .foot{display:none!important}
 .hall-retour:hover{background:#7c1e25!important;box-shadow:0 0 15px #f6bd6b88}
 @media(max-width:600px){.hall-compteur{font-size:clamp(10px,3.2vw,22px)}.hall-retour{font-size:10px;padding:5px 6px}}
 .hall-sortie{left:86%;top:13%;width:13%;height:74%}.hall-compteur{font-size:clamp(9px,1.5vw,24px)!important;background:transparent!important}
+
+/* Petite table d’accueil superposée : l’image hall.png reste strictement inchangée. */
+.hall-table-fr{position:absolute;left:67.5%;top:70%;width:15%;height:12%;z-index:3;pointer-events:none;display:flex;align-items:flex-start;justify-content:center}
+.hall-table-fr .pancarte{position:relative;z-index:2;display:block;padding:5% 8%;background:linear-gradient(145deg,#392014,#120b09);border:2px solid #d5a24d;box-shadow:inset 0 0 0 2px #6e4824,0 5px 8px #000a;color:#f7d79a;font:bold clamp(8px,1.15vw,18px) Georgia,serif;letter-spacing:.04em;text-align:center;white-space:nowrap;text-shadow:0 1px 3px #000}
+.hall-table-fr::before{content:'';position:absolute;left:0;right:0;top:39%;height:13%;border-radius:50%;background:linear-gradient(#b67a39,#5e2d15);border:2px solid #c38c49;box-shadow:0 4px 8px #000a}
+.hall-table-fr::after{content:'';position:absolute;left:47%;top:50%;height:45%;width:7%;background:linear-gradient(90deg,#47220e,#b27634,#4b230e);box-shadow:0 5px 5px #0008}
 </style></head>
 <body>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
@@ -212,6 +218,7 @@ body.inside .foot{display:none!important}
 </main>
 <section id="hall" aria-label="Hall du cinéma KURSAAL">
 <div class="hall-image" role="group" aria-label="Hall du KURSAAL : panneaux de direction, tickets et Vanessa">
+<div class="hall-table-fr" aria-label="Cinéma français"><span class="pancarte">CINÉMA FRANÇAIS</span></div>
 <a class="hall-hotspot hall-films" href="films.html" aria-label="Films" title="Films">Films</a>
 <a class="hall-hotspot hall-series" href="series.html" aria-label="Séries" title="Séries">Séries</a>
 <a class="hall-hotspot hall-acteurs" href="acteurs.html" aria-label="Liste des acteurs" title="Acteurs">Acteurs</a>
