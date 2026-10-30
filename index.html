@@ -159,8 +159,43 @@ body{justify-content:flex-start;background:#080e19}
 #hall .door{display:flex;align-items:center;justify-content:center;min-height:175px;padding:12px;background:linear-gradient(90deg,#4b1818,#811c22 50%,#4b1818);border:8px ridge #a77b45;color:#ffdfa0;font:bold clamp(14px,1.7vw,21px) Georgia,serif;text-decoration:none;cursor:pointer}
 #hall .door:hover{filter:brightness(1.25)}#hall button.retour{padding:12px 24px;background:#301116;border:1px solid #d9b16d;color:#ffe3a2;font:18px Georgia,serif;cursor:pointer}
 @media(max-width:700px){#hall .doors{grid-template-columns:repeat(2,1fr)}#hall .door{min-height:115px}#hall{padding:18px 10px}}
+
+/* Affiches du hall : liens directs, halo discret au survol, décor intact. */
+.hall-affiche{position:absolute;z-index:5;display:block;cursor:pointer;border:0;background:transparent;text-decoration:none;font-size:0;color:transparent;outline:0;transition:filter .2s ease}
+.hall-affiche::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:4px;box-shadow:0 0 18px 6px rgba(255,208,108,.75),inset 0 0 13px 4px rgba(255,225,143,.4);transition:opacity .2s ease}
+.hall-affiche:hover::after,.hall-affiche:focus-visible::after{opacity:1}
+.hall-affiche:focus-visible{outline:2px solid #ffe3a7;outline-offset:3px}
+.hall-parapluies{left:8.4%;top:0.5%;width:13.4%;height:19.5%}
+.hall-singe{left:83.1%;top:1.3%;width:16.1%;height:57.8%}
+.hall-tontons{left:54%;top:46%;width:7.5%;height:13.6%}
 </style>
-</head>
+<style id="kursaal-hall-valide-20261030">
+/* Décor validé : image inchangée, zones transparentes et lumière au survol. */
+#hall{display:none!important;min-height:0!important;width:min(100vw,1536px)!important;max-width:1536px!important;margin:0 auto!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;text-align:initial!important}
+#hall.active{display:block!important}
+body.inside{display:block!important;background:#100806!important}
+body.inside .scene{display:none!important}
+body.inside .foot{display:none!important}
+.hall-image{position:relative;width:100%;aspect-ratio:1536/1024;background:#150c09 url('hall.png') center/100% 100% no-repeat;isolation:isolate}
+.hall-hotspot{position:absolute;z-index:4;display:block;cursor:pointer;appearance:none;border:0!important;border-radius:0!important;background:transparent!important;color:transparent!important;font-size:0!important;padding:0!important;margin:0!important;box-shadow:none!important;outline:0!important;transition:filter .22s ease}
+.hall-hotspot::after{content:'';position:absolute;inset:-3px;opacity:0;pointer-events:none;transition:opacity .2s ease;box-shadow:0 0 22px 8px #ffd27d88, inset 0 0 20px 5px #ffe3a755;border-radius:20px;filter:blur(8px)}
+.hall-hotspot:hover::after,.hall-hotspot:focus-visible::after{opacity:1}
+.hall-hotspot:focus-visible{outline:2px solid #ffe3a7!important;outline-offset:3px!important}
+.hall-films{left:9%;top:29.5%;width:14%;height:7%}
+.hall-series{left:9%;top:37%;width:14%;height:7%}
+.hall-acteurs{left:9%;top:45%;width:14%;height:7%}
+.hall-realisateurs{left:9%;top:53%;width:14%;height:7%}
+.hall-vanessa{left:21%;top:26%;width:23%;height:72%}
+.hall-vanessa::after{border-radius:48% 48% 20% 20%;box-shadow:0 0 28px 9px #ffce6d99,inset 0 0 15px #ffcf6555}
+/* Le papier masque uniquement les chiffres imprimés pour montrer les vrais compteurs. */
+.hall-compteur{position:absolute;z-index:3;display:flex;align-items:center;justify-content:center;width:7.8%;height:6.3%;font:bold clamp(14px,3.1vw,49px) Georgia,serif;color:#8b1520;background:#edc89c;border-radius:3px;text-shadow:0 1px #fff5;line-height:1}
+.hall-titres{left:35.2%;top:16.4%}
+.hall-acteurs-nombre{left:51.4%;top:16.4%}
+.hall-realisateurs-nombre{left:69.1%;top:16.4%}
+.hall-retour{position:absolute;z-index:5;bottom:2.3%;right:2%;background:#4d1015e8!important;color:#f8d595!important;border:1px solid #d5a04b!important;border-radius:5px;padding:8px 14px;font:clamp(11px,1.3vw,18px) Georgia,serif;cursor:pointer;box-shadow:0 0 12px #0008}
+.hall-retour:hover{background:#7c1e25!important;box-shadow:0 0 15px #f6bd6b88}
+@media(max-width:600px){.hall-compteur{font-size:clamp(10px,3.2vw,22px)}.hall-retour{font-size:10px;padding:5px 6px}}
+</style></head>
 <body>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
 <h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
@@ -175,11 +210,20 @@ body{justify-content:flex-start;background:#080e19}
 <div hidden><output id="totalTitres"></output><output id="totalRealisateurs"></output><output id="totalActeurs"></output></div>
 </main>
 <section id="hall" aria-label="Hall du cinéma KURSAAL">
-<h2>Bienvenue au KURSAAL</h2>
-<div class="guichet"><h3>GUICHET — CINEMALAND</h3><div class="stats"><div>Films et séries<output id="hallTitres">····</output></div><div>Réalisateurs<output id="hallRealisateurs">····</output></div><div>Acteurs<output id="hallActeurs">····</output></div></div></div>
-<p>Le couloir des salles</p>
-<nav class="doors" aria-label="Portes du cinéma"><a class="door" href="films.html">FILMS</a><a class="door" href="series.html">SÉRIES</a><button class="door" type="button" onclick="openBioSearch('Acteur')">ACTEURS</button><button class="door" type="button" onclick="openBioSearch('Réalisateur')">RÉALISATEURS</button></nav>
-<button class="retour" type="button" onclick="sortirKursaal()">Retour dans la rue</button>
+<div class="hall-image" role="group" aria-label="Hall du KURSAAL : panneaux de direction, tickets et Vanessa">
+<a class="hall-hotspot hall-films" href="films.html" aria-label="Films" title="Films">Films</a>
+<a class="hall-hotspot hall-series" href="series.html" aria-label="Séries" title="Séries">Séries</a>
+<button class="hall-hotspot hall-acteurs" type="button" onclick="ouvrirRechercheHall('actor')" aria-label="Acteurs" title="Acteurs">Acteurs</button>
+<button class="hall-hotspot hall-realisateurs" type="button" onclick="ouvrirRechercheHall('director')" aria-label="Réalisateurs" title="Réalisateurs">Réalisateurs</button>
+<a class="hall-affiche hall-parapluies" href="films.html?fiche=Les%20Parapluies%20de%20Cherbourg&amp;annee=1964" aria-label="Les Parapluies de Cherbourg (1964)" title="Les Parapluies de Cherbourg (1964)">Les Parapluies de Cherbourg</a>
+<a class="hall-affiche hall-singe" href="films.html?fiche=Un%20singe%20en%20hiver&amp;annee=1962" aria-label="Un singe en hiver (1962)" title="Un singe en hiver (1962)">Un singe en hiver</a>
+<a class="hall-affiche hall-tontons" href="films.html?fiche=Les%20Tontons%20flingueurs&amp;annee=1963" aria-label="Les Tontons flingueurs (1963)" title="Les Tontons flingueurs (1963)">Les Tontons flingueurs</a>
+<a class="hall-hotspot hall-vanessa" href="films.html?fiche=Noces%20blanches&amp;annee=1989" aria-label="Vanessa — Noces blanches (1989)" title="Noces blanches (1989)">Noces blanches</a>
+<output class="hall-compteur hall-titres" id="hallTitres" aria-label="Nombre de films et séries">…</output>
+<output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
+<output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
+<button class="hall-retour" type="button" onclick="sortirKursaal()">RETOUR À LA RUE</button>
+</div>
 </section>
 <footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
 <dialog aria-labelledby="contactTitle" id="contactDialog">
@@ -390,6 +434,7 @@ const cards=document.getElementById('cards');if(cards){new MutationObserver(()=>
 <script>
 function entrerKursaal(){document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0)}
 function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
+function ouvrirRechercheHall(role){sortirKursaal();if(typeof openBioSearch==='function')openBioSearch(role==='actor'?'Acteur':'Réalisateur');}
 function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
 (function(){const ids=[['totalTitres','hallTitres'],['totalRealisateurs','hallRealisateurs'],['totalActeurs','hallActeurs']];let n=0;const timer=setInterval(()=>{for(const [a,b] of ids)document.getElementById(b).textContent=document.getElementById(a).textContent;if(++n>15)clearInterval(timer)},500)})();
 </script>
