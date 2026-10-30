@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CINEMALAND — RÉALISATEURS</title>
+<style>
+:root{--or:#e8b85b}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#4b101c,#14080c 55%,#080709);color:#f7e6c8;font:17px Georgia,serif}
+header{text-align:center;padding:35px 16px 28px;border-bottom:3px double var(--or);background:#20080dcc}
+h1{color:#f7d28d;font-size:clamp(30px,5vw,55px);margin:0 0 12px}
+header p{margin:0;color:#dec397}
+nav{position:sticky;top:0;z-index:5;background:#130a0dec;padding:14px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;border-bottom:1px solid #9d773e}
+nav a{color:#f8d998;border:1px solid #ad874d;padding:9px 16px;text-decoration:none}
+nav a:hover{background:#5e1721}
+main{max-width:1180px;margin:25px auto;padding:0 20px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+input{flex:1;min-width:200px;padding:12px;background:#f8e8ca;color:#241018;border:2px solid #c49a54;font:inherit}
+#count{color:#eac27b}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:17px}
+.card{border:1px solid #bc914b;background:linear-gradient(145deg,#2c1019,#110a0d);color:#f8e6c5;min-height:130px;padding:19px 16px;text-align:left;cursor:pointer;font:inherit}
+.card:hover,.card:focus-visible{background:#471b26;box-shadow:0 0 16px #e8b85b55;outline:0}
+.card strong{display:block;color:#f6d18d;font-size:22px;margin-bottom:11px}
+.card small{display:block;color:#d6bd96;line-height:1.4}
+.card img{width:78px;height:110px;object-fit:cover;float:left;margin:0 15px 8px 0}
+#status{padding:16px 0;color:#eac27b}
+@media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.card{padding:12px;min-height:100px}.card strong{font-size:17px}}
+</style></head>
+<body><header><h1>RÉALISATEURS</h1><p>Le cinéma des Malandain — les personnalités de notre vidéothèque</p></header>
+<nav><a href="index.html?hall=1">Retour au hall</a><a href="films.html">Films</a><a href="series.html">Séries</a><a href="acteurs.html">Acteurs</a></nav>
+<main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div>
+<p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main>
+<script src="catalogue.js"></script>
+<script>
+const ROLE='director', all=window.CINEMALAND_CATALOGUE;
+const cards=document.getElementById('cards'), status=document.getElementById('status'), counter=document.getElementById('count');
+const entries=new Map();
+function add(person,film){
+ const name=typeof person==='string'?person:(person?.name||'');
+ if(!name.trim())return;
+ const key=name.trim().toLocaleLowerCase('fr');
+ let row=entries.get(key);
+ if(!row){row={name:name.trim(),id:null,photo:null,films:new Set()};entries.set(key,row)}
+ if(person && typeof person==='object'){
+  row.id ||=person.tmdb_id||person.id||null;
+  row.photo ||=person.profile_path||person.photo||null;
+ }
+ row.films.add(film.title);
+}
+if(Array.isArray(all)){
+ for(const f of all){
+  const film=f||{};
+  if(ROLE==='actor') for(const p of (film.cast||film.actors||[]))add(p,film);
+  else for(const p of [...(film.directors||[]),...(film.creators||[])])add(p,film);
+ }
+}
+const people=[...entries.values()].sort((a,b)=>a.name.localeCompare(b.name,'fr',{sensitivity:'base'}));
+function draw(){
+ const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
+ cards.replaceChildren();
+ const matching=people.filter(x=>x.name.toLocaleLowerCase('fr').includes(term));
+ counter.textContent=matching.length+' réalisateurs';
+ for(const person of matching){
+  const b=document.createElement('button');b.type='button';b.className='card';
+  const name=document.createElement('strong');name.textContent=person.name;
+  const sub=document.createElement('small');sub.textContent=person.films.size+' titre(s) dans notre vidéothèque';
+  if(person.photo){
+   const img=document.createElement('img');img.alt='';img.loading='lazy';
+   img.src=person.photo.startsWith('http')?person.photo:'https://image.tmdb.org/t/p/w185'+person.photo;
+   b.append(img);
+  }
+  b.append(name,sub);
+  b.onclick=()=>{const params=new URLSearchParams({personne:person.name,hall:'1'});if(person.id)params.set('person_id',person.id);location.href='index.html?'+params};
+  cards.append(b);
+ }
+}
+document.getElementById('filter').addEventListener('input',draw);
+status.textContent=Array.isArray(all)?(people.length?'':'Aucune personne trouvée dans les crédits du catalogue.'):'Catalogue indisponible : placer catalogue.js avec ces pages.';
+draw();
+</script></body></html>

@@ -185,8 +185,8 @@ body.inside .foot{display:none!important}
 .hall-series{left:9%;top:37%;width:14%;height:7%}
 .hall-acteurs{left:9%;top:45%;width:14%;height:7%}
 .hall-realisateurs{left:9%;top:53%;width:14%;height:7%}
-.hall-vanessa{left:21%;top:26%;width:23%;height:72%}
-.hall-vanessa::after{border-radius:48% 48% 20% 20%;box-shadow:0 0 28px 9px #ffce6d99,inset 0 0 15px #ffcf6555}
+.hall-vanessa{left:24%;top:28%;width:20%;height:67%}
+.hall-vanessa::after{border-radius:48% 48% 20% 20%;box-shadow:0 0 15px 4px #ffce6d77}
 /* Le papier masque uniquement les chiffres imprimés pour montrer les vrais compteurs. */
 .hall-compteur{position:absolute;z-index:3;display:flex;align-items:center;justify-content:center;width:7.8%;height:6.3%;font:bold clamp(14px,3.1vw,49px) Georgia,serif;color:#8b1520;background:#edc89c;border-radius:3px;text-shadow:0 1px #fff5;line-height:1}
 .hall-titres{left:35.2%;top:16.4%}
@@ -195,6 +195,7 @@ body.inside .foot{display:none!important}
 .hall-retour{position:absolute;z-index:5;bottom:2.3%;right:2%;background:#4d1015e8!important;color:#f8d595!important;border:1px solid #d5a04b!important;border-radius:5px;padding:8px 14px;font:clamp(11px,1.3vw,18px) Georgia,serif;cursor:pointer;box-shadow:0 0 12px #0008}
 .hall-retour:hover{background:#7c1e25!important;box-shadow:0 0 15px #f6bd6b88}
 @media(max-width:600px){.hall-compteur{font-size:clamp(10px,3.2vw,22px)}.hall-retour{font-size:10px;padding:5px 6px}}
+.hall-sortie{left:86%;top:13%;width:13%;height:74%}.hall-compteur{font-size:clamp(10px,1.6vw,23px)!important;background:#edc89c!important}
 </style></head>
 <body>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
@@ -213,16 +214,16 @@ body.inside .foot{display:none!important}
 <div class="hall-image" role="group" aria-label="Hall du KURSAAL : panneaux de direction, tickets et Vanessa">
 <a class="hall-hotspot hall-films" href="films.html" aria-label="Films" title="Films">Films</a>
 <a class="hall-hotspot hall-series" href="series.html" aria-label="Séries" title="Séries">Séries</a>
-<button class="hall-hotspot hall-acteurs" type="button" onclick="ouvrirRechercheHall('actor')" aria-label="Acteurs" title="Acteurs">Acteurs</button>
-<button class="hall-hotspot hall-realisateurs" type="button" onclick="ouvrirRechercheHall('director')" aria-label="Réalisateurs" title="Réalisateurs">Réalisateurs</button>
+<a class="hall-hotspot hall-acteurs" href="acteurs.html" aria-label="Liste des acteurs" title="Acteurs">Acteurs</a>
+<a class="hall-hotspot hall-realisateurs" href="realisateurs.html" aria-label="Liste des réalisateurs" title="Réalisateurs">Réalisateurs</a>
 <a class="hall-affiche hall-parapluies" href="films.html?fiche=Les%20Parapluies%20de%20Cherbourg&amp;annee=1964" aria-label="Les Parapluies de Cherbourg (1964)" title="Les Parapluies de Cherbourg (1964)">Les Parapluies de Cherbourg</a>
 <a class="hall-affiche hall-singe" href="films.html?fiche=Un%20singe%20en%20hiver&amp;annee=1962" aria-label="Un singe en hiver (1962)" title="Un singe en hiver (1962)">Un singe en hiver</a>
 <a class="hall-affiche hall-tontons" href="films.html?fiche=Les%20Tontons%20flingueurs&amp;annee=1963" aria-label="Les Tontons flingueurs (1963)" title="Les Tontons flingueurs (1963)">Les Tontons flingueurs</a>
-<a class="hall-hotspot hall-vanessa" href="films.html?fiche=Noces%20blanches&amp;annee=1989" aria-label="Vanessa — Noces blanches (1989)" title="Noces blanches (1989)">Noces blanches</a>
+<a class="hall-hotspot hall-vanessa" href="index.html?personne=Vanessa%20Paradis&amp;hall=1" aria-label="Vanessa Paradis — fiche actrice" title="Vanessa Paradis — fiche actrice">Vanessa Paradis</a>
 <output class="hall-compteur hall-titres" id="hallTitres" aria-label="Nombre de films et séries">…</output>
 <output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
 <output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
-<button class="hall-retour" type="button" onclick="sortirKursaal()">RETOUR À LA RUE</button>
+<a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
 </div>
 </section>
 <footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
@@ -435,6 +436,22 @@ const cards=document.getElementById('cards');if(cards){new MutationObserver(()=>
 function entrerKursaal(){document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0)}
 function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
 function ouvrirRechercheHall(role){sortirKursaal();if(typeof openBioSearch==='function')openBioSearch(role==='actor'?'Acteur':'Réalisateur');}
+async function ouvrirPersonneDepuisLien(){
+ const p=new URLSearchParams(location.search);
+ if(p.get('hall')==='1') entrerKursaal();
+ const nom=p.get('personne');if(!nom)return;
+ const id=p.get('person_id');
+ if(id){await showBio({id,name:nom});return;}
+ const mots=nom.trim().split(/\s+/),last=mots.pop(),first=mots.join(' ');
+ try{
+  const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  const data=await r.json();
+  const choix=(data.people||[]).find(x=>x.name.toLocaleLowerCase('fr')===nom.toLocaleLowerCase('fr'));
+  if(choix) await showBio(choix);
+  else openBioSearch('Acteur');
+ }catch(e){openBioSearch('Acteur')}
+}
+window.addEventListener('load',ouvrirPersonneDepuisLien);
 function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
 (function(){const ids=[['totalTitres','hallTitres'],['totalRealisateurs','hallRealisateurs'],['totalActeurs','hallActeurs']];let n=0;const timer=setInterval(()=>{for(const [a,b] of ids)document.getElementById(b).textContent=document.getElementById(a).textContent;if(++n>15)clearInterval(timer)},500)})();
 </script>
