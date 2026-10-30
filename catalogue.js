@@ -1683,5 +1683,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Georgina, la patronne du bar"
       }
     ]
+  },
+  {
+    "title": "Les Parapluies de Cherbourg",
+    "kind": "Film",
+    "year": 1964,
+    "period": "1964",
+    "genre": "Drame, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-parapluies-de-cherbourg.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Parapluies%20de%20Cherbourg",
+    "summary": "Cherbourg, au mois de novembre 1957. Geneviève et sa mère tiennent un magasin de parapluies. La jeune fille est amoureuse de Guy, un jeune garagiste, au grand dam de sa maman qui préfèrerait la voir épouser Roland Cassard, un riche diamantaire. Appelé sous les drapeaux, Guy s'apprête à partir pour l'Algérie. La veille de son départ, Geneviève se donne à lui et lui jure de l'attendre. Mais les mois passent et les lettres du jeune soldat se font de plus en plus rares. Enceinte, désœuvrée, pressée par sa mère, Geneviève consent finalement, la mort dans l'âme, à épouser Roland. Dix-huit mois après son départ, Guy revient à Cherbourg, blessé à la jambe…",
+    "directors": [
+      "Jacques Demy"
+    ],
+    "cast": [
+      {
+        "name": "Catherine Deneuve",
+        "character": "Geneviève Emery"
+      },
+      {
+        "name": "Nino Castelnuovo",
+        "character": "Guy Foucher"
+      },
+      {
+        "name": "Anne Vernon",
+        "character": "Madame Emery"
+      },
+      {
+        "name": "Mireille Perrey",
+        "character": "Tante Élise"
+      },
+      {
+        "name": "Marc Michel",
+        "character": "Roland Cassard"
+      }
+    ]
   }
 ];
