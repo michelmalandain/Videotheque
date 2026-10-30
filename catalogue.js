@@ -1575,5 +1575,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Bellhop, room boy"
       }
     ]
+  },
+  {
+    "title": "Le Corniaud",
+    "kind": "Film",
+    "year": 1965,
+    "period": "1965",
+    "genre": "Comédie, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-corniaud.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Corniaud",
+    "summary": "Modeste représentant de commerce, Antoine Maréchal s’apprête à partir en vacances en Italie lorsque, en plein Paris, sa 2CV est mise en pièces par la Bentley d’un homme d’affaires, Léopold Saroyan. Antoine, désespéré, dit adieu à ses congés. Mais dès le lendemain, il est convoqué par Saroyan. Celui‐ci lui offre un billet d’avion pour Naples et le charge de récupérer une Cadillac pour le compte de riches clients américains. Ébloui, Antoine accepte, sans se douter un seul instant que la superbe voiture qu’il conduit dissimule une véritable fortune illégale. Un pactole que certains aimeraient beaucoup récupérer pour bénéficier d’une retraite dorée…",
+    "directors": [
+      "Gérard Oury"
+    ],
+    "cast": [
+      {
+        "name": "Bourvil",
+        "character": "Antoine Maréchal"
+      },
+      {
+        "name": "Louis de Funès",
+        "character": "Léopold Saroyan"
+      },
+      {
+        "name": "Venantino Venantini",
+        "character": "Mickey, \"le Bègue\""
+      },
+      {
+        "name": "Henri Génès",
+        "character": "Martial, le brigadier"
+      },
+      {
+        "name": "Beba Lončar",
+        "character": "Ursula, l'auto-stoppeuse"
+      }
+    ]
   }
 ];
