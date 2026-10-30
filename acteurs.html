@@ -89,6 +89,89 @@ body main.wrap #cards.cards article.card>.poster:hover,body main.wrap #cards.car
 @media(max-width:850px){body main.wrap #cards.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}body main.wrap{width:calc(100% - 40px)!important}}
 @media(max-width:540px){body main.wrap #cards.cards{gap:10px!important}body main.wrap #cards.cards article.card{padding:10px 14px!important}body main.wrap #cards.cards article.card::before{font-size:11px!important;letter-spacing:0!important}body header.cl-header .cl-logo strong{font-size:11px!important}body header.cl-header .cl-logo em{font-size:8px!important}}
 </style>
+
+<style id="cinemaland-maquette-finale-4-colonnes">
+/* Référence visuelle fournie et approuvée : 4 tickets par ligne. */
+body{background:
+ radial-gradient(ellipse at 50% 0%,#532013 0%,transparent 45%),
+ repeating-linear-gradient(90deg,#140406 0px,#29070d 24px,#120305 48px)!important;
+ background-attachment:fixed!important}
+body::before,body::after{content:"";position:fixed;top:0;bottom:0;width:min(6vw,75px);z-index:-1;pointer-events:none;background:repeating-linear-gradient(90deg,#4e0005 0,#ad1018 12px,#3b0005 27px,#7d0910 40px);box-shadow:inset 0 0 22px #000}
+body::before{left:0}body::after{right:0}
+body .curtain{display:none!important}
+body header.cl-header{height:auto!important;min-height:0!important;padding:0!important;margin:0!important;background:#21070a!important}
+body header.cl-header .cl-portraits{height:clamp(94px,11.4vw,176px)!important;max-width:1536px!important}
+body header.cl-header .cl-logo{
+ background:#260608 url("enseigne_cinemaland.png") center center/100% 100% no-repeat!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+body header.cl-header .cl-logo::before{display:none!important;content:none!important}
+body header.cl-header .cl-logo strong,body header.cl-header .cl-logo em{visibility:hidden!important}
+body nav.cl-nav{padding:8px 8%!important;background:linear-gradient(#300407,#6c0909 55%,#1a0708)!important;border-top:2px solid #dca85b!important;box-shadow:0 8px 17px #0009!important;gap:12px!important}
+body nav.cl-nav a{flex:1 1 125px!important;min-width:0!important;padding:9px 10px!important;background:#080606!important;border:2px solid #d8a642!important;border-radius:6px!important;color:#ffdc8d!important;font:700 clamp(13px,1.35vw,19px) Georgia,serif!important}
+body nav.cl-nav a[aria-current="page"]{background:linear-gradient(#b40807,#740705)!important;color:#fff3d0!important}
+body main.wrap{width:calc(100% - 8%)!important;max-width:1370px!important;padding:15px 12px 35px!important;margin:0 auto!important;background:transparent!important}
+body main.wrap .toolbar{background:transparent!important;border:0!important;padding:0!important;margin:0 0 15px!important;display:flex!important;gap:10px!important}
+body main.wrap .toolbar input{background:#ffedca!important;color:#3a2517!important}
+body main.wrap .toolbar select{background:#070606!important;color:#ffe2a4!important;border:1px solid #e0ad53!important;border-radius:5px!important}
+body main.wrap #cards.cards,body main #cards.cards{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:19px!important;align-items:start!important}
+body main.wrap #cards.cards article.card{
+ position:relative!important;isolation:isolate!important;display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;justify-content:flex-start!important;grid-template-columns:none!important;
+ grid-template-rows:none!important;gap:0!important;width:100%!important;max-width:none!important;
+ height:auto!important;min-height:0!important;aspect-ratio:auto!important;margin:0!important;
+ padding:12px 17px 17px!important;
+ border:0!important;border-radius:7px!important;overflow:visible!important;
+ clip-path:polygon(0 0,100% 0,100% 43%,96% 46%,96% 54%,100% 57%,100% 100%,0 100%,0 57%,4% 54%,4% 46%,0 43%)!important;
+ background:
+ radial-gradient(circle at 8px 50%,#a85e24 1px,transparent 2px) left/16px 18px repeat-y,
+ radial-gradient(circle at calc(100% - 8px) 50%,#a85e24 1px,transparent 2px) right/16px 18px repeat-y,
+ linear-gradient(100deg,#d19b56,#ffe4a5 12%,#f5cf8b 86%,#b47a3a)!important;
+ box-shadow:0 6px 20px #000c!important;filter:none!important;
+ transition:filter .2s ease,transform .2s ease,box-shadow .2s ease!important;
+ cursor:default!important}
+body main.wrap #cards.cards article.card::before{
+ content:"★  CINÉMA  ★"!important;position:static!important;display:block!important;inset:auto!important;
+ order:-2!important;width:100%!important;height:auto!important;min-height:0!important;opacity:1!important;
+ margin:0 0 8px!important;padding:1px 0 4px!important;border:0!important;border-bottom:2px solid #bb1b14!important;
+ background:none!important;box-shadow:none!important;color:#b30d0b!important;text-align:center!important;
+ font:bold clamp(13px,1.6vw,22px) Georgia,serif!important;letter-spacing:.05em!important;transform:none!important}
+body main.wrap #cards.cards article.card::after{
+ content:"★  CINEMALAND  ★"!important;position:static!important;display:block!important;inset:auto!important;
+ order:10!important;width:100%!important;height:auto!important;min-height:0!important;opacity:1!important;
+ margin:8px 0 0!important;padding:6px 0 0!important;border:0!important;border-top:1px dashed #b22b18!important;
+ background:none!important;box-shadow:none!important;color:#b20e0c!important;text-align:center!important;
+ font:bold clamp(9px,1vw,13px) Georgia,serif!important;transform:none!important}
+body main.wrap #cards.cards article.card>.poster{
+ position:relative!important;display:block!important;order:0!important;grid-column:auto!important;grid-row:auto!important;
+ width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;
+ aspect-ratio:2/3!important;align-self:stretch!important;justify-self:auto!important;
+ padding:0!important;margin:0!important;border:2px solid #925322!important;border-radius:0!important;
+ overflow:hidden!important;background:#190d0b!important;box-shadow:0 1px 6px #533218!important;
+ transform:none!important;cursor:pointer!important;transition:box-shadow .2s,filter .2s,transform .2s!important}
+body main.wrap #cards.cards article.card>.poster img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important}
+body main.wrap #cards.cards article.card>.card-title,body main.wrap #cards.cards article.card>.info,body main.wrap #cards.cards article.card>.credits-box{display:none!important}
+body main.wrap #cards.cards article.card:hover,body main.wrap #cards.cards article.card:focus-within{
+ filter:brightness(1.12)!important;box-shadow:0 0 17px 5px #ffbf47,0 8px 22px #000b!important;transform:translateY(-3px)!important}
+body main.wrap #cards.cards article.card>.poster:hover,body main.wrap #cards.cards article.card>.poster:focus-visible,body main.wrap #cards.cards article.card>.poster:active{
+ filter:brightness(1.2)!important;box-shadow:0 0 18px 6px #ffe28a!important;transform:scale(1.02)!important;outline:2px solid #ffdc84!important}
+body main #cards.cards button.card{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+ width:100%!important;max-width:none!important;min-width:0!important;height:auto!important;min-height:0!important;
+ aspect-ratio:auto!important;margin:0!important;padding:12px 17px 17px!important;border:0!important;
+ border-radius:7px!important;overflow:visible!important;
+ clip-path:polygon(0 0,100% 0,100% 43%,96% 46%,96% 54%,100% 57%,100% 100%,0 100%,0 57%,4% 54%,4% 46%,0 43%)!important;
+ background:linear-gradient(100deg,#d19b56,#ffe4a5 12%,#f5cf8b 86%,#b47a3a)!important;
+ box-shadow:0 6px 20px #000c!important;transition:filter .2s,transform .2s,box-shadow .2s!important;
+ cursor:pointer!important;color:#501d13!important}
+body main #cards.cards button.card::before{content:"★  CINÉMA  ★"!important;display:block!important;position:static!important;order:-2!important;width:100%!important;height:auto!important;opacity:1!important;margin:0 0 8px!important;padding:1px 0 4px!important;background:none!important;border:0!important;border-bottom:2px solid #b11a14!important;color:#ae100d!important;font:bold clamp(13px,1.6vw,22px) Georgia,serif!important}
+body main #cards.cards button.card::after{content:"★  CINEMALAND  ★"!important;display:block!important;position:static!important;order:10!important;width:100%!important;height:auto!important;opacity:1!important;margin:8px 0 0!important;padding:6px 0 0!important;background:none!important;border:0!important;border-top:1px dashed #b22b18!important;color:#ae100d!important;font:bold 12px Georgia,serif!important}
+body main #cards.cards button.card img{width:100%!important;height:auto!important;aspect-ratio:2/3!important;object-fit:cover!important;border:2px solid #925322!important;margin:0!important}
+body main #cards.cards button.card strong{color:#5e1d13!important;margin:8px 0 0!important;font:700 19px Georgia,serif!important}
+body main #cards.cards button.card small{color:#75452a!important;font-size:12px!important}
+body main #cards.cards button.card:hover,body main #cards.cards button.card:focus-visible{filter:brightness(1.13)!important;box-shadow:0 0 17px 5px #ffbf47,0 8px 22px #000b!important;transform:translateY(-3px)!important}
+@media(max-width:800px){body main.wrap #cards.cards,body main #cards.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}body main.wrap{width:calc(100% - 20px)!important}}
+@media(max-width:500px){body main.wrap #cards.cards,body main #cards.cards{gap:9px!important}body main.wrap #cards.cards article.card,body main #cards.cards button.card{padding:9px!important}body header.cl-header .cl-portraits{height:80px!important}}
+</style>
 </head>
 <body><header class="cl-header"><div class="cl-portraits"><a href="index.html?personne=Jean%20Gabin&amp;hall=1" title="Jean Gabin" aria-label="Biographie de Jean Gabin"><img src="gabin.jpg" alt="Jean Gabin"></a><a href="index.html?personne=Simone%20Signoret&amp;hall=1" title="Simone Signoret" aria-label="Biographie de Simone Signoret"><img src="signoret.jpg" alt="Simone Signoret"></a><a href="index.html?personne=Pierre%20Richard&amp;hall=1" title="Pierre Richard" aria-label="Biographie de Pierre Richard"><img src="richard.jpg" alt="Pierre Richard"></a><a href="index.html?personne=Catherine%20Deneuve&amp;hall=1" title="Catherine Deneuve" aria-label="Biographie de Catherine Deneuve"><img src="deneuve.jpg" alt="Catherine Deneuve"></a><div class="cl-logo"><strong>CINEMALAND</strong><em>Le cinéma des Malandain</em></div><a href="index.html?personne=Coluche&amp;hall=1" title="Coluche" aria-label="Biographie de Coluche"><img src="coluche.jpg" alt="Coluche"></a><a href="index.html?personne=Annie%20Girardot&amp;hall=1" title="Annie Girardot" aria-label="Biographie de Annie Girardot"><img src="girardot.jpg" alt="Annie Girardot"></a><a href="index.html?personne=Jean%20Rochefort&amp;hall=1" title="Jean Rochefort" aria-label="Biographie de Jean Rochefort"><img src="rochefort.jpg" alt="Jean Rochefort"></a><a href="index.html?personne=Béatrice%20Dalle&amp;hall=1" title="Béatrice Dalle" aria-label="Biographie de Béatrice Dalle"><img src="dalle.jpg" alt="Béatrice Dalle"></a></div></header><nav class="cl-nav"><a href="index.html?hall=1">HALL</a><a href="films.html">FILMS</a><a href="series.html">SÉRIES</a><a href="acteurs.html" aria-current="page">ACTEURS</a><a href="realisateurs.html">RÉALISATEURS</a></nav>
 <main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div>
