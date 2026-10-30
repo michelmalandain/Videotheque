@@ -1539,5 +1539,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Investigating Judge"
       }
     ]
+  },
+  {
+    "title": "L'Emmerdeur",
+    "kind": "Film",
+    "year": 1973,
+    "period": "1973",
+    "genre": "Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-emmerdeur.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'Emmerdeur",
+    "summary": "À Montpellier, au Palais de justice, devant la 4ème chambre correctionnelle, Louis Randoni va comparaître pour témoigner. En face des tribunaux, l'hôtel du Palais, deux chambres contiguës. Dans l'une, un tueur professionnel froid et redoutable à son seul regard, Ralph Milan qui doit assassiner Randoni avant qu'il ne puisse témoigner. Dans l'autre, un dépressif suicidaire, François Pignon épris d'un chagrin d'amour. Les deux chambres peuvent communiquer par une porte. Et quand elle s'ouvre, Ralph, la machine à tuer parfaitement huilée, voit débarquer l'énorme grain de sable qu'est François Pignon. Pignon qui mérite sans discussion le titre de champion du monde des emmerdeurs…",
+    "directors": [
+      "Édouard Molinaro"
+    ],
+    "cast": [
+      {
+        "name": "Lino Ventura",
+        "character": "Ralf Milan"
+      },
+      {
+        "name": "Jacques Brel",
+        "character": "François Pignon"
+      },
+      {
+        "name": "Caroline Cellier",
+        "character": "Louise Pignon"
+      },
+      {
+        "name": "Jean-Pierre Darras",
+        "character": "Dr. Edgar Fuchs"
+      },
+      {
+        "name": "Nino Castelnuovo",
+        "character": "Bellhop, room boy"
+      }
+    ]
   }
 ];
