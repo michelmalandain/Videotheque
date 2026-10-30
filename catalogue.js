@@ -1611,5 +1611,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Ursula, l'auto-stoppeuse"
       }
     ]
+  },
+  {
+    "title": "Rien à déclarer",
+    "kind": "Film",
+    "year": 2010,
+    "period": "2010",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/rien-a-declarer.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Rien%20%C3%A0%20d%C3%A9clarer",
+    "summary": "1er janvier 1993 : passage à l’Europe. Deux douaniers, l’un Belge, l’autre Français, apprennent la disparition prochaine de leur petit poste de douane fixe situé dans la commune de Courquain France et Koorkin Belgique. Francophobe de père en fils et douanier belge trop zélé, Ruben Vandervoorde se voit contraint et forcé d’inaugurer la première brigade volante mixte franco‐belge. Son partenaire français sera Mathias Ducatel, voisin de douane et ennemi de toujours, qui surprend tout le monde en acceptant de devenir le co‐équipier de Vandervoorde et sillonner avec lui les routes de campagnes frontalières à bord d’une 4L d’interception des douanes internationales.",
+    "directors": [
+      "Dany Boon"
+    ],
+    "cast": [
+      {
+        "name": "Benoît Poelvoorde",
+        "character": "Ruben Vandevoorde"
+      },
+      {
+        "name": "Dany Boon",
+        "character": "Mathias Ducatel"
+      },
+      {
+        "name": "Julie Bernard",
+        "character": "Louise Vandevoorde"
+      },
+      {
+        "name": "Christel Pedrinelli",
+        "character": "Olivia Vandevoorde"
+      },
+      {
+        "name": "Joachim Ledeganck",
+        "character": "Leopold Vandevoorde"
+      }
+    ]
   }
 ];
