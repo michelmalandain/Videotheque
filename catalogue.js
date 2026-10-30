@@ -1739,5 +1739,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Self - Host"
       }
     ]
+  },
+  {
+    "title": "Les vécés étaient fermés de l’intérieur",
+    "kind": "Film",
+    "year": 1976,
+    "period": "1976",
+    "genre": "Crime, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-veces-etaient-fermes-de-l-interieur.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20v%C3%A9c%C3%A9s%20%C3%A9taient%20ferm%C3%A9s%20de%20l%E2%80%99int%C3%A9rieur",
+    "summary": "Le commissaire Pichard et l'inspecteur Charbonnier mènent une enquête extravagante sur un crime commis sans mobile apparent. Un poinçonneur d'autobus est retrouvé mort dans ses wc, victime d'un assassinat. Détail surprenant : le verrou était fermé de l'intérieur. S'ensuit une enquête pour le moins loufoque, dans laquelle les deux policiers se lancent sur des pistes improbables, avant que le commissaire Pichard ne parvienne finalement à faire la lumière sur cette affaire.",
+    "directors": [
+      "Patrice Leconte"
+    ],
+    "cast": [
+      {
+        "name": "Coluche",
+        "character": "L'inspecteur Charbonnier"
+      },
+      {
+        "name": "Jean Rochefort",
+        "character": "Le commissaire Pichard"
+      },
+      {
+        "name": "Roland Dubillard",
+        "character": "Gazul"
+      },
+      {
+        "name": "Danièle Evenou",
+        "character": "Gwendoline"
+      },
+      {
+        "name": "Robert Berri",
+        "character": "René"
+      }
+    ]
   }
 ];
