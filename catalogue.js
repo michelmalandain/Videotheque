@@ -1719,5 +1719,25 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Roland Cassard"
       }
     ]
+  },
+  {
+    "title": "Bains de Minuit",
+    "kind": "Série",
+    "year": 1987,
+    "period": "1987",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/bains-de-minuit.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Bains%20de%20Minuit",
+    "summary": "« Bains de minuit » était un talk-show de fin de soirée présenté par Thierry Ardisson sur La Cinq à la fin des années 1980, filmé dans la célèbre boîte de nuit parisienne Les Bains Douches. Ardisson y interviewait des personnalités du monde de la musique, du cinéma, de la mode, de la littérature, du sport et de la politique, installées parmi le public dans l'ambiance authentique du club. Le concept était de plonger ces personnalités dans l'univers de la vie nocturne et des festivités, loin des studios de télévision traditionnels. Les interviews étaient souvent irrévérencieuses et directes, avec un ton provocateur qui allait devenir la marque de fabrique d'Ardisson. qui considère cette émission comme l'une de ses créations les plus libres et les plus audacieuses. Elle a contribué à asseoir son image d'animateur de talk-show de fin de soirée, à la fois cosmopolite, transgressif et très scénarisé.",
+    "directors": [
+      "Thierry Ardisson"
+    ],
+    "cast": [
+      {
+        "name": "Thierry Ardisson",
+        "character": "Self - Host"
+      }
+    ]
   }
 ];
