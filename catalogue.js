@@ -1503,5 +1503,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Florence Ancelin"
       }
     ]
+  },
+  {
+    "title": "La Horse",
+    "kind": "Film",
+    "year": 1970,
+    "period": "1970",
+    "genre": "Drame, Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-horse.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Horse",
+    "summary": "Auguste Maroilleur, propriétaire terrien en Normandie, règne en véritable patriarche sur sa ferme. Il y vit avec ses deux filles, ses deux gendres, et leurs enfants. Il découvre un jour que son petit-fils Henri se sert d'une des cabanes du domaine pour y cacher la drogue de son trafic. Auguste décide alors de détruire la \"horse\". Les représailles des truands avec lesquels traitaient Henri vont être terribles.",
+    "directors": [
+      "Pierre Granier-Deferre"
+    ],
+    "cast": [
+      {
+        "name": "Jean Gabin",
+        "character": "Auguste Maroilleur"
+      },
+      {
+        "name": "Danièle Ajoret",
+        "character": "Louise, Auguste's Second Daughter"
+      },
+      {
+        "name": "Michel Barbey",
+        "character": "Maurice, Louise's Husband"
+      },
+      {
+        "name": "Christian Barbier",
+        "character": "Léon, Mathilde’s Husband"
+      },
+      {
+        "name": "Pierre Dux",
+        "character": "Investigating Judge"
+      }
+    ]
   }
 ];
