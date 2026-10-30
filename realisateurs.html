@@ -237,7 +237,16 @@ body header.cl-header .cl-logo{z-index:2!important;}
  body main #cards.cards button.card strong{font-size:8px!important;overflow-wrap:anywhere!important}
 }
 </style>
-</head>
+<style id="photos-personnes-cinemaland">
+/* Six tickets anciens, photographie en haut, nom et nombre de titres dessous. */
+body main #cards.cards button.card{justify-content:flex-start!important;gap:4px!important}
+body main #cards.cards button.card .portrait-tmdb{width:100%!important;aspect-ratio:2/3!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#31191a!important;border:2px solid #925322!important;overflow:hidden!important}
+body main #cards.cards button.card .portrait-tmdb img{width:100%!important;height:100%!important;aspect-ratio:auto!important;object-fit:cover!important;border:0!important;display:block}
+body main #cards.cards button.card .portrait-tmdb.sans-photo:before{content:'PHOTO INDISPONIBLE';font:10px Georgia,serif;color:#d8b98c;letter-spacing:.04em;text-align:center}
+body main #cards.cards button.card strong{display:block!important;min-height:2.4em!important;line-height:1.2!important;font-size:clamp(10px,1.1vw,16px)!important;overflow-wrap:anywhere!important}
+body main #cards.cards button.card small{display:block!important;line-height:1.25!important;font-size:clamp(9px,.85vw,12px)!important}
+@media(max-width:540px){body main #cards.cards button.card strong{font-size:9px!important}body main #cards.cards button.card small{font-size:8px!important}}
+</style></head>
 <body><header class="cl-header"><div class="cl-portraits"><a href="index.html?personne=Jean%20Gabin&amp;hall=1" title="Jean Gabin" aria-label="Biographie de Jean Gabin"><img src="gabin.jpg" alt="Jean Gabin"></a><a href="index.html?personne=Simone%20Signoret&amp;hall=1" title="Simone Signoret" aria-label="Biographie de Simone Signoret"><img src="signoret.jpg" alt="Simone Signoret"></a><a href="index.html?personne=Pierre%20Richard&amp;hall=1" title="Pierre Richard" aria-label="Biographie de Pierre Richard"><img src="richard.jpg" alt="Pierre Richard"></a><a href="index.html?personne=Catherine%20Deneuve&amp;hall=1" title="Catherine Deneuve" aria-label="Biographie de Catherine Deneuve"><img src="deneuve.jpg" alt="Catherine Deneuve"></a><div class="cl-logo"><strong>CINEMALAND</strong><em>Le cinéma des Malandain</em></div><a href="index.html?personne=Coluche&amp;hall=1" title="Coluche" aria-label="Biographie de Coluche"><img src="coluche.jpg" alt="Coluche"></a><a href="index.html?personne=Annie%20Girardot&amp;hall=1" title="Annie Girardot" aria-label="Biographie de Annie Girardot"><img src="girardot.jpg" alt="Annie Girardot"></a><a href="index.html?personne=Jean%20Rochefort&amp;hall=1" title="Jean Rochefort" aria-label="Biographie de Jean Rochefort"><img src="rochefort.jpg" alt="Jean Rochefort"></a><a href="index.html?personne=Béatrice%20Dalle&amp;hall=1" title="Béatrice Dalle" aria-label="Biographie de Béatrice Dalle"><img src="dalle.jpg" alt="Béatrice Dalle"></a></div></header><nav class="cl-nav"><a href="index.html?hall=1">HALL</a><a href="films.html">FILMS</a><a href="series.html">SÉRIES</a><a href="acteurs.html">ACTEURS</a><a href="realisateurs.html" aria-current="page">RÉALISATEURS</a></nav>
 <main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div>
 <p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main>
@@ -256,7 +265,7 @@ function add(person,film){
   row.id ||=person.tmdb_id||person.id||null;
   row.photo ||=person.profile_path||person.photo||null;
  }
- row.films.add(film.title);
+ row.films.add([film.kind||film.type||'',film.title||'',film.year||''].join('|'));
 }
 if(Array.isArray(all)){
  for(const f of all){
@@ -275,11 +284,13 @@ function draw(){
   const b=document.createElement('button');b.type='button';b.className='card';
   const name=document.createElement('strong');name.textContent=person.name;
   const sub=document.createElement('small');sub.textContent=person.films.size+' titre(s) dans notre vidéothèque';
-  if(person.photo){
-   const img=document.createElement('img');img.alt='';img.loading='lazy';
-   img.src=person.photo.startsWith('http')?person.photo:'https://image.tmdb.org/t/p/w185'+person.photo;
-   b.append(img);
-  }
+  const photo=document.createElement('div');photo.className='portrait-tmdb';
+  const img=document.createElement('img');img.alt='Portrait de '+person.name;img.loading='lazy';
+  img.onerror=()=>{img.style.display='none';photo.classList.add('sans-photo')};
+  photo.append(img);b.append(photo);
+  if(person.photo)img.src=person.photo.startsWith('http')?person.photo:'https://image.tmdb.org/t/p/w185'+person.photo;
+  else {img.style.display='none';photo.classList.add('sans-photo');}
+  person.node=img;person.photoBox=photo;
   b.append(name,sub);
   b.onclick=()=>{const params=new URLSearchParams({personne:person.name,hall:'1'});if(person.id)params.set('person_id',person.id);location.href='index.html?'+params};
   cards.append(b);
@@ -288,4 +299,43 @@ function draw(){
 document.getElementById('filter').addEventListener('input',draw);
 status.textContent=Array.isArray(all)?(people.length?'':'Aucune personne trouvée dans les crédits du catalogue.'):'Catalogue indisponible : placer catalogue.js avec ces pages.';
 draw();
+// Compléter les photos manquantes depuis le service TMDB déjà utilisé par CINEMALAND.
+// L'identifiant TMDB prime toujours sur les homonymes ; ne jamais attribuer
+// une photographie à une personne si le nom exact est ambigu.
+const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
+const normalized=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
+function setPhoto(person,profile){
+ if(!profile||!person.node)return;
+ const path=String(profile);
+ person.node.src=path.startsWith('http')?path:'https://image.tmdb.org/t/p/w185'+(path.startsWith('/')?path:'/'+path);
+ person.node.style.display='block';person.photoBox?.classList.remove('sans-photo');
+}
+async function resolvePortrait(person){
+ if(person.photo||!person.node)return;
+ const parts=person.name.trim().split(/\s+/);if(parts.length<2)return;
+ const last=parts.pop(),first=parts.join(' ');
+ try{
+  const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  if(!response.ok)return;
+  const data=await response.json();
+  const exact=(data.people||[]).filter(p=>normalized(p.name)===normalized(person.name));
+  const match=person.id?exact.find(p=>String(p.id)===String(person.id)):(exact.length===1?exact[0]:null);
+  if(!match)return;
+  if(match.id&&!person.id)person.id=match.id;
+  setPhoto(person,match.profile_path||match.photo||match.profile);
+  // Le détail de la personne est demandé seulement si la recherche ne fournit pas de portrait.
+  if(!person.node.src||person.node.style.display==='none'){
+   const detail=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(match.id));
+   if(detail.ok){const d=await detail.json();setPhoto(person,(d.person||d.details||d).profile_path)}
+  }
+ }catch(e){/* Ne jamais empêcher l'affichage des tickets si le service est indisponible. */}
+}
+async function loadPortraits(){
+ const queue=people.filter(p=>!p.photo);
+ // 3 requêtes simultanées maximum, pour ménager le service et le navigateur.
+ let i=0;await Promise.all(Array.from({length:Math.min(3,queue.length)},async()=>{
+  while(i<queue.length){const p=queue[i++];await resolvePortrait(p)}
+ }));
+}
+loadPortraits();
 </script></body></html>
