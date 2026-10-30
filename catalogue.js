@@ -1647,5 +1647,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Leopold Vandevoorde"
       }
     ]
+  },
+  {
+    "title": "Un singe en hiver",
+    "kind": "Film",
+    "year": 1962,
+    "period": "1962",
+    "genre": "Drame, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/un-singe-en-hiver.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20singe%20en%20hiver",
+    "summary": "Dans le Calvados, en bord de mer à Tigreville, lors d’un bombardement à la fin de l’Occupation, l’hôtelier Albert Quentin, alcoolique notoire, fait la promesse à Suzanne, son épouse, d’arrêter définitivement de boire s’ils s’en sortent. Bien des années d’abstinence plus tard, un client de l'hôtel, Albert Fouquet, lui aussi adepte des nuits d’ivresse pourrait réveiller quelque démon endormi…",
+    "directors": [
+      "Henri Verneuil"
+    ],
+    "cast": [
+      {
+        "name": "Jean Gabin",
+        "character": "Albert Quentin"
+      },
+      {
+        "name": "Jean-Paul Belmondo",
+        "character": "Gabriel Fouquet"
+      },
+      {
+        "name": "Suzanne Flon",
+        "character": "Suzanne Quentin"
+      },
+      {
+        "name": "Gabrielle Dorziat",
+        "character": "Mme Victoria, la directrice"
+      },
+      {
+        "name": "Hella Petri",
+        "character": "Georgina, la patronne du bar"
+      }
+    ]
   }
 ];
