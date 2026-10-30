@@ -131,19 +131,56 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 #bioDialog>button:first-child{background:linear-gradient(#a9222c,#650b13)!important;color:#ffe0a0!important;border:2px solid #d8a04e!important;font-weight:bold!important;padding:10px 19px!important}
 #bioDialog>button:first-child:hover{filter:brightness(1.2)}
 @media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog::after{opacity:.18!important;right:0!important;width:55%!important}#bioDialog #bioForm{width:100%!important}#bioDialog h2{text-align:center!important}}
+
+/* SCENE KURSAAL — zones interactives sur photographie validée */
+body{justify-content:flex-start;background:#080e19}
+.scene{width:min(100vw,1846px);aspect-ratio:1846/852;background-image:url("Cinéma Kursaal sous le ciel bleu(1).png");background-size:100% 100%;box-shadow:0 0 50px #000;flex-shrink:0}
+.scene .zone,.scene .person-buttons,.scene .compteurs,.scene .admin-small{display:none!important}
+.hotspot{position:absolute;display:block;z-index:5;background:transparent;border:0;border-radius:4px;cursor:pointer;color:transparent;text-decoration:none;font-size:0}
+.hotspot:hover{box-shadow:inset 0 0 0 2px #ffe8a36e;background:#fff1a313}
+.hotspot:focus-visible{outline:3px solid #ffe39a;outline-offset:2px}
+.hotspot.entree{left:44.4%;top:57.5%;width:16.6%;height:22%}
+.hotspot.librairie{left:3.5%;top:50%;width:26.4%;height:26%}
+.hotspot.voyage{left:75%;top:49%;width:23%;height:28%}
+.hotspot.bureau{left:78%;top:9%;width:9%;height:12%}
+.hotspot.ds{left:1%;top:75%;width:26.4%;height:16%}
+.hotspot.quatrel{left:31%;top:74%;width:20%;height:18%}
+.hotspot.deuxcv{left:54%;top:75%;width:19%;height:17%}
+.hotspot.gordini{left:76%;top:76%;width:23%;height:16%}
+/* Hall provisoire : les décors intérieurs seront validés séparément. */
+#hall{display:none;min-height:min(80vh,750px);width:min(100vw,1200px);margin:auto;padding:40px 25px;background:radial-gradient(ellipse at 50% 20%,#813329,#290a0e 70%);border:8px solid #b18a51;text-align:center;box-shadow:0 0 50px #000}
+#hall.active{display:block}body.inside .scene{display:none}body.inside{justify-content:center}
+#hall h2{font:clamp(30px,5vw,58px) Georgia,serif;color:#f7d58f;margin:12px 0 25px}
+#hall .guichet{border:5px double #e2b56c;background:#190c10;padding:22px;max-width:700px;margin:0 auto 30px}
+#hall .guichet h3{font-size:24px;margin:0 0 16px;color:#f4d092}
+#hall .stats{display:flex;justify-content:space-evenly;gap:12px;flex-wrap:wrap}
+#hall .stats div{min-width:125px}.stats output{display:block;font-size:32px;color:#ffe3a2}
+#hall .doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:25px 0}
+#hall .door{display:flex;align-items:center;justify-content:center;min-height:175px;padding:12px;background:linear-gradient(90deg,#4b1818,#811c22 50%,#4b1818);border:8px ridge #a77b45;color:#ffdfa0;font:bold clamp(14px,1.7vw,21px) Georgia,serif;text-decoration:none;cursor:pointer}
+#hall .door:hover{filter:brightness(1.25)}#hall button.retour{padding:12px 24px;background:#301116;border:1px solid #d9b16d;color:#ffe3a2;font:18px Georgia,serif;cursor:pointer}
+@media(max-width:700px){#hall .doors{grid-template-columns:repeat(2,1fr)}#hall .door{min-height:115px}#hall{padding:18px 10px}}
 </style>
 </head>
 <body>
-<main aria-label="CINEMALAND : entrée du cinéma" class="scene">
-<h1 class="visually-hidden">CINEMALAND — Le pays du cinéma</h1>
-<a aria-label="Consulter les films" class="zone films" href="films.html" title="Voir notre collection de films"><span class="visually-hidden">Films</span></a>
-<a aria-label="Consulter les séries" class="zone series" href="series.html" title="Voir notre collection de séries"><span class="visually-hidden">Séries</span></a>
-
-<button aria-label="Malandain : nous écrire" class="zone contact" onclick="document.getElementById('contactDialog').showModal()" title="Nous écrire" type="button"><span class="visually-hidden">Malandain — Nous écrire</span></button>
-<div class="person-buttons"><button type="button" onclick="openBioSearch('Acteur')">ACTEURS</button><button type="button" onclick="openBioSearch('Réalisateur')">RÉALISATEURS</button></div>
-<a class="admin-small" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
-<div class="compteurs" aria-label="Statistiques du catalogue"><output class="compteur" id="totalTitres" title="Titres">····</output><output class="compteur" id="totalRealisateurs" title="Réalisateurs">····</output><output class="compteur" id="totalActeurs" title="Acteurs">····</output></div>
+<main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
+<h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
+<button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
+<button class="hotspot librairie" type="button" aria-label="Librairie Malandain — Almanach de la Révolution française" title="Librairie Malandain" onclick="destinationAttente('La librairie Malandain')">Librairie Malandain</button>
+<button class="hotspot voyage" type="button" aria-label="Agence de voyages — Vers l’étranger" title="Vers l’étranger" onclick="destinationAttente('Vers l’étranger')">Vers l’étranger</button>
+<a class="hotspot bureau" aria-label="Administration" title="Administration" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
+<a class="hotspot ds" aria-label="Citroën DS — La Horse" title="La Horse" href="films.html?fiche=La%20Horse&amp;annee=1970">La Horse</a>
+<a class="hotspot quatrel" aria-label="Renault 4L — Rien à déclarer" title="Rien à déclarer" href="films.html?fiche=Rien%20%C3%A0%20d%C3%A9clarer&amp;annee=2010">Rien à déclarer</a>
+<a class="hotspot deuxcv" aria-label="Citroën 2CV — Le Corniaud" title="Le Corniaud" href="films.html?fiche=Le%20Corniaud&amp;annee=1965">Le Corniaud</a>
+<a class="hotspot gordini" aria-label="Renault 8 Gordini — L’Emmerdeur" title="L’Emmerdeur" href="films.html?fiche=L%27Emmerdeur&amp;annee=1973">L’Emmerdeur</a>
+<div hidden><output id="totalTitres"></output><output id="totalRealisateurs"></output><output id="totalActeurs"></output></div>
 </main>
+<section id="hall" aria-label="Hall du cinéma KURSAAL">
+<h2>Bienvenue au KURSAAL</h2>
+<div class="guichet"><h3>GUICHET — CINEMALAND</h3><div class="stats"><div>Films et séries<output id="hallTitres">····</output></div><div>Réalisateurs<output id="hallRealisateurs">····</output></div><div>Acteurs<output id="hallActeurs">····</output></div></div></div>
+<p>Le couloir des salles</p>
+<nav class="doors" aria-label="Portes du cinéma"><a class="door" href="films.html">FILMS</a><a class="door" href="series.html">SÉRIES</a><button class="door" type="button" onclick="openBioSearch('Acteur')">ACTEURS</button><button class="door" type="button" onclick="openBioSearch('Réalisateur')">RÉALISATEURS</button></nav>
+<button class="retour" type="button" onclick="sortirKursaal()">Retour dans la rue</button>
+</section>
 <footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
 <dialog aria-labelledby="contactTitle" id="contactDialog">
 <h2 id="contactTitle">MALANDAIN — Nous écrire</h2>
@@ -351,6 +388,12 @@ let last='';async function refresh(){try{const r=await fetch(API+'?t='+Date.now(
 refresh();setInterval(refresh,30000);
 const cards=document.getElementById('cards');if(cards){new MutationObserver(()=>{if(last){try{draw(JSON.parse(last))}catch{}}}).observe(cards,{childList:true});}
 })();
+</script>
+<script>
+function entrerKursaal(){document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0)}
+function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
+function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
+(function(){const ids=[['totalTitres','hallTitres'],['totalRealisateurs','hallRealisateurs'],['totalActeurs','hallActeurs']];let n=0;const timer=setInterval(()=>{for(const [a,b] of ids)document.getElementById(b).textContent=document.getElementById(a).textContent;if(++n>15)clearInterval(timer)},500)})();
 </script>
 </body>
 </html>
