@@ -8,7 +8,7 @@
   const items=all.filter(x=>x&&x.poster&&x.title).map(x=>{
    let src=String(x.poster);
    if(src.startsWith('/'))src='https://image.tmdb.org/t/p/w185'+src;
-   if(!/^(https?:\/\/|[\w.-]+\.(?:png|jpe?g|webp)(?:\?|$)|\.\/)/i.test(src))return null;
+   if(!/^(https?:\/\/|(?:\.\/)?(?:[\w.-]+\/)*[\w.-]+\.(?:png|jpe?g|webp)(?:\?.*)?$)/i.test(src))return null;
    const isSerie=/s[eé]rie|tv/i.test(String(x.kind||x.type||''));
    return {src,title:String(x.title),year:String(x.year||''),page:isSerie?'series-mondial.html':'films-mondial.html'};
   }).filter(Boolean);
