@@ -1979,5 +1979,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Lucien"
       }
     ]
+  },
+  {
+    "title": "Un job mortel",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Mystère, Science-Fiction & Fantastique",
+    "description": "Description à compléter.",
+    "poster": "affiches/un-job-mortel.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20job%20mortel",
+    "summary": "Croulant sous les dettes, un jeune homme enchaîne les petits boulots très lucratifs que lui propose une mystérieuse agence, mais sa course à l'argent tourne au cauchemar.",
+    "directors": [
+      "한준희"
+    ],
+    "cast": [
+      {
+        "name": "Lee Jae-wook",
+        "character": "Byeon Hyuk-joon"
+      },
+      {
+        "name": "Go Min-si",
+        "character": "Uhm Yeon-joo"
+      },
+      {
+        "name": "Kim Min-ha",
+        "character": "Byeon Ji-yoon"
+      },
+      {
+        "name": "이희준",
+        "character": "Mr. S"
+      },
+      {
+        "name": "최현욱",
+        "character": "Choi Hee-dong"
+      }
+    ]
   }
 ];
