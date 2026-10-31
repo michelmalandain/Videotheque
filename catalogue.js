@@ -2015,5 +2015,38 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Choi Hee-dong"
       }
     ]
+  },
+  {
+    "title": "Les Disparus des Argonnes",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-disparus-des-argonnes.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Disparus%20des%20Argonnes",
+    "summary": "Le combat de Jocelyne Veyrades, une mère de famille modeste dont le fils, Gilles, disparaît en 1981 lors d’une permission pendant son service militaire. Les autorités évoquent une désertion, mais Jocelyne refuse de croire à cette explication. Elle pense que quelque chose de beaucoup plus grave s’est produit. Au fil des années, d’autres jeunes appelés disparaissent dans des circonstances similaires. Face au silence de l’institution militaire et à l’inaction de la justice, Jocelyne rejoint d'autres familles frappées par le même drame. Ensemble, elles brisent le mur de l’indifférence et mènent une lutte acharnée pour faire entendre leur voix.",
+    "cast": [
+      {
+        "name": "Alix Poisson",
+        "character": "Jocelyne Veyrades"
+      },
+      {
+        "name": "Vincent Deniard",
+        "character": "Fernand"
+      },
+      {
+        "name": "Anne Charrier",
+        "character": "Dominique"
+      },
+      {
+        "name": "Félix Moati",
+        "character": "Janson"
+      },
+      {
+        "name": "Camille Claris",
+        "character": "Viviane"
+      }
+    ]
   }
 ];
