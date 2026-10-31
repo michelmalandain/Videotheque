@@ -314,7 +314,33 @@ header .cl-logo em{font:clamp(17px,2vw,25px) Georgia,serif!important;color:#bfe4
 nav,nav.cl-nav{background:#06182df5!important;border-bottom:1px solid #70b9e9!important}
 nav a,nav button,nav .admin-link,nav .cinemaland-recherche-personne{background:linear-gradient(#1c4c74,#09243d)!important;color:#e4f5ff!important;border-color:#77bce8!important}
 .wrap{background:transparent!important}.card{border-color:#73b9e6!important}.card-title{color:#d6f0ff!important}
-</style></head><body><div class="curtain" aria-hidden="true"></div><header><div><h1>CINÉMA MONDIAL</h1><p>SÉRIES DU MONDE ENTIER</p></div></header><nav><a class="admin-link" href="hallmondial.html">HALL MONDIAL</a><button type="button" class="cinemaland-recherche-personne" data-role="actor">ACTEURS</button><button type="button" class="cinemaland-recherche-personne" data-role="director">RÉALISATEURS</button><a class="admin-link" href="films-mondial.html">FILMS MONDIAUX</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="year-filter" aria-label="Année"><option value="">Toutes les années</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
+</style>
+<style id="mondial-cartes-abonnement-20261031">
+/* Présentation commune Films / Séries : carte d'abonné, affiche cliquable. */
+#cards.cards{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(205px,1fr))!important;gap:23px!important;align-items:start!important}
+#cards .card{display:block!important;position:relative!important;min-height:0!important;height:auto!important;padding:13px 13px 46px!important;margin:0!important;overflow:hidden!important;border:1px solid #80b8d8!important;border-radius:16px!important;background:linear-gradient(135deg,#16466a 0%,#09243f 48%,#061424 100%)!important;box-shadow:0 8px 22px #0009,inset 0 1px #d8f4ff60!important;isolation:isolate!important}
+#cards .card::before,#cards .card::after{content:none!important;display:none!important}
+#cards .card-title,#cards .card .info,#cards .card .credits-box{display:none!important}
+#cards .card .poster{display:block!important;position:relative!important;grid-column:auto!important;grid-row:auto!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:2/3!important;max-height:none!important;padding:0!important;margin:0!important;border:1px solid #d1e7f6!important;border-radius:7px!important;overflow:hidden!important;background:#080d16!important;cursor:pointer!important;box-shadow:0 4px 14px #000a!important;transform:none!important}
+#cards .card .poster img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;pointer-events:none!important}
+#cards .card .poster:hover,#cards .card .poster:focus-visible{filter:brightness(1.12)!important;outline:2px solid #b8e9ff!important;outline-offset:2px!important;box-shadow:0 0 16px #5ac7ff88!important}
+/* Puce d'abonnement intégrée au bas de chaque carte. */
+#cards .card{background-image:linear-gradient(135deg,#16466a,#09243f 48%,#061424)!important}
+#cards .card .poster::after{content:none!important}
+#cards .card .poster::before{content:none!important}
+#cards .card{--chip:#d5b977}
+#cards .card:has(.poster)::selection{background:#8bbfe3}
+#cards .card .poster{z-index:1}
+#cards .card{background-color:#09243f!important}
+#cards .card:focus-within{border-color:#b9e9ff!important}
+@media(max-width:650px){#cards.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}#cards .card{padding:8px 8px 37px!important;border-radius:12px!important}}
+@media(max-width:360px){#cards.cards{grid-template-columns:1fr!important}}
+#cards .mondial-puce{position:absolute;left:16px;bottom:10px;width:37px;height:25px;border:1px solid #a58b4c;border-radius:5px;background:linear-gradient(135deg,#f7e4a6,#c7a45d 60%,#e5cc89);box-shadow:inset 0 0 0 1px #fff7c766,0 1px 4px #0009;z-index:2;pointer-events:none}
+#cards .mondial-puce::before{content:"";position:absolute;left:11px;top:0;bottom:0;border-left:1px solid #927747;box-shadow:9px 0 #927747}
+#cards .mondial-puce::after{content:"";position:absolute;left:0;right:0;top:8px;border-top:1px solid #927747;box-shadow:0 8px #927747}
+@media(max-width:650px){#cards .mondial-puce{left:11px;bottom:7px;transform:scale(.82);transform-origin:bottom left}}
+</style>
+</head><body><div class="curtain" aria-hidden="true"></div><header><div><h1>CINÉMA MONDIAL</h1><p>SÉRIES DU MONDE ENTIER</p></div></header><nav><a class="admin-link" href="hallmondial.html">HALL MONDIAL</a><button type="button" class="cinemaland-recherche-personne" data-role="actor">ACTEURS</button><button type="button" class="cinemaland-recherche-personne" data-role="director">RÉALISATEURS</button><a class="admin-link" href="films-mondial.html">FILMS MONDIAUX</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="year-filter" aria-label="Année"><option value="">Toutes les années</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
 (function(){
  const initial=JSON.stringify(window.CINEMALAND_CATALOGUE || []);
@@ -967,4 +993,13 @@ function openBioProposal(title,year,kind){
  dlg.addEventListener('close',()=>{generation++});
 })();
 </script>
-</body></html>
+<script id="mondial-puce-carte">
+(()=>{
+ const cards=document.getElementById('cards');if(!cards)return;
+ function equiper(){for(const card of cards.querySelectorAll('.card')){
+  if(card.querySelector('.mondial-puce'))continue;
+  const chip=document.createElement('span');chip.className='mondial-puce';chip.setAttribute('aria-hidden','true');card.append(chip);
+ }}
+ new MutationObserver(equiper).observe(cards,{childList:true});equiper();
+})();
+</script></body></html>
