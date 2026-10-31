@@ -31,7 +31,7 @@ function afficher(){
   const h=document.createElement('h2');h.textContent='Pays et destinations';p.append(h);
   const search=document.createElement('input');search.className='pays-recherche';search.type='search';search.placeholder='Rechercher un pays…';search.setAttribute('aria-label','Rechercher un pays');p.append(search);const list=document.createElement('div');list.className='pays-liste';p.append(list);search.addEventListener('input',()=>{const needle=search.value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();let shown=0;for(const b of list.children){const name=b.dataset.nom||'';const visible=name.includes(needle);b.hidden=!visible;if(visible)shown++}search.setAttribute('aria-description',shown+' pays trouvés')});
   const groupe=[...geo].sort((a,b)=>a.nom.localeCompare(b.nom,'fr'));
-  for(const c of groupe){const b=bouton('',()=>{pays=c;continent=c.continent;afficher()});
+  for(const c of groupe){const b=bouton('',()=>{window.location.href='destination.html?pays='+encodeURIComponent(c.code)});
    b.dataset.nom=c.nom.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();const flag=imageDrapeau(c.code,c.nom);b.append(flag,document.createTextNode(c.nom));list.append(b);}
   carteMonde();return;
  }
@@ -59,5 +59,5 @@ p.append(bouton('AUTRE PAYS',()=>{pays=null;continent=null;afficher()}));
 }
 function proj(lon,lat,bounds){const [minX,maxX,minY,maxY]=bounds;const w=maxX-minX,h=maxY-minY;return [(lon-minX)/w*1000,(maxY-lat)/h*560]}
 function formes(items,bounds,click){const ns='http://www.w3.org/2000/svg';const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1000 560');svg.setAttribute('role','img');svg.setAttribute('aria-label','Carte géographique interactive');for(const c of items){for(const ring of c.formes||[]){if(ring.length<4)continue;let path='';for(let i=0;i<ring.length;i++){const [x,y]=proj(ring[i][0],ring[i][1],bounds);path+=(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1)}const el=document.createElementNS(ns,'path');el.setAttribute('d',path+'Z');el.setAttribute('tabindex','0');el.setAttribute('aria-label',c.nom);const t=document.createElementNS(ns,'title');t.textContent=c.nom;el.append(t);el.addEventListener('click',()=>click(c));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();click(c)}});svg.append(el)}}$('carte').append(svg)}
-function carteMonde(){formes(geo,[-180,180,-62,84],c=>{pays=c;continent=c.continent;afficher()})}
+function carteMonde(){formes(geo,[-180,180,-62,84],c=>{window.location.href='destination.html?pays='+encodeURIComponent(c.code)})}
 </script></body></html>
