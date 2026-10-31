@@ -10,12 +10,31 @@
 .sortie{left:70.5%;top:61.2%;width:14.5%;height:19.5%;z-index:3}
 #fondu{position:fixed;inset:0;z-index:20;background:#000;opacity:0;pointer-events:none;transition:opacity 1.3s ease}
 #videoDialog{max-width:min(92vw,640px);border:2px solid #d5a04b;background:#240c0b;color:#ffe3a0;border-radius:10px;padding:25px}#videoDialog::backdrop{background:#000b}#videoDialog button{background:#5a1b1b;color:#ffe3a0;border:1px solid #d5a04b;padding:9px 15px;cursor:pointer}
+
+/* CINEMALAND — télévision interactive, superposée sans modifier le décor */
+.tv-trigger{left:61.8%;top:23.1%;width:19.5%;height:24.4%;z-index:4;border-radius:3%;}
+.tv-panel{position:absolute;left:61.8%;top:23.1%;width:19.5%;height:24.4%;z-index:5;background:radial-gradient(ellipse at 50% 15%,#263e43,#091a22 80%);border-radius:3%;box-shadow:inset 0 0 16px #000,0 0 8px #9bd5dc55;overflow:hidden;display:none;color:#f9e3ae;font-family:Arial,sans-serif;text-align:center;padding:1.1% 1%;}
+.tv-panel.active{display:flex;flex-direction:column;justify-content:center;gap:3%;}
+.tv-panel h2{font-size:clamp(7px,1.15vw,18px);margin:0;color:#f3c26e;line-height:1.12}
+.tv-panel p{font-size:clamp(6px,.86vw,14px);margin:0;line-height:1.17}
+.tv-panel .tv-small{font-size:clamp(5px,.67vw,11px);color:#d8d9d4}
+.tv-actions{display:grid;grid-template-columns:1fr 1fr;gap:4%;width:100%;}
+.tv-panel button{background:#243e48;border:1px solid #b28a51;color:#fff0cf;border-radius:3px;cursor:pointer;font-size:clamp(5px,.68vw,11px);padding:3% 2%;line-height:1.1;min-height:18px}
+.tv-panel button:hover,.tv-panel button:focus-visible{background:#71502a;outline:1px solid #ffd27b}
+.tv-panel button:disabled{opacity:.7;cursor:default}
+.tv-panel button.good{background:#176343}.tv-panel button.bad{background:#8b3232}
+.tv-top{display:flex;justify-content:space-between;align-items:center;gap:3%;font-size:clamp(5px,.65vw,11px)}
+.tv-close{position:absolute;right:2%;top:2%;z-index:6;min-height:0!important;padding:1% 3%!important}
+.tv-panel .tv-status{font-size:clamp(5px,.68vw,11px);min-height:1.3em;color:#f7c76d}
+@media(max-width:680px){.tv-panel{padding:.6%}.tv-panel button{min-height:9px;padding:1%}.tv-panel h2{font-size:6px}.tv-panel p{font-size:5px}.tv-panel .tv-small,.tv-panel .tv-status,.tv-top{font-size:4px}}
 </style></head><body>
 <main class="salon" aria-label="Salon des répliques célèbres de CINEMALAND">
 <button class="zone amelie" aria-label="Fiche du film Le Fabuleux Destin d’Amélie Poulain" title="Voir la fiche du film" onclick="location.href='films.html?fiche=Le%20Fabuleux%20Destin%20d%27Am%C3%A9lie%20Poulain&annee=2001'">Amélie Poulain</button>
 <button class="zone vadrouille" aria-label="Fiche du film La Grande Vadrouille" title="Voir la fiche du film" onclick="location.href='films.html?fiche=La%20Grande%20Vadrouille&annee=1966'">La Grande Vadrouille</button>
 <button class="zone jack" aria-label="Boire un verre de Jack Daniel’s" title="Jack Daniel’s" onclick="boire()">Jack Daniel’s</button>
 <button class="zone sortie" aria-label="Retour à la rue du KURSAAL" title="Retour à la rue" onclick="sortir()">Retour à la rue</button>
+<button class="zone tv-trigger" id="tvTrigger" aria-label="Allumer la télévision et jouer au quiz cinéma" title="Jouer au quiz cinéma" onclick="allumerTV()">Jouer au quiz cinéma</button>
+<section class="tv-panel" id="tvPanel" aria-label="Quiz de cinéma" aria-live="polite"><button class="tv-close" onclick="eteindreTV()" aria-label="Éteindre la télévision">×</button><div id="tvContent"></div></section>
 </main><div id="fondu" aria-hidden="true"></div>
 
 <script>
@@ -23,4 +42,40 @@ let animation=false;
 function boire(){if(animation)return;animation=true;const e=document.getElementById('fondu');e.style.opacity='1';setTimeout(()=>{e.style.opacity='0';setTimeout(()=>animation=false,1400)},2100)}
 function sortir(){if(animation)return;animation=true;document.getElementById('fondu').style.opacity='1';setTimeout(()=>location.href='index.html',1350)}
 
+
+// 20 questions factuelles de cinéma français : 10 par partie, sans serveur ni API.
+const questions = {
+repliques:[
+{q:'« Les cons, ça ose tout. »',a:['Les Tontons flingueurs','Le Dîner de cons','La Traversée de Paris','Le Cave se rebiffe'],c:0,info:'Les Tontons flingueurs (1963), de Georges Lautner.'},
+{q:'« Atmosphère ! Atmosphère ! »',a:['Hôtel du Nord','Quai des brumes','Le Jour se lève','La Règle du jeu'],c:0,info:'Hôtel du Nord (1938), de Marcel Carné.'},
+{q:'« T’as d’beaux yeux, tu sais. »',a:['Le Quai des brumes','Pépé le Moko','La Bête humaine','Le Grand Jeu'],c:0,info:'Quai des brumes (1938), de Marcel Carné.'},
+{q:'« C’est cela, oui ! »',a:['Le Père Noël est une ordure','Les Bronzés','Papy fait de la résistance','Le Jouet'],c:0,info:'Le Père Noël est une ordure (1982).'},
+{q:'« On ne laisse pas Bébé dans un coin. »',a:['Dirty Dancing','La Boum','Grease','Flashdance'],c:0,info:'Dirty Dancing (1987).'},
+{q:'« C’est fin, c’est très fin, ça se mange sans faim. »',a:['Le Père Noël est une ordure','La Grande Vadrouille','Le Corniaud','Le Dîner de cons'],c:0,info:'Le Père Noël est une ordure (1982).'},
+{q:'« Je suis votre père. »',a:['L’Empire contre-attaque','La Guerre des étoiles','Le Retour du Jedi','La Menace fantôme'],c:0,info:'L’Empire contre-attaque (1980).'},
+{q:'« Il nage bien, le chef. »',a:['Le Grand Bleu','Les Bronzés','Le Gendarme à Saint-Tropez','Le Corniaud'],c:1,info:'Les Bronzés (1978), de Patrice Leconte.'},
+{q:'« Il faut sauver le soldat Ryan. » : qui réalise le film ?',a:['Steven Spielberg','Ridley Scott','Oliver Stone','Robert Zemeckis'],c:0,info:'Il faut sauver le soldat Ryan (1998), réalisé par Steven Spielberg.'},
+{q:'« Je vous parle d’un temps… » : quel film met en scène Amélie ?',a:['Le Fabuleux Destin d’Amélie Poulain','Un long dimanche de fiançailles','La Délicatesse','Ensemble, c’est tout'],c:0,info:'Le Fabuleux Destin d’Amélie Poulain (2001).'}
+],
+cinema:[
+{q:'Qui a réalisé La Grande Vadrouille ?',a:['Gérard Oury','Claude Zidi','Jean Girault','Henri Verneuil'],c:0,info:'Gérard Oury a réalisé La Grande Vadrouille (1966).'},
+{q:'Quel acteur incarne François Pignon dans Le Dîner de cons ?',a:['Jacques Villeret','Thierry Lhermitte','Daniel Prévost','Francis Huster'],c:0,info:'Jacques Villeret joue François Pignon dans Le Dîner de cons (1998).'},
+{q:'Quel film réunit Bourvil et Louis de Funès en 1965 ?',a:['Le Corniaud','La Grande Vadrouille','La Folie des grandeurs','Le Gendarme de Saint-Tropez'],c:0,info:'Le Corniaud est sorti en 1965.'},
+{q:'Qui a réalisé Les Quatre Cents Coups ?',a:['François Truffaut','Jean-Luc Godard','Claude Chabrol','Louis Malle'],c:0,info:'François Truffaut, en 1959.'},
+{q:'Dans quel film apparaît le personnage d’Amélie Poulain ?',a:['Le Fabuleux Destin d’Amélie Poulain','La Môme','Les Choristes','La Vie en rose'],c:0,info:'Film de Jean-Pierre Jeunet, sorti en 2001.'},
+{q:'Qui joue le rôle principal dans La Môme ?',a:['Marion Cotillard','Audrey Tautou','Isabelle Huppert','Sophie Marceau'],c:0,info:'Marion Cotillard incarne Édith Piaf dans La Môme (2007).'},
+{q:'Quel réalisateur signe Playtime ?',a:['Jacques Tati','Pierre Étaix','Jean Renoir','Marcel Carné'],c:0,info:'Playtime (1967) est un film de Jacques Tati.'},
+{q:'Quel film a reçu la Palme d’or en 1994 ?',a:['Pulp Fiction','La Reine Margot','Léon','Trois Couleurs : Rouge'],c:0,info:'Pulp Fiction, de Quentin Tarantino, a reçu la Palme d’or en 1994.'},
+{q:'Quel film français met en scène les personnages d’Astérix et Obélix ?',a:['Mission Cléopâtre','Les Visiteurs','RRRrrrr!!!','La Cité de la peur'],c:0,info:'Astérix et Obélix : Mission Cléopâtre (2002), d’Alain Chabat.'},
+{q:'Qui a réalisé La Cité de la peur ?',a:['Alain Berbérian','Alain Chabat','Michel Hazanavicius','Dominique Farrugia'],c:0,info:'La Cité de la peur (1994) est réalisé par Alain Berbérian.'}
+]};
+let partie=[],numero=0,score=0,mode='cinema',verrou=false;
+const tvPanel=document.getElementById('tvPanel'),tvContent=document.getElementById('tvContent');
+function allumerTV(){if(animation)return;tvPanel.classList.add('active');document.getElementById('tvTrigger').style.display='none';menuTV()}
+function eteindreTV(){tvPanel.classList.remove('active');document.getElementById('tvTrigger').style.display='block';tvContent.replaceChildren()}
+function menuTV(){tvContent.innerHTML='<h2>LE CINÉMA DES MALANDAIN</h2><p>Bienvenue dans le jeu du cinéma !</p><div class="tv-actions"><button id="repliques">Répliques cultes</button><button id="cinema">Quiz cinéma</button></div><p class="tv-small">10 questions · 4 réponses · votre score à la fin</p>';document.getElementById('repliques').onclick=()=>demarrer('repliques');document.getElementById('cinema').onclick=()=>demarrer('cinema')}
+function demarrer(m){mode=m;partie=[...questions[m]].sort(()=>Math.random()-.5).slice(0,10);numero=0;score=0;afficherQuestion()}
+function afficherQuestion(){verrou=false;const q=partie[numero];tvContent.replaceChildren();let top=document.createElement('div');top.className='tv-top';top.textContent=`${mode==='repliques'?'RÉPLIQUES CULTES':'QUIZ CINÉMA'}  •  ${numero+1}/10  •  ${score} pt`;tvContent.append(top);let titre=document.createElement('p');titre.textContent=q.q;tvContent.append(titre);let actions=document.createElement('div');actions.className='tv-actions';const ordre=[0,1,2,3].sort(()=>Math.random()-.5);for(let i of ordre){let b=document.createElement('button');b.textContent=q.a[i];b.onclick=()=>repondre(i,b,actions);actions.append(b)}tvContent.append(actions);let status=document.createElement('div');status.className='tv-status';status.id='tvStatus';tvContent.append(status)}
+function repondre(i,b,actions){if(verrou)return;verrou=true;const q=partie[numero];if(i===q.c){score++;b.classList.add('good')}else{b.classList.add('bad');for(const x of actions.children)if(x.textContent===q.a[q.c])x.classList.add('good')}for(const x of actions.children)x.disabled=true;document.getElementById('tvStatus').textContent=q.info;setTimeout(()=>{numero++;if(numero<partie.length)afficherQuestion();else finTV()},2500)}
+function finTV(){tvContent.innerHTML=`<h2>FIN DE SÉANCE</h2><p>Votre score : <strong>${score}/10</strong></p><p>${score===10?'Une encyclopédie du cinéma !':score>=7?'Un vrai cinéphile !':score>=4?'Encore quelques séances !':'Le cinéma vous réserve des surprises !'}</p><div class="tv-actions"><button id="rejouer">Rejouer</button><button id="menu">Autre jeu</button></div>`;document.getElementById('rejouer').onclick=()=>demarrer(mode);document.getElementById('menu').onclick=menuTV}
 </script></body></html>
