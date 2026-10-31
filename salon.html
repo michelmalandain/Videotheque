@@ -53,6 +53,14 @@
 .proj-game .tv-status{font-size:clamp(11px,1.1vw,16px);color:#f7c76d;min-height:1.3em}
 @media(max-width:650px){.proj-quit{padding:5px 7px;font-size:10px}.proj-game{top:12%;height:55%;padding:2%;gap:5px}.proj-game #tvContent{width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(7px,1.2vh,15px)}
 .proj-game h2{font-size:14px}.proj-game p{font-size:12px}.proj-game button{font-size:10px;padding:5px}.proj-game .tv-status{font-size:10px}}
+
+/* Troisième jeu : portrait, sans retoucher projection.png */
+.proj-menu #startPortraits{left:45.2%;top:68%;width:22%;height:6.6%;font-size:clamp(10px,1.3vw,20px);color:#ffe7aa;background:linear-gradient(#703a24,#31141c);border:2px solid #d5a85c;border-radius:30px;text-shadow:0 1px 3px #000;box-shadow:0 3px 12px #000a}
+.proj-game.portrait-active{top:11%;height:55%;padding:1.2%;gap:4px}
+.proj-game .portrait-photo{height:clamp(90px,19vh,225px);max-width:65%;object-fit:contain;border:2px solid #d2a65f;background:#160e14;box-shadow:0 4px 14px #000}
+.proj-game .portrait-note{font-size:clamp(10px,1vw,14px)}
+.proj-game.portrait-active .tv-actions{max-width:650px}
+@media(max-width:650px){.proj-game .portrait-photo{height:70px}.proj-menu #startPortraits{font-size:10px;border-width:1px}}
 </style></head><body>
 <main class="salon" aria-label="Salon des répliques célèbres de CINEMALAND">
 <button class="zone amelie" aria-label="Fiche du film Le Fabuleux Destin d’Amélie Poulain" title="Voir la fiche du film" onclick="location.href='films.html?fiche=Le%20Fabuleux%20Destin%20d%27Am%C3%A9lie%20Poulain&annee=2001'">Amélie Poulain</button>
@@ -61,7 +69,7 @@
 <button class="zone sortie" aria-label="Retour à la rue du KURSAAL" title="Retour à la rue" onclick="sortir()">Retour à la rue</button>
 <button class="zone tv-trigger" id="tvTrigger" aria-label="Allumer la télévision et jouer au quiz cinéma" title="Jouer au quiz cinéma" onclick="allumerTV()">Jouer au quiz cinéma</button>
 
-</main><div class="projection" id="projection" role="dialog" aria-modal="true" aria-label="CINEMALAND, jeu de cinéma" aria-hidden="true"><div class="projection-scene" id="projectionScene"><button class="proj-quit" id="projQuit" onclick="eteindreTV()" aria-label="Quitter le jeu et revenir au salon">FERMER · RETOUR AU SALON</button><div class="proj-menu" id="projMenu"><div class="quiz-level"><label for="quizLevel">DIFFICULTÉ</label><select id="quizLevel"><option value="tous">Toutes</option><option value="amateur">Amateur</option><option value="cinephile">Cinéphile</option><option value="expert">Expert</option></select></div><button id="startRepliques" onclick="demarrer('repliques')" aria-label="Jouer aux répliques cultes">Répliques cultes</button><button id="startCinema" onclick="demarrer('cinema')" aria-label="Jouer au quiz cinéma">Quiz cinéma</button></div><section class="proj-game" id="projGame" aria-live="polite"><div id="tvContent"></div></section></div></div><div id="fondu" aria-hidden="true"></div>
+</main><div class="projection" id="projection" role="dialog" aria-modal="true" aria-label="CINEMALAND, jeu de cinéma" aria-hidden="true"><div class="projection-scene" id="projectionScene"><button class="proj-quit" id="projQuit" onclick="eteindreTV()" aria-label="Quitter le jeu et revenir au salon">FERMER · RETOUR AU SALON</button><div class="proj-menu" id="projMenu"><div class="quiz-level"><label for="quizLevel">DIFFICULTÉ</label><select id="quizLevel"><option value="tous">Toutes</option><option value="amateur">Amateur</option><option value="cinephile">Cinéphile</option><option value="expert">Expert</option></select></div><button id="startRepliques" onclick="demarrer('repliques')" aria-label="Jouer aux répliques cultes">Répliques cultes</button><button id="startCinema" onclick="demarrer('cinema')" aria-label="Jouer au quiz cinéma">Quiz cinéma</button><button id="startPortraits" onclick="demarrerPortraits()" aria-label="Jouer à Qui est-ce ?">QUI EST-CE ?</button></div><section class="proj-game" id="projGame" aria-live="polite"><div id="tvContent"></div></section></div></div><div id="fondu" aria-hidden="true"></div>
 
 <script>
 let animation=false;
@@ -74,11 +82,65 @@ const tvContent=document.getElementById('tvContent');
 const projection=document.getElementById('projection');
 let sortieProjection=null,questionTimer=null;
 function allumerTV(){if(animation||projection.classList.contains('open'))return;clearTimeout(sortieProjection);projection.classList.remove('closing');projection.classList.add('open');projection.setAttribute('aria-hidden','false');document.getElementById('projMenu').style.display='block';document.getElementById('projGame').classList.remove('active');document.getElementById('projQuit').focus()}
-function eteindreTV(){if(!projection.classList.contains('open'))return;clearTimeout(questionTimer);projection.classList.add('closing');sortieProjection=setTimeout(()=>{projection.classList.remove('open','closing');projection.setAttribute('aria-hidden','true');document.getElementById('projGame').classList.remove('active');tvContent.replaceChildren();document.getElementById('tvTrigger').focus()},1400)}
-function menuTV(){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='block';document.getElementById('projGame').classList.remove('active');tvContent.replaceChildren()}
+function eteindreTV(){if(!projection.classList.contains('open'))return;clearTimeout(questionTimer);projection.classList.add('closing');sortieProjection=setTimeout(()=>{projection.classList.remove('open','closing');projection.setAttribute('aria-hidden','true');document.getElementById('projGame').classList.remove('active','portrait-active');tvContent.replaceChildren();document.getElementById('tvTrigger').focus()},1400)}
+function menuTV(){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='block';document.getElementById('projGame').classList.remove('active','portrait-active');tvContent.replaceChildren()}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&projection.classList.contains('open'))eteindreTV()});
-function demarrer(m){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='none';document.getElementById('projGame').classList.add('active');mode=m;const niveau=document.getElementById('quizLevel').value;const reserve=questions[m].filter(q=>niveau==='tous'||q.level===niveau);partie=[...reserve].sort(()=>Math.random()-.5).slice(0,10);numero=0;score=0;afficherQuestion()}
+function demarrer(m){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='none';document.getElementById('projGame').classList.add('active');document.getElementById('projGame').classList.remove('portrait-active');mode=m;const niveau=document.getElementById('quizLevel').value;const reserve=questions[m].filter(q=>niveau==='tous'||q.level===niveau);partie=[...reserve].sort(()=>Math.random()-.5).slice(0,10);numero=0;score=0;afficherQuestion()}
 function afficherQuestion(){verrou=false;const q=partie[numero];tvContent.replaceChildren();let top=document.createElement('div');top.className='tv-top';top.textContent=`${mode==='repliques'?'RÉPLIQUES CULTES':'QUIZ CINÉMA'}  •  ${numero+1}/10  •  ${score} pt`;tvContent.append(top);let titre=document.createElement('p');titre.textContent=q.q;tvContent.append(titre);let actions=document.createElement('div');actions.className='tv-actions';const ordre=[0,1,2,3].sort(()=>Math.random()-.5);for(let i of ordre){let b=document.createElement('button');b.textContent=q.a[i];b.onclick=()=>repondre(i,b,actions);actions.append(b)}tvContent.append(actions);let status=document.createElement('div');status.className='tv-status';status.id='tvStatus';tvContent.append(status)}
 function repondre(i,b,actions){if(verrou)return;verrou=true;const q=partie[numero];if(i===q.c){score++;b.classList.add('good')}else{b.classList.add('bad');for(const x of actions.children)if(x.textContent===q.a[q.c])x.classList.add('good')}for(const x of actions.children)x.disabled=true;document.getElementById('tvStatus').textContent=q.info;questionTimer=setTimeout(()=>{numero++;if(numero<partie.length)afficherQuestion();else finTV()},2500)}
 function finTV(){tvContent.innerHTML=`<h2>FIN DE SÉANCE</h2><p>Votre score : <strong>${score}/10</strong></p><p>${score===10?'Une encyclopédie du cinéma !':score>=7?'Un vrai cinéphile !':score>=4?'Encore quelques séances !':'Le cinéma vous réserve des surprises !'}</p><div class="tv-actions"><button id="rejouer">Rejouer</button><button id="menu">Autre jeu</button></div>`;document.getElementById('rejouer').onclick=()=>demarrer(mode);document.getElementById('menu').onclick=menuTV}
+</script><script src="quiz-portraits.js"></script><script>
+// Jeu « Qui est-ce ? » : portraits authentiques Wikimedia Commons / Wikipédia.
+// Les portraits ne sont pas datés : les images à différents âges seront possibles avec
+// une sélection manuelle ultérieure, sans attribuer de photo à la mauvaise personne.
+let portraitTour=0,portraitScore=0,portraitPartie=[],portraitToken=0,portraitVerrou=false;
+const portraitCache=new Map();
+function melangerPortrait(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+async function portraitImage(person){
+ if(portraitCache.has(person.name))return portraitCache.get(person.name);
+ // Une photo d'article biographique, non un résultat de recherche d'image ambigu.
+ const nom=person.name.replace(/ \(actrice\)$/,'');
+ const endpoint='https://fr.wikipedia.org/w/api.php?origin=*&action=query&format=json&prop=pageimages&piprop=thumbnail&pithumbsize=700&titles='+encodeURIComponent(nom);
+ try{const r=await fetch(endpoint,{signal:AbortSignal.timeout(8500)});if(!r.ok)return null;const data=await r.json();const page=Object.values(data.query?.pages||{})[0];const url=page?.thumbnail?.source;
+ if(!url||/\.svg(?:\?|$)/i.test(url))return null;
+ portraitCache.set(person.name,url);return url;
+ }catch{return null}
+}
+function demarrerPortraits(){
+ clearTimeout(questionTimer);portraitToken++;portraitTour=0;portraitScore=0;portraitVerrou=false;
+ mode='portraits';document.getElementById('projMenu').style.display='none';
+ document.getElementById('projGame').classList.add('active','portrait-active');
+ const level=document.getElementById('quizLevel').value;
+ portraitPartie=melangerPortrait(acteursQuiz.filter(p=>level==='tous'||p.level===level));
+ afficherPortrait();
+}
+async function afficherPortrait(){
+ const token=portraitToken;portraitVerrou=false;
+ tvContent.replaceChildren();const msg=document.createElement('p');msg.textContent='Recherche d’un portrait authentique…';tvContent.append(msg);
+ let person,url;
+ // Les portraits absents ne sont pas remplacés par une image inventée.
+ while(portraitPartie.length){person=portraitPartie.shift();url=await portraitImage(person);if(token!==portraitToken||mode!=='portraits'||!projection.classList.contains('open'))return;if(url)break}
+ if(!url){tvContent.innerHTML='<h2>PHOTOGRAPHIES INDISPONIBLES</h2><p>Impossible de récupérer suffisamment de portraits. Vérifie ta connexion.</p><button id="retourPortrait">Retour aux jeux</button>';document.getElementById('retourPortrait').onclick=menuTV;return}
+ const autres=melangerPortrait(acteursQuiz.filter(p=>p.name!==person.name&&p.origin===person.origin));
+ const choix=melangerPortrait([person,...autres.slice(0,3)]);
+ tvContent.replaceChildren();
+ const top=document.createElement('div');top.className='tv-top';top.textContent=`QUI EST-CE ?  •  ${portraitTour+1}/10  •  ${portraitScore} pt`;tvContent.append(top);
+ const photo=document.createElement('img');photo.className='portrait-photo';photo.src=url;photo.alt='Photographie de la personnalité à identifier';photo.referrerPolicy='no-referrer';tvContent.append(photo);
+ const titre=document.createElement('p');titre.textContent='Qui est cette personnalité ?';tvContent.append(titre);
+ const actions=document.createElement('div');actions.className='tv-actions';
+ for(const candidat of choix){const b=document.createElement('button');b.textContent=candidat.name.replace(/ \(actrice\)$/,'');b.onclick=()=>repondrePortrait(candidat,person,b,actions);actions.append(b)}tvContent.append(actions);
+ const status=document.createElement('div');status.className='tv-status';status.id='tvStatus';tvContent.append(status);
+ const note=document.createElement('div');note.className='portrait-note';note.textContent='Photographie authentique : Wikimedia / Wikipédia';tvContent.append(note);
+ photo.onerror=()=>{if(!portraitVerrou&&token===portraitToken)afficherPortrait()};
+}
+function repondrePortrait(candidat,person,b,actions){
+ if(portraitVerrou)return;portraitVerrou=true;
+ if(candidat.name===person.name){portraitScore++;b.classList.add('good')}else{b.classList.add('bad');for(const x of actions.children)if(x.textContent===person.name.replace(/ \(actrice\)$/,''))x.classList.add('good')}
+ for(const x of actions.children)x.disabled=true;
+ document.getElementById('tvStatus').textContent='Il s’agit de '+person.name.replace(/ \(actrice\)$/,'')+'.';
+ questionTimer=setTimeout(()=>{portraitTour++;if(portraitTour<10)afficherPortrait();else finPortraits()},2600)
+}
+function finPortraits(){tvContent.innerHTML=`<h2>FIN DE SÉANCE</h2><p>Votre score : <strong>${portraitScore}/10</strong></p><p>${portraitScore===10?'Quel œil de cinéphile !':portraitScore>=7?'Bravo, belle reconnaissance !':'Encore quelques portraits à découvrir !'}</p><div class="tv-actions"><button id="rejouerPortrait">Rejouer</button><button id="menuPortrait">Autre jeu</button></div>`;document.getElementById('rejouerPortrait').onclick=demarrerPortraits;document.getElementById('menuPortrait').onclick=menuTV}
+const ancienEteindre=eteindreTV;eteindreTV=function(){portraitToken++;ancienEteindre()};
+const ancienMenu=menuTV;menuTV=function(){portraitToken++;ancienMenu();document.getElementById('projGame').classList.remove('portrait-active')};
 </script><script src="quiz-questions.js"></script></body></html>
