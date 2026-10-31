@@ -6,21 +6,21 @@
 .salon{width:min(100vw,1670px);aspect-ratio:1670/942;position:relative;background:url('salon.png') center/100% 100% no-repeat;box-shadow:0 0 55px #000}
 .zone{position:absolute;z-index:2;background:transparent;border:0;color:transparent;font-size:0;cursor:pointer;display:block;padding:0;text-decoration:none}
 .zone:hover{filter:drop-shadow(0 0 12px #ffd27b)}.zone:focus-visible{outline:2px solid #ffe3a0}
-.amelie{left:86.3%;top:0.8%;width:12%;height:20%}.vadrouille{left:17.1%;top:1.2%;width:8.7%;height:24%}.jack{left:49.8%;top:57.8%;width:4.2%;height:18%}
-.sortie{position:absolute;right:2%;bottom:2%;z-index:3;background:#3c1515df;border:1px solid #d5a04b;border-radius:5px;color:#ffe1a1;font:clamp(11px,1.3vw,18px) Georgia,serif;padding:9px 16px;cursor:pointer}
+.amelie{left:86.2%;top:0%;width:13.2%;height:24%}.vadrouille{left:17.1%;top:1.2%;width:8.7%;height:24%}.jack{left:49.8%;top:57.8%;width:4.2%;height:18%}
+.sortie{left:70.5%;top:61.2%;width:14.5%;height:19.5%;z-index:3}
 #fondu{position:fixed;inset:0;z-index:20;background:#000;opacity:0;pointer-events:none;transition:opacity 1.3s ease}
 #videoDialog{max-width:min(92vw,640px);border:2px solid #d5a04b;background:#240c0b;color:#ffe3a0;border-radius:10px;padding:25px}#videoDialog::backdrop{background:#000b}#videoDialog button{background:#5a1b1b;color:#ffe3a0;border:1px solid #d5a04b;padding:9px 15px;cursor:pointer}
 </style></head><body>
 <main class="salon" aria-label="Salon des répliques célèbres de CINEMALAND">
-<button class="zone amelie" aria-label="Réplique d’Amélie Poulain" title="Amélie Poulain" onclick="video('Le Fabuleux Destin d’Amélie Poulain')">Amélie Poulain</button>
-<button class="zone vadrouille" aria-label="Réplique de La Grande Vadrouille" title="La Grande Vadrouille" onclick="video('La Grande Vadrouille')">La Grande Vadrouille</button>
+<button class="zone amelie" aria-label="Fiche du film Le Fabuleux Destin d’Amélie Poulain" title="Voir la fiche du film" onclick="location.href='films.html?fiche=Le%20Fabuleux%20Destin%20d%27Am%C3%A9lie%20Poulain&annee=2001'">Amélie Poulain</button>
+<button class="zone vadrouille" aria-label="Fiche du film La Grande Vadrouille" title="Voir la fiche du film" onclick="location.href='films.html?fiche=La%20Grande%20Vadrouille&annee=1966'">La Grande Vadrouille</button>
 <button class="zone jack" aria-label="Boire un verre de Jack Daniel’s" title="Jack Daniel’s" onclick="boire()">Jack Daniel’s</button>
-<button class="sortie" onclick="sortir()">SORTIE VERS LA RUE</button>
+<button class="zone sortie" aria-label="Retour à la rue du KURSAAL" title="Retour à la rue" onclick="sortir()">Retour à la rue</button>
 </main><div id="fondu" aria-hidden="true"></div>
-<dialog id="videoDialog"><h2 id="videoTitle"></h2><p>La vidéo de cette réplique reste à choisir.</p><button onclick="document.getElementById('videoDialog').close()">Fermer</button></dialog>
+
 <script>
 let animation=false;
 function boire(){if(animation)return;animation=true;const e=document.getElementById('fondu');e.style.opacity='1';setTimeout(()=>{e.style.opacity='0';setTimeout(()=>animation=false,1400)},2100)}
 function sortir(){if(animation)return;animation=true;document.getElementById('fondu').style.opacity='1';setTimeout(()=>location.href='index.html',1350)}
-function video(nom){document.getElementById('videoTitle').textContent=nom;document.getElementById('videoDialog').showModal()}
+
 </script></body></html>
