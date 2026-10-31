@@ -270,6 +270,7 @@ function add(person,film){
 if(Array.isArray(all)){
  for(const f of all){
   const film=f||{};
+  if(!Array.isArray(film.production_countries)||!film.production_countries.includes('FR'))continue;
   if(ROLE==='actor'){for(const p of (film.cast||film.actors||[]))add(p,film);}
   else {for(const p of [...(film.directors||[]),...(film.creators||[])])add(p,film);}
  }

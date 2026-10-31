@@ -477,16 +477,23 @@ function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu 
  function majCompteursHall(){
   const items=window.CINEMALAND_CATALOGUE;
   if(!Array.isArray(items))return false;
-  const films=new Set(),series=new Set();
-  for(const item of items){if(!item||!item.title)continue;
-   const cle=[item.title,item.year||''].map(x=>String(x).trim().toLocaleLowerCase('fr')).join('|');
-   if(item.kind==='Film')films.add(cle);
-   else if(item.kind==='Série')series.add(cle);
+  const films=new Set(),series=new Set(),acteurs=new Set(),realisateurs=new Set();
+  const norm=x=>String(x||'').trim().toLocaleLowerCase('fr');
+  const add=(set,arr)=>{for(const p of Array.isArray(arr)?arr:[]){const n=norm(typeof p==='string'?p:p?.name);if(n)set.add(n)}};
+  for(const item of items){
+   if(!item||!item.title||!Array.isArray(item.production_countries)||!item.production_countries.includes('FR'))continue;
+   const cle=norm(item.title)+'|'+String(item.year||'');
+   const kind=norm(item.kind||item.type);
+   if(kind==='film'||kind==='movie')films.add(cle);
+   else if(['série','serie','series','tv'].includes(kind))series.add(cle);
+   add(acteurs,item.cast||item.actors);
+   add(realisateurs,item.directors);
+   add(realisateurs,item.creators);
   }
   document.getElementById('hallFilms').textContent=films.size.toLocaleString('fr-FR');
   document.getElementById('hallSeries').textContent=series.size.toLocaleString('fr-FR');
-  document.getElementById('hallActeurs').textContent=String(Number(document.getElementById('totalActeurs').textContent||0));
-  document.getElementById('hallRealisateurs').textContent=String(Number(document.getElementById('totalRealisateurs').textContent||0));
+  document.getElementById('hallActeurs').textContent=acteurs.size.toLocaleString('fr-FR');
+  document.getElementById('hallRealisateurs').textContent=realisateurs.size.toLocaleString('fr-FR');
   return true;
  }
  if(!majCompteursHall()){let n=0;const timer=setInterval(()=>{if(majCompteursHall()||++n>15)clearInterval(timer)},500)}
