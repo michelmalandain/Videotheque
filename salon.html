@@ -27,6 +27,31 @@
 .tv-close{position:absolute;right:2%;top:2%;z-index:6;min-height:0!important;padding:1% 3%!important}
 .tv-panel .tv-status{font-size:clamp(5px,.68vw,11px);min-height:1.3em;color:#f7c76d}
 @media(max-width:680px){.tv-panel{padding:.6%}.tv-panel button{min-height:9px;padding:1%}.tv-panel h2{font-size:6px}.tv-panel p{font-size:5px}.tv-panel .tv-small,.tv-panel .tv-status,.tv-top{font-size:4px}}
+
+/* Projection CINEMALAND : le salon d'origine demeure intact. */
+.projection{position:fixed;inset:0;z-index:12;background:#100704;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s;overflow:hidden}
+.projection.open{opacity:1;visibility:visible}
+.projection-scene{position:relative;width:min(100vw,177.58vh);aspect-ratio:1648/928;background:url('projection.png') center/100% 100% no-repeat;transform:translateY(-115%);transition:transform 1.55s cubic-bezier(.22,.85,.3,1);box-shadow:0 0 80px #000}
+.projection.open .projection-scene{transform:translateY(0)}
+.projection.closing .projection-scene{transform:translateY(-115%);transition:transform 1.35s ease-in-out}
+.projection .proj-menu{position:absolute;inset:0;display:block}
+.proj-menu button{position:absolute;top:50.1%;width:11%;height:5.8%;background:transparent;border:0;cursor:pointer;color:transparent;font-size:0}
+.proj-menu button:hover,.proj-menu button:focus-visible{outline:3px solid #ffd680;border-radius:25px;background:#ffd68022}
+.proj-menu #startRepliques{left:37.5%}.proj-menu #startCinema{left:60.1%}
+.proj-quit{position:absolute;right:2.2%;top:3.2%;z-index:5;background:#3d1015ee;color:#ffe1a0;border:1px solid #dfac5c;border-radius:5px;padding:9px 15px;font:bold clamp(12px,1.1vw,18px) Georgia,serif;cursor:pointer}
+.proj-quit:hover{background:#7b2525}
+.proj-game{position:absolute;left:23.1%;top:16%;width:61.2%;height:47%;background:linear-gradient(135deg,#0d1826f7,#220d1af7);border:2px solid #d4a35b;box-shadow:0 0 30px #000;display:none;flex-direction:column;align-items:center;justify-content:center;gap:clamp(7px,1.2vh,15px);padding:2.2%;font-family:Georgia,serif;text-align:center;color:#ffe9ba;overflow:auto}
+.proj-game.active{display:flex}
+.proj-game #tvContent{width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(7px,1.2vh,15px)}
+.proj-game h2{font-size:clamp(16px,2.5vw,35px);margin:0;color:#f4ca76}
+.proj-game p{font-size:clamp(13px,1.7vw,24px);line-height:1.3;margin:0}
+.proj-game .tv-top{font-size:clamp(11px,1.1vw,17px);width:100%;justify-content:center;color:#f4c976}
+.proj-game .tv-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:730px}
+.proj-game button{background:#243e48;color:#fff0cf;border:1px solid #b28a51;border-radius:7px;cursor:pointer;font-size:clamp(11px,1.2vw,18px);padding:clamp(7px,1vh,14px)}
+.proj-game button:hover{background:#76512d}.proj-game button.good{background:#176343}.proj-game button.bad{background:#8b3232}.proj-game button:disabled{cursor:default;opacity:.8}
+.proj-game .tv-status{font-size:clamp(11px,1.1vw,16px);color:#f7c76d;min-height:1.3em}
+@media(max-width:650px){.proj-quit{padding:5px 7px;font-size:10px}.proj-game{top:12%;height:55%;padding:2%;gap:5px}.proj-game #tvContent{width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(7px,1.2vh,15px)}
+.proj-game h2{font-size:14px}.proj-game p{font-size:12px}.proj-game button{font-size:10px;padding:5px}.proj-game .tv-status{font-size:10px}}
 </style></head><body>
 <main class="salon" aria-label="Salon des répliques célèbres de CINEMALAND">
 <button class="zone amelie" aria-label="Fiche du film Le Fabuleux Destin d’Amélie Poulain" title="Voir la fiche du film" onclick="location.href='films.html?fiche=Le%20Fabuleux%20Destin%20d%27Am%C3%A9lie%20Poulain&annee=2001'">Amélie Poulain</button>
@@ -34,8 +59,8 @@
 <button class="zone jack" aria-label="Boire un verre de Jack Daniel’s" title="Jack Daniel’s" onclick="boire()">Jack Daniel’s</button>
 <button class="zone sortie" aria-label="Retour à la rue du KURSAAL" title="Retour à la rue" onclick="sortir()">Retour à la rue</button>
 <button class="zone tv-trigger" id="tvTrigger" aria-label="Allumer la télévision et jouer au quiz cinéma" title="Jouer au quiz cinéma" onclick="allumerTV()">Jouer au quiz cinéma</button>
-<section class="tv-panel" id="tvPanel" aria-label="Quiz de cinéma" aria-live="polite"><button class="tv-close" onclick="eteindreTV()" aria-label="Éteindre la télévision">×</button><div id="tvContent"></div></section>
-</main><div id="fondu" aria-hidden="true"></div>
+
+</main><div class="projection" id="projection" role="dialog" aria-modal="true" aria-label="CINEMALAND, jeu de cinéma" aria-hidden="true"><div class="projection-scene" id="projectionScene"><button class="proj-quit" id="projQuit" onclick="eteindreTV()" aria-label="Quitter le jeu et revenir au salon">FERMER · RETOUR AU SALON</button><div class="proj-menu" id="projMenu"><button id="startRepliques" onclick="demarrer('repliques')" aria-label="Jouer aux répliques cultes">Répliques cultes</button><button id="startCinema" onclick="demarrer('cinema')" aria-label="Jouer au quiz cinéma">Quiz cinéma</button></div><section class="proj-game" id="projGame" aria-live="polite"><div id="tvContent"></div></section></div></div><div id="fondu" aria-hidden="true"></div>
 
 <script>
 let animation=false;
@@ -70,12 +95,15 @@ cinema:[
 {q:'Qui a réalisé La Cité de la peur ?',a:['Alain Berbérian','Alain Chabat','Michel Hazanavicius','Dominique Farrugia'],c:0,info:'La Cité de la peur (1994) est réalisé par Alain Berbérian.'}
 ]};
 let partie=[],numero=0,score=0,mode='cinema',verrou=false;
-const tvPanel=document.getElementById('tvPanel'),tvContent=document.getElementById('tvContent');
-function allumerTV(){if(animation)return;tvPanel.classList.add('active');document.getElementById('tvTrigger').style.display='none';menuTV()}
-function eteindreTV(){tvPanel.classList.remove('active');document.getElementById('tvTrigger').style.display='block';tvContent.replaceChildren()}
-function menuTV(){tvContent.innerHTML='<h2>LE CINÉMA DES MALANDAIN</h2><p>Bienvenue dans le jeu du cinéma !</p><div class="tv-actions"><button id="repliques">Répliques cultes</button><button id="cinema">Quiz cinéma</button></div><p class="tv-small">10 questions · 4 réponses · votre score à la fin</p>';document.getElementById('repliques').onclick=()=>demarrer('repliques');document.getElementById('cinema').onclick=()=>demarrer('cinema')}
-function demarrer(m){mode=m;partie=[...questions[m]].sort(()=>Math.random()-.5).slice(0,10);numero=0;score=0;afficherQuestion()}
+const tvContent=document.getElementById('tvContent');
+const projection=document.getElementById('projection');
+let sortieProjection=null,questionTimer=null;
+function allumerTV(){if(animation||projection.classList.contains('open'))return;clearTimeout(sortieProjection);projection.classList.remove('closing');projection.classList.add('open');projection.setAttribute('aria-hidden','false');document.getElementById('projMenu').style.display='block';document.getElementById('projGame').classList.remove('active');document.getElementById('projQuit').focus()}
+function eteindreTV(){if(!projection.classList.contains('open'))return;clearTimeout(questionTimer);projection.classList.add('closing');sortieProjection=setTimeout(()=>{projection.classList.remove('open','closing');projection.setAttribute('aria-hidden','true');document.getElementById('projGame').classList.remove('active');tvContent.replaceChildren();document.getElementById('tvTrigger').focus()},1400)}
+function menuTV(){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='block';document.getElementById('projGame').classList.remove('active');tvContent.replaceChildren()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&projection.classList.contains('open'))eteindreTV()});
+function demarrer(m){clearTimeout(questionTimer);document.getElementById('projMenu').style.display='none';document.getElementById('projGame').classList.add('active');mode=m;partie=[...questions[m]].sort(()=>Math.random()-.5).slice(0,10);numero=0;score=0;afficherQuestion()}
 function afficherQuestion(){verrou=false;const q=partie[numero];tvContent.replaceChildren();let top=document.createElement('div');top.className='tv-top';top.textContent=`${mode==='repliques'?'RÉPLIQUES CULTES':'QUIZ CINÉMA'}  •  ${numero+1}/10  •  ${score} pt`;tvContent.append(top);let titre=document.createElement('p');titre.textContent=q.q;tvContent.append(titre);let actions=document.createElement('div');actions.className='tv-actions';const ordre=[0,1,2,3].sort(()=>Math.random()-.5);for(let i of ordre){let b=document.createElement('button');b.textContent=q.a[i];b.onclick=()=>repondre(i,b,actions);actions.append(b)}tvContent.append(actions);let status=document.createElement('div');status.className='tv-status';status.id='tvStatus';tvContent.append(status)}
-function repondre(i,b,actions){if(verrou)return;verrou=true;const q=partie[numero];if(i===q.c){score++;b.classList.add('good')}else{b.classList.add('bad');for(const x of actions.children)if(x.textContent===q.a[q.c])x.classList.add('good')}for(const x of actions.children)x.disabled=true;document.getElementById('tvStatus').textContent=q.info;setTimeout(()=>{numero++;if(numero<partie.length)afficherQuestion();else finTV()},2500)}
+function repondre(i,b,actions){if(verrou)return;verrou=true;const q=partie[numero];if(i===q.c){score++;b.classList.add('good')}else{b.classList.add('bad');for(const x of actions.children)if(x.textContent===q.a[q.c])x.classList.add('good')}for(const x of actions.children)x.disabled=true;document.getElementById('tvStatus').textContent=q.info;questionTimer=setTimeout(()=>{numero++;if(numero<partie.length)afficherQuestion();else finTV()},2500)}
 function finTV(){tvContent.innerHTML=`<h2>FIN DE SÉANCE</h2><p>Votre score : <strong>${score}/10</strong></p><p>${score===10?'Une encyclopédie du cinéma !':score>=7?'Un vrai cinéphile !':score>=4?'Encore quelques séances !':'Le cinéma vous réserve des surprises !'}</p><div class="tv-actions"><button id="rejouer">Rejouer</button><button id="menu">Autre jeu</button></div>`;document.getElementById('rejouer').onclick=()=>demarrer(mode);document.getElementById('menu').onclick=menuTV}
 </script></body></html>
