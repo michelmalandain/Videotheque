@@ -147,6 +147,8 @@ body{justify-content:flex-start;background:#080e19}
 .hotspot.quatrel{left:31%;top:74%;width:20%;height:18%}
 .hotspot.deuxcv{left:54%;top:75%;width:19%;height:17%}
 .hotspot.gordini{left:76%;top:76%;width:23%;height:16%}
+/* Fenêtre du salon : zone transparente sur la façade validée. */
+.hotspot.salon-fenetre{left:25.1%;top:10.2%;width:3.2%;height:9.3%}
 /* Hall provisoire : les décors intérieurs seront validés séparément. */
 #hall{display:none;min-height:min(80vh,750px);width:min(100vw,1200px);margin:auto;padding:40px 25px;background:radial-gradient(ellipse at 50% 20%,#813329,#290a0e 70%);border:8px solid #b18a51;text-align:center;box-shadow:0 0 50px #000}
 #hall.active{display:block}body.inside .scene{display:none}body.inside{justify-content:center}
@@ -202,6 +204,7 @@ body.inside .foot{display:none!important}
 <h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
 <button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
 <button class="hotspot librairie" type="button" aria-label="Librairie Malandain — Almanach de la Révolution française" title="Librairie Malandain" onclick="window.open('https://archive.org/details/@michel_malandain', '_blank', 'noopener')">Librairie Malandain</button>
+<a class="hotspot salon-fenetre" href="salon.html" aria-label="Entrer dans le salon des répliques célèbres" title="Salon des répliques célèbres">Salon vidéo</a>
 <a class="hotspot voyage" href="agence.html" aria-label="Agence de voyages CINEMALAND" title="Agence de voyages">Agence de voyages</a>
 <a class="hotspot bureau" aria-label="Administration" title="Administration" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
 <a class="hotspot ds" aria-label="Citroën DS — La Horse" title="La Horse" href="films.html?fiche=La%20Horse&amp;annee=1970">La Horse</a>
