@@ -1907,5 +1907,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "La Grande Vadrouille",
+    "kind": "Film",
+    "year": 1966,
+    "period": "1966",
+    "genre": "Comédie, Guerre",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-grande-vadrouille.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Grande%20Vadrouille",
+    "summary": "En 1942, pendant l'occupation allemande en France, un bombardier de cinq aviateurs britanniques est abattu au-dessus de Paris par la Flak lors d'un retour de raid aérien. Ses occupants sautent alors en parachute. Deux sont faits prisonniers, les trois autres parviennent à échapper aux Allemands. Le premier, Sir Reginald Brook « Big Moustache », atterrit dans le zoo de Vincennes. Le second, Peter Cunhingam, sur la nacelle d'un peintre en bâtiment, Augustin Bouvet, et le dernier, Alan MacIntosh, sur le toit de l'Opéra de Paris (Garnier) puis se réfugie dans la loge d'un chef d'orchestre acariâtre, Stanislas Lefort. Les deux Français, aidés de Juliette doivent alors, malgré eux, cacher les aviateurs puis concourir à leurs retrouvailles parisiennes avant de les accompagner et fuir avec eux pour rejoindre la zone libre et l'Espagne.",
+    "directors": [
+      "Gérard Oury"
+    ],
+    "cast": [
+      {
+        "name": "Bourvil",
+        "character": "Augustin Bouvet"
+      },
+      {
+        "name": "Louis de Funès",
+        "character": "Stanislas Lefort"
+      },
+      {
+        "name": "Terry-Thomas",
+        "character": "Reginald Brook"
+      },
+      {
+        "name": "Claudio Brook",
+        "character": "Peter Cunningham"
+      },
+      {
+        "name": "Mike Marshall",
+        "character": "Alan MacIntosh"
+      }
+    ]
   }
 ];
