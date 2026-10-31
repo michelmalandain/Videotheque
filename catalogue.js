@@ -1943,5 +1943,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Alan MacIntosh"
       }
     ]
+  },
+  {
+    "title": "Le Fabuleux Destin d'Amélie Poulain",
+    "kind": "Film",
+    "year": 2001,
+    "period": "2001",
+    "genre": "Comédie, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-fabuleux-destin-d-amelie-poulain.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Fabuleux%20Destin%20d'Am%C3%A9lie%20Poulain",
+    "summary": "Amélie, une jeune serveuse dans un bar de Montmartre, passe son temps à observer les gens et à laisser son imagination divaguer. Elle s'est fixée un but : faire le bien de ceux qui l'entourent. Elle invente alors des stratagèmes pour intervenir incognito dans leur existence. Le chemin d'Amélie est jalonné de rencontres: Georgette, la buraliste hypocondriaque, Lucien, le commis d'épicerie, Madeleine Wallace, la concierge portée sur le porto et les chiens empaillés, ou encore Raymond Dufayel alias « l'homme de verre », son voisin qui ne vit qu'à travers une reproduction d'un tableau de Renoir. Cette quête du bonheur amène Amélie à faire la connaissance de Nino Quincampoix, un étrange « prince charmant ». Celui-ci partage son temps entre un train fantôme et un sex-shop, et cherche à identifier un inconnu dont la photo réapparaît sans cesse dans plusieurs cabines de photomaton.",
+    "directors": [
+      "Jean-Pierre Jeunet"
+    ],
+    "cast": [
+      {
+        "name": "Audrey Tautou",
+        "character": "Amélie Poulain"
+      },
+      {
+        "name": "Mathieu Kassovitz",
+        "character": "Nino Quincampoix"
+      },
+      {
+        "name": "Rufus",
+        "character": "Raphaël Poulain"
+      },
+      {
+        "name": "Serge Merlin",
+        "character": "Raymond Dufayel"
+      },
+      {
+        "name": "Jamel Debbouze",
+        "character": "Lucien"
+      }
+    ]
   }
 ];
