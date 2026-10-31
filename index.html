@@ -178,7 +178,7 @@ body{justify-content:flex-start;background:#080e19}
 body.inside{display:block!important;background:#100806!important}
 body.inside .scene{display:none!important}
 body.inside .foot{display:none!important}
-.hall-image{position:relative;width:100%;aspect-ratio:1536/1024;background:#150c09 url('hall.png') center/100% 100% no-repeat;isolation:isolate}
+.hall-image{position:relative;width:100%;aspect-ratio:1721/914;background:#150c09 url('hall-mondial.png') center/100% 100% no-repeat;isolation:isolate}
 .hall-hotspot{position:absolute;z-index:4;display:block;cursor:pointer;appearance:none;border:0!important;border-radius:0!important;background:transparent!important;color:transparent!important;font-size:0!important;padding:0!important;margin:0!important;box-shadow:none!important;outline:0!important;transition:filter .22s ease}
 .hall-hotspot::after{content:'';position:absolute;inset:-3px;opacity:0;pointer-events:none;transition:opacity .2s ease;box-shadow:0 0 22px 8px #ffd27d88, inset 0 0 20px 5px #ffe3a755;border-radius:20px;filter:blur(8px)}
 .hall-hotspot:hover::after,.hall-hotspot:focus-visible::after{opacity:1}
@@ -198,6 +198,19 @@ body.inside .foot{display:none!important}
 .hall-retour:hover{background:#7c1e25!important;box-shadow:0 0 15px #f6bd6b88}
 @media(max-width:600px){.hall-compteur{font-size:clamp(10px,3.2vw,22px)}.hall-retour{font-size:10px;padding:5px 6px}}
 .hall-sortie{left:86%;top:13%;width:13%;height:74%}.hall-compteur{font-size:clamp(9px,1.5vw,24px)!important;background:transparent!important}
+</style><style id="hall-compteurs-sur-pancartes">
+/* Nouveau hall validé : compteurs réels sur les quatre pancartes. */
+.hall-compteur{position:absolute!important;z-index:6!important;display:flex!important;align-items:center!important;justify-content:center!important;width:2.64%!important;height:3.75%!important;background:#23130d!important;color:#f8cb72!important;border:0!important;border-radius:0!important;font:normal clamp(9px,1.28vw,21px) Georgia,serif!important;letter-spacing:-.04em!important;text-shadow:0 0 3px #8c5526!important;line-height:1!important;pointer-events:none!important}
+.hall-films-nombre{left:19.32%;top:15.22%}
+.hall-series-nombre{left:19.32%;top:23.77%}
+.hall-acteurs-nombre{left:19.32%;top:32.40%}
+.hall-realisateurs-nombre{left:19.32%;top:40.98%}
+.hall-films{left:8.8%;top:11.7%;width:14.3%;height:9%}
+.hall-series{left:8.8%;top:20.2%;width:14.3%;height:9%}
+.hall-acteurs{left:8.8%;top:28.7%;width:14.3%;height:9%}
+.hall-realisateurs{left:8.8%;top:37.2%;width:14.3%;height:9%}
+.hall-vanessa{left:23%;top:11%;width:17%;height:79%}
+@media(max-width:600px){.hall-compteur{font-size:clamp(7px,1.35vw,12px)!important}}
 </style></head>
 <body>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
@@ -223,7 +236,8 @@ body.inside .foot{display:none!important}
 <a class="hall-affiche hall-singe" href="films.html?fiche=Un%20singe%20en%20hiver&amp;annee=1962" aria-label="Un singe en hiver (1962)" title="Un singe en hiver (1962)">Un singe en hiver</a>
 <a class="hall-affiche hall-tontons" href="films.html?fiche=Les%20Tontons%20flingueurs&amp;annee=1963" aria-label="Les Tontons flingueurs (1963)" title="Les Tontons flingueurs (1963)">Les Tontons flingueurs</a>
 <a class="hall-hotspot hall-vanessa" href="index.html?personne=Vanessa%20Paradis&amp;hall=1" aria-label="Vanessa Paradis — fiche actrice" title="Vanessa Paradis — fiche actrice">Vanessa Paradis</a>
-<output class="hall-compteur hall-titres" id="hallTitres" aria-label="Nombre de films et séries">…</output>
+<output class="hall-compteur hall-films-nombre" id="hallFilms" aria-label="Nombre de films">…</output>
+<output class="hall-compteur hall-series-nombre" id="hallSeries" aria-label="Nombre de séries">…</output>
 <output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
 <output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
 <a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
@@ -456,7 +470,24 @@ async function ouvrirPersonneDepuisLien(){
 }
 window.addEventListener('load',ouvrirPersonneDepuisLien);
 function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
-(function(){const ids=[['totalTitres','hallTitres'],['totalRealisateurs','hallRealisateurs'],['totalActeurs','hallActeurs']];let n=0;const timer=setInterval(()=>{for(const [a,b] of ids)document.getElementById(b).textContent=document.getElementById(a).textContent;if(++n>15)clearInterval(timer)},500)})();
+(function(){
+ function majCompteursHall(){
+  const items=window.CINEMALAND_CATALOGUE;
+  if(!Array.isArray(items))return false;
+  const films=new Set(),series=new Set();
+  for(const item of items){if(!item||!item.title)continue;
+   const cle=[item.title,item.year||''].map(x=>String(x).trim().toLocaleLowerCase('fr')).join('|');
+   if(item.kind==='Film')films.add(cle);
+   else if(item.kind==='Série')series.add(cle);
+  }
+  document.getElementById('hallFilms').textContent=films.size.toLocaleString('fr-FR');
+  document.getElementById('hallSeries').textContent=series.size.toLocaleString('fr-FR');
+  document.getElementById('hallActeurs').textContent=String(Number(document.getElementById('totalActeurs').textContent||0));
+  document.getElementById('hallRealisateurs').textContent=String(Number(document.getElementById('totalRealisateurs').textContent||0));
+  return true;
+ }
+ if(!majCompteursHall()){let n=0;const timer=setInterval(()=>{if(majCompteursHall()||++n>15)clearInterval(timer)},500)}
+})();
 </script>
 </body>
 </html>
