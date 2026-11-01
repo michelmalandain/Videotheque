@@ -163,13 +163,6 @@ body{justify-content:flex-start;background:#080e19}
 @media(max-width:700px){#hall .doors{grid-template-columns:repeat(2,1fr)}#hall .door{min-height:115px}#hall{padding:18px 10px}}
 
 /* Affiches du hall : liens directs, halo discret au survol, décor intact. */
-.hall-affiche{position:absolute;z-index:5;display:block;cursor:pointer;border:0;background:transparent;text-decoration:none;font-size:0;color:transparent;outline:0;transition:filter .2s ease}
-.hall-affiche::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:4px;box-shadow:0 0 18px 6px rgba(255,208,108,.75),inset 0 0 13px 4px rgba(255,225,143,.4);transition:opacity .2s ease}
-.hall-affiche:hover::after,.hall-affiche:focus-visible::after{opacity:1}
-.hall-affiche:focus-visible{outline:2px solid #ffe3a7;outline-offset:3px}
-.hall-parapluies{left:8.4%;top:0.5%;width:13.4%;height:19.5%}
-.hall-singe{left:24%;top:0.5%;width:15.5%;height:24%}
-.hall-tontons{left:60.5%;top:46.5%;width:7.5%;height:14%}
 </style>
 <style id="kursaal-hall-valide-20261030">
 /* Décor validé : image inchangée, zones transparentes et lumière au survol. */
@@ -212,7 +205,7 @@ body.inside .foot{display:none!important}
 .hall-vanessa{left:23%;top:11%;width:17%;height:79%}
 @media(max-width:600px){.hall-compteur{font-size:clamp(7px,1.35vw,12px)!important}}
 /* CINÉMA MONDIAL : lien uniquement sur la table à droite du hall français. */
-.hall-mondial-acces{left:79.5%;top:30.0%;width:19%;height:47%;}
+
 </style><style id="kursaal-transition-20261101">
 /* Bandeau et fondu : aucun changement des images validées. */
 #kursaal-transition{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(8,5,5,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s ease,background .8s ease,visibility 0s linear .8s}
@@ -232,15 +225,15 @@ body.inside .foot{display:none!important}
 .hall-series{left:8.5%;top:21.1%;width:15.1%;height:8.9%}
 .hall-acteurs{left:8.5%;top:30%;width:15.1%;height:8.8%}
 .hall-realisateurs{left:8.5%;top:39%;width:15.1%;height:8.8%}
-/* Les chiffres restent à leur place, sur les quatre réserves des panneaux. */
-.hall-films-nombre{left:20.05%;top:15.35%}
-.hall-series-nombre{left:20.05%;top:24.4%}
-.hall-acteurs-nombre{left:20.05%;top:33.35%}
-.hall-realisateurs-nombre{left:20.05%;top:42.3%}
-.hall-compteur{width:3.05%!important;height:4.15%!important}
+/* Chiffres seuls, sans fond ni cadre ajouté, dans les réserves du PNG validé. */
+.hall-films-nombre{left:20.05%;top:15.15%}
+.hall-series-nombre{left:20.05%;top:24.15%}
+.hall-acteurs-nombre{left:20.05%;top:33.15%}
+.hall-realisateurs-nombre{left:20.05%;top:42.15%}
+ .hall-compteur{width:3.0%!important;height:4.15%!important;background:transparent!important;box-shadow:none!important;border:none!important;border-radius:0!important;color:#f9d58d!important;text-shadow:0 1px 3px #170800,0 0 5px #3d2007!important;font-size:clamp(9px,1.17vw,19px)!important;letter-spacing:-.06em!important}
 /* Enseigne au fond du couloir et porte moderne ENTREZ : même destination. */
-.hall-mondial-acces{left:50.7%;top:14.7%;width:28%;height:11.5%}
-.hall-entrez{left:58.2%;top:32%;width:13.6%;height:27%}
+.hall-mondial-acces{left:50.8%;top:15.1%;width:27.5%;height:10.2%}
+.hall-entrez{left:58.4%;top:32.0%;width:13.0%;height:26.5%}
 .hall-sortie{left:89.9%;top:8.8%;width:8.5%;height:13.5%}
 </style>
 </head>
@@ -265,9 +258,6 @@ body.inside .foot{display:none!important}
 <a class="hall-hotspot hall-series" href="series.html" aria-label="Séries" title="Séries">Séries</a>
 <a class="hall-hotspot hall-acteurs" href="acteurs.html" aria-label="Liste des acteurs" title="Acteurs">Acteurs</a>
 <a class="hall-hotspot hall-realisateurs" href="realisateurs.html" aria-label="Liste des réalisateurs" title="Réalisateurs">Réalisateurs</a>
-<a class="hall-affiche hall-parapluies" href="films.html?fiche=Les%20Parapluies%20de%20Cherbourg&amp;annee=1964" aria-label="Les Parapluies de Cherbourg (1964)" title="Les Parapluies de Cherbourg (1964)">Les Parapluies de Cherbourg</a>
-<a class="hall-affiche hall-singe" href="films.html?fiche=Un%20singe%20en%20hiver&amp;annee=1962" aria-label="Un singe en hiver (1962)" title="Un singe en hiver (1962)">Un singe en hiver</a>
-<a class="hall-affiche hall-tontons" href="films.html?fiche=Les%20Tontons%20flingueurs&amp;annee=1963" aria-label="Les Tontons flingueurs (1963)" title="Les Tontons flingueurs (1963)">Les Tontons flingueurs</a>
 <a class="hall-hotspot hall-vanessa" href="index.html?personne=Vanessa%20Paradis&amp;hall=1" aria-label="Vanessa Paradis — fiche actrice" title="Vanessa Paradis — fiche actrice">Vanessa Paradis</a>
 <output class="hall-compteur hall-films-nombre" id="hallFilms" aria-label="Nombre de films">…</output>
 <output class="hall-compteur hall-series-nombre" id="hallSeries" aria-label="Nombre de séries">…</output>
