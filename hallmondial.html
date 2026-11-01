@@ -26,11 +26,12 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .globe-animation::after{content:"";position:absolute;inset:-4% -50%;border-radius:50%;background:linear-gradient(90deg,transparent 15%,rgba(30,120,255,.06) 35%,rgba(190,245,255,.25) 49%,rgba(15,80,210,.04) 55%,transparent 76%);transform:translateX(-70%);animation:globe-passage 60s linear infinite;mix-blend-mode:screen}
 @keyframes globe-passage{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
 @media(prefers-reduced-motion:reduce){.globe-animation::after{animation:none;opacity:0}}
-/* Borne arcade cliquable ; décor PNG inchangé. */
-.borne-arcade{position:absolute;left:67%;top:69%;width:8%;height:23%;z-index:6;display:block;color:transparent;font-size:0}
-.borne-arcade:hover,.borne-arcade:focus-visible{outline:2px solid #8acbff;outline-offset:-3px;border-radius:7px}
-.borne-arcade::after{content:"ARCADE — JOUER";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:max-content;max-width:170%;padding:5px 8px;border:1px solid #e7b75c;border-radius:5px;background:rgba(6,12,30,.94);color:#ffe0a0;font:700 clamp(8px,.8vw,13px) Georgia,serif;text-align:center;box-shadow:0 0 12px #65c9ff88;letter-spacing:.04em;white-space:nowrap;pointer-events:none}
-.borne-arcade:hover::after,.borne-arcade:focus-visible::after{background:#17324b;color:#fff}
+/* Borne d’arcade ACTIVE : surbrillance directement sur la borne, sans retoucher le PNG. */
+.borne-arcade{position:absolute;left:67%;top:69%;width:8%;height:23%;z-index:9;display:flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;border:2px solid #70e7ff;border-radius:9px;background:linear-gradient(180deg,#25c9ff33,#041a3644 45%,#ffbd3844);box-shadow:0 0 15px 5px #21cfff99,inset 0 0 22px #2bdfff99;animation:borne-pulse 1.8s ease-in-out infinite}
+.borne-arcade::after{content:"JOUER";position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);padding:5px 7px;border:1px solid #ffdc82;border-radius:4px;background:#071329ed;color:#fff2bc;font:700 clamp(10px,1.1vw,18px) Georgia,serif;letter-spacing:.08em;white-space:nowrap;text-shadow:0 0 8px #ffdc82;box-shadow:0 0 12px #ffc75d}
+.borne-arcade:hover,.borne-arcade:focus-visible{outline:3px solid #fff0ae;outline-offset:3px;box-shadow:0 0 25px 10px #3de8ff,inset 0 0 28px #fff5a6;background:#34dcff55;animation:none}
+@keyframes borne-pulse{0%,100%{box-shadow:0 0 9px 2px #21cfff88,inset 0 0 12px #2bdfff88}50%{box-shadow:0 0 24px 8px #21cfffdd,inset 0 0 26px #2bdfffcc}}
+@media(prefers-reduced-motion:reduce){.borne-arcade{animation:none}}
 </style>
 </head>
 <body>
