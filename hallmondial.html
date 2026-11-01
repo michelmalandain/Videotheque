@@ -26,6 +26,11 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .globe-animation::after{content:"";position:absolute;inset:-4% -50%;border-radius:50%;background:linear-gradient(90deg,transparent 15%,rgba(30,120,255,.06) 35%,rgba(190,245,255,.25) 49%,rgba(15,80,210,.04) 55%,transparent 76%);transform:translateX(-70%);animation:globe-passage 60s linear infinite;mix-blend-mode:screen}
 @keyframes globe-passage{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
 @media(prefers-reduced-motion:reduce){.globe-animation::after{animation:none;opacity:0}}
+/* Borne arcade cliquable ; décor PNG inchangé. */
+.borne-arcade{position:absolute;left:67%;top:69%;width:8%;height:23%;z-index:6;display:block;color:transparent;font-size:0}
+.borne-arcade:hover,.borne-arcade:focus-visible{outline:2px solid #8acbff;outline-offset:-3px;border-radius:7px}
+.borne-arcade::after{content:"ARCADE — JOUER";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:max-content;max-width:170%;padding:5px 8px;border:1px solid #e7b75c;border-radius:5px;background:rgba(6,12,30,.94);color:#ffe0a0;font:700 clamp(8px,.8vw,13px) Georgia,serif;text-align:center;box-shadow:0 0 12px #65c9ff88;letter-spacing:.04em;white-space:nowrap;pointer-events:none}
+.borne-arcade:hover::after,.borne-arcade:focus-visible::after{background:#17324b;color:#fff}
 </style>
 </head>
 <body>
@@ -33,6 +38,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 <div class="globe-animation" aria-hidden="true"></div>
 <a class="porte porte-films" href="films-mondial.html" aria-label="Films du cinéma mondial" title="FILMS MONDIAUX">Films mondiaux</a>
 <a class="porte porte-series" href="series-mondial.html" aria-label="Séries du cinéma mondial" title="SÉRIES MONDIALES">Séries mondiales</a>
+<a class="borne-arcade" href="arcade.html" aria-label="Entrer dans la salle d’arcade" title="SALLE D’ARCADE">Salle d’arcade</a>
 <section class="comptoir-compteurs" aria-label="Compteurs du cinéma mondial">
  <div class="comptoir-compteur">FILMS<strong id="cm-films">—</strong></div>
  <div class="comptoir-compteur">SÉRIES<strong id="cm-series">—</strong></div>
