@@ -213,8 +213,18 @@ body.inside .foot{display:none!important}
 @media(max-width:600px){.hall-compteur{font-size:clamp(7px,1.35vw,12px)!important}}
 /* CINÉMA MONDIAL : lien uniquement sur la table à droite du hall français. */
 .hall-mondial-acces{left:79.5%;top:30.0%;width:19%;height:47%;}
-</style></head>
+</style><style id="kursaal-transition-20261101">
+/* Bandeau et fondu : aucun changement des images validées. */
+#kursaal-transition{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(8,5,5,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s ease,background .8s ease,visibility 0s linear .8s}
+#kursaal-transition.visible{visibility:visible;opacity:1;background:rgba(8,5,5,.68);transition:opacity .8s ease,background .8s ease}
+#kursaal-transition .bienvenue{max-width:90vw;padding:22px clamp(25px,5vw,70px);border:2px solid #d9a451;background:linear-gradient(115deg,#30100e,#6d231c 50%,#30100e);box-shadow:0 0 38px #e4b86b77,0 15px 55px #000;color:#ffe4a4;text-align:center;font:clamp(23px,4vw,49px) Georgia,serif;letter-spacing:.045em;text-shadow:0 2px 10px #000;transform:translateY(15px);transition:transform .7s ease}
+#kursaal-transition.visible .bienvenue{transform:translateY(0)}
+#kursaal-transition.fadeout{background:#090504}
+@media(prefers-reduced-motion:reduce){#kursaal-transition,#kursaal-transition .bienvenue{transition:none}}
+</style>
+</head>
 <body>
+<div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
 <h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
 <button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
@@ -453,12 +463,44 @@ const cards=document.getElementById('cards');if(cards){new MutationObserver(()=>
 })();
 </script>
 <script>
-function entrerKursaal(){document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0)}
-function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
+/* Ambiance discrète de circulation, synthétisée localement (aucun fichier audio externe).
+   Les navigateurs n'autorisent le son qu'après une interaction du visiteur. */
+let kursaalAudio=null, kursaalCirculation=null, kursaalTransitionEnCours=false;
+function demarrerAmbianceKursaal(){
+ if(kursaalAudio){if(kursaalAudio.state==='suspended')kursaalAudio.resume().catch(()=>{});return;}
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  const ctx=new AC();kursaalAudio=ctx;
+  const length=ctx.sampleRate*4,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+  let last=0;for(let i=0;i<length;i++){last=.985*last+.015*(Math.random()*2-1);data[i]=last;}
+  const src=ctx.createBufferSource();src.buffer=buffer;src.loop=true;
+  const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=470;
+  const gain=ctx.createGain();gain.gain.value=.09;
+  src.connect(filter).connect(gain).connect(ctx.destination);src.start();
+  kursaalCirculation=gain;
+  // Passage lent des voitures, en fond sonore très léger.
+  function passage(){if(!kursaalCirculation)return;const t=ctx.currentTime;gain.gain.cancelScheduledValues(t);gain.gain.setValueAtTime(.035,t);gain.gain.linearRampToValueAtTime(.13,t+2.2);gain.gain.linearRampToValueAtTime(.035,t+5.8);}
+  passage();setInterval(()=>{if(!document.body.classList.contains('inside'))passage()},8500);
+ }catch(e){/* Le navigateur peut bloquer l'audio. */}
+}
+function couperAmbianceKursaal(){if(kursaalAudio&&kursaalCirculation){const t=kursaalAudio.currentTime;kursaalCirculation.gain.cancelScheduledValues(t);kursaalCirculation.gain.setTargetAtTime(0,t,.35);}}
+function entrerKursaal(sansTransition=false){
+ if(sansTransition){couperAmbianceKursaal();document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0);return;}
+ if(kursaalTransitionEnCours)return;kursaalTransitionEnCours=true;
+ demarrerAmbianceKursaal();
+ const rideau=document.getElementById('kursaal-transition');rideau.setAttribute('aria-hidden','false');
+ rideau.classList.add('visible');couperAmbianceKursaal();
+ setTimeout(()=>rideau.classList.add('fadeout'),1250);
+ setTimeout(()=>{document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0);},1900);
+ setTimeout(()=>{rideau.classList.remove('visible','fadeout');rideau.setAttribute('aria-hidden','true');kursaalTransitionEnCours=false;},2700);
+}
+// Le son commence après le premier clic/toucher sur la façade (règle des navigateurs).
+document.getElementById('exterieur').addEventListener('pointerdown',demarrerAmbianceKursaal,{once:true});
+function sortirKursaal(){document.body.classList.remove('inside');demarrerAmbianceKursaal();document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
 function ouvrirRechercheHall(role){sortirKursaal();if(typeof openBioSearch==='function')openBioSearch(role==='actor'?'Acteur':'Réalisateur');}
 async function ouvrirPersonneDepuisLien(){
  const p=new URLSearchParams(location.search);
- if(p.get('hall')==='1') entrerKursaal();
+ if(p.get('hall')==='1') entrerKursaal(true);
  const nom=p.get('personne');if(!nom)return;
  const id=p.get('person_id');
  if(id){await showBio({id,name:nom});return;}
