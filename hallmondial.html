@@ -15,11 +15,11 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .porte:hover,.porte:focus-visible{outline:2px solid #8acbff;outline-offset:-4px;box-shadow:0 0 18px #6cc9ff88;border-radius:12px}
 .porte-films{left:12%;top:39%;width:17%;height:36%}
 .porte-series{left:71%;top:39%;width:17%;height:36%}
-/* Compteurs sur le guichet du fond : position réglable sans retoucher le décor. */
-.comptoir-compteurs{position:absolute;left:38%;top:51%;width:24%;z-index:4;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2px,.4vw,8px);pointer-events:none}
-.comptoir-compteur{min-width:0;text-align:center;padding:clamp(3px,.45vw,9px) 2px;background:linear-gradient(155deg,#102c24ee,#07150fee);border:1px solid #d9ad61;border-radius:5px;box-shadow:0 2px 12px #000b;color:#f6d79a;font:700 clamp(6px,.75vw,13px) Georgia,serif;letter-spacing:.025em}
-.comptoir-compteur strong{display:block;margin-top:2px;color:#fff2c6;font:700 clamp(12px,1.55vw,27px) Georgia,serif;font-variant-numeric:tabular-nums}
-@media(max-width:650px){.comptoir-compteurs{gap:2px}.comptoir-compteur{border-radius:2px}}
+/* Quatre petits compteurs sur la façade basse du comptoir, sans toucher au PNG. */
+.comptoir-compteurs{position:absolute;left:37.2%;top:79.2%;width:25.6%;height:7%;z-index:4;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.5%;pointer-events:none;align-items:center}
+.comptoir-compteur{min-width:0;text-align:center;padding:2px 1px;background:rgba(5,18,35,.83);border:1px solid #c79b48;border-radius:4px;color:#f6d79a;font:700 clamp(5px,.62vw,10px) Georgia,serif;letter-spacing:0;line-height:1.05}
+.comptoir-compteur strong{display:block;margin-top:2px;color:#fff2c6;font:700 clamp(9px,1.15vw,19px) Georgia,serif;font-variant-numeric:tabular-nums}
+@media(max-width:650px){.comptoir-compteur{border-width:0.5px;border-radius:2px;padding:1px 0}.comptoir-compteur strong{margin-top:1px}}
 
 /* Animation lumineuse discrète du globe existant : PNG inchangé. */
 .globe-animation{position:absolute;left:41.2%;top:0.4%;width:17.6%;height:26.2%;border-radius:50%;overflow:hidden;pointer-events:none;z-index:2;mask-image:radial-gradient(ellipse 49% 49% at 50% 50%,#000 75%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 49% 49% at 50% 50%,#000 75%,transparent 100%)}
