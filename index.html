@@ -204,7 +204,7 @@ body.inside .foot{display:none!important}
 .hall-realisateurs{left:8.8%;top:37.2%;width:14.3%;height:9%}
 .hall-vanessa{left:23%;top:11%;width:17%;height:79%}
 @media(max-width:600px){.hall-compteur{font-size:clamp(7px,1.35vw,12px)!important}}
-/* CINÉMA MONDIAL : lien uniquement sur la table à droite du hall français. */
+/* Aucun lien sur CINÉMA MONDIAL. */
 
 </style><style id="kursaal-transition-20261101">
 /* Bandeau et fondu : aucun changement des images validées. */
@@ -218,7 +218,7 @@ body.inside .foot{display:none!important}
 <style id="hall-survol-vert-or-20261101">
 /* Effet uniquement au survol : le PNG hall.png reste strictement inchangé. */
 .hall-image .hall-hotspot{transition:none!important}
-.hall-image .hall-hotspot::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:5px;border:2px solid rgba(255,210,94,.85);background:linear-gradient(125deg,rgba(255,214,94,.18),rgba(255,214,94,.12));box-shadow:0 0 10px 3px rgba(255,210,94,.65),0 0 22px 7px rgba(255,191,59,.55),inset 0 0 14px rgba(255,219,95,.45);filter:none;transition:opacity .23s ease}
+.hall-image .hall-hotspot::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:5px;border:2px solid rgba(255,210,94,.85);background:linear-gradient(125deg,rgba(24,180,85,.18),rgba(255,214,94,.12));box-shadow:0 0 10px 3px rgba(44,225,110,.65),0 0 22px 7px rgba(255,191,59,.55),inset 0 0 14px rgba(255,219,95,.45);filter:none;transition:opacity .23s ease}
 .hall-image .hall-hotspot:hover::after,.hall-image .hall-hotspot:focus-visible::after{opacity:1}
 /* Zones correspondant aux quatre panneaux de la photographie validée. */
 .hall-films{left:8.5%;top:12%;width:15.1%;height:9.1%}
@@ -231,9 +231,10 @@ body.inside .foot{display:none!important}
 .hall-acteurs-nombre{left:20.05%;top:33.15%}
 .hall-realisateurs-nombre{left:20.05%;top:42.15%}
  .hall-compteur{width:3.0%!important;height:4.15%!important;background:transparent!important;box-shadow:none!important;border:none!important;border-radius:0!important;color:#f9d58d!important;text-shadow:0 1px 3px #170800,0 0 5px #3d2007!important;font-size:clamp(9px,1.17vw,19px)!important;letter-spacing:-.06em!important}
-/* Enseigne au fond du couloir et porte moderne ENTREZ : même destination. */
-.hall-mondial-acces{left:50.8%;top:15.1%;width:27.5%;height:10.2%}
-.hall-entrez{left:58.4%;top:32.0%;width:13.0%;height:26.5%}
+/* Porte du fond ENTREZ : accès au hall mondial. Enseigne non cliquable. */
+.hall-porte-mondial{left:58.3%;top:36.5%;width:13.8%;height:22.5%}
+
+
 .hall-sortie{left:89.9%;top:8.8%;width:8.5%;height:13.5%}
 </style>
 </head>
@@ -263,6 +264,7 @@ body.inside .foot{display:none!important}
 <output class="hall-compteur hall-series-nombre" id="hallSeries" aria-label="Nombre de séries">…</output>
 <output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
 <output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
+<a class="hall-hotspot hall-porte-mondial" href="hallmondial.html" aria-label="Entrer dans le hall du cinéma mondial" title="ENTREZ — CINÉMA MONDIAL">Entrer</a>
 <a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
 </div>
 </section>
