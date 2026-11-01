@@ -20,10 +20,17 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .comptoir-compteur{min-width:0;text-align:center;padding:clamp(3px,.45vw,9px) 2px;background:linear-gradient(155deg,#102c24ee,#07150fee);border:1px solid #d9ad61;border-radius:5px;box-shadow:0 2px 12px #000b;color:#f6d79a;font:700 clamp(6px,.75vw,13px) Georgia,serif;letter-spacing:.025em}
 .comptoir-compteur strong{display:block;margin-top:2px;color:#fff2c6;font:700 clamp(12px,1.55vw,27px) Georgia,serif;font-variant-numeric:tabular-nums}
 @media(max-width:650px){.comptoir-compteurs{gap:2px}.comptoir-compteur{border-radius:2px}}
+
+/* Animation lumineuse discrète du globe existant : PNG inchangé. */
+.globe-animation{position:absolute;left:41.2%;top:0.4%;width:17.6%;height:26.2%;border-radius:50%;overflow:hidden;pointer-events:none;z-index:2;mask-image:radial-gradient(ellipse 49% 49% at 50% 50%,#000 75%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 49% 49% at 50% 50%,#000 75%,transparent 100%)}
+.globe-animation::after{content:"";position:absolute;inset:-4% -50%;border-radius:50%;background:linear-gradient(90deg,transparent 15%,rgba(30,120,255,.06) 35%,rgba(190,245,255,.25) 49%,rgba(15,80,210,.04) 55%,transparent 76%);transform:translateX(-70%);animation:globe-passage 60s linear infinite;mix-blend-mode:screen}
+@keyframes globe-passage{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
+@media(prefers-reduced-motion:reduce){.globe-animation::after{animation:none;opacity:0}}
 </style>
 </head>
 <body>
 <main class="hall-mondial" aria-label="Hall du CINÉMA MONDIAL">
+<div class="globe-animation" aria-hidden="true"></div>
 <a class="porte porte-films" href="films-mondial.html" aria-label="Films du cinéma mondial" title="FILMS MONDIAUX">Films mondiaux</a>
 <a class="porte porte-series" href="series-mondial.html" aria-label="Séries du cinéma mondial" title="SÉRIES MONDIALES">Séries mondiales</a>
 <section class="comptoir-compteurs" aria-label="Compteurs du cinéma mondial">
