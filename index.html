@@ -222,6 +222,27 @@ body.inside .foot{display:none!important}
 #kursaal-transition.fadeout{background:#090504}
 @media(prefers-reduced-motion:reduce){#kursaal-transition,#kursaal-transition .bienvenue{transition:none}}
 </style>
+<style id="hall-survol-vert-or-20261101">
+/* Effet uniquement au survol : le PNG hall.png reste strictement inchangé. */
+.hall-image .hall-hotspot{transition:none!important}
+.hall-image .hall-hotspot::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:5px;border:2px solid rgba(255,210,94,.85);background:linear-gradient(125deg,rgba(24,180,85,.18),rgba(255,214,94,.12));box-shadow:0 0 10px 3px rgba(44,225,110,.65),0 0 22px 7px rgba(255,191,59,.55),inset 0 0 14px rgba(255,219,95,.45);filter:none;transition:opacity .23s ease}
+.hall-image .hall-hotspot:hover::after,.hall-image .hall-hotspot:focus-visible::after{opacity:1}
+/* Zones correspondant aux quatre panneaux de la photographie validée. */
+.hall-films{left:8.5%;top:12%;width:15.1%;height:9.1%}
+.hall-series{left:8.5%;top:21.1%;width:15.1%;height:8.9%}
+.hall-acteurs{left:8.5%;top:30%;width:15.1%;height:8.8%}
+.hall-realisateurs{left:8.5%;top:39%;width:15.1%;height:8.8%}
+/* Les chiffres restent à leur place, sur les quatre réserves des panneaux. */
+.hall-films-nombre{left:20.05%;top:15.35%}
+.hall-series-nombre{left:20.05%;top:24.4%}
+.hall-acteurs-nombre{left:20.05%;top:33.35%}
+.hall-realisateurs-nombre{left:20.05%;top:42.3%}
+.hall-compteur{width:3.05%!important;height:4.15%!important}
+/* Enseigne au fond du couloir et porte moderne ENTREZ : même destination. */
+.hall-mondial-acces{left:50.7%;top:14.7%;width:28%;height:11.5%}
+.hall-entrez{left:58.2%;top:32%;width:13.6%;height:27%}
+.hall-sortie{left:89.9%;top:8.8%;width:8.5%;height:13.5%}
+</style>
 </head>
 <body>
 <div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
@@ -253,6 +274,7 @@ body.inside .foot{display:none!important}
 <output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
 <output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
  <a class="hall-hotspot hall-mondial-acces" href="hallmondial.html" aria-label="Entrer au CINÉMA MONDIAL" title="CINÉMA MONDIAL">Cinéma mondial</a>
+<a class="hall-hotspot hall-entrez" href="hallmondial.html" aria-label="ENTREZ — Cinéma mondial" title="ENTREZ">Entrer au cinéma mondial</a>
 <a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
 </div>
 </section>
@@ -487,7 +509,6 @@ function couperAmbianceKursaal(){if(kursaalAudio&&kursaalCirculation){const t=ku
 function entrerKursaal(sansTransition=false){
  if(sansTransition){couperAmbianceKursaal();document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0);return;}
  if(kursaalTransitionEnCours)return;kursaalTransitionEnCours=true;
- demarrerAmbianceKursaal();
  const rideau=document.getElementById('kursaal-transition');rideau.setAttribute('aria-hidden','false');
  rideau.classList.add('visible');couperAmbianceKursaal();
  setTimeout(()=>rideau.classList.add('fadeout'),1250);
@@ -495,8 +516,8 @@ function entrerKursaal(sansTransition=false){
  setTimeout(()=>{rideau.classList.remove('visible','fadeout');rideau.setAttribute('aria-hidden','true');kursaalTransitionEnCours=false;},2700);
 }
 // Le son commence après le premier clic/toucher sur la façade (règle des navigateurs).
-document.getElementById('exterieur').addEventListener('pointerdown',demarrerAmbianceKursaal,{once:true});
-function sortirKursaal(){document.body.classList.remove('inside');demarrerAmbianceKursaal();document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
+/* Ambiance sonore de la façade reportée : aucun démarrage automatique. */
+function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
 function ouvrirRechercheHall(role){sortirKursaal();if(typeof openBioSearch==='function')openBioSearch(role==='actor'?'Acteur':'Réalisateur');}
 async function ouvrirPersonneDepuisLien(){
  const p=new URLSearchParams(location.search);
