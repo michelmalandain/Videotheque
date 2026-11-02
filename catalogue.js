@@ -1985,7 +1985,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Série",
     "year": 2026,
     "period": "2026",
-    "genre": "Mystère, Science-Fiction & Fantastique",
+    "genre": "Mystère",
     "description": "Description à compléter.",
     "poster": "affiches/un-job-mortel.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20job%20mortel",
@@ -2046,6 +2046,39 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Camille Claris",
         "character": "Viviane"
+      }
+    ]
+  },
+  {
+    "title": "La Comtesse de Monte-Cristo",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-comtesse-de-monte-cristo.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Comtesse%20de%20Monte-Cristo",
+    "summary": "Marseille, 1815. Mercédès Herrera est prête à tout pour l’homme qu’elle aime, Edmond Dantès, un marin promis à un avenir brillant. Mais leur bonheur est cruellement brisé par une trahison impitoyable. Edmond, accusé à tort, est arraché à Mercédès et jeté dans les profondeurs du Château d'If, sans espoir de retour. Dévastée mais déterminée, Mercédès se lance dans une course effrénée pour le sauver, mais Edmond est tué lors de leur tentative d’évasion et elle-même se retrouve enfermée, condamnée à languir dans une cellule voisine de celle qui a abrité l’amour de sa vie.\n\nDans ce gouffre de douleur, tout semble perdu. Mercédès n'a désormais plus qu'un but, prendre sa revanche sur ceux qui ont détruit sa vie : Fernand, son propre cousin, secrètement amoureux d’elle ; Danglars, un manipulateur ambitieux ; et surtout Héloïse de Villefort, la femme implacable du procureur de la ville...",
+    "cast": [
+      {
+        "name": "Audrey Fleurot",
+        "character": "Mercédès Herrera"
+      },
+      {
+        "name": "Simon Ehrlacher",
+        "character": ""
+      },
+      {
+        "name": "Zabou Breitman",
+        "character": "Héloïse de Villefort"
+      },
+      {
+        "name": "Esteban Vial",
+        "character": ""
+      },
+      {
+        "name": "Marysole Fertard",
+        "character": ""
       }
     ]
   }
