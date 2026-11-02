@@ -2154,5 +2154,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Iris de Toledo"
       }
     ]
+  },
+  {
+    "title": "Orgueil et Préjugés (2025)",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/orgueil-et-prejuges-2025.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Orgueil%20et%20Pr%C3%A9jug%C3%A9s%20(2025)",
+    "summary": "Elizabeth Bennet est célibataire et la deuxième des cinq filles de M. et Mme Bennet, originaires du Hertfordshire, près de Londres. La demeure des Bennet ne peut être héritée que par les hommes de la famille ; les filles sont donc soumises à une forte pression sociale pour faire un bon mariage, sous peine de tout perdre. Dans la société, Elizabeth fréquente des célibataires comme M. Darcy, un homme d'apparence bourrue et souvent incompris.",
+    "directors": [
+      "Dolly Alderton"
+    ],
+    "cast": [
+      {
+        "name": "Emma Corrin",
+        "character": "Elizabeth Bennet"
+      },
+      {
+        "name": "Jack Lowden",
+        "character": "Mr. Darcy"
+      },
+      {
+        "name": "Olivia Colman",
+        "character": "Mrs. Bennet"
+      },
+      {
+        "name": "Rufus Sewell",
+        "character": "Mr. Bennet"
+      },
+      {
+        "name": "Fiona Shaw",
+        "character": "Lady Catherine de Bourg"
+      }
+    ]
   }
 ];
