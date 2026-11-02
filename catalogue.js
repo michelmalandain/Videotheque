@@ -2117,5 +2117,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "Eldorado",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/eldorado.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Eldorado",
+    "summary": "En 1973, le choc pétrolier marque la fin des Trente Glorieuses. Heureusement, en France, on n’a pas de pétrole mais on a des idées. Un aristocrate belge et un obscur savant italien parviennent à convaincre le puissant groupe Elf Aquitaine de l’existence d’un procédé révolutionnaire permettant de détecter du pétrole depuis les airs",
+    "directors": [
+      "Tarek Haoudy",
+      "Nacim Mehtar"
+    ],
+    "cast": [
+      {
+        "name": "Jérémie Renier",
+        "character": "Arnaud de Toledo"
+      },
+      {
+        "name": "Karim Leklou",
+        "character": "Léo Sarda"
+      },
+      {
+        "name": "Marie Colomb",
+        "character": "Emma Zenatti"
+      },
+      {
+        "name": "Laurent Capelluto",
+        "character": "Florindo Bonamici"
+      },
+      {
+        "name": "Clémentine Fargeas",
+        "character": "Iris de Toledo"
+      }
+    ]
   }
 ];
