@@ -2444,5 +2444,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Corinne"
       }
     ]
+  },
+  {
+    "title": "Garance",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/garance.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Garance",
+    "summary": "Garance est une jeune actrice sans être une vedette. Elle gère et assure tout de son mieux, vaillante, joyeuse, soldate, et elle trouve dans l’alcool un carburant, un réconfort, inconditionnel. Garance change de vie et commence alors un parcours de huit ans de déménagements, de travail, de rencontres, de fêtes et d’angoisses, de joies et de coups durs… Une révolution intime, amicale et sexuelle, Mais elle consomme, toujours plus. Jusqu'à la potentialité de la mort..",
+    "directors": [
+      "Jeanne Herry"
+    ],
+    "cast": [
+      {
+        "name": "Adèle Exarchopoulos",
+        "character": "Garance"
+      },
+      {
+        "name": "Sara Giraudeau",
+        "character": "Pauline"
+      },
+      {
+        "name": "Anne Suarez",
+        "character": "Marianne"
+      },
+      {
+        "name": "Sara-Jeanne Drillaud",
+        "character": "Judith"
+      },
+      {
+        "name": "Rudgy Pajany",
+        "character": "Ethan"
+      }
+    ]
   }
 ];
