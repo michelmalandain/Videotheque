@@ -2190,5 +2190,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Lady Catherine de Bourg"
       }
     ]
+  },
+  {
+    "title": "Bloodaxe",
+    "kind": "Série",
+    "year": 2027,
+    "period": "2027",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/bloodaxe.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Bloodaxe",
+    "summary": "Suivez Erik Hache-Sanglante et sa redoutable épouse, Gunnhild, « Mère des rois », dans leur lutte pour le trône de Norvège — un pays déchiré par des rivaux acharnés, des alliances changeantes et des trahisons sanglantes. Alors que la guerre menace et que le chaos s’empare du royaume — entraînant dans son sillage les souverains impitoyables d’autres contrées scandinaves, ainsi qu’un puissant monarque anglais —, tout est réuni pour une nouvelle saga viking : tonitruante, cataclysmique, captivante et absolument magique.",
+    "directors": [
+      "Michael Hirst",
+      "Horatio Hirst"
+    ],
+    "cast": [
+      {
+        "name": "Xavier Molyneux",
+        "character": "Erik Bloodaxe"
+      },
+      {
+        "name": "Jessica Madsen",
+        "character": "Gunnhild"
+      },
+      {
+        "name": "Kārlis Arnolds Avots",
+        "character": "Egil"
+      },
+      {
+        "name": "Rod Hallett",
+        "character": "Athelstan"
+      },
+      {
+        "name": "Alina Tomnikov",
+        "character": "Greta / The Seer"
+      }
+    ]
   }
 ];
