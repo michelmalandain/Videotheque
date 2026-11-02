@@ -2336,5 +2336,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "Karma",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/karma.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Karma",
+    "summary": "Dans un village au nord de l’Espagne, Jeanne tente de reconstruire sa vie avec Daniel, qui ne connaît rien de son passé trouble. Un jour, Mateo, le filleul de Jeanne âgé de six ans, disparaît mystérieusement… Afin d’échapper à la police qui la soupçonne rapidement, Jeanne se réfugie en France dans une communauté religieuse dans laquelle elle est née et qu’elle a fuie quelques années auparavant. Daniel ne croit pas à la culpabilité de la femme qu’il aime et va tout faire pour la retrouver avant la police.",
+    "directors": [
+      "Guillaume Canet"
+    ],
+    "cast": [
+      {
+        "name": "Marion Cotillard",
+        "character": "Jeanne"
+      },
+      {
+        "name": "Denis Ménochet",
+        "character": "Marc"
+      },
+      {
+        "name": "Leonardo Sbaraglia",
+        "character": "Daniel"
+      },
+      {
+        "name": "Luis Zahera",
+        "character": "Vasquez"
+      },
+      {
+        "name": "Anne Le Forestier",
+        "character": ""
+      }
+    ]
   }
 ];
