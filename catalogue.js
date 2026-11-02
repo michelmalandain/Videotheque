@@ -2372,5 +2372,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "Moulin",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Histoire, Drame, Guerre",
+    "description": "Description à compléter.",
+    "poster": "affiches/moulin.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Moulin",
+    "summary": "Jean Moulin est parachuté en France occupée pour unifier les réseaux de la Résistance, sous l’égide du général de Gaulle. Malgré ses efforts pour rester dans l’ombre, Moulin est trahi puis livré à la Gestapo à Lyon, dirigée par l’impitoyable Klaus Barbie. Torturé sans relâche, il ne cède jamais. Sa détermination silencieuse contribuera à galvaniser les forces de la Résistance et à faire naître un nouvel esprit de combat et de liberté en France…",
+    "directors": [
+      "Lászlo Nemes"
+    ],
+    "cast": [
+      {
+        "name": "Gilles Lellouche",
+        "character": "Jean Moulin"
+      },
+      {
+        "name": "Lars Eidinger",
+        "character": "Klaus Barbie"
+      },
+      {
+        "name": "Louise Bourgoin",
+        "character": "Comtesse De Forez"
+      },
+      {
+        "name": "Marcin Czarnik",
+        "character": "Aubrac"
+      },
+      {
+        "name": "Max Warburton",
+        "character": "Alain"
+      }
+    ]
   }
 ];
