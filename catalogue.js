@@ -2264,5 +2264,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Lena"
       }
     ]
+  },
+  {
+    "title": "Blade Runner 2099",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Science-Fiction & Fantastique",
+    "description": "Description à compléter.",
+    "poster": "affiches/blade-runner-2099.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Blade%20Runner%202099",
+    "summary": "Dans le Los Angeles de 2099, Cora a vécu toute sa vie en cavale, un caméléon forcé d'adopter de nombreuses identités. Pour assurer un avenir stable à son frère, elle prend une dernière identité et est contrainte de s'associer à Olwen, une Blade Runner confrontée à la fin de sa vie. Les deux sont entraînés dans une conspiration grandissante qui représente une menace existentielle pour une ville qui lutte pour renaître.",
+    "directors": [
+      "Silka Luisa"
+    ],
+    "cast": [
+      {
+        "name": "Hunter Schafer",
+        "character": "Cora"
+      },
+      {
+        "name": "Michelle Yeoh",
+        "character": "Olwen"
+      },
+      {
+        "name": "Dimitri Abold",
+        "character": ""
+      },
+      {
+        "name": "Lewis Gribben",
+        "character": ""
+      },
+      {
+        "name": "Tom Burke",
+        "character": ""
+      }
+    ]
   }
 ];
