@@ -2300,5 +2300,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "La Maison de nos rêves",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-maison-de-nos-reves.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Maison%20de%20nos%20r%C3%AAves",
+    "summary": "Benjamin et Amélie, jeune couple de trentenaires décide d’acheter la maison de leurs rêves en viager à Nicolette, une dame qui semble mourante. Mais peu après la vente, elle va beaucoup mieux et le couple se demande s’il n’a pas été arnaqué. Bientôt à genoux financièrement, ils sont forcés de penser au pire.",
+    "directors": [
+      "Claude Zidi Jr."
+    ],
+    "cast": [
+      {
+        "name": "Kev Adams",
+        "character": "Benjamin"
+      },
+      {
+        "name": "Chantal Ladesou",
+        "character": "Nicolette"
+      },
+      {
+        "name": "Camille Aguilar",
+        "character": "Amélie"
+      },
+      {
+        "name": "Bernard Farcy",
+        "character": ""
+      },
+      {
+        "name": "Jonathan Lambert",
+        "character": ""
+      }
+    ]
   }
 ];
