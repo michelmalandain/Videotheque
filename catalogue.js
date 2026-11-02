@@ -2227,5 +2227,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Greta / The Seer"
       }
     ]
+  },
+  {
+    "title": "12 12 12",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Action & Adventure, Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/12-12-12.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=12%2012%2012",
+    "summary": "Un braquage prend 12 mois à préparer, 12 heures à mettre à exécution, et un braqueur qui n'est pas arrêté dans les 12 jours ne le sera jamais. Dans un chassé-croisé haletant de trois temporalités, un agent du FBI et un criminel de carrière se livrent à un jeu dangereux du chat et de la souris, à travers l'Europe.",
+    "directors": [
+      "Dudi Appleton",
+      "Jim Keeble"
+    ],
+    "cast": [
+      {
+        "name": "Anthony Mackie",
+        "character": "Jack Strickland"
+      },
+      {
+        "name": "Jamie Dornan",
+        "character": "Paul Galvin"
+      },
+      {
+        "name": "Jack Kesy",
+        "character": "Bobby Galvin"
+      },
+      {
+        "name": "Agathe Rousselle",
+        "character": "Severine"
+      },
+      {
+        "name": "Sallie Harmsen",
+        "character": "Lena"
+      }
+    ]
   }
 ];
