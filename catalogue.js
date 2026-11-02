@@ -2408,5 +2408,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Alain"
       }
     ]
+  },
+  {
+    "title": "Notre salut",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Histoire, Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/notre-salut.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Notre%20salut",
+    "summary": "Septembre 1940, le régime de Pétain se met en place. Henri Marre, 49 ans, débarque à Vichy sans le sou, sans contact, loin de sa femme et ses enfants. Il voit dans la nouvelle administration l’opportunité de trouver enfin la place qu’il mérite. Dans sa valise, son traité politique édité à compte d’auteur, Notre Salut, où il défend ses convictions patriotiques et ses méthodes d'ingénieur. Son credo: « gagner en efficacité » pour relever la France de la débâcle. Mais peut-être qu’Henri cherche avant tout à fuir sa propre débâcle…",
+    "directors": [
+      "Emmanuel Marre"
+    ],
+    "cast": [
+      {
+        "name": "Swann Arlaud",
+        "character": "Henri Marre"
+      },
+      {
+        "name": "Sandrine Blancke",
+        "character": "Paulette Henri"
+      },
+      {
+        "name": "Mathieu Perotto",
+        "character": "Gasque"
+      },
+      {
+        "name": "Harpo Guit",
+        "character": "Harpo"
+      },
+      {
+        "name": "Mathilde Abd El Kader",
+        "character": "Corinne"
+      }
+    ]
   }
 ];
