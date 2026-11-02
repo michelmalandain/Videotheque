@@ -20,5 +20,16 @@
     "comment": "j'adore les artistes fictifs décédés",
     "stars": 5,
     "created": "2026-10-28T07:41:23.129Z"
+  },
+  {
+    "id": "71fe6b82-aabb-4d55-b268-399ccbbecdf9",
+    "type": "comment",
+    "kind": "Série",
+    "title": "Dans de beaux draps",
+    "year": 2025,
+    "pseudo": "Mortimer",
+    "comment": "léger léger",
+    "stars": 0,
+    "created": "2026-10-29T08:41:48.575Z"
   }
 ]
