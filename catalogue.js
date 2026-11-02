@@ -2081,5 +2081,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": ""
       }
     ]
+  },
+  {
+    "title": "Mascarade",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "À compléter",
+    "description": "Description à compléter.",
+    "poster": "affiches/mascarade.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Mascarade",
+    "summary": "Loris Giuliano vous invite à rejoindre \"Mascarade\", sa grande soirée d’anniversaire durant laquelle il va devoir deviner quelles stars du cinéma français se cachent derrière ses convives : 8 grandes actrices et acteurs du cinéma français entièrement transformés physiquement et vocalement grâce à des technologies innovantes. François Damiens, Marina Foïs, Laurent Lafitte, Géraldine Nakache, Pierre Niney, Raphaël Quenard, Alison Wheeler et Jean-Pascal Zadi vont débarquer dans cette soirée avec une seule mission : être le dernier à se faire démasquer par Loris avant le lever du jour pour remporter la partie... Mais eux non plus ne savent pas qui se cachent derrière ces personnages d’un soir et ils vont devoir faire preuve d’imagination pour protéger leur propre identité et rester dans la course jusqu’au bout de cet incroyable anniversaire ! Car cette soirée organisée par Alfredo, le majordome de Loris, leur réserve bien des surprises. De révélations en trahisons, ils s’apprêtent à déco...",
+    "directors": [
+      "Loris Giuliano"
+    ],
+    "cast": [
+      {
+        "name": "Loris Giuliano",
+        "character": ""
+      },
+      {
+        "name": "François Damiens",
+        "character": ""
+      },
+      {
+        "name": "Marina Foïs",
+        "character": ""
+      },
+      {
+        "name": "Laurent Lafitte",
+        "character": ""
+      },
+      {
+        "name": "Géraldine Nakache",
+        "character": ""
+      }
+    ]
   }
 ];
