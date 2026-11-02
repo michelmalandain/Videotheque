@@ -2480,5 +2480,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Ethan"
       }
     ]
+  },
+  {
+    "title": "Le charles",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Mystère, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-charles.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20charles",
+    "summary": "Le Charles de Gaulle, le seul porte-avions à propulsion nucléaire européen, vient d'appareiller pour une mission stratégique en Méditerranée orientale, où la situation est explosive. Quelques heures après le grand départ, une femme de l'équipage est retrouvée morte et une autre est portée disparue. Malgré les inquiétudes, le Commandant et l'État-major décident de maintenir l'opération.",
+    "directors": [
+      "Henri Debeurme",
+      "Mathilde Arnaud"
+    ],
+    "cast": [
+      {
+        "name": "Élodie Yung",
+        "character": "Héléna Duval"
+      },
+      {
+        "name": "Alban Lenoir",
+        "character": "Paul Fischer"
+      },
+      {
+        "name": "Patrick Mille",
+        "character": "Danton"
+      },
+      {
+        "name": "Jacques Gamblin",
+        "character": "Daniel Devred"
+      },
+      {
+        "name": "Constance Labbé",
+        "character": "Poulidor"
+      }
+    ]
   }
 ];
