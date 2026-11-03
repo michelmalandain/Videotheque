@@ -2482,6 +2482,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Rudgy Pajany",
         "character": "Ethan"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
