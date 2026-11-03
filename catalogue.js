@@ -269,6 +269,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Rory Culkin",
         "character": "Karl Anders"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
