@@ -30,6 +30,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Natasha O'Keeffe",
         "character": "Lizzie Stark"
       }
+    ],
+    "production_countries": [
+      "GB"
     ]
   },
   {
