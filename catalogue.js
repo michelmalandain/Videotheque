@@ -729,6 +729,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Valeria Santaella",
         "character": "Venus"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
