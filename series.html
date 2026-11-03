@@ -1183,4 +1183,64 @@ function openBioProposal(title,year,kind){
 @media(max-width:900px){#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:570px){#person-dialog #person-films{grid-template-columns:1fr!important}#person-dialog .cm-hero{padding-right:70px!important}#person-dialog .cm-hero img{width:85px!important;height:115px!important}}
 </style>
+
+<style id="cm-restauration-photos-fiche">
+#film-dialog .fiche-hero{position:relative;isolation:isolate}
+#film-dialog .cm-affiche-fiche{position:absolute;left:30px;top:22px;width:125px;max-height:185px;object-fit:contain;border:2px solid #d9ad61;border-radius:5px;box-shadow:0 5px 20px #000a;z-index:1}
+#film-dialog .fiche-hero:has(.cm-affiche-fiche){padding-left:180px}
+#film-dialog #film-cast li .fiche-photo{display:block;width:90px;height:120px;object-fit:cover;margin:0 0 9px}
+@media(max-width:600px){#film-dialog .cm-affiche-fiche{left:15px;top:15px;width:78px;max-height:115px}#film-dialog .fiche-hero:has(.cm-affiche-fiche){padding-left:110px}}
+</style>
+<script id="cm-restauration-photos-fiche-js">
+(function(){
+ const dialog=document.getElementById('film-dialog');
+ if(!dialog)return;
+ const castNode=document.getElementById('film-cast');
+ const hero=dialog.querySelector('.fiche-hero');
+ let serial=0;
+ const url=(path,size)=>path && (String(path).startsWith('/')?'https://image.tmdb.org/t/p/'+size+path:/^https:\/\//.test(String(path))?String(path):null);
+ function setPoster(path){
+  const src=url(path,'w342');if(!src)return;
+  let img=hero.querySelector('.cm-affiche-fiche');
+  if(!img){img=document.createElement('img');img.className='cm-affiche-fiche';hero.prepend(img)}
+  img.src=src;img.alt='Affiche de '+document.getElementById('film-title').textContent;
+  img.onerror=()=>img.remove();
+ }
+ function portraits(people){
+  if(!Array.isArray(people))return;
+  for(const li of castNode.querySelectorAll('li')){
+   const a=li.querySelector('a');if(!a)continue;
+   const name=a.textContent.trim().normalize('NFC').toLocaleLowerCase('fr');
+   const p=people.find(p=>p && typeof p==='object' && String(p.name||'').trim().normalize('NFC').toLocaleLowerCase('fr')===name);
+   if(!p||!p.profile_path||a.querySelector('img'))continue;
+   const src=url(p.profile_path,'w185');if(!src)continue;
+   const img=document.createElement('img');img.className='fiche-photo';img.src=src;img.alt='Portrait de '+a.textContent.trim();img.loading='lazy';img.onerror=()=>img.remove();a.prepend(img);
+  }
+ }
+ const previous=window.openFilm;
+ window.openFilm=function(x){
+  const token=++serial;
+  hero?.querySelector('.cm-affiche-fiche')?.remove();
+  previous(x);
+  setPoster(x.poster_path||x.poster||x.posterPath||x.poster_url);
+  portraits(x.cast);
+  const params=new URLSearchParams({type:x.kind==='Série'?'tv':'movie',title:x.title,year:String(x.year||'').match(/\d{4}/)?.[0]||''});
+  const id=x.tmdb_id||x.tmdbId||x.tmdbID||x.tmdb?.id||x.tmdb_movie_id||x.tmdb_tv_id;
+  if(id)params.set('id',String(id));
+  fetch('https://videotheque-admin.michelmalandain.workers.dev/details?'+params)
+   .then(r=>r.ok?r.json():null)
+   .then(response=>{
+    if(token!==serial||!dialog.open||!response)return;
+    const d=response.details||response;
+    setPoster(d.poster_path||d.poster||d.poster_url);
+    const people=d.cast||d.credits?.cast||[];
+    portraits(people);
+    const observer=new MutationObserver(()=>portraits(people));
+    observer.observe(castNode,{childList:true});
+    setTimeout(()=>observer.disconnect(),12000);
+   }).catch(()=>{});
+ };
+})();
+</script>
+
 </body></html>
