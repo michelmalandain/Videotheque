@@ -2357,6 +2357,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Sallie Harmsen",
         "character": "Lena"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
