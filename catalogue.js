@@ -573,6 +573,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Georges Torbey",
         "character": "Loula"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
