@@ -69,6 +69,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Jaime Murray",
         "character": "Gaia"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
