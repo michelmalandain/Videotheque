@@ -2085,6 +2085,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "최현욱",
         "character": "Choi Hee-dong"
       }
+    ],
+    "production_countries": [
+      "KR"
     ]
   },
   {
