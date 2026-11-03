@@ -2474,6 +2474,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Anne Le Forestier",
         "character": ""
       }
+    ],
+    "production_countries": [
+      "CY",
+      "FR"
     ]
   },
   {
