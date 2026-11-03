@@ -651,6 +651,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Saïd Taghmaoui",
         "character": "Prince Majeb Bin Faheem"
       }
+    ],
+    "production_countries": [
+      "CA",
+      "US"
     ]
   },
   {
