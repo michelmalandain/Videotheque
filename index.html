@@ -256,6 +256,16 @@ body.inside .foot{display:none!important}
 @media(max-width:850px){.bio-ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.bio-ticket-grid{grid-template-columns:1fr}.bio-ticket-name{font-size:17px}}
 </style>
+<style id="correction-fiche-20261103">
+/* Bouton unique flottant dans la fiche, sans toucher aux images. */
+#bioCard .bio-fermer-unique {
+ position:fixed;top:18px;right:clamp(18px,3vw,48px);z-index:9999;
+ padding:10px 22px;background:linear-gradient(#71151e,#39090e);
+ color:#f8d595;border:2px solid #d5a04b;border-radius:7px;
+ font:bold 17px Georgia,serif;box-shadow:0 3px 12px #000b;cursor:pointer;
+}
+#bioCard .bio-fermer-unique:hover{filter:brightness(1.2)}
+</style>
 </head>
 <body>
 <div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
@@ -287,7 +297,7 @@ body.inside .foot{display:none!important}
 <a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
 </div>
 </section>
-<footer class="foot">CINEMALAND · Le pays du cinéma · Michel et Christiane</footer>
+
 <dialog aria-labelledby="contactTitle" id="contactDialog">
 <h2 id="contactTitle">MALANDAIN — Nous écrire</h2>
 <p>Un mot pour Michel et Christiane ? Écrivez-nous ici.</p>
@@ -305,7 +315,7 @@ body.inside .foot{display:none!important}
 </dialog>
 
 <dialog id="bioDialog" aria-labelledby="bioTitle"><div class="cinema-projector" aria-hidden="true"><svg viewBox="0 0 235 360" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="spot"><stop stop-color="#fff3bf" stop-opacity=".95"/><stop offset=".2" stop-color="#f6bc57" stop-opacity=".65"/><stop offset="1" stop-color="#f6bc57" stop-opacity="0"/></radialGradient><linearGradient id="beam" x1="1" y1="0" x2="0" y2="1"><stop stop-color="#ffe6a0" stop-opacity=".42"/><stop offset="1" stop-color="#f9ba55" stop-opacity="0"/></linearGradient></defs><path d="M214 28 L0 140 L0 340 Z" fill="url(#beam)"/><circle cx="208" cy="31" r="55" fill="url(#spot)"/><path d="M202 8 L225 14 L217 50 L196 42 Z" fill="#4a3023" stroke="#d7a45b" stroke-width="3"/><path d="M204 41 L218 43 L230 58" fill="none" stroke="#ad8246" stroke-width="4"/><circle cx="206" cy="29" r="12" fill="#fff1bd"/><circle cx="206" cy="29" r="20" fill="none" stroke="#d6a15c" stroke-width="3"/></svg></div><div class="cinema-chair" aria-hidden="true"><svg viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#e0b76f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 40 L135 40 L122 132 L54 132 Z" fill="#24150f"/><path d="M48 46 L128 46 L117 122 L59 122 Z" fill="#39231b"/><path d="M35 132 L144 132 L127 153 L53 153 Z" fill="#281910"/><path d="M57 153 L30 210 M122 153 L148 210 M57 153 L122 153 M33 207 L147 207"/><path d="M43 78 L18 141 L55 153 M135 78 L162 141 L125 153"/><path d="M33 165 L146 165" stroke-width="3"/></g><circle cx="91" cy="18" r="8" fill="#d6a35e"/></svg></div><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
-<dialog id="bioCard" aria-labelledby="bioCardTitle"><div id="bioCardBody"></div></dialog>
+<dialog id="bioCard" aria-labelledby="bioCardTitle"><button class="bio-fermer-unique" type="button" onclick="document.getElementById('bioCard').close()">Fermer</button><div id="bioCardBody"></div></dialog>
 <dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
 <script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
@@ -354,11 +364,7 @@ async function showBio(page){
   const fact=(label,value)=>{if(!value)return;const row=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';row.append(strong,document.createTextNode(value));facts.append(row)};
   fact('Nom',p.name);fact('Naissance',p.birthday?formatDate(p.birthday):null);fact('Lieu de naissance',p.place_of_birth);fact('Décès',p.deathday?formatDate(p.deathday):null);
   fact('Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department==='Directing'?'Réalisation':p.known_for_department);
-  const actions=document.createElement('div');actions.className='bio-actions';
-  const action=(label,fn)=>{const button=document.createElement('button');button.type='button';button.textContent=label;button.onclick=fn;actions.append(button)};
-  action('RETOUR',()=>{el('bioCard').close();el('bioDialog').showModal()});
-  action('FERMER',()=>el('bioCard').close());
-  facts.append(actions);profile.append(facts);body.append(profile);
+   profile.append(facts);body.append(profile);
   const story=document.createElement('section');story.className='bio-story';
   const heading=document.createElement('h3');heading.textContent='BIOGRAPHIE';story.append(heading);
   const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';story.append(bio);body.append(story);
