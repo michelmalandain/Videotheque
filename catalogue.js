@@ -2519,6 +2519,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Constance Labbé",
         "character": "Poulidor"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];
