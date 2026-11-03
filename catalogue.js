@@ -2197,6 +2197,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Géraldine Nakache",
         "character": ""
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
