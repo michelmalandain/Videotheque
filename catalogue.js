@@ -2316,6 +2316,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Alina Tomnikov",
         "character": "Greta / The Seer"
       }
+    ],
+    "production_countries": [
+      "IE",
+      "US"
     ]
   },
   {
