@@ -178,5 +178,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-11-03T17:45:05.529Z"
+  },
+  "Film|2026|karma": {
+    "title": "Karma",
+    "kind": "Film",
+    "year": 2026,
+    "stars": 0,
+    "comment": "",
+    "watch": true,
+    "updated": "2026-11-03T17:45:42.456Z"
   }
 }
