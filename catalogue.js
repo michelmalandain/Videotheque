@@ -212,6 +212,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Richard S. Castellano",
         "character": "Clemenza"
       }
+    ],
+    "production_countries": [
+      "IT"
     ]
   },
   {
