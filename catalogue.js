@@ -191,6 +191,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Freddy Rodríguez",
         "character": "Federico Diaz"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
