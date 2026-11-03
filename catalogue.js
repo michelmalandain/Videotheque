@@ -690,6 +690,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Jimmie Sanders",
         "character": ""
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
