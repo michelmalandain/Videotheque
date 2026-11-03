@@ -2446,6 +2446,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Mathilde Abd El Kader",
         "character": "Corinne"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
