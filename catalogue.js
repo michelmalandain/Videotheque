@@ -308,6 +308,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Mykelti Williamson",
         "character": "Bubba Blue"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
