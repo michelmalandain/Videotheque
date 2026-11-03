@@ -1164,6 +1164,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Quentin Tarantino",
         "character": "Bill (voice) (uncredited)"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   },
   {
