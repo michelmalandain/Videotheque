@@ -2157,6 +2157,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Marysole Fertard",
         "character": ""
       }
+    ],
+    "production_countries": [
+      "FR",
+      "US"
     ]
   },
   {
