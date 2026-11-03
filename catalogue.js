@@ -981,7 +981,10 @@ window.CINEMALAND_CATALOGUE = [
     "genre": "À compléter",
     "description": "Description à compléter.",
     "poster": "affiches/the-good-fight.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=the%20good%20fight"
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=the%20good%20fight",
+    "production_countries": [
+      "GB"
+    ]
   },
   {
     "title": "L'Espèce explosive",
