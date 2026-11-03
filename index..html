@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<meta name="description" content="Découvrez CINEMALAND, la vidéothèque de Michel et Christiane : films cultes, séries incontournables, affiches, synopsis et filmographies.">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>CINEMALAND — Le pays du cinéma</title>
+<meta content="CINEMALAND, le pays du cinéma de Michel et Christiane : films d'autrefois, classiques oubliés et pépites du septième art." name="description"/>
+<style>
+:root{color-scheme:dark;--or:#ffdc89}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#130604;color:#fff0cf;font-family:Georgia,serif}body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh}.scene{width:min(100vw,1536px);aspect-ratio:3/2;position:relative;background:url('cinemaland.png') center/100% 100% no-repeat;box-shadow:0 0 80px #000}.zone{position:absolute;display:block;border:2px solid transparent;border-radius:12px;cursor:pointer;transition:box-shadow .18s,background .18s,border-color .18s}.zone:hover,.zone:focus-visible{outline:none;border-color:transparent;box-shadow:none;background:transparent;filter:brightness(1.12)}.films{left:3.1%;top:30.5%;width:23.1%;height:17.5%}.series{left:3.1%;top:50.5%;width:23.1%;height:16.8%}.admin{left:3.1%;top:69.2%;width:23.1%;height:15.7%}.contact{left:78.2%;top:80.2%;width:17.5%;height:7.7%;appearance:none;-webkit-appearance:none;padding:0;background:transparent;color:inherit;font:inherit}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.foot{font:14px Georgia,serif;color:#d8b77e;text-align:center;padding:12px 16px}.foot a{color:#fbe4ac}dialog{max-width:min(92vw,540px);background:linear-gradient(145deg,#3b1513,#170909);border:3px solid #c49a54;border-radius:12px;color:#ffedce;box-shadow:0 20px 100px #000;padding:24px}dialog::backdrop{background:#000b}dialog h2{color:#f8d38d;margin-top:0}dialog p{line-height:1.5}dialog button{background:#eed29b;color:#3c1411;border:0;border-radius:5px;padding:10px 18px;font-weight:bold;cursor:pointer}@media(max-width:700px){body{justify-content:flex-start}.scene{width:100%;min-height:0}.foot{font-size:12px;padding:14px 10px}.zone{border-radius:4px}}
+dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:11px;border:1px solid #c49a54;border-radius:5px;background:#fff3db;color:#29120d;font:16px Georgia,serif}dialog label{display:block;color:#f8d38d}dialog textarea{min-height:125px;resize:vertical}.contact-actions{display:flex;gap:12px;flex-wrap:wrap}.contact-actions button{margin-top:8px}#contactStatus{min-height:1.4em}
+
+/* Compteurs dynamiques : les valeurs sont calculées à partir de films.html et series.html. */
+.compteurs{position:absolute;left:49.9%;top:75.5%;width:18.3%;height:4.8%;display:grid;grid-template-columns:repeat(3,1fr);gap:8%;pointer-events:none}
+.compteur{display:flex;align-items:center;justify-content:center;color:#ffe4a1;background:#200b06;font:clamp(8px,1.5vw,23px) Georgia,serif;letter-spacing:.04em;text-shadow:0 0 6px #d68b2d;border-radius:3px}
+
+/* Enseignes présentes dans le PNG : zones cliquables entièrement transparentes. */
+.films{left:3.1%;top:30.5%;width:23.1%;height:17.5%}
+.series{left:3.1%;top:49%;width:23.1%;height:17.5%}
+.person-buttons{display:contents}
+.person-buttons button{position:absolute;left:3.1%;width:23.1%;height:15%;border:0;padding:0;background:transparent;color:transparent;font-size:0;cursor:pointer;z-index:3;box-shadow:none;appearance:none}
+.person-buttons button:first-child{top:66%}
+.person-buttons button:last-child{top:81%}
+.person-buttons button:hover{background:transparent;box-shadow:none;filter:brightness(1.08)}
+.person-buttons button:focus-visible{outline:2px solid #ffe5a9;outline-offset:-5px}
+/* Le texte Administration est déjà dessiné sur le décor. */
+.admin-small{position:absolute;left:78.2%;top:87.3%;width:17.5%;height:3.5%;z-index:3;color:transparent;font-size:0;text-decoration:none}
+.admin-small:focus-visible{outline:2px solid #ffe5a9}
+.bio-photo{display:block;max-width:190px;max-height:260px;object-fit:contain;border:1px solid #c49a54;border-radius:5px;cursor:pointer;margin:10px auto}
+.bio-photo:hover{outline:2px solid #f8d38d}.bio-results button{display:block;width:100%;text-align:left;margin:8px 0;background:#301419;color:#ffedce;border:1px solid #c49a54}
+.bio-credits{max-height:55vh;overflow:auto}.bio-credit{display:flex;gap:12px;align-items:center;border-bottom:1px solid #68482e;padding:8px 0}.bio-credit img{width:45px;height:66px;object-fit:contain}
+.bio-back{position:sticky;top:0;z-index:5;display:block;margin:0 0 12px!important}
+
+.bio-credit{width:100%;background:transparent;color:#f5ccab;text-align:left;cursor:pointer;font:inherit}.bio-credit:hover{background:#4a2020}.bio-credit span{text-decoration:underline}.bio-film-detail{max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto}.bio-film-layout{display:flex;gap:24px;flex-wrap:wrap}.bio-film-layout>img{width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #e8b85b}.bio-film-layout>div{flex:1;min-width:220px}.bio-film-detail a{color:#f5cc7b}.bio-add{display:inline-block;margin-top:12px;color:#f5cc7b!important;font:inherit;text-decoration:underline;background:transparent;border:0;padding:0}.bio-propose{display:block;width:max-content;max-width:100%;margin-top:14px;padding:12px 16px;background:#7e101a;color:#f5cc7b;border:2px solid #e8b85b;border-radius:6px;font:inherit;font-weight:bold;cursor:pointer}.bio-propose:hover{filter:brightness(1.2)}.bio-film-detail>button:first-child{color:#f5cc7b!important;background:#7e101a;border:1px solid #e8b85b;border-radius:5px;padding:9px 13px;font:inherit;cursor:pointer}.bio-proposal-dialog{background:#231016;color:#f6e8cf;border:2px solid #c89442;max-width:550px;width:90%;padding:24px;font:inherit}.bio-proposal-dialog input,.bio-proposal-dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:9px;background:#fff1d9;color:#23130e;border:1px solid #c89442;font:inherit}.bio-proposal-dialog button{background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;padding:9px 14px;cursor:pointer;font:inherit}.bio-proposal-dialog label{display:block;margin-top:10px}
+
+/* CINEMALAND — fiche biographique cinéma */
+#bioCard{width:min(1050px,95vw);max-width:1050px;max-height:92vh;overflow:auto;background:linear-gradient(90deg,rgba(20,3,7,.88),rgba(27,4,8,.82)),url("decor-fiche-cinemaland.png") center top / 100% auto no-repeat;color:#f9e9cf;border:3px double #e8b85b;border-radius:18px;padding:22px 28px;box-shadow:0 0 45px #000}
+#bioCard::backdrop{background:#000c}
+#bioCardTitle{font:clamp(30px,4.5vw,54px) Georgia,serif;color:#f4c66e;text-align:left;margin:0 0 16px;text-transform:uppercase;letter-spacing:2px;line-height:1.12}
+.bio-profile{display:grid;grid-template-columns:minmax(170px,280px) minmax(0,1fr);gap:30px;align-items:start}
+.bio-profile .bio-photo{width:100%;max-width:280px;max-height:380px;margin:0;align-self:start;border:3px solid #d5a346;box-shadow:0 5px 20px #0008;object-fit:cover}
+.bio-facts{font-size:18px;line-height:1.5}.bio-facts p{margin:0 0 9px}.bio-facts strong{color:#f4c66e}
+.bio-actions{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.bio-actions button{flex:1 1 150px;background:linear-gradient(#6e101b,#33070d);color:#f5cf7d;border:2px solid #e8b85b;border-radius:9px;padding:12px 15px;font:19px Georgia,serif;cursor:pointer}
+.bio-actions button:hover{filter:brightness(1.2)}
+.bio-story{border-top:1px solid #c99b4c;margin-top:20px;padding-top:12px}
+.bio-story h3{color:#f4c66e;font:30px Georgia,serif;margin:0 0 14px}
+.bio-story p{white-space:pre-line;font:18px/1.65 Georgia,serif;text-align:justify;margin:0}
+@media(max-width:620px){.bio-profile{grid-template-columns:1fr}#bioCardTitle{text-align:center}.bio-profile .bio-photo{margin:auto}.bio-facts{font-size:16px}#bioCard{padding:15px}}
+
+/* CINEMALAND — fiche corrigée : bandeau indépendant, jamais déformé */
+#bioCard{
+ position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;
+ max-height:100dvh;margin:0;padding:0!important;border:0;border-radius:0;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ background:#170609!important;box-sizing:border-box;
+}
+#bioCard::before{
+ content:"";display:block;position:sticky;top:0;z-index:5;
+ width:100%;height:auto;aspect-ratio:1721 / 148;
+ background:#170609 url("bandeau-fiche-cinemaland.png") center top / 100% auto no-repeat;
+ border-bottom:2px solid #e8b85b;box-sizing:border-box;
+ box-shadow:0 5px 16px #000a;pointer-events:none;
+}
+#bioCardBody{
+ padding:24px clamp(18px,4vw,65px) 45px;
+ max-width:1370px;margin:0 auto;
+ background:linear-gradient(90deg,#170609,#290b12,#170609);
+}
+@media(max-width:620px){
+ #bioCardBody{padding:18px 14px 28px}
+ .bio-profile{grid-template-columns:1fr}
+}
+
+/* Recherche acteurs / réalisateurs — salon cinéma, sans toucher à la logique TMDB */
+#bioDialog{width:min(92vw,560px);max-width:560px;max-height:90dvh;overflow-y:auto;position:fixed;padding:34px clamp(22px,4vw,42px) 30px;border:3px solid #d9a34e;border-radius:20px;background:radial-gradient(ellipse at 83% 25%,#66271d 0%,transparent 37%),linear-gradient(140deg,#381014,#150608 75%);box-shadow:0 0 0 5px #200b0b,0 22px 90px #000, inset 0 0 55px #0008;color:#ffebc8}
+#bioDialog::before{content:"";display:block;height:42px;margin:-8px 0 8px;background:repeating-linear-gradient(135deg,#f1d7a5 0 22px,#1b1010 22px 44px);clip-path:polygon(0 0,100% 0,100% 75%,0 75%);border-radius:5px;opacity:.95}
+#bioDialog h2{font: bold clamp(26px,3vw,34px) Georgia,serif;text-align:center;margin:10px 0 25px;color:#ffe0a0;text-shadow:0 2px 12px #b87128}
+#bioDialog h2::after{content:"★";display:block;font-size:18px;color:#e5b75e;margin:12px auto 0;max-width:250px;border-bottom:1px solid #b88843;padding-bottom:9px}
+#bioDialog>button:first-child{background:#2b0c0d;color:#f6d38f;border:1px solid #a77736;border-radius:6px;font:14px Georgia,serif;padding:9px 15px}
+#bioDialog label{font:18px Georgia,serif;color:#f7dca3;margin:12px 0}
+#bioDialog input{background:#fff3dc;color:#24120d;border:2px solid #bc8b43;border-radius:7px;padding:13px;font:18px Georgia,serif;box-shadow:inset 0 2px 5px #0002}
+#bioDialog input:focus{outline:2px solid #ffe2a1;outline-offset:2px}
+#bioDialog #bioForm>button{display:block;width:min(100%,310px);margin:24px auto 14px;padding:15px 20px;background:linear-gradient(120deg,#ae671b,#ffe2a0 45%,#d4932c);color:#2a1009;border:1px solid #f6d48e;border-radius:10px;font:bold 18px Georgia,serif;box-shadow:0 4px 13px #0009;cursor:pointer}
+#bioDialog #bioForm>button:hover{filter:brightness(1.1)}
+#bioDialog #bioStatus{font-size:16px;color:#ffe3ae}
+#bioDialog .bio-results button{display:flex;align-items:center;gap:12px;padding:12px 15px;background:linear-gradient(100deg,#4c1c1c,#2a1012);color:#fff0d4;border:1px solid #b88948;border-radius:8px;font:18px Georgia,serif;min-height:55px}
+#bioDialog .bio-results button::after{content:"›";margin-left:auto;font-size:30px;color:#f5c66e}
+#bioDialog .bio-results button:hover{background:#663029;border-color:#ffe1a1}
+@media(max-width:600px){#bioDialog{padding:20px}#bioDialog::before{height:27px}}
+
+/* CINEMALAND — salon de recherche version cinéma : décor et dimensions */
+#bioDialog{width:min(94vw,650px)!important;max-width:650px!important;max-height:94dvh!important;padding:30px 32px 34px!important;border:4px ridge #d7a04b!important;border-radius:18px!important;background:radial-gradient(ellipse at 80% 26%,#6c1b1b 0%,#250b0c 37%,#130708 85%)!important;box-shadow:0 0 0 5px #250c0c,0 24px 90px #000,inset 0 0 60px #000!important;isolation:isolate}
+#bioDialog::before{content:""!important;position:absolute;top:8px;left:25%;width:52%;height:65px!important;margin:0!important;clip-path:none!important;border-radius:0!important;opacity:1!important;pointer-events:none;background:repeating-linear-gradient(125deg,#f5e6c8 0 21px,#1a1311 21px 42px)!important;transform:rotate(-8deg);border:6px solid #21140f;box-shadow:0 4px 8px #0009;z-index:-1}
+#bioDialog::after{content:"";position:absolute;right:0;top:92px;width:45%;height:370px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 92% 4%,#fff0ad 0 2%,#f9b955aa 3%,transparent 9%),linear-gradient(151deg,transparent 28%,#f9bd532c 43%,#f9bd5300 70%);opacity:.9}
+#bioDialog h2{text-align:center!important;margin:36px 0 30px!important;font:bold clamp(26px,3vw,35px) Georgia,serif!important;text-shadow:0 2px 12px #b87128}
+#bioDialog #bioForm{position:relative;width:70%;z-index:2}
+#bioDialog label{font-size:18px!important}
+#bioDialog input{font-size:18px!important;padding:14px!important}
+#bioDialog #bioForm>button{width:100%!important;margin:20px 0 12px!important;font-size:20px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2}
+#bioDialog .bio-results button{min-height:68px!important;font-size:19px!important}
+#bioDialog .bio-results button:hover{transform:translateX(2px)}
+#bioDialog .cinema-chair{position:absolute;right:25px;top:245px;width:170px;height:210px;pointer-events:none;z-index:1;filter:drop-shadow(0 10px 8px #000c)}
+#bioDialog .cinema-chair svg{width:100%;height:100%}
+#bioDialog>button:first-child{position:relative;z-index:3}
+@media(max-width:650px){#bioDialog{padding:18px!important}#bioDialog #bioForm{width:100%}#bioDialog .cinema-chair{display:none}#bioDialog::after{opacity:.35}#bioDialog h2{margin:25px 0!important}}
+
+/* VERSION CORRIGÉE — projecteur et fauteuil réellement visibles */
+#bioDialog{width:min(94vw,690px)!important;max-width:690px!important;min-height:555px!important;padding:24px 30px 34px!important;overflow-x:hidden!important}
+#bioDialog::before{z-index:0!important;top:7px!important;left:29%!important;width:45%!important;height:42px!important;transform:rotate(-4deg)!important}
+#bioDialog::after{display:none!important}
+#bioDialog h2{position:relative;z-index:3;margin:28px 0 26px!important}
+#bioDialog #bioForm{width:66%!important;position:relative;z-index:3}
+#bioDialog .cinema-chair{display:block!important;position:absolute!important;right:22px!important;top:278px!important;width:185px!important;height:225px!important;z-index:2!important;opacity:1!important}
+#bioDialog .cinema-projector{position:absolute;right:12px;top:125px;width:235px;height:360px;z-index:1;pointer-events:none;opacity:1}
+#bioDialog .cinema-projector svg{width:100%;height:100%;display:block}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:3}
+#bioDialog .bio-results{max-width:100%}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog #bioForm{width:100%!important}#bioDialog .cinema-chair{display:none!important}#bioDialog .cinema-projector{display:none!important}}
+
+/* Version avec vrai PNG : projecteur et fauteuil photographiques */
+#bioDialog{width:min(94vw,760px)!important;max-width:760px!important;min-height:575px!important;padding:26px 35px 34px!important;isolation:isolate;background:linear-gradient(125deg,#270b0c,#170708)!important}
+#bioDialog::before{left:31%!important;width:40%!important}
+#bioDialog .cinema-chair,#bioDialog .cinema-projector{display:none!important}
+#bioDialog::after{content:""!important;display:block!important;position:absolute!important;right:5px!important;top:92px!important;width:270px!important;height:455px!important;z-index:0!important;opacity:1!important;background:url("decor-recherche-cinemaland.png") center / contain no-repeat!important;pointer-events:none!important}
+#bioDialog #bioForm{width:63%!important;position:relative;z-index:2}
+#bioDialog h2{position:relative;z-index:2;text-align:left!important;margin:32px 0 28px!important}
+#bioDialog #bioStatus,#bioDialog #bioResults{position:relative;z-index:2;max-width:100%}
+#bioDialog>button:first-child{background:linear-gradient(#a9222c,#650b13)!important;color:#ffe0a0!important;border:2px solid #d8a04e!important;font-weight:bold!important;padding:10px 19px!important}
+#bioDialog>button:first-child:hover{filter:brightness(1.2)}
+@media(max-width:650px){#bioDialog{min-height:0!important;padding:20px!important}#bioDialog::after{opacity:.18!important;right:0!important;width:55%!important}#bioDialog #bioForm{width:100%!important}#bioDialog h2{text-align:center!important}}
+
+/* SCENE KURSAAL — zones interactives sur photographie validée */
+body{justify-content:flex-start;background:#080e19}
+.scene{width:min(100vw,1846px);aspect-ratio:1846/852;background-image:url("kursaal.png");background-size:100% 100%;box-shadow:0 0 50px #000;flex-shrink:0}
+.scene .zone,.scene .person-buttons,.scene .compteurs,.scene .admin-small{display:none!important}
+.hotspot{position:absolute;display:block;z-index:5;background:transparent;border:0;border-radius:4px;cursor:pointer;color:transparent;text-decoration:none;font-size:0}
+.hotspot:hover{box-shadow:none;background:radial-gradient(ellipse at center,rgba(255,240,160,.34) 0%,rgba(255,220,110,.13) 48%,transparent 75%);filter:drop-shadow(0 0 13px rgba(255,225,135,.8));transition:filter .2s ease,background .2s ease}
+.hotspot:focus-visible{outline:3px solid #ffe39a;outline-offset:2px}
+.hotspot.entree{left:44.4%;top:57.5%;width:16.6%;height:22%}
+.hotspot.librairie{left:3.5%;top:50%;width:26.4%;height:26%}
+.hotspot.voyage{left:75%;top:49%;width:23%;height:28%}
+.hotspot.bureau{left:78%;top:9%;width:9%;height:12%}
+.hotspot.ds{left:1%;top:75%;width:26.4%;height:16%}
+.hotspot.quatrel{left:31%;top:74%;width:20%;height:18%}
+.hotspot.deuxcv{left:54%;top:75%;width:19%;height:17%}
+.hotspot.gordini{left:76%;top:76%;width:23%;height:16%}
+/* Fenêtre du salon : zone transparente sur la façade validée. */
+.hotspot.salon-fenetre{left:16.9%;top:24.5%;width:3.0%;height:8.2%}
+/* Hall provisoire : les décors intérieurs seront validés séparément. */
+#hall{display:none;min-height:min(80vh,750px);width:min(100vw,1200px);margin:auto;padding:40px 25px;background:radial-gradient(ellipse at 50% 20%,#813329,#290a0e 70%);border:8px solid #b18a51;text-align:center;box-shadow:0 0 50px #000}
+#hall.active{display:block}body.inside .scene{display:none}body.inside{justify-content:center}
+#hall h2{font:clamp(30px,5vw,58px) Georgia,serif;color:#f7d58f;margin:12px 0 25px}
+#hall .guichet{border:5px double #e2b56c;background:#190c10;padding:22px;max-width:700px;margin:0 auto 30px}
+#hall .guichet h3{font-size:24px;margin:0 0 16px;color:#f4d092}
+#hall .stats{display:flex;justify-content:space-evenly;gap:12px;flex-wrap:wrap}
+#hall .stats div{min-width:125px}.stats output{display:block;font-size:32px;color:#ffe3a2}
+#hall .doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:25px 0}
+#hall .door{display:flex;align-items:center;justify-content:center;min-height:175px;padding:12px;background:linear-gradient(90deg,#4b1818,#811c22 50%,#4b1818);border:8px ridge #a77b45;color:#ffdfa0;font:bold clamp(14px,1.7vw,21px) Georgia,serif;text-decoration:none;cursor:pointer}
+#hall .door:hover{filter:brightness(1.25)}#hall button.retour{padding:12px 24px;background:#301116;border:1px solid #d9b16d;color:#ffe3a2;font:18px Georgia,serif;cursor:pointer}
+@media(max-width:700px){#hall .doors{grid-template-columns:repeat(2,1fr)}#hall .door{min-height:115px}#hall{padding:18px 10px}}
+
+/* Affiches du hall : liens directs, halo discret au survol, décor intact. */
+</style>
+<style id="kursaal-hall-valide-20261030">
+/* Décor validé : image inchangée, zones transparentes et lumière au survol. */
+#hall{display:none!important;min-height:0!important;width:min(100vw,1536px)!important;max-width:1536px!important;margin:0 auto!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;text-align:initial!important}
+#hall.active{display:block!important}
+body.inside{display:block!important;background:#100806!important}
+body.inside .scene{display:none!important}
+body.inside .foot{display:none!important}
+.hall-image{position:relative;width:100%;aspect-ratio:1721/914;background:#150c09 url('hall.png') center/100% 100% no-repeat;isolation:isolate}
+.hall-hotspot{position:absolute;z-index:4;display:block;cursor:pointer;appearance:none;border:0!important;border-radius:0!important;background:transparent!important;color:transparent!important;font-size:0!important;padding:0!important;margin:0!important;box-shadow:none!important;outline:0!important;transition:filter .22s ease}
+.hall-hotspot::after{content:'';position:absolute;inset:-3px;opacity:0;pointer-events:none;transition:opacity .2s ease;box-shadow:0 0 22px 8px #ffd27d88, inset 0 0 20px 5px #ffe3a755;border-radius:20px;filter:blur(8px)}
+.hall-hotspot:hover::after,.hall-hotspot:focus-visible::after{opacity:1}
+.hall-hotspot:focus-visible{outline:2px solid #ffe3a7!important;outline-offset:3px!important}
+.hall-films{left:9%;top:29.5%;width:14%;height:7%}
+.hall-series{left:9%;top:37%;width:14%;height:7%}
+.hall-acteurs{left:9%;top:45%;width:14%;height:7%}
+.hall-realisateurs{left:9%;top:53%;width:14%;height:7%}
+.hall-vanessa{left:24%;top:28%;width:20%;height:67%}
+.hall-vanessa::after{border-radius:48% 48% 20% 20%;box-shadow:0 0 15px 4px #ffce6d77}
+/* Le papier masque uniquement les chiffres imprimés pour montrer les vrais compteurs. */
+.hall-compteur{position:absolute;z-index:3;display:flex;align-items:center;justify-content:center;width:5%;height:4%;font:normal clamp(10px,1.5vw,24px) Georgia,serif;color:#991c23;background:transparent;border:0;border-radius:0;text-shadow:none;line-height:1;pointer-events:none}
+.hall-titres{left:46.7%;top:15.4%}
+.hall-acteurs-nombre{left:60.1%;top:14.2%}
+.hall-realisateurs-nombre{left:74.3%;top:12.8%}
+.hall-retour{position:absolute;z-index:5;bottom:2.3%;right:2%;background:#4d1015e8!important;color:#f8d595!important;border:1px solid #d5a04b!important;border-radius:5px;padding:8px 14px;font:clamp(11px,1.3vw,18px) Georgia,serif;cursor:pointer;box-shadow:0 0 12px #0008}
+.hall-retour:hover{background:#7c1e25!important;box-shadow:0 0 15px #f6bd6b88}
+@media(max-width:600px){.hall-compteur{font-size:clamp(10px,3.2vw,22px)}.hall-retour{font-size:10px;padding:5px 6px}}
+.hall-sortie{left:89%;top:11%;width:9%;height:18%}.hall-compteur{font-size:clamp(9px,1.5vw,24px)!important;background:transparent!important}
+</style><style id="hall-compteurs-sur-pancartes">
+/* Nouveau hall validé : compteurs réels sur les quatre pancartes. */
+.hall-compteur{position:absolute!important;z-index:6!important;display:flex!important;align-items:center!important;justify-content:center!important;width:3.12%!important;height:4.3%!important;background:transparent!important;box-shadow:none!important;color:#f8cb72!important;border:0!important;border-radius:0!important;font:normal clamp(9px,1.28vw,21px) Georgia,serif!important;letter-spacing:-.04em!important;text-shadow:0 0 3px #8c5526!important;line-height:1!important;pointer-events:none!important}
+.hall-films-nombre{left:19.12%;top:15.05%}
+.hall-series-nombre{left:19.12%;top:23.60%}
+.hall-acteurs-nombre{left:19.12%;top:32.23%}
+.hall-realisateurs-nombre{left:19.12%;top:40.81%}
+.hall-films{left:8.8%;top:11.7%;width:14.3%;height:9%}
+.hall-series{left:8.8%;top:20.2%;width:14.3%;height:9%}
+.hall-acteurs{left:8.8%;top:28.7%;width:14.3%;height:9%}
+.hall-realisateurs{left:8.8%;top:37.2%;width:14.3%;height:9%}
+.hall-vanessa{left:23%;top:11%;width:17%;height:79%}
+@media(max-width:600px){.hall-compteur{font-size:clamp(7px,1.35vw,12px)!important}}
+/* Aucun lien sur CINÉMA MONDIAL. */
+
+</style><style id="kursaal-transition-20261101">
+/* Bandeau et fondu : aucun changement des images validées. */
+#kursaal-transition{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(8,5,5,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s ease,background .8s ease,visibility 0s linear .8s}
+#kursaal-transition.visible{visibility:visible;opacity:1;background:rgba(8,5,5,.68);transition:opacity .8s ease,background .8s ease}
+#kursaal-transition .bienvenue{max-width:90vw;padding:22px clamp(25px,5vw,70px);border:2px solid #d9a451;background:linear-gradient(115deg,#30100e,#6d231c 50%,#30100e);box-shadow:0 0 38px #e4b86b77,0 15px 55px #000;color:#ffe4a4;text-align:center;font:clamp(23px,4vw,49px) Georgia,serif;letter-spacing:.045em;text-shadow:0 2px 10px #000;transform:translateY(15px);transition:transform .7s ease}
+#kursaal-transition.visible .bienvenue{transform:translateY(0)}
+#kursaal-transition.fadeout{background:#090504}
+@media(prefers-reduced-motion:reduce){#kursaal-transition,#kursaal-transition .bienvenue{transition:none}}
+</style>
+<style id="hall-survol-vert-or-20261101">
+/* Effet uniquement au survol : le PNG hall.png reste strictement inchangé. */
+.hall-image .hall-hotspot{transition:none!important}
+.hall-image .hall-hotspot::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:5px;border:2px solid rgba(255,210,94,.85);background:linear-gradient(125deg,rgba(24,180,85,.18),rgba(255,214,94,.12));box-shadow:0 0 10px 3px rgba(44,225,110,.65),0 0 22px 7px rgba(255,191,59,.55),inset 0 0 14px rgba(255,219,95,.45);filter:none;transition:opacity .23s ease}
+.hall-image .hall-hotspot:hover::after,.hall-image .hall-hotspot:focus-visible::after{opacity:1}
+/* Zones correspondant aux quatre panneaux de la photographie validée. */
+.hall-films{left:8.5%;top:12%;width:15.1%;height:9.1%}
+.hall-series{left:8.5%;top:21.1%;width:15.1%;height:8.9%}
+.hall-acteurs{left:8.5%;top:30%;width:15.1%;height:8.8%}
+.hall-realisateurs{left:8.5%;top:39%;width:15.1%;height:8.8%}
+/* Chiffres seuls, sans fond ni cadre ajouté, dans les réserves du PNG validé. */
+.hall-films-nombre{left:20.05%;top:15.15%}
+.hall-series-nombre{left:20.05%;top:24.15%}
+.hall-acteurs-nombre{left:20.05%;top:33.15%}
+.hall-realisateurs-nombre{left:20.05%;top:42.15%}
+ .hall-compteur{width:3.0%!important;height:4.15%!important;background:transparent!important;box-shadow:none!important;border:none!important;border-radius:0!important;color:#f9d58d!important;text-shadow:0 1px 3px #170800,0 0 5px #3d2007!important;font-size:clamp(9px,1.17vw,19px)!important;letter-spacing:-.06em!important}
+/* Porte du fond ENTREZ : accès au hall mondial. Enseigne non cliquable. */
+.hall-porte-mondial{left:58.3%;top:36.5%;width:13.8%;height:22.5%}
+
+
+.hall-sortie{left:89.9%;top:8.8%;width:8.5%;height:13.5%}
+</style>
+
+<style id="fiche-unique-tickets-20261102">
+/* Fiche acteur/réalisateur : présentation validée, filmographie intégrée en 3 colonnes. */
+#bioCard{width:min(1370px,97vw)!important;max-width:1370px!important;max-height:94vh!important}
+.bio-inline-films{margin-top:24px;border-top:3px double #d5a04b;padding-top:16px}
+.bio-inline-films h3{font:clamp(25px,3vw,38px) Georgia,serif;color:#f5ca78;margin:0 0 8px}
+.bio-inline-films-status{color:#e8c999;margin:0 0 18px}
+.bio-ticket-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 16px}
+.bio-ticket{position:relative;min-width:0;min-height:94px;display:grid;grid-template-columns:67px minmax(0,1fr) 62px;gap:10px;align-items:center;padding:9px 11px;border:2px solid #a87837;border-left:5px double #b88645;border-radius:5px;background:linear-gradient(135deg,#f9dda2,#e8bd73);color:#251408;text-align:left;font:inherit;cursor:pointer;box-shadow:0 3px 9px #0008}
+.bio-ticket:hover,.bio-ticket:focus-visible{background:#ffebb9;box-shadow:0 0 13px #f3c06b9c}
+.bio-ticket-year{font:bold 19px Georgia,serif;color:#8d1e22;border-right:1px dashed #9d713f;padding-right:6px}
+.bio-ticket-name{font:bold clamp(14px,1.25vw,19px) Georgia,serif;overflow-wrap:anywhere}
+.bio-ticket img{width:58px;height:76px;object-fit:cover;justify-self:end;border:1px solid #90602b}
+.bio-ticket .bio-ticket-empty{display:block;width:58px;height:76px}
+.bio-ticket-present{outline:2px solid #f6d383;outline-offset:1px}
+.bio-ticket-present::after{content:"Dans notre vidéothèque";position:absolute;bottom:2px;left:82px;font:10px Georgia,serif;color:#6d3118}
+@media(max-width:850px){.bio-ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.bio-ticket-grid{grid-template-columns:1fr}.bio-ticket-name{font-size:17px}}
+<style id="bio-fermer-unique-20261103">
+/* Bouton unique fixe dans la fiche, indépendant du défilement, sans modifier les PNG. */
+#bioCard{position:fixed!important;inset:0!important;width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important}
+#bioCard .bio-close-fixed{position:fixed!important;top:clamp(12px,2vw,26px);right:clamp(16px,3vw,44px);z-index:100!important;display:block!important;background:linear-gradient(#71151e,#39090e)!important;color:#f8d595!important;border:2px solid #d5a04b!important;border-radius:7px!important;padding:10px 22px!important;font:bold 17px Georgia,serif!important;box-shadow:0 3px 12px #000b!important;cursor:pointer}
+#bioCard .bio-close-fixed:hover{filter:brightness(1.2)}
+</style>
+</head>
+<body>
+<div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
+<main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
+<h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
+<button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
+<button class="hotspot librairie" type="button" aria-label="Librairie Malandain — Almanach de la Révolution française" title="Librairie Malandain" onclick="window.open('https://archive.org/details/@michel_malandain', '_blank', 'noopener')">Librairie Malandain</button>
+<a class="hotspot salon-fenetre" href="salon.html" aria-label="Entrer dans le salon des répliques célèbres" title="Salon des répliques célèbres">Salon vidéo</a>
+<a class="hotspot voyage" href="agence.html" aria-label="Agence de voyages CINEMALAND" title="Agence de voyages">Agence de voyages</a>
+<a class="hotspot bureau" aria-label="Administration" title="Administration" href="https://videotheque-admin.michelmalandain.workers.dev/">Administration</a>
+<a class="hotspot ds" aria-label="Citroën DS — La Horse" title="La Horse" href="films.html?fiche=La%20Horse&amp;annee=1970">La Horse</a>
+<a class="hotspot quatrel" aria-label="Renault 4L — Rien à déclarer" title="Rien à déclarer" href="films.html?fiche=Rien%20%C3%A0%20d%C3%A9clarer&amp;annee=2010">Rien à déclarer</a>
+<a class="hotspot deuxcv" aria-label="Citroën 2CV — Le Corniaud" title="Le Corniaud" href="films.html?fiche=Le%20Corniaud&amp;annee=1965">Le Corniaud</a>
+<a class="hotspot gordini" aria-label="Renault 8 Gordini — L’Emmerdeur" title="L’Emmerdeur" href="films.html?fiche=L%27Emmerdeur&amp;annee=1973">L’Emmerdeur</a>
+<div hidden><output id="totalTitres"></output><output id="totalRealisateurs"></output><output id="totalActeurs"></output></div>
+</main>
+<section id="hall" aria-label="Hall du cinéma KURSAAL">
+<div class="hall-image" role="group" aria-label="Hall du KURSAAL : panneaux de direction, tickets et Vanessa">
+<a class="hall-hotspot hall-films" href="films.html" aria-label="Films" title="Films">Films</a>
+<a class="hall-hotspot hall-series" href="series.html" aria-label="Séries" title="Séries">Séries</a>
+<a class="hall-hotspot hall-acteurs" href="acteurs.html" aria-label="Liste des acteurs" title="Acteurs">Acteurs</a>
+<a class="hall-hotspot hall-realisateurs" href="realisateurs.html" aria-label="Liste des réalisateurs" title="Réalisateurs">Réalisateurs</a>
+<a class="hall-hotspot hall-vanessa" href="index.html?personne=Vanessa%20Paradis&amp;hall=1" aria-label="Vanessa Paradis — fiche actrice" title="Vanessa Paradis — fiche actrice">Vanessa Paradis</a>
+<output class="hall-compteur hall-films-nombre" id="hallFilms" aria-label="Nombre de films">…</output>
+<output class="hall-compteur hall-series-nombre" id="hallSeries" aria-label="Nombre de séries">…</output>
+<output class="hall-compteur hall-acteurs-nombre" id="hallActeurs" aria-label="Nombre d'acteurs">…</output>
+<output class="hall-compteur hall-realisateurs-nombre" id="hallRealisateurs" aria-label="Nombre de réalisateurs">…</output>
+<a class="hall-hotspot hall-porte-mondial" href="hallmondial.html" aria-label="Entrer dans le hall du cinéma mondial" title="ENTREZ — CINÉMA MONDIAL">Entrer</a>
+<a class="hall-hotspot hall-sortie" href="index.html" aria-label="Sortie vers la façade du KURSAAL" title="SORTIE">Sortie</a>
+</div>
+</section>
+
+<dialog aria-labelledby="contactTitle" id="contactDialog">
+<h2 id="contactTitle">MALANDAIN — Nous écrire</h2>
+<p>Un mot pour Michel et Christiane ? Écrivez-nous ici.</p>
+<form id="contactForm" action="https://formsubmit.co/michelmalandain@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="CINEMALAND — Nouveau message">
+<input type="hidden" name="_captcha" value="true">
+<input type="hidden" name="_template" value="table">
+<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<label for="visitorName">Votre nom</label><input id="visitorName" name="name" maxlength="100" required autocomplete="name">
+<label for="visitorEmail">Votre adresse e-mail</label><input id="visitorEmail" name="email" type="email" maxlength="200" required autocomplete="email">
+<label for="visitorMessage">Votre message</label><textarea id="visitorMessage" name="message" maxlength="5000" required></textarea>
+<p id="contactStatus" role="status" aria-live="polite">Après l’envoi, une confirmation peut être demandée. Lors du premier message, Michel devra activer la réception depuis son e-mail.</p>
+<div class="contact-actions"><button type="submit">Envoyer</button><button type="button" onclick="document.getElementById('contactDialog').close()">Fermer</button></div>
+</form>
+</dialog>
+
+<dialog id="bioDialog" aria-labelledby="bioTitle"><div class="cinema-projector" aria-hidden="true"><svg viewBox="0 0 235 360" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="spot"><stop stop-color="#fff3bf" stop-opacity=".95"/><stop offset=".2" stop-color="#f6bc57" stop-opacity=".65"/><stop offset="1" stop-color="#f6bc57" stop-opacity="0"/></radialGradient><linearGradient id="beam" x1="1" y1="0" x2="0" y2="1"><stop stop-color="#ffe6a0" stop-opacity=".42"/><stop offset="1" stop-color="#f9ba55" stop-opacity="0"/></linearGradient></defs><path d="M214 28 L0 140 L0 340 Z" fill="url(#beam)"/><circle cx="208" cy="31" r="55" fill="url(#spot)"/><path d="M202 8 L225 14 L217 50 L196 42 Z" fill="#4a3023" stroke="#d7a45b" stroke-width="3"/><path d="M204 41 L218 43 L230 58" fill="none" stroke="#ad8246" stroke-width="4"/><circle cx="206" cy="29" r="12" fill="#fff1bd"/><circle cx="206" cy="29" r="20" fill="none" stroke="#d6a15c" stroke-width="3"/></svg></div><div class="cinema-chair" aria-hidden="true"><svg viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#e0b76f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 40 L135 40 L122 132 L54 132 Z" fill="#24150f"/><path d="M48 46 L128 46 L117 122 L59 122 Z" fill="#39231b"/><path d="M35 132 L144 132 L127 153 L53 153 Z" fill="#281910"/><path d="M57 153 L30 210 M122 153 L148 210 M57 153 L122 153 M33 207 L147 207"/><path d="M43 78 L18 141 L55 153 M135 78 L162 141 L125 153"/><path d="M33 165 L146 165" stroke-width="3"/></g><circle cx="91" cy="18" r="8" fill="#d6a35e"/></svg></div><button type="button" onclick="document.getElementById('bioDialog').close()">Fermer</button><h2 id="bioTitle">Recherche</h2><form id="bioForm"><label>Nom<input id="bioLast" required autocomplete="off"></label><label>Prénom<input id="bioFirst" required autocomplete="off"></label><button type="submit">RECHERCHER</button></form><p id="bioStatus" role="status"></p><div class="bio-results" id="bioResults"></div></dialog>
+<dialog id="bioCard" aria-labelledby="bioCardTitle"><button type="button" class="bio-close-fixed" onclick="fermerFicheBio()">Fermer</button><div id="bioCardBody"></div></dialog>
+<dialog id="bioFilms" aria-labelledby="bioFilmsTitle"><button class="bio-back" type="button" onclick="document.getElementById('bioFilms').close()">Retour à la fiche</button><h2 id="bioFilmsTitle">Filmographie</h2><p id="bioFilmsStatus"></p><div id="bioFilmsList" class="bio-credits"></div></dialog>
+<script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
+/* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
+(function(){
+ const initial=JSON.stringify(window.CINEMALAND_CATALOGUE || []);
+ let checking=false;
+ async function checkCatalogue(){
+  if(checking || document.hidden) return;
+  checking=true;
+  try{
+   const r=await fetch('catalogue.js?actualisation='+Date.now(),{cache:'no-store'});
+   if(!r.ok)return;
+   const source=await r.text();
+   const m=source.match(/window\.CINEMALAND_CATALOGUE\s*=\s*(\[[\s\S]*\])\s*;/);
+   if(!m)return;
+   const current=JSON.stringify(JSON.parse(m[1]));
+   if(current!==initial) location.reload();
+  }catch(e){/* réseau momentanément indisponible */}
+  finally{checking=false;}
+ }
+ setInterval(checkCatalogue,20000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkCatalogue();});
+})();
+</script>
+<script>
+let bioRole='Acteur', bioPerson='';
+const el=id=>document.getElementById(id);
+function fermerFicheBio(){el('bioCard').close();}
+function openBioSearch(role){bioRole=role;el('bioTitle').textContent='Rechercher un '+role.toLowerCase();el('bioResults').replaceChildren();el('bioStatus').textContent='';el('bioDialog').showModal();}
+const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
+const para=(label,value)=>{const p=document.createElement('p');p.textContent=label+' : '+(value||'Non renseigné');return p;};
+function formatDate(v){if(!v)return 'Non renseignée';const m=v.match(/^[+-]?(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:v;}
+async function showBio(page){
+ bioPerson=page.name;el('bioDialog').close();
+ const body=el('bioCardBody');body.replaceChildren(para('Chargement','en cours'));el('bioCard').showModal();
+ try{
+  const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(page.id));
+  const p=await r.json();if(!r.ok)throw Error(p.message||'Fiche indisponible');
+  body.replaceChildren();
+  const identity={id:p.id};
+  const profile=document.createElement('div');profile.className='bio-profile';
+  if(p.profile_path){
+   const img=document.createElement('img');img.className='bio-photo';img.src='https://image.tmdb.org/t/p/w342'+p.profile_path;img.alt='Portrait de '+p.name;
+   profile.append(img);
+  }else{const absent=document.createElement('p');absent.textContent='Photographie non disponible';profile.append(absent)}
+  const facts=document.createElement('div');facts.className='bio-facts';const nameHeading=document.createElement('h2');nameHeading.id='bioCardTitle';nameHeading.textContent=p.name;facts.append(nameHeading);
+  const fact=(label,value)=>{if(!value)return;const row=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';row.append(strong,document.createTextNode(value));facts.append(row)};
+  fact('Nom',p.name);fact('Naissance',p.birthday?formatDate(p.birthday):null);fact('Lieu de naissance',p.place_of_birth);fact('Décès',p.deathday?formatDate(p.deathday):null);
+  fact('Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department==='Directing'?'Réalisation':p.known_for_department);
+  const actions=document.createElement('div');actions.className='bio-actions';
+  const action=(label,fn)=>{const button=document.createElement('button');button.type='button';button.textContent=label;button.onclick=fn;actions.append(button)};
+  action('RETOUR',()=>{el('bioCard').close();el('bioDialog').showModal()});
+  action('FERMER',()=>el('bioCard').close());
+  facts.append(actions);profile.append(facts);body.append(profile);
+  const story=document.createElement('section');story.className='bio-story';
+  const heading=document.createElement('h3');heading.textContent='BIOGRAPHIE';story.append(heading);
+  const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';story.append(bio);body.append(story);
+  const section=document.createElement('section');section.className='bio-inline-films';
+  const title=document.createElement('h3');title.textContent='FILMOGRAPHIE';section.append(title);
+  const status=document.createElement('p');status.className='bio-inline-films-status';status.textContent='Chargement de la filmographie…';section.append(status);
+  const grid=document.createElement('div');grid.className='bio-ticket-grid';section.append(grid);body.append(section);
+  try{
+   const params=new URLSearchParams({role:p.known_for_department==='Directing'?'director':'actor',id:p.id});
+   const response=await fetch(PERSON_API+'/filmography?'+params);
+   if(!response.ok){const error=await response.json().catch(()=>({}));throw Error(error.message||'Filmographie indisponible');}
+   const data=await response.json();
+   if(!Array.isArray(data.credits))throw Error('Réponse de filmographie incorrecte');
+   status.textContent=data.credits.length+' films et séries';
+   for(const credit of data.credits){
+    const ticket=document.createElement('button');ticket.type='button';ticket.className='bio-ticket';
+    ticket.title='Consulter '+(credit.title||credit.name||'ce titre');
+    const year=document.createElement('span');year.className='bio-ticket-year';year.textContent=String(credit.date||'').slice(0,4)||'—';
+    const label=document.createElement('span');label.className='bio-ticket-name';label.textContent=credit.title||credit.name||'Sans titre';
+    ticket.append(year,label);
+    if(credit.poster_path){const poster=document.createElement('img');poster.loading='lazy';poster.src='https://image.tmdb.org/t/p/w154'+credit.poster_path;poster.alt='Affiche de '+label.textContent;ticket.append(poster)}
+    else {const empty=document.createElement('span');empty.className='bio-ticket-empty';ticket.append(empty)}
+    ticket.onclick=()=>openBioFilmDetail(credit);
+    grid.append(ticket);
+   }
+   cataloguePromise.then(items=>{
+    for(let i=0;i<data.credits.length;i++)if(trouverDansCatalogue(items,data.credits[i]))grid.children[i]?.classList.add('bio-ticket-present');
+   }).catch(()=>{});
+  }catch(error){status.textContent=error.message;}
+ }catch(e){body.replaceChildren(para('Erreur',e.message))}
+}
+// Catalogue unique, déjà chargé par catalogue.js pour les compteurs.
+const cataloguePromise=Promise.resolve().then(()=>{
+ const items=window.CINEMALAND_CATALOGUE;
+ if(!Array.isArray(items))throw Error('Catalogue CINEMALAND indisponible');
+ return items;
+});
+function cleTitre(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/^(le|la|les|the|l) /,'');}
+function trouverDansCatalogue(items,credit){
+ const kind=credit.media_type==='tv'?'Série':'Film';const year=String(credit.date||'').slice(0,4);
+ const title=cleTitre(credit.title||credit.name);
+ const candidats=items.filter(x=>x.kind===kind&&cleTitre(x.title)===title);
+ return candidats.find(x=>String(x.year)===year)|| (candidats.length===1?candidats[0]:null);
+}
+function openBioProposal(title,year,kind){
+ const d=document.createElement('dialog');d.className='bio-proposal-dialog';
+ const heading=document.createElement('h2');heading.textContent='Proposer '+(kind==='Série'?'cette série':'ce film');
+ const note=document.createElement('p');note.textContent='Votre proposition sera soumise à la modération.';
+ const form=document.createElement('form');
+ function field(label,name,value,tag='input'){const l=document.createElement('label');l.textContent=label;const x=document.createElement(tag);x.name=name;x.required=true;if(tag==='input')x.type='text';x.value=value||'';l.append(x);form.append(l);return x;}
+ const pseudo=field('Votre pseudonyme','pseudo','');pseudo.maxLength=50;
+ const t=field('Titre','title',title);t.maxLength=160;
+ const y=field('Année','year',year);y.type='number';y.min='1888';y.max='2100';
+ const reason=field('Pourquoi proposer ce titre ?','comment','','textarea');reason.maxLength=1500;
+ const trap=document.createElement('input');trap.name='website';trap.tabIndex=-1;trap.style.display='none';form.append(trap);
+ const widget=document.createElement('div');form.append(widget);
+ const status=document.createElement('p');status.setAttribute('role','status');
+ const submit=document.createElement('button');submit.type='submit';submit.textContent='Envoyer pour validation';submit.disabled=true;
+ const close=document.createElement('button');close.type='button';close.textContent='Fermer';close.onclick=()=>d.close();
+ form.append(submit,status);d.append(close,heading,note,form);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
+ let widgetId=null;
+ (async()=>{try{
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/config');if(!r.ok)throw Error('Service indisponible');const c=await r.json();if(!c.enabled)throw Error('Protection antispam indisponible');
+ if(!window.turnstile){await new Promise((resolve,reject)=>{const existing=document.querySelector('script[data-bio-turnstile]');if(existing){const poll=setInterval(()=>{if(window.turnstile){clearInterval(poll);resolve();}},100);setTimeout(()=>{clearInterval(poll);if(!window.turnstile)reject(Error('Antispam indisponible'));},10000);return;}const script=document.createElement('script');script.dataset.bioTurnstile='1';script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.onload=resolve;script.onerror=()=>reject(Error('Antispam indisponible'));document.head.append(script);});}
+ if(!d.isConnected)return;widgetId=window.turnstile.render(widget,{sitekey:c.sitekey});submit.disabled=false;
+ }catch(e){status.textContent=e.message;}})();
+ form.addEventListener('submit',async e=>{e.preventDefault();if(widgetId===null)return;const token=window.turnstile.getResponse(widgetId);if(!token){status.textContent='Validez la protection antispam.';return;}submit.disabled=true;status.textContent='Envoi…';try{
+ const payload={type:'suggestion',kind,title:t.value,year:Number(y.value),pseudo:pseudo.value,comment:reason.value,stars:0,website:trap.value,token};
+ const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/contributions/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw Error(data.message||'Envoi impossible');status.textContent=data.message;form.reset();t.value=title;y.value=year;
+ }catch(err){status.textContent=err.message;}finally{window.turnstile.reset(widgetId);submit.disabled=false;}});
+}
+
+function openBioFilmDetail(credit){
+ const title=credit.title||credit.name||'Sans titre',type=credit.media_type==='tv'?'tv':'movie';
+ const id=/^\d+$/.test(String(credit.id||''))?String(credit.id):null,year=String(credit.date||'').slice(0,4);
+ const d=document.createElement('dialog');d.className='bio-film-detail';
+ const close=document.createElement('button');close.type='button';close.textContent='Retour à la filmographie';close.onclick=()=>d.close();
+ const h=document.createElement('h2');h.textContent=title;
+ const grid=document.createElement('div');grid.className='bio-film-layout';
+ let poster=null;
+ if(credit.poster_path){poster=document.createElement('img');poster.src='https://image.tmdb.org/t/p/w500'+credit.poster_path;poster.alt='Affiche de '+title;grid.append(poster);}
+ const info=document.createElement('div');info.append(para('Type',type==='tv'?'Série':'Film'),para('Année',year||'Non renseignée'));
+ const h3=document.createElement('h3');h3.textContent='Synopsis';info.append(h3);
+ const overview=document.createElement('p');overview.textContent=credit.overview||credit.description||'Synopsis non communiqué.';info.append(overview);
+ const propose=document.createElement('button');propose.type='button';propose.className='bio-propose';propose.textContent='Proposer ce '+(type==='tv'?'programme':'film');propose.onclick=()=>openBioProposal(title,year,type==='tv'?'Série':'Film');info.append(propose);
+ const add=document.createElement('a');add.className='bio-add';add.textContent='Vérification de la vidéothèque…';add.style.pointerEvents='none';add.style.opacity='.65';info.append(add);
+ grid.append(info);d.append(close,h,grid);document.body.append(d);d.addEventListener('close',()=>d.remove());d.showModal();
+ cataloguePromise.then(items=>{
+  if(!d.isConnected)return;
+  const present=trouverDansCatalogue(items,credit);
+  if(present && (present.summary||present.description))overview.textContent=present.summary||present.description;
+  if(present){
+   add.textContent='Déjà dans ma vidéothèque';add.removeAttribute('href');add.style.cssText='pointer-events:none;opacity:.7;';add.setAttribute('aria-disabled','true');propose.remove();
+   if(poster){poster.style.cursor='pointer';poster.title='Ouvrir la fiche dans CINEMALAND';poster.tabIndex=0;poster.setAttribute('role','link');const go=()=>location.href=(type==='tv'?'series.html':'films.html')+'?fiche='+encodeURIComponent(present.title)+'&annee='+encodeURIComponent(present.year||'');poster.onclick=go;poster.onkeydown=e=>{if(e.key==='Enter')go();};}
+   const hint=document.createElement('p');hint.textContent='Cliquez sur l’affiche pour consulter la fiche dans notre vidéothèque.';info.append(hint);
+  }else if(/^\d{4}$/.test(year)){
+   add.textContent='Ajouter à ma vidéothèque (administration)';add.href='https://videotheque-admin.michelmalandain.workers.dev/?'+new URLSearchParams({title,year,kind:type==='tv'?'Série':'Film'});add.target='_blank';add.rel='noopener noreferrer';add.style.pointerEvents='auto';add.style.opacity='1';
+  }else{add.textContent='Année manquante — ajout indisponible';propose.disabled=true;}
+ }).catch(err=>{add.textContent='Vérification du catalogue impossible';add.title=err.message;});
+ if(id)fetch('https://videotheque-admin.michelmalandain.workers.dev/details?type='+type+'&id='+encodeURIComponent(id)).then(r=>{if(!r.ok)throw Error('Détails indisponibles');return r.json()}).then(data=>{if(!d.isConnected)return;const detail=data.details||data;if(!trouverDansCatalogue(window.CINEMALAND_CATALOGUE||[],credit))overview.textContent=detail.overview||detail.summary||detail.description||overview.textContent;const genres=Array.isArray(detail.genres)?detail.genres.map(g=>g.name||g).join(', '):'';if(genres)info.insertBefore(para('Genres',genres),h3);}).catch(()=>{});
+}
+
+async function showBioFilms(name,identity){el('bioFilmsTitle').textContent='Filmographie de '+name;el('bioFilmsStatus').textContent='Chargement…';el('bioFilmsList').replaceChildren();el('bioFilms').showModal();try{const params=new URLSearchParams({role:bioRole==='Acteur'?'actor':'director'});if(identity?.id)params.set('id',identity.id);else if(identity?.imdb)params.set('imdb',identity.imdb);else throw Error('Identifiant TMDB ou IMDb absent de cette biographie.');const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/filmography?'+params);if(!r.ok){const error=await r.json();throw Error(error.message||'Service de filmographie indisponible');}const d=await r.json();if(!Array.isArray(d.credits))throw Error('Réponse du service incorrecte');el('bioFilmsStatus').textContent=d.credits.length+' films et séries';for(const x of d.credits){const row=document.createElement('button');row.type='button';row.className='bio-credit';row.title='Ouvrir la fiche de '+(x.title||'ce titre');row.onclick=()=>openBioFilmDetail(x);if(x.poster_path){const img=document.createElement('img');img.src='https://image.tmdb.org/t/p/w154'+x.poster_path;img.alt='Affiche de '+x.title;row.append(img)}const label=document.createElement('span');label.textContent=(x.title||'Sans titre')+' ('+(x.date||'').slice(0,4)+')';row.append(label);el('bioFilmsList').append(row)}}catch(e){el('bioFilmsStatus').textContent=e.message;}}
+el('bioForm').addEventListener('submit',async e=>{
+ e.preventDefault();const first=el('bioFirst').value.trim(),last=el('bioLast').value.trim();
+ el('bioStatus').textContent='Recherche en cours…';el('bioResults').replaceChildren();
+ try{
+  const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  const d=await r.json();if(!r.ok)throw Error(d.message||'Recherche indisponible');
+  el('bioStatus').textContent=d.people.length?'Sélectionnez la bonne personne :':'Aucune personne portant exactement ce nom sur TMDB.';
+  d.people.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.name;b.onclick=()=>showBio(p);el('bioResults').append(b)});
+ }catch(err){el('bioStatus').textContent=err.message}
+});
+(function(){
+  const ids=['totalTitres','totalRealisateurs','totalActeurs'];
+  function update(){
+    const items=window.CINEMALAND_CATALOGUE;
+    if(!Array.isArray(items))return;
+    const titles=new Set(),directors=new Set(),actors=new Set();
+    const add=(set,value)=>{if(typeof value==='string'&&value.trim())set.add(value.trim().toLocaleLowerCase('fr'));};
+    for(const item of items){
+      if(!item||!item.title)continue;
+      titles.add([item.kind||'',item.title,item.year||''].map(v=>String(v).trim().toLocaleLowerCase('fr')).join('|'));
+      for(const d of (Array.isArray(item.directors)?item.directors:[]))add(directors,typeof d==='string'?d:d?.name);
+      for(const a of (Array.isArray(item.cast)?item.cast:[]))add(actors,typeof a==='string'?a:a?.name);
+    }
+    [titles.size,directors.size,actors.size].forEach((n,i)=>document.getElementById(ids[i]).textContent=String(n).padStart(4,'0'));
+  }
+  update();
+})();
+</script>
+<script id="cinemaland-avis">
+(function(){
+const API='https://videotheque-admin.michelmalandain.workers.dev/reviews';
+const norm=x=>String(x||'').normalize('NFC').toLocaleLowerCase('fr');
+const key=x=>x.kind+'|'+x.year+'|'+norm(x.title);
+function draw(reviews){
+ if(!Array.isArray(window.CINEMALAND_CATALOGUE))return;
+ const entries=window.CINEMALAND_CATALOGUE;
+ if(document.getElementById('cards')){
+  document.querySelectorAll('#cards .card').forEach(card=>{
+   const title=card.querySelector('.card-title')?.textContent?.trim();
+   const x=entries.find(f=>f.title===title&&f.kind===(location.pathname.includes('series')?'Série':'Film'));
+   if(!x)return;
+   card.querySelector('.cinemaland-avis-box')?.remove();
+   const r=reviews[key(x)];if(!r)return;
+   const box=document.createElement('div');box.className='cinemaland-avis-box';box.style.cssText='grid-column:1/-1;padding:12px 16px;border-top:1px solid #c79b4a;color:#f6e8cf;white-space:pre-wrap';
+   const parts=[];if(r.watch)parts.push('🍿 À VOIR');if(r.stars)parts.push('⭐ Notre note : '+'★'.repeat(r.stars)+'☆'.repeat(5-r.stars));
+   box.textContent=parts.join('  ·  ')+(r.comment?'\n📝 Notre avis : '+r.comment:'');if(box.textContent.trim())card.append(box);
+  });
+ }
+ const count=document.getElementById('watch-count');if(count)count.textContent=Object.values(reviews).filter(x=>x.watch).length;
+}
+let last='';async function refresh(){try{const r=await fetch(API+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const d=await r.json();const json=JSON.stringify(d.reviews||{});if(json!==last){last=json;draw(d.reviews||{});}}catch{}}
+refresh();setInterval(refresh,30000);
+const cards=document.getElementById('cards');if(cards){new MutationObserver(()=>{if(last){try{draw(JSON.parse(last))}catch{}}}).observe(cards,{childList:true});}
+})();
+</script>
+<script>
+/* Ambiance discrète de circulation, synthétisée localement (aucun fichier audio externe).
+   Les navigateurs n'autorisent le son qu'après une interaction du visiteur. */
+let kursaalAudio=null, kursaalCirculation=null, kursaalTransitionEnCours=false;
+function demarrerAmbianceKursaal(){
+ if(kursaalAudio){if(kursaalAudio.state==='suspended')kursaalAudio.resume().catch(()=>{});return;}
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  const ctx=new AC();kursaalAudio=ctx;
+  const length=ctx.sampleRate*4,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+  let last=0;for(let i=0;i<length;i++){last=.985*last+.015*(Math.random()*2-1);data[i]=last;}
+  const src=ctx.createBufferSource();src.buffer=buffer;src.loop=true;
+  const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=470;
+  const gain=ctx.createGain();gain.gain.value=.09;
+  src.connect(filter).connect(gain).connect(ctx.destination);src.start();
+  kursaalCirculation=gain;
+  // Passage lent des voitures, en fond sonore très léger.
+  function passage(){if(!kursaalCirculation)return;const t=ctx.currentTime;gain.gain.cancelScheduledValues(t);gain.gain.setValueAtTime(.035,t);gain.gain.linearRampToValueAtTime(.13,t+2.2);gain.gain.linearRampToValueAtTime(.035,t+5.8);}
+  passage();setInterval(()=>{if(!document.body.classList.contains('inside'))passage()},8500);
+ }catch(e){/* Le navigateur peut bloquer l'audio. */}
+}
+function couperAmbianceKursaal(){if(kursaalAudio&&kursaalCirculation){const t=kursaalAudio.currentTime;kursaalCirculation.gain.cancelScheduledValues(t);kursaalCirculation.gain.setTargetAtTime(0,t,.35);}}
+function entrerKursaal(sansTransition=false){
+ if(sansTransition){couperAmbianceKursaal();document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0);return;}
+ if(kursaalTransitionEnCours)return;kursaalTransitionEnCours=true;
+ const rideau=document.getElementById('kursaal-transition');rideau.setAttribute('aria-hidden','false');
+ rideau.classList.add('visible');couperAmbianceKursaal();
+ setTimeout(()=>rideau.classList.add('fadeout'),1250);
+ setTimeout(()=>{document.body.classList.add('inside');document.getElementById('hall').classList.add('active');window.scrollTo(0,0);},1900);
+ setTimeout(()=>{rideau.classList.remove('visible','fadeout');rideau.setAttribute('aria-hidden','true');kursaalTransitionEnCours=false;},2700);
+}
+// Le son commence après le premier clic/toucher sur la façade (règle des navigateurs).
+/* Ambiance sonore de la façade reportée : aucun démarrage automatique. */
+function sortirKursaal(){document.body.classList.remove('inside');document.getElementById('hall').classList.remove('active');window.scrollTo(0,0)}
+function ouvrirRechercheHall(role){sortirKursaal();if(typeof openBioSearch==='function')openBioSearch(role==='actor'?'Acteur':'Réalisateur');}
+async function ouvrirPersonneDepuisLien(){
+ const p=new URLSearchParams(location.search);
+ if(p.get('hall')==='1') entrerKursaal(true);
+ const nom=p.get('personne');if(!nom)return;
+ const id=p.get('person_id');
+ if(id){await showBio({id,name:nom});return;}
+ const mots=nom.trim().split(/\s+/),last=mots.pop(),first=mots.join(' ');
+ try{
+  const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  const data=await r.json();
+  const choix=(data.people||[]).find(x=>x.name.toLocaleLowerCase('fr')===nom.toLocaleLowerCase('fr'));
+  if(choix) await showBio(choix);
+  else openBioSearch('Acteur');
+ }catch(e){openBioSearch('Acteur')}
+}
+window.addEventListener('load',ouvrirPersonneDepuisLien);
+function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
+(function(){
+ function majCompteursHall(){
+  const items=window.CINEMALAND_CATALOGUE;
+  if(!Array.isArray(items))return false;
+  const films=new Set(),series=new Set(),acteurs=new Set(),realisateurs=new Set();
+  const norm=x=>String(x||'').trim().toLocaleLowerCase('fr');
+  const add=(set,arr)=>{for(const p of Array.isArray(arr)?arr:[]){const n=norm(typeof p==='string'?p:p?.name);if(n)set.add(n)}};
+  for(const item of items){
+   if(!item||!item.title||!Array.isArray(item.production_countries)||!item.production_countries.includes('FR'))continue;
+   const cle=norm(item.title)+'|'+String(item.year||'');
+   const kind=norm(item.kind||item.type);
+   if(kind==='film'||kind==='movie')films.add(cle);
+   else if(['série','serie','series','tv'].includes(kind))series.add(cle);
+   add(acteurs,item.cast||item.actors);
+   add(realisateurs,item.directors);
+   add(realisateurs,item.creators);
+  }
+  document.getElementById('hallFilms').textContent=films.size.toLocaleString('fr-FR');
+  document.getElementById('hallSeries').textContent=series.size.toLocaleString('fr-FR');
+  document.getElementById('hallActeurs').textContent=acteurs.size.toLocaleString('fr-FR');
+  document.getElementById('hallRealisateurs').textContent=realisateurs.size.toLocaleString('fr-FR');
+  return true;
+ }
+ if(!majCompteursHall()){let n=0;const timer=setInterval(()=>{if(majCompteursHall()||++n>15)clearInterval(timer)},500)}
+})();
+</script>
+</body>
+</html>
