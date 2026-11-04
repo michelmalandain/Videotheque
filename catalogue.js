@@ -2710,5 +2710,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Jeanne"
       }
     ]
+  },
+  {
+    "title": "Renoir",
+    "kind": "Film",
+    "year": 2012,
+    "period": "2012",
+    "genre": "Drame, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/renoir.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Renoir",
+    "summary": "1915. Sur la Côte d’Azur. Au crépuscule de sa vie, Auguste Renoir est éprouvé par la perte de son épouse, les douleurs du grand âge, et les mauvaises nouvelles venues du front : son fils Jean est blessé… Mais une jeune fille, Andrée, apparue dans sa vie comme un miracle, va insuffler au vieil homme une énergie qu’il n’attendait plus. Éclatante de vitalité, rayonnante de beauté, Andrée sera le dernier modèle du peintre, sa source de jouvence. Lorsque Jean, revenu blessé de la guerre, vient passer sa convalescence dans la maison familiale, il découvre à son tour, fasciné, celle qui est devenue l’astre roux de la galaxie Renoir. Et dans cet éden Méditerranéen, Jean, malgré l’opposition ronchonne du vieux peintre, va aimer celle qui, animée par une volonté désordonnée, insaisissable, fera de lui, jeune officier velléitaire et bancal, un apprenti cinéaste…",
+    "directors": [
+      "Gilles Bourdos"
+    ],
+    "cast": [
+      {
+        "name": "Michel Bouquet",
+        "character": "Auguste Renoir"
+      },
+      {
+        "name": "Christa Théret",
+        "character": "Andrée Heuschling"
+      },
+      {
+        "name": "Vincent Rottiers",
+        "character": "Jean Renoir"
+      },
+      {
+        "name": "Thomas Doret",
+        "character": "Coco Renoir"
+      },
+      {
+        "name": "Romane Bohringer",
+        "character": "Gabrielle"
+      }
+    ]
   }
 ];
