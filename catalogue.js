@@ -1146,7 +1146,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Film",
     "year": 2025,
     "period": "2025",
-    "genre": "Action, Animation, Fantastique, Crime, Thriller",
+    "genre": "Animation, Action, Crime",
     "description": "Description à compléter.",
     "poster": "affiches/chapitre-perdu-la-vengeance-de-yuki.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Chapitre%20perdu%20%3A%20La%20vengeance%20de%20Yuki",
@@ -2641,6 +2641,38 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "production_countries": [
       "FR"
+    ]
+  },
+  {
+    "title": "The Impressionists",
+    "kind": "Série",
+    "year": 2006,
+    "period": "2006",
+    "genre": "Documentaire, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/the-impressionists.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=The%20Impressionists",
+    "cast": [
+      {
+        "name": "Julian Glover",
+        "character": "Claude Monet - older"
+      },
+      {
+        "name": "Richard Armitage",
+        "character": "Claude Monet"
+      },
+      {
+        "name": "Sebastian Armesto",
+        "character": "Art Critic"
+      },
+      {
+        "name": "Charlie Condou",
+        "character": "Renoir"
+      },
+      {
+        "name": "Aden Gillett",
+        "character": "Degas"
+      }
     ]
   }
 ];
