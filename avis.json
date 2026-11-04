@@ -196,5 +196,14 @@
     "comment": "",
     "watch": true,
     "updated": "2026-11-04T09:14:21.528Z"
+  },
+  "Film|2012|berthe morisot": {
+    "title": "Berthe Morisot",
+    "kind": "Film",
+    "year": 2012,
+    "stars": 0,
+    "comment": "",
+    "watch": true,
+    "updated": "2026-11-04T09:15:46.564Z"
   }
 }
