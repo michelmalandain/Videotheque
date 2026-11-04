@@ -2712,6 +2712,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Laure Lapeyre",
         "character": "Jeanne"
       }
+    ],
+    "production_countries": [
+      "GB"
     ]
   },
   {
