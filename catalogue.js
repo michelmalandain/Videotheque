@@ -2674,5 +2674,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Degas"
       }
     ]
+  },
+  {
+    "title": "Berthe Morisot",
+    "kind": "Film",
+    "year": 2012,
+    "period": "2012",
+    "genre": "Drame, Téléfilm, Histoire",
+    "description": "Description à compléter.",
+    "poster": "affiches/berthe-morisot.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Berthe%20Morisot",
+    "summary": "1865. A 25 ans, Berthe Morisot rêve de vivre de sa peinture, de ne jamais se marier, et de toujours rester avec sa sœur Edma. Ses parents ne voient pas leur existence sous le même angle et lui façonnent déjà un destin plus conforme à l’époque. Berthe se rebelle et sa rencontre avec Manet va bouleverser sa pensée, sa relation avec sa sœur, questionner son rapport à la peinture et son rapport au monde. Le destin d’une femme qui deviendra la première peintre professionnelle et la première impressionniste.",
+    "directors": [
+      "Caroline Champetier"
+    ],
+    "cast": [
+      {
+        "name": "Marine Delterme",
+        "character": "Berthe Morisot"
+      },
+      {
+        "name": "Malik Zidi",
+        "character": "Edouard Manet"
+      },
+      {
+        "name": "Alice Butaud",
+        "character": "Edma Morisot"
+      },
+      {
+        "name": "Bérangère Bonvoisin",
+        "character": "Cornélie"
+      },
+      {
+        "name": "Laure Lapeyre",
+        "character": "Jeanne"
+      }
+    ]
   }
 ];
