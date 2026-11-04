@@ -2745,6 +2745,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Romane Bohringer",
         "character": "Gabrielle"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];
