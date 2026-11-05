@@ -33,6 +33,10 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .borne-arcade:hover,.borne-arcade:focus-visible{outline:3px solid #fff0ae;outline-offset:3px;box-shadow:0 0 25px 10px #3de8ff,inset 0 0 28px #fff5a6;background:#34dcff55;animation:none}
 @keyframes borne-pulse{0%,100%{box-shadow:0 0 9px 2px #21cfff88,inset 0 0 12px #2bdfff88}50%{box-shadow:0 0 24px 8px #21cfffdd,inset 0 0 26px #2bdfffcc}}
 @media(prefers-reduced-motion:reduce){.borne-arcade{animation:none}}
+/* Deux accès discrets au-dessus des compteurs, sans icônes. */
+.comptoir-acces{position:absolute;left:38.1%;top:73.5%;width:23.8%;height:5.1%;z-index:8;display:flex;gap:2%;align-items:stretch}
+.comptoir-acces a{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;color:#ffe5a6;background:linear-gradient(180deg,#246a49,#0b3b2b 65%,#082b21);border:1px solid #d4aa61;border-radius:999px;box-shadow:0 2px 7px #000a,inset 0 1px 4px #e9cf7b55;font:700 clamp(7px,.85vw,14px) Georgia,serif;white-space:nowrap}
+.comptoir-acces a:hover,.comptoir-acces a:focus-visible{background:linear-gradient(#31835c,#12523b);box-shadow:0 0 10px #e7c779;outline:1px solid #ffe2a4}
 </style>
 </head>
 <body>
@@ -41,6 +45,10 @@ body{display:flex;justify-content:center;align-items:flex-start}
 <a class="porte porte-films" href="films-mondial.html" aria-label="Films du cinéma mondial" title="FILMS MONDIAUX">Films mondiaux</a>
 <a class="porte porte-series" href="series-mondial.html" aria-label="Séries du cinéma mondial" title="SÉRIES MONDIALES">Séries mondiales</a>
 <a class="borne-arcade" href="arcade.html" aria-label="Entrer dans la salle d’arcade" title="SALLE D’ARCADE">Salle d’arcade</a>
+<nav class="comptoir-acces" aria-label="Accès aux personnes du cinéma mondial">
+ <a href="acteurs-mondial.html">ACTEURS</a>
+ <a href="realisateurs-mondial.html">RÉALISATEURS</a>
+</nav>
 <section class="comptoir-compteurs" aria-label="Compteurs du cinéma mondial">
  <div class="comptoir-compteur">FILMS<strong id="cm-films">—</strong></div>
  <div class="comptoir-compteur">SÉRIES<strong id="cm-series">—</strong></div>
