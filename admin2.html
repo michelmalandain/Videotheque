@@ -1,10 +1,10 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Administration 2 — CINEMALAND</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#12533b,#062a20 58%,#031811);color:#f9e9c9;font:16px Georgia,serif}header{text-align:center;padding:22px 12px;border-bottom:2px solid #d8b268}h1{font-size:clamp(26px,3vw,42px);color:#f9dba0;margin:0}header p{margin:8px 0 0;color:#e5c88f}main{max-width:1700px;margin:22px auto;padding:0 16px}.panels{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(350px,1.2fr) minmax(350px,1.2fr);gap:14px;align-items:start}.panel{min-width:0;background:linear-gradient(145deg,#07503a,#043224 65%,#03251d);border:3px double #d6b06a;border-radius:13px;padding:18px;box-shadow:0 8px 26px #0008}.panel h2{text-align:center;font-size:clamp(19px,1.5vw,26px);margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid #d8b268;color:#ffe2a7}label{display:block;margin:12px 0 5px;color:#ffe0a3}input,select,textarea{width:100%;min-width:0;padding:9px 10px;border:1px solid #c99e5b;border-radius:4px;background:#f7e8ca;color:#1d241e;font:15px Georgia,serif}textarea{min-height:105px;resize:vertical}button{cursor:pointer;background:linear-gradient(#16734f,#06472e);color:#ffe5b0;border:2px solid #e1b970;border-radius:6px;padding:11px 15px;font:bold 15px Georgia,serif;margin-top:14px;width:100%}button:hover{filter:brightness(1.2)}.note{font-size:13px;line-height:1.45;color:#e3cda7}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}.field{min-width:0}.field.wide{grid-column:1/-1}.field label{font-size:14px;margin:6px 0 4px}.field img{display:block;max-width:120px;max-height:140px;margin-top:7px}.hint{font-size:12px;color:#dfc99f}.editor{display:none;border-top:1px solid #9d854c;margin-top:20px;padding-top:10px}.editor h3{color:#ffdda0;overflow-wrap:anywhere}#msg{white-space:pre-wrap;color:#ffe5ad;font-size:14px;min-height:35px}#remember{width:auto;margin-right:8px;accent-color:#14895d}.remember-label{display:flex;align-items:center;font-size:14px}footer{text-align:center;padding:25px}footer a{color:#f5d18c}.field input[readonly]{background:#bcb9aa}@media(max-width:1100px){.panels{grid-template-columns:1fr 1fr}.panel:first-child{grid-column:1/-1}}@media(max-width:680px){.panels{grid-template-columns:1fr}.panel:first-child{grid-column:auto}.fields{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#12533b,#062a20 58%,#031811);color:#f9e9c9;font:16px Georgia,serif}header{text-align:center;padding:22px 12px;border-bottom:2px solid #d8b268}h1{font-size:clamp(26px,3vw,42px);color:#f9dba0;margin:0}header p{margin:8px 0 0;color:#e5c88f}main{max-width:1700px;margin:22px auto;padding:0 16px}.panels{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(350px,1.2fr) minmax(350px,1.2fr);gap:14px;align-items:start}.panel{min-width:0;background:linear-gradient(145deg,#07503a,#043224 65%,#03251d);border:3px double #d6b06a;border-radius:13px;padding:18px;box-shadow:0 8px 26px #0008}.panel h2{text-align:center;font-size:clamp(19px,1.5vw,26px);margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid #d8b268;color:#ffe2a7}label{display:block;margin:12px 0 5px;color:#ffe0a3}input,select,textarea{width:100%;min-width:0;padding:9px 10px;border:1px solid #c99e5b;border-radius:4px;background:#f7e8ca;color:#1d241e;font:15px Georgia,serif}textarea{min-height:105px;resize:vertical}button{cursor:pointer;background:linear-gradient(#16734f,#06472e);color:#ffe5b0;border:2px solid #e1b970;border-radius:6px;padding:11px 15px;font:bold 15px Georgia,serif;margin-top:14px;width:100%}button:hover{filter:brightness(1.2)}.note{font-size:13px;line-height:1.45;color:#e3cda7}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}.field{min-width:0}.field.wide{grid-column:1/-1}.field label{font-size:14px;margin:6px 0 4px}.field img{display:block;max-width:120px;max-height:140px;margin-top:7px}.hint{font-size:12px;color:#dfc99f}.editor{display:none;border-top:1px solid #9d854c;margin-top:20px;padding-top:10px}.editor h3{color:#ffdda0;overflow-wrap:anywhere}#msg{white-space:pre-wrap;color:#ffe5ad;font-size:14px;min-height:35px}#remember{width:auto;margin-right:8px;accent-color:#14895d}.remember-label{display:flex;align-items:center;font-size:14px}footer{text-align:center;padding:25px}footer a{color:#f5d18c}.field input[readonly]{background:#bcb9aa}.field-actions{display:flex;align-items:center;gap:7px}.field-actions>input,.field-actions>select,.field-actions>textarea{flex:1;min-width:0}.field-actions>button{width:auto;flex:none;margin:0;padding:9px 12px;font-size:12px}.field-actions>button:disabled{opacity:.5}.field-status{font-size:12px;color:#ffe0a3;min-height:14px}.list-editor{display:grid;gap:6px}.list-row{display:flex;gap:6px;align-items:center}.list-row input,.list-row select{flex:1}.list-row button{width:auto;margin:0;padding:6px 10px}.list-add{display:flex;gap:6px}.list-add input,.list-add select{flex:1}.list-add button{width:auto;margin:0}@media(max-width:1100px){.panels{grid-template-columns:1fr 1fr}.panel:first-child{grid-column:1/-1}}@media(max-width:680px){.panels{grid-template-columns:1fr}.panel:first-child{grid-column:auto}.fields{grid-template-columns:1fr}}
 </style></head><body><header><h1>CINEMALAND — ADMINISTRATION 2</h1><p>Correction des données enregistrées</p></header><main><div class="panels">
 <section class="panel"><h2>ACCÈS ADMINISTRATEUR</h2><label for="pass">Mot de passe administrateur</label><input type="password" id="pass" autocomplete="off"><label class="remember-label"><input type="checkbox" id="remember">Mémoriser sur cet ordinateur</label><p class="note">Attention : la mémorisation conserve le mot de passe dans ce navigateur. À éviter sur un ordinateur partagé.</p><p id="msg">Saisissez votre mot de passe, puis chargez une catégorie.</p></section>
-<section class="panel"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><label for="film-pick">Sélectionner une fiche</label><select id="film-pick"><option>Charger les titres d'abord</option></select><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><button id="film-save">ENREGISTRER LES MODIFICATIONS</button></div></section>
-<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><button id="load-people">CHARGER LES PERSONNES</button><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><label for="people-pick">Sélectionner une fiche</label><select id="people-pick"><option>Charger les personnes d'abord</option></select><p class="note">Le service actuel fournit les corrections de personnes déjà enregistrées, pas nécessairement la liste complète des acteurs et réalisateurs.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><button id="people-save">ENREGISTRER LES MODIFICATIONS</button></div></section>
+<section class="panel"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><label for="film-pick">Sélectionner une fiche</label><select id="film-pick"><option>Charger les titres d'abord</option></select><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
+<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><button id="load-people">CHARGER LES PERSONNES</button><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><label for="people-pick">Sélectionner une fiche</label><select id="people-pick"><option>Charger les personnes d'abord</option></select><p class="note">Le service actuel fournit les corrections de personnes déjà enregistrées, pas nécessairement la liste complète des acteurs et réalisateurs.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
 </div><footer><a href="./">RETOUR AU CINÉMA</a></footer></main><script>
 const $=id=>document.getElementById(id);
 const WORKER='https://videotheque-admin.michelmalandain.workers.dev';
@@ -23,18 +23,7 @@ function fill(){const select=$(kind()==='people'?'people-pick':'film-pick');sele
  if(select.options.length){if(kind()==='people')openPerson(select.value);else openEntry(Number(select.value))}
  else msg(kind()==='people'?'Aucune correction de personne enregistrée dans la base.':'Aucune fiche dans cette catégorie.');
 }
-// Recherche films : reconstruire la liste (option.hidden n'est pas fiable dans les listes natives).
-$('film-search').oninput=()=>{
-  if(activeGroup==='people')setGroup($('media-kind').value);
-  const q=$('film-search').value.trim().toLocaleLowerCase('fr');
-  const select=$('film-pick');select.replaceChildren();
-  entries.map((v,i)=>({v,i})).filter(({v})=>v.kind===$('media-kind').value && (v.title||'').toLocaleLowerCase('fr').includes(q))
-    .sort((a,b)=>alphabetique(a.v.title||'',b.v.title||''))
-    .forEach(({v,i})=>select.add(new Option((v.title||'Sans titre')+' ('+(v.year||'?')+')',String(i))));
-  if(select.options.length){select.selectedIndex=0;openEntry(Number(select.value));}
-  else{$('film-editor').style.display='none';index=-1;}
-};
-$('people-search').oninput=()=>{const q=$('people-search').value.toLocaleLowerCase('fr');for(const opt of $('people-pick').options)opt.hidden=!opt.text.toLocaleLowerCase('fr').includes(q)};
+$('film-search').oninput=$('people-search').oninput=()=>{const q=$(kind()==='people'?'people-search':'film-search').value.toLocaleLowerCase('fr');for(const opt of $(kind()==='people'?'people-pick':'film-pick').options)opt.hidden=!opt.text.toLocaleLowerCase('fr').includes(q)};
 $('film-pick').onchange=()=>{activeGroup=$('media-kind').value;openEntry(Number($('film-pick').value))};$('people-pick').onchange=()=>{activeGroup='people';openPerson($('people-pick').value)};
 
 function openEntry(i){if(!Number.isInteger(i)||!entries[i])return;index=i;const x=entries[i];$('film-heading').textContent=(x.title||'Fiche')+' — '+x.kind;render(x)}
@@ -43,33 +32,106 @@ const labels={title:'Titre',original_title:'Titre original',name:'Nom affiché',
 const human=k=>labels[k]||k.replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
 const imageKey=k=>/(poster|profile|backdrop|photo|image|affiche|portrait)/i.test(k);
 const longKey=k=>/(description|overview|summary|synopsis|biography|comment|cast|credits|awards)/i.test(k);
-function render(data){original=structuredClone(data);controls=[];const root=$(kind()==='people'?'people-fields':'film-fields');root.replaceChildren();
- function field(obj,key,path){const val=obj[key],wrap=document.createElement('div');wrap.className='field'+(longKey(key)||Array.isArray(val)||val&&typeof val==='object'?' wide':'');const label=document.createElement('label');label.textContent=human(key);wrap.append(label);
- if(val!==null&&typeof val==='object'&&!Array.isArray(val)){const sub=document.createElement('div');sub.className='fields';wrap.append(sub);for(const k of Object.keys(val))sub.append(field(val,k,[...path,key]));return wrap}
- const locked=lockedKeys.includes(key);if(locked)return wrap;const complex=Array.isArray(val);const multiline=complex||longKey(key)||typeof val==='string'&&val.length>140;
- const choices={kind:['Film','Série'],nationality:['Française','Belge','Suisse','Canadienne','Américaine','Britannique','Italienne','Espagnole','Allemande','Autre'],status:['Présent dans la vidéothèque','À voir','Absent']};const useSelect=!multiline&&typeof val==='string'&&choices[key]?.includes(val);const input=document.createElement(multiline?'textarea':useSelect?'select':'input');if(useSelect){for(const option of choices[key])input.add(new Option(option,option))}else if(!multiline)input.type=typeof val==='number'?'number':'text';input.value=complex?JSON.stringify(val,null,2):val==null?'':String(val);input.readOnly=locked;input.dataset.key=key;wrap.append(input);
- if(complex){const note=document.createElement('div');note.className='hint';note.textContent='Liste structurée : conservez les crochets et les virgules.';wrap.append(note)}
- if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu de l’image';img.hidden=true;wrap.append(img);const update=()=>{let u=input.value.trim();if(u.startsWith('/'))u='https://image.tmdb.org/t/p/w500'+u;img.hidden=!/^https:\/\//i.test(u);if(!img.hidden)img.src=u};input.addEventListener('input',update);update()}
- controls.push({path:[...path,key],input,val,complex,locked});return wrap}
- for(const key of Object.keys(data))root.append(field(data,key,[]));$(kind()==='people'?'people-editor':'film-editor').style.display='block'}
-function build(){const out=structuredClone(original);for(const c of controls){let dest=out;for(const k of c.path.slice(0,-1))dest=dest[k];const key=c.path.at(-1);if(c.locked)continue;const raw=c.input.value;
- if(c.complex){try{const v=JSON.parse(raw);if(!Array.isArray(v))throw Error();dest[key]=v}catch{throw Error('Liste invalide : '+human(key))}}
- else if(typeof c.val==='number'){if(raw.trim()==='')throw Error('Valeur numérique vide : '+human(key));const n=Number(raw);if(!Number.isFinite(n))throw Error('Nombre invalide : '+human(key));dest[key]=n}
- else if(typeof c.val==='boolean')dest[key]=raw.toLowerCase()==='true';
- else if(c.val===null)dest[key]=raw.trim()===''?null:raw;
- else dest[key]=raw}
- return out}
-async function saveCurrent(){try{const data=build();if(kind()==='catalogue'){const old=entries[index];for(const k of lockedKeys)if(JSON.stringify(old[k]??null)!==JSON.stringify(data[k]??null))throw Error('Identifiant TMDB verrouillé : '+k)}else for(const k of ['id','tmdb_id','tmdbId'])if(k in data)throw Error('Identifiant TMDB verrouillé.');if(!confirm('Enregistrer cette correction dans GitHub ?'))return;msg('Enregistrement…');await api('POST',kind(),{sha,index,id:personId,data});msg('Correction enregistrée. Rechargez la base avant une autre modification.');$('film-editor').style.display='none';$('people-editor').style.display='none'}catch(e){msg(e.message)}}
+const COUNTRIES=['France','Belgique','Suisse','Canada','États-Unis','Royaume-Uni','Italie','Espagne','Allemagne','Australie','Autriche','Brésil','Chine','Corée du Sud','Danemark','Grèce','Inde','Irlande','Japon','Luxembourg','Maroc','Mexique','Norvège','Pays-Bas','Pologne','Portugal','Suède','Turquie'];
+let saving=false;
+function getAt(root,path){return path.reduce((obj,k)=>obj[k],root)}
+function putAt(root,path,value){let obj=root;for(const k of path.slice(0,-1))obj=obj[k];obj[path.at(-1)]=value}
+function copyValue(x){return structuredClone(x)}
+function normalizeCountry(x){return typeof x==='string'?x:(x?.name||x?.iso_3166_1||'')}
+function render(data){
+ original=structuredClone(data);controls=[];
+ const root=$(kind()==='people'?'people-fields':'film-fields');root.replaceChildren();
+ function field(obj,key,path){
+  const val=obj[key],full=[...path,key],locked=lockedKeys.includes(key);
+  if(locked)return document.createDocumentFragment();
+  const wrap=document.createElement('div');wrap.className='field'+(longKey(key)||Array.isArray(val)||val&&typeof val==='object'?' wide':'');
+  const label=document.createElement('label');label.textContent=human(key);wrap.append(label);
+  if(val!==null&&typeof val==='object'&&!Array.isArray(val)){
+   const sub=document.createElement('div');sub.className='fields';wrap.append(sub);
+   for(const k of Object.keys(val))sub.append(field(val,k,full));return wrap;
+  }
+  const actions=document.createElement('div');actions.className='field-actions';wrap.append(actions);
+  let readValue;
+  if(Array.isArray(val)&&(key==='production_countries'||key==='cast'||key==='directors'||key==='director')){
+   const editor=document.createElement('div');editor.className='list-editor';actions.append(editor);actions.style.display='block';
+   let current=copyValue(val);
+   function redraw(){editor.replaceChildren();
+    current.forEach((item,i)=>{
+     const row=document.createElement('div');row.className='list-row';
+     const input=document.createElement('input');input.value=key==='production_countries'?normalizeCountry(item):(typeof item==='string'?item:(item?.name||''));
+     input.setAttribute('aria-label',human(key)+' '+(i+1));
+     input.oninput=()=>{if(typeof current[i]==='string')current[i]=input.value;else if(current[i]&&typeof current[i]==='object'){current[i]={...current[i],name:input.value}}};
+     const remove=document.createElement('button');remove.type='button';remove.textContent='RETIRER';remove.onclick=()=>{current.splice(i,1);redraw()};row.append(input,remove);editor.append(row);
+    });
+    const add=document.createElement('div');add.className='list-add';
+    const input=key==='production_countries'?document.createElement('select'):document.createElement('input');
+    if(key==='production_countries'){
+      input.add(new Option('Choisir un pays',''));
+      for(const country of COUNTRIES)input.add(new Option(country,country));
+    }else input.placeholder='Nom de la personne à ajouter';
+    const button=document.createElement('button');button.type='button';button.textContent='AJOUTER';button.onclick=()=>{
+      const name=input.value.trim();if(!name)return;
+      const sample=val.find(x=>x&&typeof x==='object');
+      if(sample){const item={...sample};for(const k of Object.keys(item))if(k==='name')item[k]=name;else if(k==='character')item[k]='';else if(['id','tmdb_id','tmdbId'].includes(k))item[k]=null;
+       if(key==='production_countries'&&'iso_3166_1'in item){const codes={'France':'FR','Belgique':'BE','Suisse':'CH','Canada':'CA','États-Unis':'US','Royaume-Uni':'GB','Italie':'IT','Espagne':'ES','Allemagne':'DE'};item.iso_3166_1=codes[name]||''}
+       current.push(item);
+      }else current.push(name);
+      redraw();
+    };add.append(input,button);editor.append(add);
+   }
+   redraw();readValue=()=>copyValue(current);
+  }else{
+   const multiline=Array.isArray(val)||longKey(key)||typeof val==='string'&&val.length>140;
+   const choices={kind:['Film','Série'],nationality:['Française','Belge','Suisse','Canadienne','Américaine','Britannique','Italienne','Espagnole','Allemande','Autre']};
+   const useSelect=!multiline&&typeof val==='string'&&choices[key]?.includes(val);
+   const input=document.createElement(multiline?'textarea':useSelect?'select':'input');
+   if(useSelect){for(const choice of choices[key])input.add(new Option(choice,choice))}
+   else if(!multiline)input.type=typeof val==='number'?'number':'text';
+   input.value=Array.isArray(val)?JSON.stringify(val,null,2):val==null?'':String(val);actions.append(input);
+   readValue=()=>{const raw=input.value;
+    if(Array.isArray(val)){let parsed;try{parsed=JSON.parse(raw)}catch{throw Error('Liste invalide : '+human(key))}if(!Array.isArray(parsed))throw Error('Liste invalide : '+human(key));return parsed}
+    if(typeof val==='number'){if(raw.trim()===''||!Number.isFinite(Number(raw)))throw Error('Nombre invalide : '+human(key));return Number(raw)}
+    if(typeof val==='boolean')return raw.toLowerCase()==='true';
+    return val===null&&raw.trim()===''?null:raw;
+   };
+   if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
+  }
+  const save=document.createElement('button');save.type='button';save.textContent='VALIDER';actions.append(save);
+  const status=document.createElement('div');status.className='field-status';wrap.append(status);
+  save.onclick=async()=>{
+   if(saving)return;
+   try{
+    const value=readValue();
+    const before=getAt(original,full);
+    if(JSON.stringify(before)===JSON.stringify(value)){status.textContent='Aucun changement.';return}
+    const group=kind(),currentIndex=index,currentId=personId;
+    const data=copyValue(original);putAt(data,full,value);
+    if(!confirm('Enregistrer uniquement « '+human(key)+' » dans CINEMALAND ?'))return;
+    saving=true;save.disabled=true;status.textContent='Enregistrement…';
+    await api('POST',group,{sha,index:currentIndex,id:currentId,data});
+    // Le Worker modifie le SHA du catalogue : le recharger avant toute autre correction.
+    putAt(original,full,copyValue(value));
+    status.textContent='Enregistré. Rechargez la base avant une autre correction.';
+    msg('« '+human(key)+' » enregistré. Rechargez la base pour continuer.');
+    root.querySelectorAll('.field-actions>button').forEach(b=>b.disabled=true);
+   }catch(e){status.textContent='Erreur : '+e.message;msg('Erreur : '+e.message)}
+   finally{saving=false;if(!status.textContent.startsWith('Enregistré'))save.disabled=false}
+  };
+  return wrap;
+ }
+ for(const key of Object.keys(data))root.append(field(data,key,[]));
+ $(kind()==='people'?'people-editor':'film-editor').style.display='block';
+}
 const states={catalogue:null,people:null};
-function setGroup(group){activeGroup=group;const k=kind();const s=states[k];entries=s?.entries||[];sha=s?.sha||null;people=k==='people'?entries:{};index=-1;personId='';original=null;controls=[];$('film-editor').style.display='none';$('people-editor').style.display='none';if(s){fill();if(k==='catalogue'&&$('film-search').value.trim())$('film-search').oninput();}}
+function setGroup(group){activeGroup=group;const k=kind();const s=states[k];entries=s?.entries||[];sha=s?.sha||null;people=k==='people'?entries:{};index=-1;personId='';original=null;controls=[];$('film-editor').style.display='none';$('people-editor').style.display='none';if(s)fill();}
 async function loadGroup(group){setGroup(group);try{msg('Chargement de la base…');const data=await api('GET',kind());states[kind()]={entries:data.entries,sha:data.sha};setGroup(group);msg(kind()==='people'?'Corrections de personnes chargées.':'Catalogue chargé : '+entries.length+' titres.')}catch(e){msg('Erreur : '+e.message)}}
 $('media-kind').onchange=()=>{setGroup($('media-kind').value);};
 $('load-films').onclick=()=>loadGroup($('media-kind').value);
 $('load-people').onclick=()=>loadGroup('people');
 $('film-search').addEventListener('focus',()=>{if(activeGroup==='people')setGroup($('media-kind').value)});
 $('people-search').addEventListener('focus',()=>{if(activeGroup!=='people')setGroup('people')});
-$('film-save').onclick=()=>{if(activeGroup!=='people')saveCurrent();else msg('Sélectionnez une fiche film.')};
-$('people-save').onclick=()=>{if(activeGroup==='people')saveCurrent();else msg('Sélectionnez une personne.')};
+
+
 const storageKey='cinemaland-admin2-password';
 $('pass').value=localStorage.getItem(storageKey)||'';
 $('remember').checked=!!localStorage.getItem(storageKey);
