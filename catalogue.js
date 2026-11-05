@@ -1247,7 +1247,7 @@ window.CINEMALAND_CATALOGUE = [
       }
     ],
     "production_countries": [
-      "Irlande"
+      "France"
     ]
   },
   {
