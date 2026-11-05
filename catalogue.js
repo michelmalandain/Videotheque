@@ -2823,5 +2823,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Disturbing man / Youri / Émile Gravier"
       }
     ]
+  },
+  {
+    "title": "Adieu les cons",
+    "kind": "Film",
+    "year": 2020,
+    "period": "2020",
+    "genre": "Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/adieu-les-cons.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Adieu%20les%20cons",
+    "summary": "Lorsque Suze Trappet apprend à 43 ans qu'elle est sérieusement malade, elle décide de partir à la recherche de l'enfant qu'elle a été forcée d'abandonner quand elle avait 15 ans. Sa quête administrative va lui faire croiser JB, quinquagénaire en plein burn out, et M. Blin, archiviste aveugle d'un enthousiasme impressionnant.  À eux trois, ils se lancent dans une quête aussi spectaculaire qu'improbable.",
+    "directors": [
+      "Albert Dupontel"
+    ],
+    "cast": [
+      {
+        "name": "Virginie Efira",
+        "character": "Suze Trappet"
+      },
+      {
+        "name": "Albert Dupontel",
+        "character": "Jean-Baptiste 'JB' Cuchas"
+      },
+      {
+        "name": "Nicolas Marié",
+        "character": "Serge Blin"
+      },
+      {
+        "name": "Jackie Berroyer",
+        "character": "Docteur Lint"
+      },
+      {
+        "name": "Philippe Uchan",
+        "character": "Mr. Kurtzmann"
+      }
+    ]
   }
 ];
