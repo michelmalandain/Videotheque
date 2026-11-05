@@ -1171,4 +1171,57 @@ function openBioProposal(title,year,kind){
 })();
 </script>
 
+
+<style id="cm-affiches-locales-detail">
+#film-dialog .fiche-hero{position:relative;isolation:isolate}
+#film-dialog .cm-affiche-fiche{position:absolute;left:30px;top:22px;width:125px;max-height:185px;object-fit:contain;border:2px solid #d9ad61;border-radius:5px;box-shadow:0 5px 20px #000a;z-index:1}
+#film-dialog .fiche-hero:has(.cm-affiche-fiche){padding-left:180px}
+#film-dialog .fiche-hero.cm-fond-affiche{background-position:center 35%;}
+@media(max-width:600px){#film-dialog .cm-affiche-fiche{left:15px;top:15px;width:78px;max-height:115px}#film-dialog .fiche-hero:has(.cm-affiche-fiche){padding-left:110px}}
+</style>
+<script id="cm-affiches-locales-detail-js">
+/* Utilise les affiches du catalogue (y compris celles du dossier affiches/)
+   dans la fiche détaillée, sans modifier le Worker ni les données. */
+(function(){
+ const dlg=document.getElementById('film-dialog');
+ const hero=dlg?.querySelector('.fiche-hero');
+ if(!hero||typeof window.openFilm!=='function')return;
+ let sequence=0;
+ function imageUrl(path,size){
+  if(!path)return '';
+  const p=String(path).trim();
+  if(/^https?:\/\//i.test(p))return p;
+  if(p.startsWith('//'))return location.protocol+p;
+  if(p.startsWith('/'))return 'https://image.tmdb.org/t/p/'+size+p;
+  if(/^(?:\.\/)?affiches\//i.test(p))return new URL(p,location.href).href;
+  if(/^(?:\.\/)?[\wÀ-ÿ-]+\.(?:png|jpe?g|webp)$/i.test(p))return new URL(p,location.href).href;
+  return '';
+ }
+ const old=window.openFilm;
+ window.openFilm=function(x){
+  const ticket=++sequence;
+  old.apply(this,arguments);
+  hero.classList.remove('cm-fond-affiche');
+  const raw=x.poster||x.poster_url||x.posterPath||x.poster_path;
+  const src=imageUrl(raw,'w500');
+  if(!src)return;
+  let poster=hero.querySelector('.cm-affiche-fiche');
+  if(!poster){poster=document.createElement('img');poster.className='cm-affiche-fiche';hero.prepend(poster)}
+  poster.src=src;
+  poster.alt='Affiche de '+(x.title||'');
+  poster.onerror=()=>{if(ticket===sequence)poster.remove()};
+  const hasBackdrop=!!(x.backdrop_path||x.backdrop||x.backdropPath||x.backdrop_url);
+  if(hasBackdrop)return;
+  const fallback=new Image();
+  fallback.onload=()=>{
+   if(ticket!==sequence||!dlg.open)return;
+   // Un fond TMDB récupéré entre-temps reste prioritaire.
+   if(hero.style.getPropertyValue('--fiche-image'))return;
+   hero.style.setProperty('--fiche-image','url("'+src.replace(/["\\]/g,'')+'")');
+   hero.classList.add('cm-fond-affiche');
+  };
+  fallback.src=src;
+ };
+})();
+</script>
 </body></html>
