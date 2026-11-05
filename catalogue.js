@@ -456,6 +456,10 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Juliet Lemonnier",
         "character": "Pamela Moreau"
+      },
+      {
+        "name": "adele galloy",
+        "character": ""
       }
     ],
     "production_countries": [
