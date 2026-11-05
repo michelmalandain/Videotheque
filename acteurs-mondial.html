@@ -94,6 +94,42 @@ async function loadPortraits(){
 const actorDialog=document.getElementById('actor-detail');
 const actorContent=document.getElementById('actor-content');
 document.getElementById('actor-close').onclick=()=>actorDialog.close();
+// Compléments Wikidata : correspondance exacte par identifiant TMDB (P4985).
+// Aucune nationalité n'est déduite du lieu de naissance.
+const BIO_WIKIDATA_PROPS={P27:'Nationalité',P26:'Conjoint(e)',P40:'Enfants',P22:'Père',P25:'Mère',P69:'Formation',P856:'Site officiel',P106:'Profession'};
+const BIO_NATIONALITES={'Q142':'Française','Q183':'Allemande','Q38':'Italienne','Q29':'Espagnole','Q31':'Belge','Q39':'Suisse','Q16':'Canadienne','Q30':'Américaine','Q145':'Britannique','Q17':'Japonaise','Q148':'Chinoise','Q155':'Brésilienne','Q159':'Russe','Q96':'Mexicaine','Q408':'Australienne','Q55':'Néerlandaise','Q20':'Norvégienne','Q34':'Suédoise','Q35':'Danoise','Q33':'Finlandaise','Q36':'Polonaise','Q45':'Portugaise','Q41':'Grecque','Q43':'Turque','Q262':'Algérienne','Q1041':'Sénégalaise','Q1028':'Marocaine','Q948':'Tunisienne','Q79':'Égyptienne','Q668':'Indienne','Q884':'Sud-coréenne','Q801':'Israélienne','Q27':'Irlandaise','Q40':'Autrichienne','Q212':'Ukrainienne','Q414':'Argentine'};
+async function bioWikidata(id){
+ if(!/^\d+$/.test(String(id)))return null;
+ const query=`SELECT ?person ?prop ?value ?valueLabel WHERE {
+  ?person wdt:P4985 "${id}" .
+  VALUES ?prop { wdt:P27 wdt:P26 wdt:P40 wdt:P22 wdt:P25 wdt:P69 wdt:P856 wdt:P106 }
+  ?person ?prop ?value .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
+ } LIMIT 150`;
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),11000);
+ try{
+  const url='https://query.wikidata.org/sparql?format=json&query='+encodeURIComponent(query);
+  const response=await fetch(url,{headers:{Accept:'application/sparql-results+json'},signal:controller.signal});
+  if(!response.ok)throw Error('Wikidata indisponible');
+  const json=await response.json();const result={};
+  for(const row of json.results?.bindings||[]){
+   const prop=row.prop?.value?.match(/P\d+$/)?.[0];if(!BIO_WIKIDATA_PROPS[prop])continue;
+   const qid=row.value?.value?.match(/Q\d+$/)?.[0];
+   let label=row.valueLabel?.value||row.value?.value;
+   if(prop==='P27'&&qid&&BIO_NATIONALITES[qid])label=BIO_NATIONALITES[qid];
+   if(!label||/^https?:\/\/www.wikidata.org\/entity\/Q\d+$/.test(label))continue;
+   (result[prop]??=new Set()).add(label);
+  }
+  return result;
+ }finally{clearTimeout(timer)}
+}
+function bioAjouterWikidata(facts,fact,data){
+ if(!data)return;
+ for(const prop of ['P27','P26','P40','P22','P25','P69','P856']){
+  const valeurs=[...(data[prop]||[])];if(valeurs.length)fact(BIO_WIKIDATA_PROPS[prop],valeurs.join(' ; '));
+ }
+}
+
 const actorDate=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:(v||'Non renseignée')};
 function actorSection(title){const sec=document.createElement('section');sec.className='actor-section';const h=document.createElement('h3');h.textContent=title;sec.append(h);actorContent.append(sec);return sec}
 async function openActorDetail(person){
@@ -103,8 +139,14 @@ async function openActorDetail(person){
   if(!id){const words=person.name.trim().split(/\s+/),last=words.pop(),first=words.join(' ');const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1)throw Error('Identité ambiguë : impossible de choisir cet acteur avec certitude.');id=matches[0].id;person.id=id;}
   const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(id));if(!r.ok)throw Error('Fiche indisponible');const p=await r.json();actorContent.replaceChildren();
   const profile=document.createElement('div');profile.className='actor-profile';const photo=document.createElement('div');if(p.profile_path||person.photo){const img=document.createElement('img');img.alt='Portrait de '+p.name;const path=p.profile_path||person.photo;img.src=String(path).startsWith('http')?path:'https://image.tmdb.org/t/p/w342'+path;photo.append(img)}else photo.textContent='Photographie indisponible';profile.append(photo);
-  const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);
+  const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);const wikidataPlace=document.createElement('div');facts.append(wikidataPlace);
   for(const [label,value] of [['Naissance',p.birthday?actorDate(p.birthday):null],['Lieu de naissance',p.place_of_birth],['Décès',p.deathday?actorDate(p.deathday):null],['Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department]])if(value){const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value));facts.append(line)}profile.append(facts);actorContent.append(profile);
+   // Compléments Wikidata non bloquants : la fiche TMDB reste utilisable.
+   bioWikidata(id).then(data=>{
+    if(!data||!wikidataPlace.isConnected)return;
+    const addFact=(label,value)=>{if(!value)return;const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value));wikidataPlace.append(line)};
+    bioAjouterWikidata(wikidataPlace,addFact,data);
+   }).catch(()=>{});
   const biography=actorSection('BIOGRAPHIE');const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';biography.append(bio);
   const films=actorSection('FILMOGRAPHIE');const status=document.createElement('p');status.textContent='Chargement de la filmographie…';films.append(status);const grid=document.createElement('div');grid.className='actor-tickets';films.append(grid);
   try{const fr=await fetch(PERSON_API+'/filmography?'+new URLSearchParams({role:'actor',id}));if(!fr.ok)throw Error('Filmographie indisponible');const data=await fr.json();if(!Array.isArray(data.credits))throw Error('Réponse incorrecte');status.textContent=data.credits.length+' films et séries';
