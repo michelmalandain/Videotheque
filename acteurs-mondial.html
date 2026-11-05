@@ -45,7 +45,7 @@ function draw(){
   else {img.style.display='none';photo.classList.add('sans-photo');}
   person.node=img;person.photoBox=photo;
   b.append(name,sub);
-  b.onclick=()=>openActorDetail(person);
+  b.onclick=()=>{const params=new URLSearchParams({personne:person.name,hall:'1'});if(person.id)params.set('person_id',person.id);location.href='index.html?'+params};
   cards.append(b);
  }
 }
