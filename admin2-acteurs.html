@@ -4,7 +4,7 @@
 .search-results{display:none;max-height:270px;overflow-y:auto;margin-top:5px;border:1px solid #c99e5b;border-radius:4px;background:#092f25}.search-results button{display:block;width:100%;text-align:left;margin:0;border:0;border-bottom:1px solid #6b7753;border-radius:0;padding:10px 12px;background:#0b4935;color:#ffe6b4;font:15px Georgia,serif}.search-results button:hover,.search-results button:focus{background:#17664b}.search-results .no-result{padding:10px;color:#f5d6a0;font-size:14px}.catalogue-counts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 16px}.catalogue-count{border:1px solid #d6b06a;border-radius:7px;padding:10px 18px;text-align:center;min-width:140px;background:#043224}.catalogue-count strong{display:block;font-size:27px;color:#ffe2a7}.catalogue-count span{font-size:13px;color:#e3cda7}</style></head><body><header><h1>CINEMALAND — ACTEURS ET RÉALISATEURS</h1><p>Modification des acteurs et réalisateurs</p></header><main><div class="panels">
 <section class="panel"><h2>ACCÈS ADMINISTRATEUR</h2><label for="pass">Mot de passe administrateur</label><input type="password" id="pass" autocomplete="off"><label class="remember-label"><input type="checkbox" id="remember">Mémoriser sur cet ordinateur</label><p class="note">Attention : la mémorisation conserve le mot de passe dans ce navigateur. À éviter sur un ordinateur partagé.</p><p id="msg">Saisissez votre mot de passe, puis chargez une catégorie.</p></section>
 <section class="panel" style="display:none" aria-hidden="true"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><div id="film-results" class="search-results" role="listbox" aria-label="Résultats films et séries"></div><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
-<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des noms présents dans les crédits du catalogue.</p><button id="load-people">CHARGER LES PERSONNES</button><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche exclusivement dans les personnes identifiées du catalogue CINEMALAND. Aucune création de personne.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
+<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des noms présents dans les crédits du catalogue.</p><button id="load-people">CHARGER LES PERSONNES</button><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche exclusivement dans les personnes du catalogue CINEMALAND, même sans identifiant TMDB. Aucune création de personne.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
 </div><footer><a href="./admin2.html">RETOUR À L’ADMINISTRATION</a></footer></main><script>
 const $=id=>document.getElementById(id);
 const WORKER='https://videotheque-admin.michelmalandain.workers.dev';
@@ -47,26 +47,31 @@ $('people-search').addEventListener('input',()=>searchResults('people'));
 
 function openEntry(i){if(!Number.isInteger(i)||!entries[i])return;index=i;const x=entries[i];$('film-heading').textContent=(x.title||'Fiche')+' — '+x.kind;render(x)}
 async function openPerson(id){
- if(!/^[1-9]\d{0,9}$/.test(String(id||''))){msg('Identifiant TMDB invalide.');return}
  personId=String(id);let x=people[personId];
- if(!x){try{msg('Chargement de la fiche TMDB…');const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');x={name:j.name||'',first_name:'',last_name:'',birthday:j.birthday||'',place_of_birth:j.place_of_birth||'',nationality:'',deathday:j.deathday||'',biography:j.biography||'',profile_path:j.profile_path||''};}catch(e){msg('Erreur : '+e.message);return}}
- $('people-heading').textContent=x.name||'Personne TMDB '+personId;render(x);msg('Fiche chargée : '+$('people-heading').textContent);
+ if(!x){
+  if(personId.startsWith('name:')){
+   const item=(states.people?.directory||[]).find(p=>p.id===personId);
+   if(!item){msg('Personne absente du catalogue.');return}
+   x={name:item.name,first_name:'',last_name:'',birthday:'',place_of_birth:'',nationality:'',deathday:'',biography:'',profile_path:''};
+  }else{
+   try{msg('Chargement de la fiche…');const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');x={name:j.name||'',first_name:'',last_name:'',birthday:j.birthday||'',place_of_birth:j.place_of_birth||'',nationality:'',deathday:j.deathday||'',biography:j.biography||'',profile_path:j.profile_path||''};}catch(e){msg('Erreur : '+e.message);return}
+  }
+ }
+ $('people-heading').textContent=x.name||'Personne du catalogue';render(x);msg('Fiche chargée : '+$('people-heading').textContent);
 }
-// La sélection provient exclusivement des crédits du catalogue CINEMALAND.
+// Répertoire des noms réellement présents dans les crédits, avec ou sans identifiant TMDB.
 function peopleDirectory(catalogue){
  const map=new Map();
  const collect=(value,role)=>{
   if(Array.isArray(value)){value.forEach(x=>collect(x,role));return}
-  if(!value||typeof value!=='object')return;
-  const id=value.tmdb_id??value.tmdbId??value.id;
-  const name=String(value.name||'').trim();
-  if(!name||!/^[1-9]\d{0,9}$/.test(String(id||'')))return;
-  const key=String(id);
-  if(!map.has(key))map.set(key,{id:key,label:name,roles:new Set()});
-  map.get(key).roles.add(role);
+  const name=String(typeof value==='string'?value:value?.name||'').trim();if(!name)return;
+  const rawId=typeof value==='object'?(value.tmdb_id??value.tmdbId??value.id):null;
+  const id=/^[1-9]\d{0,9}$/.test(String(rawId||''))?String(rawId):null;
+  const key=norm(name);if(!map.has(key))map.set(key,{name,id,roles:new Set()});
+  const record=map.get(key);if(!record.id&&id)record.id=id;record.roles.add(role);
  };
  for(const film of catalogue||[]){collect(film.cast,'Acteur');collect(film.director,'Réalisateur');collect(film.directors,'Réalisateur')}
- return [...map.values()].map(x=>({id:x.id,label:x.label+' — '+[...x.roles].join(' / ')})).sort((a,b)=>alphabetique(a.label,b.label));
+ return [...map.values()].map(x=>({id:x.id||'name:'+norm(x.name),name:x.name,label:x.name+' — '+[...x.roles].join(' / ')})).sort((a,b)=>alphabetique(a.label,b.label));
 }
 
 function updatePeopleCounters(catalogue){
