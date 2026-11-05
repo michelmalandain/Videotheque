@@ -450,14 +450,6 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Joseph Batista"
       },
       {
-        "name": "Bruno Sanches",
-        "character": "Samy Kaddourian"
-      },
-      {
-        "name": "Adèle Galloy",
-        "character": "Lyna Rochefort"
-      },
-      {
         "name": "Maxence Danet-Fauvel",
         "character": "Berthier"
       },
