@@ -2755,5 +2755,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Melancholia",
+    "kind": "Film",
+    "year": 2011,
+    "period": "2011",
+    "genre": "Drame, Science-Fiction",
+    "description": "Description à compléter.",
+    "poster": "affiches/melancholia.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Melancholia",
+    "summary": "À l'occasion de leur mariage, Justine et Michael donnent une somptueuse réception dans la maison de la sœur de Justine et de son beau-frère. Pendant ce temps, la planète Melancholia se dirige vers la Terre…",
+    "directors": [
+      "Lars von Trier"
+    ],
+    "cast": [
+      {
+        "name": "Kirsten Dunst",
+        "character": "Justine"
+      },
+      {
+        "name": "Charlotte Gainsbourg",
+        "character": "Claire"
+      },
+      {
+        "name": "Kiefer Sutherland",
+        "character": "John"
+      },
+      {
+        "name": "Alexander Skarsgård",
+        "character": "Michael"
+      },
+      {
+        "name": "Cameron Spurr",
+        "character": "Leo"
+      }
+    ]
   }
 ];
