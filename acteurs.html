@@ -61,16 +61,32 @@ draw();
 const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
 const normalized=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
 function setPhoto(person,profile){
- if(!profile||!person.node)return;
- const path=String(profile);
- person.node.src=path.startsWith('http')?path:'https://image.tmdb.org/t/p/w185'+(path.startsWith('/')?path:'/'+path);
- person.node.style.display='block';person.photoBox?.classList.remove('sans-photo');
+ if(!profile)return false;
+ const path=String(profile).trim();
+ if(!path)return false;
+ const url=path.startsWith('http')?path:'https://image.tmdb.org/t/p/w185'+(path.startsWith('/')?path:'/'+path);
+ person.photo=url; // Conserver le portrait lors d'une recherche ou d'un nouveau rendu.
+ if(person.node){
+  person.node.src=url;
+  person.node.style.display='block';
+  person.photoBox?.classList.remove('sans-photo');
+ }
+ return true;
 }
 async function resolvePortrait(person){
- if(person.photo||!person.node)return;
- const parts=person.name.trim().split(/\s+/);if(parts.length<2)return;
- const last=parts.pop(),first=parts.join(' ');
+ if(person.photo)return;
  try{
+  // Utiliser d'abord l'identifiant TMDB déjà enregistré : pas de risque d'homonyme.
+  if(person.id){
+   const detail=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(person.id));
+   if(detail.ok){
+    const d=await detail.json(),info=d.person||d.details||d;
+    if(setPhoto(person,info.profile_path||info.photo||info.profile))return;
+   }
+  }
+  const parts=person.name.trim().split(/\s+/);
+  if(parts.length<2)return;
+  const last=parts.pop(),first=parts.join(' ');
   const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
   if(!response.ok)return;
   const data=await response.json();
@@ -78,18 +94,17 @@ async function resolvePortrait(person){
   const match=person.id?exact.find(p=>String(p.id)===String(person.id)):(exact.length===1?exact[0]:null);
   if(!match)return;
   if(match.id&&!person.id)person.id=match.id;
-  setPhoto(person,match.profile_path||match.photo||match.profile);
-  // Le détail de la personne est demandé seulement si la recherche ne fournit pas de portrait.
-  if(!person.node.src||person.node.style.display==='none'){
+  if(setPhoto(person,match.profile_path||match.photo||match.profile))return;
+  if(match.id){
    const detail=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(match.id));
-   if(detail.ok){const d=await detail.json();setPhoto(person,(d.person||d.details||d).profile_path)}
+   if(detail.ok){const d=await detail.json(),info=d.person||d.details||d;setPhoto(person,info.profile_path||info.photo||info.profile)}
   }
- }catch(e){/* Ne jamais empêcher l'affichage des tickets si le service est indisponible. */}
+ }catch(e){/* Un service indisponible ne doit pas bloquer les tickets. */}
 }
 async function loadPortraits(){
  const queue=people.filter(p=>!p.photo);
- // 3 requêtes simultanées maximum, pour ménager le service et le navigateur.
- let i=0;await Promise.all(Array.from({length:Math.min(3,queue.length)},async()=>{
+ let i=0;
+ await Promise.all(Array.from({length:Math.min(3,queue.length)},async()=>{
   while(i<queue.length){const p=queue[i++];await resolvePortrait(p)}
  }));
 }
