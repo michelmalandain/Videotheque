@@ -59,6 +59,8 @@ function render(data){
  const root=$(kind()==='people'?'people-fields':'film-fields');root.replaceChildren();
  function field(obj,key,path){
   const val=obj[key],full=[...path,key],locked=lockedKeys.includes(key);
+  // Masquer uniquement le champ Period dans le formulaire, sans modifier les données.
+  if(kind()==='catalogue' && key==='period')return document.createDocumentFragment();
   if(locked)return document.createDocumentFragment();
   const wrap=document.createElement('div');wrap.className='field'+(longKey(key)||Array.isArray(val)||val&&typeof val==='object'?' wide':'');
   const label=document.createElement('label');label.textContent=human(key);wrap.append(label);
