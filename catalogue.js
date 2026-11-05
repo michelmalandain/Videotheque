@@ -2791,5 +2791,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Leo"
       }
     ]
+  },
+  {
+    "title": "La Cité de la peur",
+    "kind": "Film",
+    "year": 1994,
+    "period": "1994",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-cite-de-la-peur.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Cit%C3%A9%20de%20la%20peur",
+    "summary": "Lors du festival de Cannes 1993, Odile Deray, petite attachée de presse de cinéma, rencontre bien des difficultés à intéresser les professionnels à son film « Red is Dead », un film d’horreur d'une nullité qui n'a d’égal que les budget ridicule et acteurs improbables. Pourtant un évènement sert les attentes d'Odile : un tueur commet des meurtres identique au modus operandi du film. L'opportunité est à saisir : de vrais meurtres identiques à son film, en plein festival ! Odile met en avant Simon Jeremi, l'acteur principal, un enfant simplet de trente ans. Pour assurer sa protection, elle engage un garde du corps, Serge Karamazov, plus animé par les femmes que par sa mission. Dans la fièvre de Cannes, avec un tueur en liberté, un politicien véreux et un commissaire principal obsédé par son égo médiatique, Odile, Simon et Kara devront jouer des coudes pour traverser le festival vivants. D'ici là, ils ne seront pas au bout de leurs péripéties...",
+    "directors": [
+      "Alain Berbérian"
+    ],
+    "cast": [
+      {
+        "name": "Chantal Lauby",
+        "character": "Odile Deray / Louise, TV journalist"
+      },
+      {
+        "name": "Alain Chabat",
+        "character": "Serge Karamazov / Youri / Jacques, TV journalist"
+      },
+      {
+        "name": "Dominique Farrugia",
+        "character": "Simon Jérémi / Benjamin / Michel, TV journalist"
+      },
+      {
+        "name": "Gérard Darmon",
+        "character": "Commissioner Patrick Bialès / Maurice Bialès / Alicia Lampéro"
+      },
+      {
+        "name": "Sam Karmann",
+        "character": "Disturbing man / Youri / Émile Gravier"
+      }
+    ]
   }
 ];
