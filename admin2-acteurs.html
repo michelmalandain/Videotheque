@@ -151,18 +151,36 @@ function render(data){
    };
    if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
   }
+  let chosenPhoto=null;
+  if(kind()==='people'&&key==='profile_path'){
+   const picker=document.createElement('input');picker.type='file';picker.accept='image/jpeg,image/png,image/webp';picker.setAttribute('aria-label','Parcourir une photo sur cet ordinateur');picker.style.marginTop='9px';wrap.append(picker);
+   const preview=document.createElement('img');preview.alt='Photo sélectionnée';preview.hidden=true;wrap.append(preview);
+   const help=document.createElement('div');help.className='hint';help.textContent='JPG, PNG ou WebP (5 Mo maximum). La photo sera renommée et envoyée sur GitHub lors de la validation.';wrap.append(help);
+   picker.onchange=()=>{if(chosenPhoto?.preview)URL.revokeObjectURL(chosenPhoto.preview);const file=picker.files?.[0];chosenPhoto=null;preview.hidden=true;if(!file)return;
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){msg('Choisissez une photo JPG, PNG ou WebP de 5 Mo maximum.');picker.value='';return}
+    const url=URL.createObjectURL(file);chosenPhoto={file,preview:url};preview.src=url;preview.hidden=false;
+   };
+  }
   const save=document.createElement('button');save.type='button';save.textContent='VALIDER';actions.append(save);
   const status=document.createElement('div');status.className='field-status';wrap.append(status);
   save.onclick=async()=>{
    if(saving)return;
    try{
-    const value=readValue();
+    let value=readValue();
     const before=getAt(original,full);
-    if(JSON.stringify(before)===JSON.stringify(value)){status.textContent='Aucun changement.';return}
+    if(!chosenPhoto&&JSON.stringify(before)===JSON.stringify(value)){status.textContent='Aucun changement.';return}
     const group=kind(),currentIndex=index,currentId=personId;
     const data=copyValue(original);putAt(data,full,value);
     if(!confirm('Enregistrer uniquement « '+human(key)+' » dans CINEMALAND ?'))return;
     saving=true;save.disabled=true;status.textContent='Enregistrement…';
+    if(chosenPhoto){
+     status.textContent='Envoi de la photo sur GitHub…';
+     const file=chosenPhoto.file;
+     const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(Error('Lecture de la photo impossible.'));reader.readAsDataURL(file)});
+     const response=await fetch(WORKER+'/admin2-photo',{method:'POST',headers:{Authorization:'Bearer '+$('pass').value,'Content-Type':'application/json'},body:JSON.stringify({id:currentId,name:data.name||'',mime:file.type,content:encoded})});
+     const result=await response.json();if(!response.ok)throw Error(result.message||'Envoi impossible.');
+     value=result.path;putAt(data,full,value);status.textContent='Photo envoyée. Enregistrement de la fiche…';
+    }
     await api('POST',group,{sha,index:currentIndex,id:currentId,data});
     // Le Worker modifie le SHA du catalogue : le recharger avant toute autre correction.
     putAt(original,full,copyValue(value));
