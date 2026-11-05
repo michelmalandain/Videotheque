@@ -68,34 +68,44 @@ function render(data){
   }
   const actions=document.createElement('div');actions.className='field-actions';wrap.append(actions);
   let readValue;
-  if(Array.isArray(val)&&(key==='production_countries'||key==='cast'||key==='directors'||key==='director')){
-   const editor=document.createElement('div');editor.className='list-editor';actions.append(editor);actions.style.display='block';
-   let current=copyValue(val);
-   function redraw(){editor.replaceChildren();
-    current.forEach((item,i)=>{
-     const row=document.createElement('div');row.className='list-row';
-     const input=document.createElement('input');input.value=key==='production_countries'?normalizeCountry(item):(typeof item==='string'?item:(item?.name||''));
-     input.setAttribute('aria-label',human(key)+' '+(i+1));
-     input.oninput=()=>{if(typeof current[i]==='string')current[i]=input.value;else if(current[i]&&typeof current[i]==='object'){current[i]={...current[i],name:input.value}}};
-     const remove=document.createElement('button');remove.type='button';remove.textContent='RETIRER';remove.onclick=()=>{current.splice(i,1);redraw()};row.append(input,remove);editor.append(row);
-    });
-    const add=document.createElement('div');add.className='list-add';
-    const input=key==='production_countries'?document.createElement('select'):document.createElement('input');
-    if(key==='production_countries'){
-      input.add(new Option('Choisir un pays',''));
-      for(const country of COUNTRIES)input.add(new Option(country,country));
-    }else input.placeholder='Nom de la personne à ajouter';
-    const button=document.createElement('button');button.type='button';button.textContent='AJOUTER';button.onclick=()=>{
+  if(Array.isArray(val)&&key==='production_countries'){
+    // Un seul choix de pays, son code ISO est déduit automatiquement.
+    const select=document.createElement('select');
+    const codes={'France':'FR','Belgique':'BE','Suisse':'CH','Canada':'CA','États-Unis':'US','Royaume-Uni':'GB','Italie':'IT','Espagne':'ES','Allemagne':'DE','Australie':'AU','Autriche':'AT','Brésil':'BR','Chine':'CN','Corée du Sud':'KR','Danemark':'DK','Grèce':'GR','Inde':'IN','Irlande':'IE','Japon':'JP','Luxembourg':'LU','Maroc':'MA','Mexique':'MX','Norvège':'NO','Pays-Bas':'NL','Pologne':'PL','Portugal':'PT','Suède':'SE','Turquie':'TR'};
+    select.add(new Option('Choisir un pays',''));
+    for(const country of COUNTRIES)select.add(new Option(country,country));
+    const currentName=val.length===1?normalizeCountry(val[0]):'';
+    if(currentName&&!COUNTRIES.includes(currentName))select.add(new Option(currentName,currentName));
+    select.value=currentName;
+    actions.append(select);
+    readValue=()=>{
+     const name=select.value;if(!name)throw Error('Choisissez un pays de production.');
+     const sample=val.find(x=>x&&typeof x==='object');
+     if(sample){const item={...sample,name};if('iso_3166_1' in item)item.iso_3166_1=codes[name]||'';return [item]}
+     return [name];
+    };
+   }else if(Array.isArray(val)&&(key==='cast'||key==='directors'||key==='director')){
+    const editor=document.createElement('div');editor.className='list-editor';actions.append(editor);actions.style.display='block';
+    let current=copyValue(val);
+    function redraw(){editor.replaceChildren();
+     current.forEach((item,i)=>{
+      const row=document.createElement('div');row.className='list-row';
+      const input=document.createElement('input');input.value=typeof item==='string'?item:(item?.name||'');
+      input.setAttribute('aria-label',human(key)+' '+(i+1));
+      input.oninput=()=>{if(typeof current[i]==='string')current[i]=input.value;else if(current[i]&&typeof current[i]==='object')current[i]={...current[i],name:input.value}};
+      const remove=document.createElement('button');remove.type='button';remove.textContent='RETIRER';remove.onclick=()=>{current.splice(i,1);redraw()};row.append(input,remove);editor.append(row);
+     });
+     const add=document.createElement('div');add.className='list-add';
+     const input=document.createElement('input');input.placeholder='Nom de la personne à ajouter';
+     const button=document.createElement('button');button.type='button';button.textContent='AJOUTER';button.onclick=()=>{
       const name=input.value.trim();if(!name)return;
       const sample=val.find(x=>x&&typeof x==='object');
-      if(sample){const item={...sample};for(const k of Object.keys(item))if(k==='name')item[k]=name;else if(k==='character')item[k]='';else if(['id','tmdb_id','tmdbId'].includes(k))item[k]=null;
-       if(key==='production_countries'&&'iso_3166_1'in item){const codes={'France':'FR','Belgique':'BE','Suisse':'CH','Canada':'CA','États-Unis':'US','Royaume-Uni':'GB','Italie':'IT','Espagne':'ES','Allemagne':'DE'};item.iso_3166_1=codes[name]||''}
-       current.push(item);
-      }else current.push(name);
+      if(sample){const item={...sample};for(const k of Object.keys(item))if(k==='name')item[k]=name;else if(k==='character')item[k]='';else if(['id','tmdb_id','tmdbId'].includes(k))item[k]=null;current.push(item)}
+      else current.push(name);
       redraw();
-    };add.append(input,button);editor.append(add);
-   }
-   redraw();readValue=()=>copyValue(current);
+     };add.append(input,button);editor.append(add);
+    }
+    redraw();readValue=()=>copyValue(current);
   }else{
    const multiline=Array.isArray(val)||longKey(key)||typeof val==='string'&&val.length>140;
    const choices={kind:['Film','Série'],nationality:['Française','Belge','Suisse','Canadienne','Américaine','Britannique','Italienne','Espagnole','Allemande','Autre']};
