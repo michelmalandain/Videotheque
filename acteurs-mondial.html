@@ -3,6 +3,7 @@
 .mondial-tapis{position:relative;overflow:hidden;background:linear-gradient(100deg,#061c16,#15523b 50%,#061c16);border-top:2px solid #c9a669;border-bottom:2px solid #c9a669;padding:10px 0;min-height:140px}.mondial-tapis-track{display:flex;align-items:center;gap:12px;width:max-content;animation:mondial-roule 95s linear infinite}.mondial-tapis:hover .mondial-tapis-track,.mondial-tapis:focus-within .mondial-tapis-track{animation-play-state:paused}.mondial-tapis-item{flex:0 0 auto;width:82px;height:118px;border:1px solid #c9a669;border-radius:3px;overflow:hidden;display:block;background:#09271f;box-shadow:0 2px 8px #0008}.mondial-tapis-item img{width:100%;height:100%;object-fit:cover;display:block}.mondial-tapis-item:focus-visible{outline:3px solid #fff0b9;outline-offset:2px}@keyframes mondial-roule{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mondial-tapis-track{animation:none;max-width:100vw;overflow-x:auto}}@media(max-width:600px){.mondial-tapis-item{width:62px;height:92px}.mondial-tapis{min-height:110px}}
 </style><style id="fiche-acteur-mondial">
 .actor-dialog{width:min(1200px,96vw);max-height:94vh;overflow:auto;border:2px solid #d7b36d;border-radius:12px;background:linear-gradient(140deg,#164c39,#071e17);color:#f5e6c5;padding:25px;box-shadow:0 20px 80px #000c}.actor-dialog::backdrop{background:#000c}.actor-close{float:right;padding:10px 20px;background:#235941;color:#ffe6af;border:1px solid #d7b36d;border-radius:5px;cursor:pointer;font:inherit}.actor-profile{display:grid;grid-template-columns:230px 1fr;gap:25px;align-items:start;clear:both;padding-top:15px}.actor-profile img{width:100%;max-height:330px;object-fit:cover;border:2px solid #d7b36d}.actor-profile h2{font-size:32px;color:#ffe0a0;margin:0 0 16px}.actor-section{margin-top:24px}.actor-section h3{color:#f9d38c;border-bottom:1px solid #b99459;padding-bottom:9px}.actor-tickets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.actor-ticket{display:grid;grid-template-columns:54px 1fr 52px;gap:8px;align-items:center;min-height:83px;padding:8px;border:2px solid #b99558;border-radius:6px;background:linear-gradient(125deg,#25674b,#103829);color:#ffe9bf;text-align:left;font:inherit}.actor-ticket-year{color:#f4cc81;font-weight:bold}.actor-ticket img{width:50px;height:68px;object-fit:cover}.actor-ticket strong{overflow-wrap:anywhere;font-size:15px}.actor-ticket.present{outline:2px solid #e8c17b}.actor-ticket small{grid-column:2 / 4;color:#d9e5d6;font-size:11px}@media(max-width:850px){.actor-tickets{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.actor-profile{grid-template-columns:1fr}.actor-profile img{max-width:210px}.actor-tickets{grid-template-columns:1fr}}
+ .bio-link{color:#ffe0a0;text-decoration:underline;text-underline-offset:3px}.bio-link:hover{color:white}
 </style></head><body><header><h1>CINÉMA MONDIAL</h1><p>ACTEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html" aria-current="page">ACTEURS</a><a href="realisateurs-mondial.html">RÉALISATEURS</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">FERMER</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='actor', all=window.CINEMALAND_CATALOGUE;
@@ -45,7 +46,7 @@ function draw(){
   else {img.style.display='none';photo.classList.add('sans-photo');}
   person.node=img;person.photoBox=photo;
   b.append(name,sub);
-  b.onclick=()=>{const params=new URLSearchParams({personne:person.name,hall:'1'});if(person.id)params.set('person_id',person.id);location.href='index.html?'+params};
+  b.onclick=()=>openActorDetail(person);
   cards.append(b);
  }
 }
@@ -100,10 +101,11 @@ const BIO_WIKIDATA_PROPS={P27:'Nationalité',P26:'Conjoint(e)',P40:'Enfants',P22
 const BIO_NATIONALITES={'Q142':'Française','Q183':'Allemande','Q38':'Italienne','Q29':'Espagnole','Q31':'Belge','Q39':'Suisse','Q16':'Canadienne','Q30':'Américaine','Q145':'Britannique','Q17':'Japonaise','Q148':'Chinoise','Q155':'Brésilienne','Q159':'Russe','Q96':'Mexicaine','Q408':'Australienne','Q55':'Néerlandaise','Q20':'Norvégienne','Q34':'Suédoise','Q35':'Danoise','Q33':'Finlandaise','Q36':'Polonaise','Q45':'Portugaise','Q41':'Grecque','Q43':'Turque','Q262':'Algérienne','Q1041':'Sénégalaise','Q1028':'Marocaine','Q948':'Tunisienne','Q79':'Égyptienne','Q668':'Indienne','Q884':'Sud-coréenne','Q801':'Israélienne','Q27':'Irlandaise','Q40':'Autrichienne','Q212':'Ukrainienne','Q414':'Argentine'};
 async function bioWikidata(id){
  if(!/^\d+$/.test(String(id)))return null;
- const query=`SELECT ?person ?prop ?value ?valueLabel WHERE {
+ const query=`SELECT ?person ?prop ?value ?valueLabel ?relativeTmdb WHERE {
   ?person wdt:P4985 "${id}" .
   VALUES ?prop { wdt:P27 wdt:P26 wdt:P40 wdt:P22 wdt:P25 wdt:P69 wdt:P856 wdt:P106 }
   ?person ?prop ?value .
+  OPTIONAL { ?value wdt:P4985 ?relativeTmdb . }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
  } LIMIT 150`;
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),11000);
@@ -118,15 +120,29 @@ async function bioWikidata(id){
    let label=row.valueLabel?.value||row.value?.value;
    if(prop==='P27'&&qid&&BIO_NATIONALITES[qid])label=BIO_NATIONALITES[qid];
    if(!label||/^https?:\/\/www.wikidata.org\/entity\/Q\d+$/.test(label))continue;
-   (result[prop]??=new Set()).add(label);
+   (result[prop]??=new Map()).set(label,{label,tmdb:row.relativeTmdb?.value||null});
   }
   return result;
  }finally{clearTimeout(timer)}
 }
-function bioAjouterWikidata(facts,fact,data){
+function bioAjouterWikidata(place,data){
  if(!data)return;
  for(const prop of ['P27','P26','P40','P22','P25','P69','P856']){
-  const valeurs=[...(data[prop]||[])];if(valeurs.length)fact(BIO_WIKIDATA_PROPS[prop],valeurs.join(' ; '));
+  const valeurs=[...(data[prop]?.values()||[])];if(!valeurs.length)continue;
+  const line=document.createElement('p'),bold=document.createElement('strong');
+  bold.textContent=BIO_WIKIDATA_PROPS[prop]+' : ';line.append(bold);
+  valeurs.forEach((item,i)=>{
+   if(i)line.append(document.createTextNode(' ; '));
+   if(prop==='P856'){
+    try{const url=new URL(item.label);if(!['https:','http:'].includes(url.protocol))throw Error();
+     const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';link.textContent=item.label;link.className='bio-link';line.append(link);
+    }catch(e){line.append(document.createTextNode(item.label))}
+   }else if(['P26','P40','P22','P25'].includes(prop)&&/^\d+$/.test(String(item.tmdb||''))){
+    const link=document.createElement('a');link.className='bio-link';link.textContent=item.label;
+    const params=new URLSearchParams({personne:item.label,hall:'1',person_id:item.tmdb});
+    link.href='index.html?'+params;line.append(link);
+   }else line.append(document.createTextNode(item.label));
+  });place.append(line);
  }
 }
 
@@ -144,8 +160,7 @@ async function openActorDetail(person){
    // Compléments Wikidata non bloquants : la fiche TMDB reste utilisable.
    bioWikidata(id).then(data=>{
     if(!data||!wikidataPlace.isConnected)return;
-    const addFact=(label,value)=>{if(!value)return;const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value));wikidataPlace.append(line)};
-    bioAjouterWikidata(wikidataPlace,addFact,data);
+    bioAjouterWikidata(wikidataPlace,data);
    }).catch(()=>{});
   const biography=actorSection('BIOGRAPHIE');const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';biography.append(bio);
   const films=actorSection('FILMOGRAPHIE');const status=document.createElement('p');status.textContent='Chargement de la filmographie…';films.append(status);const grid=document.createElement('div');grid.className='actor-tickets';films.append(grid);
