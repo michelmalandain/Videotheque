@@ -4,7 +4,8 @@
 </style><style id="fiche-acteur-mondial">
 .actor-dialog{width:min(1200px,96vw);max-height:94vh;overflow:auto;border:2px solid #d7b36d;border-radius:12px;background:linear-gradient(140deg,#164c39,#071e17);color:#f5e6c5;padding:25px;box-shadow:0 20px 80px #000c}.actor-dialog::backdrop{background:#000c}.actor-close{float:right;padding:10px 20px;background:#235941;color:#ffe6af;border:1px solid #d7b36d;border-radius:5px;cursor:pointer;font:inherit}.actor-profile{display:grid;grid-template-columns:230px 1fr;gap:25px;align-items:start;clear:both;padding-top:15px}.actor-profile img{width:100%;max-height:330px;object-fit:cover;border:2px solid #d7b36d}.actor-profile h2{font-size:32px;color:#ffe0a0;margin:0 0 16px}.actor-section{margin-top:24px}.actor-section h3{color:#f9d38c;border-bottom:1px solid #b99459;padding-bottom:9px}.actor-tickets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.actor-ticket{display:grid;grid-template-columns:54px 1fr 52px;gap:8px;align-items:center;min-height:83px;padding:8px;border:2px solid #b99558;border-radius:6px;background:linear-gradient(125deg,#25674b,#103829);color:#ffe9bf;text-align:left;font:inherit}.actor-ticket-year{color:#f4cc81;font-weight:bold}.actor-ticket img{width:50px;height:68px;object-fit:cover}.actor-ticket strong{overflow-wrap:anywhere;font-size:15px}.actor-ticket.present{outline:2px solid #e8c17b}.actor-ticket small{grid-column:2 / 4;color:#d9e5d6;font-size:11px}@media(max-width:850px){.actor-tickets{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.actor-profile{grid-template-columns:1fr}.actor-profile img{max-width:210px}.actor-tickets{grid-template-columns:1fr}}
  .bio-link{color:#ffe0a0;text-decoration:underline;text-underline-offset:3px}.bio-link:hover{color:white}
-</style></head><body><header><h1>CINÉMA MONDIAL</h1><p>ACTEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html" aria-current="page">ACTEURS</a><a href="realisateurs-mondial.html">RÉALISATEURS</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">FERMER</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
+.actor-section.bio-readable{max-width:100%;}.bio-readable p{font-size:18px;line-height:1.75;margin:0 0 1.15em;max-width:100%;font-weight:normal}.bio-readable h3{margin-bottom:18px}
+</style></head><body><header><h1>CINÉMA MONDIAL</h1><p>ACTEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html" aria-current="page">ACTEURS</a><a href="realisateurs-mondial.html">RÉALISATEURS</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='actor', all=window.CINEMALAND_CATALOGUE;
 const cards=document.getElementById('cards'), status=document.getElementById('status'), counter=document.getElementById('count');
@@ -94,6 +95,7 @@ async function loadPortraits(){
 
 const actorDialog=document.getElementById('actor-detail');
 const actorContent=document.getElementById('actor-content');
+// Retour à la liste et à son filtre, sans quitter la page mondiale.
 document.getElementById('actor-close').onclick=()=>actorDialog.close();
 // Compléments Wikidata : correspondance exacte par identifiant TMDB (P4985).
 // Aucune nationalité n'est déduite du lieu de naissance.
@@ -162,7 +164,21 @@ async function openActorDetail(person){
     if(!data||!wikidataPlace.isConnected)return;
     bioAjouterWikidata(wikidataPlace,data);
    }).catch(()=>{});
-  const biography=actorSection('BIOGRAPHIE');const bio=document.createElement('p');bio.textContent=p.biography?.trim()||'Biographie non disponible sur TMDB.';biography.append(bio);
+  const biography=actorSection('BIOGRAPHIE');biography.classList.add('bio-readable');
+  // Conserver le texte TMDB, ses paragraphes et ses sauts de ligne.
+  // Si TMDB fournit un seul bloc très long, l'aérer entre les phrases sans modifier les mots.
+  const rawBio=String(p.biography||'').trim()||'Biographie non disponible sur TMDB.';
+  const sections=rawBio.split(/\n\s*\n/).flatMap(block=>{
+   const lines=block.split(/\n/).map(x=>x.trim()).filter(Boolean);
+   return lines.flatMap(line=>{
+    if(line.length<550)return [line];
+    const sentences=line.match(/[^.!?]+(?:[.!?]+(?=\s|$)|$)/g)||[line];
+    const groups=[];let current='';
+    for(const sentence of sentences){const part=sentence.trim();if(!part)continue;if(current&&current.length+part.length>440){groups.push(current);current=''}current+=(current?' ':'')+part}
+    if(current)groups.push(current);return groups;
+   });
+  });
+  for(const paragraph of sections){const bio=document.createElement('p');bio.textContent=paragraph;biography.append(bio)}
   const films=actorSection('FILMOGRAPHIE');const status=document.createElement('p');status.textContent='Chargement de la filmographie…';films.append(status);const grid=document.createElement('div');grid.className='actor-tickets';films.append(grid);
   try{const fr=await fetch(PERSON_API+'/filmography?'+new URLSearchParams({role:'actor',id}));if(!fr.ok)throw Error('Filmographie indisponible');const data=await fr.json();if(!Array.isArray(data.credits))throw Error('Réponse incorrecte');status.textContent=data.credits.length+' films et séries';
    const localNames=new Set([...person.films].map(x=>normalized(x.split('|')[1])));
