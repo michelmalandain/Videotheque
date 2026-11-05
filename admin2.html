@@ -23,7 +23,18 @@ function fill(){const select=$(kind()==='people'?'people-pick':'film-pick');sele
  if(select.options.length){if(kind()==='people')openPerson(select.value);else openEntry(Number(select.value))}
  else msg(kind()==='people'?'Aucune correction de personne enregistrée dans la base.':'Aucune fiche dans cette catégorie.');
 }
-$('film-search').oninput=$('people-search').oninput=()=>{const q=$(kind()==='people'?'people-search':'film-search').value.toLocaleLowerCase('fr');for(const opt of $(kind()==='people'?'people-pick':'film-pick').options)opt.hidden=!opt.text.toLocaleLowerCase('fr').includes(q)};
+// Recherche films : reconstruire la liste (option.hidden n'est pas fiable dans les listes natives).
+$('film-search').oninput=()=>{
+  if(activeGroup==='people')setGroup($('media-kind').value);
+  const q=$('film-search').value.trim().toLocaleLowerCase('fr');
+  const select=$('film-pick');select.replaceChildren();
+  entries.map((v,i)=>({v,i})).filter(({v})=>v.kind===$('media-kind').value && (v.title||'').toLocaleLowerCase('fr').includes(q))
+    .sort((a,b)=>alphabetique(a.v.title||'',b.v.title||''))
+    .forEach(({v,i})=>select.add(new Option((v.title||'Sans titre')+' ('+(v.year||'?')+')',String(i))));
+  if(select.options.length){select.selectedIndex=0;openEntry(Number(select.value));}
+  else{$('film-editor').style.display='none';index=-1;}
+};
+$('people-search').oninput=()=>{const q=$('people-search').value.toLocaleLowerCase('fr');for(const opt of $('people-pick').options)opt.hidden=!opt.text.toLocaleLowerCase('fr').includes(q)};
 $('film-pick').onchange=()=>{activeGroup=$('media-kind').value;openEntry(Number($('film-pick').value))};$('people-pick').onchange=()=>{activeGroup='people';openPerson($('people-pick').value)};
 
 function openEntry(i){if(!Number.isInteger(i)||!entries[i])return;index=i;const x=entries[i];$('film-heading').textContent=(x.title||'Fiche')+' — '+x.kind;render(x)}
@@ -50,7 +61,7 @@ function build(){const out=structuredClone(original);for(const c of controls){le
  return out}
 async function saveCurrent(){try{const data=build();if(kind()==='catalogue'){const old=entries[index];for(const k of lockedKeys)if(JSON.stringify(old[k]??null)!==JSON.stringify(data[k]??null))throw Error('Identifiant TMDB verrouillé : '+k)}else for(const k of ['id','tmdb_id','tmdbId'])if(k in data)throw Error('Identifiant TMDB verrouillé.');if(!confirm('Enregistrer cette correction dans GitHub ?'))return;msg('Enregistrement…');await api('POST',kind(),{sha,index,id:personId,data});msg('Correction enregistrée. Rechargez la base avant une autre modification.');$('film-editor').style.display='none';$('people-editor').style.display='none'}catch(e){msg(e.message)}}
 const states={catalogue:null,people:null};
-function setGroup(group){activeGroup=group;const k=kind();const s=states[k];entries=s?.entries||[];sha=s?.sha||null;people=k==='people'?entries:{};index=-1;personId='';original=null;controls=[];$('film-editor').style.display='none';$('people-editor').style.display='none';if(s)fill();}
+function setGroup(group){activeGroup=group;const k=kind();const s=states[k];entries=s?.entries||[];sha=s?.sha||null;people=k==='people'?entries:{};index=-1;personId='';original=null;controls=[];$('film-editor').style.display='none';$('people-editor').style.display='none';if(s){fill();if(k==='catalogue'&&$('film-search').value.trim())$('film-search').oninput();}}
 async function loadGroup(group){setGroup(group);try{msg('Chargement de la base…');const data=await api('GET',kind());states[kind()]={entries:data.entries,sha:data.sha};setGroup(group);msg(kind()==='people'?'Corrections de personnes chargées.':'Catalogue chargé : '+entries.length+' titres.')}catch(e){msg('Erreur : '+e.message)}}
 $('media-kind').onchange=()=>{setGroup($('media-kind').value);};
 $('load-films').onclick=()=>loadGroup($('media-kind').value);
