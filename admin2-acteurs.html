@@ -205,11 +205,15 @@ function render(data){
      value=result.path;putAt(data,full,value);status.textContent='Photo envoyée. Enregistrement de la fiche…';
     }
     await api('POST',group,{sha,index:currentIndex,id:currentId,data});
-    // Le Worker modifie le SHA du catalogue : le recharger avant toute autre correction.
-    putAt(original,full,copyValue(value));
-    status.textContent='Enregistré. Rechargez la base avant une autre correction.';
-    msg('« '+human(key)+' » enregistré. Rechargez la base pour continuer.');
-    root.querySelectorAll('.field-actions>button').forEach(b=>b.disabled=true);
+     putAt(original,full,copyValue(value));
+     status.textContent='Enregistré.';
+     msg('« '+human(key)+' » enregistré. Actualisation des données…');
+     // Actualiser le SHA sans fermer la fiche ni perdre le choix TMDB.
+     const fresh=await api('GET',group);
+     states[group==='people'?'people':'catalogue']={...states[group==='people'?'people':'catalogue'],entries:fresh.entries,sha:fresh.sha};
+     sha=fresh.sha;
+     if(group==='people')people=fresh.entries||{};
+     msg('« '+human(key)+' » enregistré. Vous pouvez modifier un autre champ.');
    }catch(e){status.textContent='Erreur : '+e.message;msg('Erreur : '+e.message)}
    finally{saving=false;if(!status.textContent.startsWith('Enregistré'))save.disabled=false}
   };
