@@ -2907,5 +2907,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Juré n°9"
       }
     ]
+  },
+  {
+    "title": "2001 : L'Odyssée de l'espace",
+    "kind": "Film",
+    "year": 1968,
+    "period": "1968",
+    "genre": "Science-Fiction, Mystère, Aventure",
+    "description": "Description à compléter.",
+    "poster": "affiches/2001-l-odyssee-de-l-espace.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=2001%20%3A%20L'Odyss%C3%A9e%20de%20l'espace",
+    "summary": "Aux temps préhistoriques, une petite tribu d’hommes‐singes installée au milieu de rochers arides lutte difficilement pour la vie. Un matin, ils trouvent devant eux une mystérieuse dalle noire monolithique. L’un des singes touche la pierre et apprend alors à se servir d’un os de quadrupède pour tuer ses ennemis. Quatre millions d’années plus tard, en 2001, un savant de l’espace, le Dr Heywood Floyd, débarque sur la lune pour examiner une dalle noire semblable à celle des singes, qui était enterrée sous la surface de l’astre. Selon les premières observations, l’objet émettrait un signal mystérieux…",
+    "directors": [
+      "Stanley Kubrick"
+    ],
+    "cast": [
+      {
+        "name": "Keir Dullea",
+        "character": "Dr. David Bowman"
+      },
+      {
+        "name": "Gary Lockwood",
+        "character": "Dr. Frank Poole"
+      },
+      {
+        "name": "William Sylvester",
+        "character": "Dr. Heywood Floyd"
+      },
+      {
+        "name": "Douglas Rain",
+        "character": "HAL 9000 (voice)"
+      },
+      {
+        "name": "Daniel Richter",
+        "character": "Moonwatcher"
+      }
+    ]
   }
 ];
