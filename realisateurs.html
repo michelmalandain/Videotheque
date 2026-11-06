@@ -198,9 +198,31 @@ async function openActorDetail(person){
   const films=actorSection('FILMOGRAPHIE');const status=document.createElement('p');status.textContent='Chargement de la filmographie…';films.append(status);const grid=document.createElement('div');grid.className='actor-tickets';films.append(grid);
   try{const fr=await fetch(PERSON_API+'/filmography?'+new URLSearchParams({role:'director',id}));if(!fr.ok)throw Error('Filmographie indisponible');const data=await fr.json();if(!Array.isArray(data.credits))throw Error('Réponse incorrecte');status.textContent=data.credits.length+' films et séries';
    const localNames=new Set([...person.films].map(x=>normalized(x.split('|')[1])));
-   for(const credit of data.credits){const ticket=document.createElement('div');ticket.className='actor-ticket';const year=document.createElement('span');year.className='actor-ticket-year';year.textContent=String(credit.date||'').slice(0,4)||'—';const name=document.createElement('strong');name.textContent=credit.title||credit.name||'Sans titre';ticket.append(year,name);if(credit.poster_path){const img=document.createElement('img');img.loading='lazy';img.alt='Affiche de '+name.textContent;img.src='https://image.tmdb.org/t/p/w154'+credit.poster_path;ticket.append(img)}else ticket.append(document.createElement('span'));if(localNames.has(normalized(name.textContent))){ticket.classList.add('present');const badge=document.createElement('small');badge.textContent='Dans notre vidéothèque';ticket.append(badge)}grid.append(ticket)}
+   for(const credit of data.credits){const ticket=document.createElement('div');ticket.className='actor-ticket';ticket.tabIndex=0;ticket.setAttribute('role','button');ticket.title='Ouvrir la fiche de cette œuvre';ticket.style.cursor='pointer';ticket.addEventListener('click',()=>ouvrirOeuvreFilmographie(credit,credit.title||credit.name||'Sans titre'));ticket.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ouvrirOeuvreFilmographie(credit,credit.title||credit.name||'Sans titre')}});const year=document.createElement('span');year.className='actor-ticket-year';year.textContent=String(credit.date||'').slice(0,4)||'—';const name=document.createElement('strong');name.textContent=credit.title||credit.name||'Sans titre';ticket.append(year,name);if(credit.poster_path){const img=document.createElement('img');img.loading='lazy';img.alt='Affiche de '+name.textContent;img.src='https://image.tmdb.org/t/p/w154'+credit.poster_path;ticket.append(img)}else ticket.append(document.createElement('span'));if(localNames.has(normalized(name.textContent))){ticket.classList.add('present');const badge=document.createElement('small');badge.textContent='Dans notre vidéothèque';ticket.append(badge)}grid.append(ticket)}
   }catch(e){status.textContent=e.message}
  }catch(e){actorContent.replaceChildren();const error=document.createElement('p');error.textContent=e.message;actorContent.append(error)}
+}
+
+
+// CINEMALAND : fiche d’œuvre depuis la filmographie, harmonisée vert et or.
+function ouvrirOeuvreFilmographie(credit, titre){
+ const type=(credit.media_type==='tv'||credit.mediaType==='tv'||credit.type==='tv')?'tv':'movie';
+ const id=credit.id||credit.tmdb_id||credit.tmdbId;
+ const d=document.createElement('dialog');d.className='fiche-oeuvre-harmonie';
+ d.style.cssText='width:min(850px,94vw);max-width:94vw;max-height:90vh;overflow:auto;background:linear-gradient(140deg,#164c39,#071e17);color:#f5e6c5;border:2px solid #d7b36d;border-radius:10px;padding:24px;box-shadow:0 20px 80px #000c';
+ const retour=document.createElement('button');retour.type='button';retour.textContent='Retour à la filmographie';retour.style.cssText='float:right;background:#235941;color:#ffe6af;border:1px solid #d7b36d;border-radius:5px;padding:9px 13px;cursor:pointer;font:inherit';retour.onclick=()=>d.close();
+ const h=document.createElement('h2');h.textContent=titre;h.style.cssText='color:#ffe0a0;clear:both;padding-top:12px';
+ const row=document.createElement('div');row.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
+ const img=document.createElement('img');img.alt='Affiche de '+titre;img.style.cssText='width:min(220px,100%);max-height:340px;object-fit:contain;border:2px solid #d7b36d';
+ if(credit.poster_path){img.src='https://image.tmdb.org/t/p/w500'+credit.poster_path;row.append(img)}
+ const info=document.createElement('div');info.style.cssText='flex:1;min-width:220px;line-height:1.6';
+ const meta=document.createElement('p');meta.textContent=String(credit.date||credit.release_date||credit.first_air_date||'').slice(0,4)+' · '+(type==='tv'?'Série':'Film');
+ const label=document.createElement('h3');label.textContent='Synopsis';label.style.color='#ffe0a0';
+ const synopsis=document.createElement('p');synopsis.textContent=credit.overview||credit.description||'Synopsis non communiqué dans la filmographie.';
+ info.append(meta,label,synopsis);
+ if(id){const lien=document.createElement('a');lien.textContent='Consulter la fiche complète sur TMDB';lien.href='https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR';lien.target='_blank';lien.rel='noopener noreferrer';lien.style.color='#ffe0a0';info.append(lien)}
+ row.append(info);d.append(retour,h,row);document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
+ if(id)fetch(PERSON_API+'/details?'+new URLSearchParams({type,id:String(id)})).then(r=>r.ok?r.json():null).then(data=>{if(!data||!d.isConnected)return;const details=data.details||data;const overview=details.overview||details.summary||details.description;if(overview)synopsis.textContent=overview}).catch(()=>{});
 }
 
 loadPortraits();

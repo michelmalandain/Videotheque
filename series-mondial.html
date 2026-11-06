@@ -587,7 +587,7 @@ article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(a
     const type=ligne.dataset.mediaType==='tv'?'tv':'movie';
     const lien=id?'https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR':'https://www.themoviedb.org/search?query='+encodeURIComponent(titre);
     const d=document.createElement('dialog');d.className='film-dialog';
-    d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:#160d11;color:#f6e8cf;border:3px double #e8b85b;border-radius:10px;padding:24px';
+    d.style.cssText='max-width:min(850px,94vw);width:850px;max-height:90vh;overflow:auto;background:linear-gradient(140deg,#164c39,#071e17);color:#f5e6c5;border:2px solid #d7b36d;border-radius:10px;padding:24px';
     const close=document.createElement('button');close.textContent='Retour à la filmographie';close.className='close';close.type='button';close.style.color='#f5cc7b';close.addEventListener('click',()=>d.close());
     const h=document.createElement('h2');h.textContent=titre;h.style.color='#f5cc7b';
     const grid=document.createElement('div');grid.style.cssText='display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start';
@@ -603,7 +603,7 @@ article.append(title,poster,info);cards.append(article);chargerDecorCinemaland(a
     ajouter.textContent='Ajouter à ma vidéothèque (administration)';
     ajouter.style.cssText='display:inline-block;margin-top:12px;color:#e8b85b;text-decoration:underline;font-size:14px;background:transparent;border:0;padding:0';
     const proposer=document.createElement('button');proposer.type='button';proposer.textContent='Proposer ce '+(type==='tv'?'programme':'film');
-    proposer.style.cssText='display:block;margin-top:16px;padding:10px 16px;background:#7e101a;color:#f5cc7b;border:1px solid #e8b85b;border-radius:5px;font:inherit;cursor:pointer';
+    proposer.style.cssText='display:block;margin-top:16px;padding:10px 16px;background:#235941;color:#f5cc7b;border:1px solid #e8b85b;border-radius:5px;font:inherit;cursor:pointer';
     proposer.addEventListener('click',()=>openBioProposal(titre,annee,type==='tv'?'Série':'Film'));
     const params=new URLSearchParams({title:titre,year:annee,kind:type==='tv'?'Série':'Film'});
     ajouter.href='https://videotheque-admin.michelmalandain.workers.dev/?'+params.toString();
