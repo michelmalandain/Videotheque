@@ -2824,5 +2824,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Pamela Moreau"
       }
     ]
+  },
+  {
+    "title": "L'Homme du Picardie",
+    "kind": "Série",
+    "year": 1968,
+    "period": "1968",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-homme-du-picardie.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'Homme%20du%20Picardie",
+    "summary": "Artisan marinier, Joseph Durtol est le patron du Picardie, une péniche, plus exactement un automoteur de 38 mètres. Il vit à bord avec sa femme Thérèse et sa fille Yvette, parcourant les canaux et les fleuves au gré des chargements qu'il obtient. Quant à son fils aîné, il navigue sur le Rhin.\n\nMais la condition des bateliers dans les années 1960 est dure. La tradition familiale fait de cette profession un métier très particulier. L'histoire de la famille Durtol, mariniers de père en fils, s'inscrit dans les problèmes quotidiens d'une vie professionnelle montrés à la manière d'un reportage documentaire.",
+    "directors": [
+      "André Maheux",
+      "Henri Grangé"
+    ],
+    "cast": [
+      {
+        "name": "Christian Barbier",
+        "character": "Joseph Durtol"
+      },
+      {
+        "name": "Léone Veron",
+        "character": "Yvette Durtol"
+      },
+      {
+        "name": "Yvette Etiévant",
+        "character": "Thérèse Durtol"
+      },
+      {
+        "name": "Pierre Santini",
+        "character": "Julien Durtol"
+      },
+      {
+        "name": "Henri Kuhn",
+        "character": "Schaeffer"
+      }
+    ]
   }
 ];
