@@ -2860,6 +2860,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Henri Kuhn",
         "character": "Schaeffer"
       }
+    ],
+    "production_countries": [
+      "France"
     ]
   }
 ];
