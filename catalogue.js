@@ -2943,5 +2943,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Moonwatcher"
       }
     ]
+  },
+  {
+    "title": "Frankenstein Junior",
+    "kind": "Film",
+    "year": 1974,
+    "period": "1974",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/frankenstein-junior.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Frankenstein%20Junior",
+    "summary": "Peu fier de son ascendance, le Docteur Frederick Frankenstein accepte pourtant de retourner sur les terres de ses ancêtres. Rattrapé par la folie familiale, il décide de suivre les traces de son aïeul et de créer à son tour une créature à partir de cadavres, avec l’aide de son fidèle serviteur Igor. Malheureusement, chargé de trouver le cerveau d’un génie, ce dernier se trompe et rapporte à Frankenstein un cerveau anormal…",
+    "directors": [
+      "Mel Brooks"
+    ],
+    "cast": [
+      {
+        "name": "Gene Wilder",
+        "character": "Dr. Frankenstein"
+      },
+      {
+        "name": "Peter Boyle",
+        "character": "Monster"
+      },
+      {
+        "name": "Marty Feldman",
+        "character": "Igor"
+      },
+      {
+        "name": "Madeline Kahn",
+        "character": "Elizabeth"
+      },
+      {
+        "name": "Cloris Leachman",
+        "character": "Frau Blücher"
+      }
+    ]
   }
 ];
