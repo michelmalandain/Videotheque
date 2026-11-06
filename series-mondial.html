@@ -1018,8 +1018,20 @@ function openBioProposal(title,year,kind){
  if(ticket!==generation||!dlg.open)return;
  if(results[0].status==='fulfilled'&&Array.isArray(results[0].value.credits)){credits=results[0].value.credits;buttons();draw();if(!credits.length)list.textContent='Aucun titre disponible.'}else{list.textContent=results[0].reason?.message||'Filmographie indisponible'}
  bioText.replaceChildren();const nameHeading=document.createElement('h2');nameHeading.className='cm-person-name';nameHeading.textContent=name;bioText.append(nameHeading);const personData=results[1].status==='fulfilled'?results[1].value:null;
- if(personData){const portrait=imgUrl(personData.profile_path);if(portrait){const im=document.createElement('img');im.src=portrait;im.alt='Portrait de '+name;const second=im.cloneNode();second.className='cm-portrait';bioText.append(second)}
- p(head,[personData.known_for_department==='Directing'?'Réalisation':'Interprétation',personData.birthday?'Né(e) le '+personData.birthday:'',personData.place_of_birth].filter(Boolean).join(' · '));p(bioText,personData.biography||'Biographie non disponible sur TMDB.');}
+ if(personData){
+  const profile=document.createElement('div');profile.className='cm-harmonie-profile';
+  const photo=document.createElement('div');const portrait=imgUrl(personData.profile_path);
+  if(portrait){const im=document.createElement('img');im.src=portrait;im.alt='Portrait de '+name;photo.append(im)}else photo.textContent='Photographie indisponible';
+  const facts=document.createElement('div');facts.className='cm-harmonie-facts';
+  const h=document.createElement('h2');h.className='cm-person-name';h.textContent=name;facts.append(h);
+  const date=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?m[3]+'/'+m[2]+'/'+m[1]:v};
+  for(const [label,value] of [['Naissance',personData.birthday?date(personData.birthday):null],['Lieu de naissance',personData.place_of_birth],['Décès',personData.deathday?date(personData.deathday):null],['Profession',personData.known_for_department==='Directing'?'Réalisation':personData.known_for_department==='Acting'?'Acteur / Actrice':personData.known_for_department]]){
+   if(!value)continue;const line=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';line.append(strong,document.createTextNode(value));facts.append(line);
+  }
+  profile.append(photo,facts);bioText.replaceChildren(profile);
+  const heading=document.createElement('h3');heading.textContent='BIOGRAPHIE';bioText.append(heading);
+  const story=document.createElement('p');story.className='cm-harmonie-biographie';story.textContent=personData.biography||'Biographie non disponible sur TMDB.';bioText.append(story);
+ }
  else p(bioText,'Biographie indisponible pour cette recherche.');
  };
  dlg.addEventListener('close',()=>{generation++});
@@ -1054,4 +1066,31 @@ function openBioProposal(title,year,kind){
 @media(max-width:900px){#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:570px){#person-dialog #person-films{grid-template-columns:1fr!important}#person-dialog .cm-hero{padding-right:70px!important}#person-dialog .cm-hero img{width:85px!important;height:115px!important}}
 </style>
-<script src="bandeau-mondial.js" defer></script></body></html>
+<script src="bandeau-mondial.js" defer></script><style id="cinemaland-harmonie-vert-or-20261106">
+/* Harmonisation des fiches personnes avec acteurs.html, sans toucher aux fiches films. */
+#person-dialog{width:min(1200px,96vw)!important;max-width:1200px!important;height:auto!important;max-height:94vh!important;min-height:0!important;inset:auto!important;margin:auto!important;overflow:auto!important;border:2px solid #d7b36d!important;border-radius:12px!important;background:linear-gradient(140deg,#164c39,#071e17)!important;color:#f5e6c5!important;padding:25px!important;box-shadow:0 20px 80px #000c!important;font:17px Georgia,serif!important}
+#person-dialog::backdrop{background:#000c!important}
+#person-dialog .cm-hero{display:none!important}
+#person-dialog .cm-dialog-nav{position:sticky!important;top:0!important;z-index:40!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;height:auto!important;min-height:0!important;padding:0 0 12px!important;background:transparent!important;border:0!important}
+#person-dialog .cm-dialog-nav button:not(.cm-close){display:none!important}
+#person-dialog .cm-dialog-nav .cm-close{font:17px Georgia,serif!important;padding:10px 20px!important;background:#235941!important;color:#ffe6af!important;border:1px solid #d7b36d!important;border-radius:5px!important}
+#person-dialog .cm-columns{display:flex!important;flex-direction:column!important;gap:18px!important;height:auto!important;min-height:0!important;padding:0!important}
+#person-dialog .cm-panel{width:100%!important;max-height:none!important;min-height:0!important;overflow:visible!important;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+#person-dialog .cm-panel h3{font: bold 23px Georgia,serif!important;color:#f9d38c!important;border-bottom:1px solid #b99459!important;padding:0 0 9px!important;margin:16px 0!important}
+#person-dialog .cm-scroll{overflow:visible!important;padding:0!important;background:transparent!important;color:#f5e6c5!important;font:18px/1.75 Georgia,serif!important;white-space:normal!important}
+#person-dialog .cm-person-name{font: bold 32px Georgia,serif!important;color:#ffe0a0!important;margin:0 0 16px!important}
+#person-dialog .cm-harmonie-profile{display:grid!important;grid-template-columns:230px minmax(0,1fr)!important;gap:25px!important;align-items:start!important;margin-bottom:24px!important}
+#person-dialog .cm-harmonie-profile img{display:block!important;width:100%!important;max-height:330px!important;object-fit:cover!important;border:2px solid #d7b36d!important}
+#person-dialog .cm-harmonie-facts p{margin:0 0 12px!important}
+#person-dialog .cm-harmonie-biographie{margin-top:15px!important;white-space:pre-line!important}
+#person-dialog .cm-tabs{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin-bottom:15px!important}
+#person-dialog .cm-tabs button{background:#235941!important;color:#ffe6af!important;border:1px solid #d7b36d!important;border-radius:5px!important;padding:8px 14px!important;font:inherit!important}
+#person-dialog #person-films{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:13px!important;overflow:visible!important;padding:0!important}
+#person-dialog .person-film{display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;gap:8px!important;align-items:center!important;min-height:83px!important;padding:8px!important;border:2px solid #b99558!important;border-radius:6px!important;background:linear-gradient(125deg,#25674b,#103829)!important;color:#ffe9bf!important;text-align:left!important;font:inherit!important}
+#person-dialog .person-film img{width:50px!important;height:68px!important;object-fit:cover!important}
+#person-dialog .person-film strong{font-size:15px!important;color:#ffe9bf!important}
+#person-dialog .person-film small{font-size:12px!important;color:#d9e5d6!important}
+#person-dialog #person-title,#person-dialog #person-count,#person-dialog .person-note{display:none!important}
+@media(max-width:850px){#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){#person-dialog .cm-harmonie-profile{grid-template-columns:1fr!important}#person-dialog .cm-harmonie-profile img{max-width:210px!important}#person-dialog #person-films{grid-template-columns:1fr!important}}
+</style></body></html>
