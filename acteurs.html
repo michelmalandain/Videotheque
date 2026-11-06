@@ -222,6 +222,16 @@ function ouvrirOeuvreFilmographie(credit, titre){
  info.append(meta,label,synopsis);
  if(id){const lien=document.createElement('a');lien.textContent='Consulter la fiche complète sur TMDB';lien.href='https://www.themoviedb.org/'+type+'/'+encodeURIComponent(id)+'?language=fr-FR';lien.target='_blank';lien.rel='noopener noreferrer';lien.style.color='#ffe0a0';info.append(lien)}
  const proposal=document.createElement('button');proposal.type='button';proposal.textContent='Proposer '+(type==='tv'?'cette série':'ce film');proposal.style.cssText='display:block;margin-top:16px;background:#235941;color:#ffe6af;border:1px solid #d7b36d;border-radius:5px;padding:10px 14px;cursor:pointer;font:inherit';proposal.addEventListener('click',()=>window.cinemalandProposerFilmographie(titre,String(credit.date||credit.release_date||credit.first_air_date||'').slice(0,4),type==='tv'?'Série':'Film'));info.append(proposal);
+ // Lien discret réservé à l'ajout direct par l'administration (même circuit que Films/Séries).
+ const anneeAdmin=String(credit.date||credit.release_date||credit.first_air_date||'').slice(0,4);
+ if(/^\d{4}$/.test(anneeAdmin)){
+  const ajouterAdmin=document.createElement('a');
+  ajouterAdmin.textContent='Ajouter à ma vidéothèque (administration)';
+  ajouterAdmin.style.cssText='display:block;width:max-content;margin-top:10px;color:#d7b36d;text-decoration:underline;font-size:13px;background:transparent';
+  ajouterAdmin.href=PERSON_API+'/?'+new URLSearchParams({title:titre,year:anneeAdmin,kind:type==='tv'?'Série':'Film'}).toString();
+  ajouterAdmin.target='_blank';ajouterAdmin.rel='noopener noreferrer';
+  info.append(ajouterAdmin);
+ }
  row.append(info);d.append(retour,h,row);document.body.append(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.showModal();
  if(id)fetch(PERSON_API+'/details?'+new URLSearchParams({type,id:String(id)})).then(r=>r.ok?r.json():null).then(data=>{if(!data||!d.isConnected)return;const details=data.details||data;const overview=details.overview||details.summary||details.description;if(overview)synopsis.textContent=overview}).catch(()=>{});
 }
