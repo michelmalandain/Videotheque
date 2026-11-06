@@ -566,10 +566,25 @@ async function cinemalandDistribution(x){
  cinemalandDistributionCache.set(key,promise);return promise;
 }
 async function cinemalandRemplirDistribution(x,element,tag){
- const cast=await cinemalandDistribution(x);if(!cast)return;
+ // CINEMALAND décide des personnes affichées ; TMDB ne fait qu'enrichir leurs données.
+ const local=Array.isArray(x.cast)?x.cast:[];
+ if(!local.length)return;
+ const remote=await cinemalandDistribution(x);
  if(tag==='li'&&document.getElementById('film-dialog').dataset.currentTitle!==x.title)return;
+ if(!Array.isArray(remote))return;
+ const norm=s=>String(s||'').trim().normalize('NFC').toLocaleLowerCase('fr');
  element.replaceChildren();
- for(const a of cast.slice(0,10)){const li=document.createElement(tag);li.append(filmographyLink(a,x,'actor'));if(a.character)li.append(document.createTextNode(' — '+a.character));element.append(li)}
+ for(const original of local.slice(0,10)){
+  const name=typeof original==='string'?original:original.name;
+  const tmdb=remote.find(p=>norm(p?.name)===norm(name));
+  const person=typeof original==='string'?{name}:original;
+  const enriched={...tmdb,...person,name};
+  if(!enriched.profile_path&&tmdb?.profile_path)enriched.profile_path=tmdb.profile_path;
+  const li=document.createElement(tag);
+  li.append(filmographyLink(enriched,x,'actor'));
+  if(person.character)li.append(document.createTextNode(' — '+person.character));
+  element.append(li);
+ }
 }
 function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre;document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[],x);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,10)){const li=document.createElement('li');li.append(filmographyLink(a,x,'actor'));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal();cinemalandRemplirDistribution(x,cast,'li');window.cinemalandAfficherAvisFiche?.(x);window.cinemalandLienGerer?.(x)}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
 /* Décors TMDB chargés à la demande, avec cache de session et sans modifier le catalogue. */
