@@ -1635,7 +1635,13 @@ window.CINEMALAND_CATALOGUE = [
       },
       {
         "name": "Christian Barbier",
+        "tmdb_id": 1507315,
         "character": "Léon, Mathilde’s Husband"
+      },
+      {
+        "name": "Christian Barbier",
+        "tmdb_id": 44509,
+        "character": ""
       },
       {
         "name": "Pierre Dux",
@@ -2842,6 +2848,7 @@ window.CINEMALAND_CATALOGUE = [
     "cast": [
       {
         "name": "Christian Barbier",
+        "tmdb_id": 44509,
         "character": "Joseph Durtol"
       },
       {
