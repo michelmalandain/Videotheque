@@ -4,8 +4,8 @@
 .search-results{display:none;max-height:270px;overflow-y:auto;margin-top:5px;border:1px solid #c99e5b;border-radius:4px;background:#092f25}.search-results button{display:block;width:100%;text-align:left;margin:0;border:0;border-bottom:1px solid #6b7753;border-radius:0;padding:10px 12px;background:#0b4935;color:#ffe6b4;font:15px Georgia,serif}.search-results button:hover,.search-results button:focus{background:#17664b}.search-results .no-result{padding:10px;color:#f5d6a0;font-size:14px}.catalogue-counts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 16px}.catalogue-count{border:1px solid #d6b06a;border-radius:7px;padding:10px 18px;text-align:center;min-width:140px;background:#043224}.catalogue-count strong{display:block;font-size:27px;color:#ffe2a7}.catalogue-count span{font-size:13px;color:#e3cda7}</style></head><body><header><h1>CINEMALAND — ACTEURS ET RÉALISATEURS</h1><p>Modification des acteurs et réalisateurs</p></header><main><div class="panels">
 <section class="panel"><h2>ACCÈS ADMINISTRATEUR</h2><label for="pass">Mot de passe administrateur</label><input type="password" id="pass" autocomplete="off"><label class="remember-label"><input type="checkbox" id="remember">Mémoriser sur cet ordinateur</label><p class="note">Attention : la mémorisation conserve le mot de passe dans ce navigateur. À éviter sur un ordinateur partagé.</p><p id="msg">Saisissez votre mot de passe, puis chargez une catégorie.</p></section>
 <section class="panel" style="display:none" aria-hidden="true"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><div id="film-results" class="search-results" role="listbox" aria-label="Résultats films et séries"></div><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
-<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des identifiants TMDB uniques présents dans les crédits du catalogue.</p><button id="load-people">CHARGER LES PERSONNES</button><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche exclusivement parmi les personnes du catalogue possédant un identifiant TMDB. Aucune création de personne.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
-</div><footer><a href="./admin.html">RETOUR À L’ADMINISTRATION</a></footer></main><script>
+<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des noms distincts présents dans les crédits du catalogue (identifiants TMDB à confirmer).</p><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche parmi les personnes du catalogue. Identification sur TMDB avant toute modification ; aucune attribution automatique aux homonymes.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
+</div><footer><a href="https://videotheque-admin.michelmalandain.workers.dev/">RETOUR À L’ADMINISTRATION</a></footer></main><script>
 const $=id=>document.getElementById(id);
 const WORKER='https://videotheque-admin.michelmalandain.workers.dev';
 let entries=[],sha=null,index=-1,personId='',people={},original=null,controls=[];let activeGroup='Film';
@@ -39,36 +39,55 @@ function searchResults(group){
    setGroup(isPerson?'people':$('media-kind').value);
    $(isPerson?'people-search':'film-search').value=result.label;
    hideResults(group);
-   if(isPerson)openPerson(result.id);else openEntry(result.id);
+   if(isPerson)openPerson(result.id,result.name);else openEntry(result.id);
  };target.append(button)}
 }
 $('film-search').addEventListener('input',()=>searchResults('catalogue'));
 $('people-search').addEventListener('input',()=>searchResults('people'));
 
 function openEntry(i){if(!Number.isInteger(i)||!entries[i])return;index=i;const x=entries[i];$('film-heading').textContent=(x.title||'Fiche')+' — '+x.kind;render(x)}
-async function openPerson(id){
- personId=String(id);let x=people[personId];
-  if(!/^[1-9]\d{0,9}$/.test(personId)){msg('Identifiant TMDB obligatoire.');return}
-  if(!x){
-   try{msg('Chargement de la fiche…');const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');x={name:j.name||'',first_name:'',last_name:'',birthday:j.birthday||'',place_of_birth:j.place_of_birth||'',nationality:'',deathday:j.deathday||'',biography:j.biography||'',profile_path:j.profile_path||''};}catch(e){msg('Erreur : '+e.message);return}
-  }
- $('people-heading').textContent=x.name||'Personne du catalogue';render(x);msg('Fiche chargée : '+$('people-heading').textContent);
+async function openPerson(id,name){
+ personId=String(id);
+ if(!/^[1-9]\d{0,9}$/.test(personId)){
+  const target=states.people?.directory?.find(p=>p.id===personId);
+  const fullName=name||target?.name||'';
+  if(!fullName){msg('Nom introuvable dans le catalogue.');return}
+  msg('Recherche de « '+fullName+' » sur TMDB…');
+  try{
+   const parts=fullName.split(/\s+/),last=parts.pop(),first=parts.join(' ');
+   const response=await fetch(WORKER+'/person-search?'+new URLSearchParams({first,last}));
+   const data=await response.json();
+   if(!response.ok)throw Error(data.message||'Recherche TMDB indisponible');
+   const matches=(data.people||[]).filter(p=>norm(p.name)===norm(fullName)&&/^[1-9]\d{0,9}$/.test(String(p.id)));
+   const unique=[...new Map(matches.map(p=>[String(p.id),p])).values()];
+   const results=$('people-results');results.replaceChildren();results.style.display='block';
+   if(!unique.length){msg('Aucune fiche TMDB exacte pour « '+fullName+' ». Aucune identité attribuée.');return}
+   msg(unique.length+' fiche(s) TMDB pour « '+fullName+' ». Choisissez la bonne identité.');
+   for(const p of unique){const button=document.createElement('button');button.type='button';button.textContent=p.name+' — TMDB '+p.id;button.onclick=()=>{results.style.display='none';openPerson(String(p.id))};results.append(button)}
+  }catch(e){msg('Erreur TMDB : '+e.message)}
+  return;
+ }
+ let x=people[personId];
+ if(!x){
+  try{msg('Chargement de la fiche TMDB…');const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');const info=j.person||j.details||j;x={name:info.name||'',first_name:'',last_name:'',birthday:info.birthday||'',place_of_birth:info.place_of_birth||'',nationality:'',deathday:info.deathday||'',biography:info.biography||'',profile_path:info.profile_path||''};}catch(e){msg('Erreur : '+e.message);return}
+ }
+ $('people-heading').textContent=(x.name||'Personne du catalogue')+' — TMDB '+personId;render(x);msg('Fiche chargée : '+$('people-heading').textContent);
 }
-// Répertoire dédoublonné uniquement par identifiant TMDB, jamais par nom.
+// Les noms sans ID restent consultables, mais une identité TMDB doit être choisie avant toute correction.
 function peopleDirectory(catalogue){
  const map=new Map();
  const collect=(value,role)=>{
   if(Array.isArray(value)){value.forEach(x=>collect(x,role));return}
-  if(!value||typeof value!=='object')return;
-  const name=String(value.name||'').trim();
-  const rawId=value.tmdb_id??value.tmdbId??value.id;
-  const id=String(rawId??'');
-  if(!name||!/^[1-9]\d{0,9}$/.test(id))return;
-  if(!map.has(id))map.set(id,{id,name,roles:new Set()});
-  map.get(id).roles.add(role);
+  const name=String(typeof value==='string'?value:(value?.name||'')).trim();if(!name)return;
+  const rawId=typeof value==='object'&&value?(value.tmdb_id??value.tmdbId??value.id):null;
+  const valid=/^[1-9]\d{0,9}$/.test(String(rawId??''));
+  const id=valid?String(rawId):null;
+  const key=id?'id:'+id:'nom:'+norm(name);
+  if(!map.has(key))map.set(key,{id:id||key,name,roles:new Set()});
+  map.get(key).roles.add(role);
  };
- for(const film of catalogue||[]){collect(film.cast,'Acteur');collect(film.director,'Réalisateur');collect(film.directors,'Réalisateur')}
- return [...map.values()].map(x=>({id:x.id,name:x.name,label:x.name+' — '+[...x.roles].join(' / ')})).sort((a,b)=>alphabetique(a.label,b.label));
+ for(const film of catalogue||[]){collect(film.cast,'Acteur');collect(film.actors,'Acteur');collect(film.director,'Réalisateur');collect(film.directors,'Réalisateur');collect(film.creators,'Réalisateur')}
+ return [...map.values()].map(x=>({id:x.id,name:x.name,label:x.name+' — '+[...x.roles].join(' / ')+(String(x.id).startsWith('nom:')?' (ID à confirmer)':'')})).sort((a,b)=>alphabetique(a.label,b.label));
 }
 function updatePeopleCounters(catalogue){
  const directory=peopleDirectory(catalogue);
@@ -206,11 +225,11 @@ async function loadGroup(group){setGroup(group);try{
  const [data,cat]=await Promise.all([api('GET','people'),api('GET','catalogue')]);
  states.people={entries:data.entries||{},sha:data.sha,directory:peopleDirectory(cat.entries||[])};states.catalogue={entries:cat.entries||[],sha:cat.sha};
  updatePeopleCounters(cat.entries);setGroup('people');
- msg('Corrections chargées. Recherche limitée aux identifiants TMDB du catalogue.');searchResults('people');
+ msg('Catalogue chargé. Sélectionnez une personne pour confirmer son identité TMDB.');searchResults('people');
  }catch(e){msg('Erreur : '+e.message)}}
 $('media-kind').onchange=()=>{setGroup($('media-kind').value);searchResults('catalogue')};
 $('load-films').onclick=()=>loadGroup($('media-kind').value);
-$('load-people').onclick=()=>loadGroup('people');
+
 $('film-search').addEventListener('focus',()=>{if(activeGroup==='people')setGroup($('media-kind').value)});
 $('people-search').addEventListener('focus',()=>{if(activeGroup!=='people')setGroup('people')});
 
@@ -219,5 +238,7 @@ const storageKey='cinemaland-admin2-password';
 $('pass').value=localStorage.getItem(storageKey)||'';
 $('remember').checked=!!localStorage.getItem(storageKey);
 $('remember').onchange=()=>{if($('remember').checked)localStorage.setItem(storageKey,$('pass').value);else localStorage.removeItem(storageKey)};
-$('pass').oninput=()=>{if($('remember').checked)localStorage.setItem(storageKey,$('pass').value)};
+let reloadTimer;
+$('pass').oninput=()=>{if($('remember').checked)localStorage.setItem(storageKey,$('pass').value);clearTimeout(reloadTimer);reloadTimer=setTimeout(()=>{if($('pass').value.trim())loadGroup('people')},900)};
+if($('pass').value.trim())loadGroup('people');else msg('Saisissez votre mot de passe : le chargement démarrera automatiquement.');
 </script></body></html>
