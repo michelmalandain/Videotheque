@@ -138,6 +138,23 @@ async function openActorDetail(person){
   const profile=document.createElement('div');profile.className='actor-profile';const photo=document.createElement('div');if(p.profile_path||person.photo){const img=document.createElement('img');img.alt='Portrait de '+p.name;const path=p.profile_path||person.photo;img.src=String(path).startsWith('http')?path:'https://image.tmdb.org/t/p/w342'+path;photo.append(img)}else photo.textContent='Photographie indisponible';profile.append(photo);
   const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);
   for(const [label,value] of [['Naissance',p.birthday?actorDate(p.birthday):null],['Lieu de naissance',p.place_of_birth],['Décès',p.deathday?actorDate(p.deathday):null],['Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department]])if(value){const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value));facts.append(line)}profile.append(facts);actorContent.append(profile);
+  // Suppression administrative d'un identifiant TMDB, jamais d'un nom entier.
+  const adminArea=document.createElement('div');adminArea.style.cssText='margin:15px 0;padding:13px;border:1px solid #a88a54;border-radius:7px;background:#09251d';
+  const tmdbLabel=document.createElement('p');tmdbLabel.textContent='Identifiant TMDB : '+id;adminArea.append(tmdbLabel);
+  const localInfo=document.createElement('p');localInfo.textContent='Vérification des titres du catalogue avant toute suppression.';adminArea.append(localInfo);
+  const removeBtn=document.createElement('button');removeBtn.type='button';removeBtn.textContent='SUPPRIMER DE CINEMALAND (ADMINISTRATION)';removeBtn.style.cssText='padding:9px 13px;border:1px solid #d7b36d;background:#68232b;color:#ffe6af;cursor:pointer;font:inherit;border-radius:5px';adminArea.append(removeBtn);
+  const removalStatus=document.createElement('p');removalStatus.setAttribute('role','status');adminArea.append(removalStatus);
+  removeBtn.onclick=async()=>{
+   const password=prompt('Mot de passe administrateur pour vérifier la suppression de '+(p.name||person.name)+' (TMDB '+id+') :');
+   if(!password)return;
+   if(!confirm('Vérifier les films et séries liés à cet identifiant TMDB, puis exclure cette fiche uniquement si aucun titre ne lui est associé ?'))return;
+   removeBtn.disabled=true;removalStatus.textContent='Vérification des films et séries dans le catalogue…';
+   try{const response=await fetch(PERSON_API+'/person-exclusions',{method:'POST',headers:{'Authorization':'Bearer '+password,'Content-Type':'application/json'},body:JSON.stringify({id:String(id),name:p.name||person.name,role:'actor'})});const data=await response.json();
+    if(!response.ok){removalStatus.textContent=(data.message||'Suppression refusée.')+(data.titles?.length?' Titres : '+data.titles.join(', '):'');return}
+    removalStatus.textContent='Fiche TMDB '+id+' exclue définitivement de CINEMALAND.';removeBtn.remove();person.id=null;actorDialog.close();
+   }catch(e){removalStatus.textContent='Erreur de connexion : aucune suppression effectuée.'}finally{removeBtn.disabled=false}
+  };
+  actorContent.append(adminArea);
   const biography=actorSection('BIOGRAPHIE');biography.classList.add('bio-readable');
   // Conserver le texte TMDB, ses paragraphes et ses sauts de ligne.
   // Si TMDB fournit un seul bloc très long, l'aérer entre les phrases sans modifier les mots.
