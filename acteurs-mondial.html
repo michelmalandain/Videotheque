@@ -13,7 +13,8 @@ const entries=new Map();
 function add(person,film){
  const name=typeof person==='string'?person:(person?.name||'');
  if(!name.trim())return;
- const key=name.trim().toLocaleLowerCase('fr');
+ const rawId=person&&typeof person==='object'?(person.tmdb_id||person.id):null;
+  const key=/^[1-9]\d*$/.test(String(rawId||''))?'tmdb:'+rawId:'name:'+name.trim().toLocaleLowerCase('fr');
  let row=entries.get(key);
  if(!row){row={name:name.trim(),id:null,photo:null,films:new Set()};entries.set(key,row)}
  if(person && typeof person==='object'){
@@ -112,57 +113,7 @@ const actorDialog=document.getElementById('actor-detail');
 const actorContent=document.getElementById('actor-content');
 // Retour à la liste et à son filtre, sans quitter la page mondiale.
 document.getElementById('actor-close').onclick=()=>actorDialog.close();
-// Compléments Wikidata : correspondance exacte par identifiant TMDB (P4985).
-// Aucune nationalité n'est déduite du lieu de naissance.
-const BIO_WIKIDATA_PROPS={P27:'Nationalité',P26:'Conjoint(e)',P40:'Enfants',P22:'Père',P25:'Mère',P69:'Formation',P856:'Site officiel',P106:'Profession'};
-const BIO_NATIONALITES={'Q142':'Française','Q183':'Allemande','Q38':'Italienne','Q29':'Espagnole','Q31':'Belge','Q39':'Suisse','Q16':'Canadienne','Q30':'Américaine','Q145':'Britannique','Q17':'Japonaise','Q148':'Chinoise','Q155':'Brésilienne','Q159':'Russe','Q96':'Mexicaine','Q408':'Australienne','Q55':'Néerlandaise','Q20':'Norvégienne','Q34':'Suédoise','Q35':'Danoise','Q33':'Finlandaise','Q36':'Polonaise','Q45':'Portugaise','Q41':'Grecque','Q43':'Turque','Q262':'Algérienne','Q1041':'Sénégalaise','Q1028':'Marocaine','Q948':'Tunisienne','Q79':'Égyptienne','Q668':'Indienne','Q884':'Sud-coréenne','Q801':'Israélienne','Q27':'Irlandaise','Q40':'Autrichienne','Q212':'Ukrainienne','Q414':'Argentine'};
-async function bioWikidata(id){
- if(!/^\d+$/.test(String(id)))return null;
- const query=`SELECT ?person ?prop ?value ?valueLabel ?relativeTmdb WHERE {
-  ?person wdt:P4985 "${id}" .
-  VALUES ?prop { wdt:P27 wdt:P26 wdt:P40 wdt:P22 wdt:P25 wdt:P69 wdt:P856 wdt:P106 }
-  ?person ?prop ?value .
-  OPTIONAL { ?value wdt:P4985 ?relativeTmdb . }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
- } LIMIT 150`;
- const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),11000);
- try{
-  const url='https://query.wikidata.org/sparql?format=json&query='+encodeURIComponent(query);
-  const response=await fetch(url,{headers:{Accept:'application/sparql-results+json'},signal:controller.signal});
-  if(!response.ok)throw Error('Wikidata indisponible');
-  const json=await response.json();const result={};
-  for(const row of json.results?.bindings||[]){
-   const prop=row.prop?.value?.match(/P\d+$/)?.[0];if(!BIO_WIKIDATA_PROPS[prop])continue;
-   const qid=row.value?.value?.match(/Q\d+$/)?.[0];
-   let label=row.valueLabel?.value||row.value?.value;
-   if(prop==='P27'&&qid&&BIO_NATIONALITES[qid])label=BIO_NATIONALITES[qid];
-   if(!label||/^https?:\/\/www.wikidata.org\/entity\/Q\d+$/.test(label))continue;
-   (result[prop]??=new Map()).set(label,{label,tmdb:row.relativeTmdb?.value||null});
-  }
-  return result;
- }finally{clearTimeout(timer)}
-}
-function bioAjouterWikidata(place,data){
- if(!data)return;
- for(const prop of ['P27','P26','P40','P22','P25','P69','P856']){
-  const valeurs=[...(data[prop]?.values()||[])];if(!valeurs.length)continue;
-  const line=document.createElement('p'),bold=document.createElement('strong');
-  bold.textContent=BIO_WIKIDATA_PROPS[prop]+' : ';line.append(bold);
-  valeurs.forEach((item,i)=>{
-   if(i)line.append(document.createTextNode(' ; '));
-   if(prop==='P856'){
-    try{const url=new URL(item.label);if(!['https:','http:'].includes(url.protocol))throw Error();
-     const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';link.textContent=item.label;link.className='bio-link';line.append(link);
-    }catch(e){line.append(document.createTextNode(item.label))}
-   }else if(['P26','P40','P22','P25'].includes(prop)&&/^\d+$/.test(String(item.tmdb||''))){
-    const link=document.createElement('a');link.className='bio-link';link.textContent=item.label;
-    const params=new URLSearchParams({personne:item.label,hall:'1',person_id:item.tmdb});
-    link.href='index.html?'+params;line.append(link);
-   }else line.append(document.createTextNode(item.label));
-  });place.append(line);
- }
-}
-
+// Données biographiques : TMDB uniquement. Aucun appel à Wikidata.
 const actorDate=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:(v||'Non renseignée')};
 function actorSection(title){const sec=document.createElement('section');sec.className='actor-section';const h=document.createElement('h3');h.textContent=title;sec.append(h);actorContent.append(sec);return sec}
 async function openActorDetail(person){
@@ -172,13 +123,8 @@ async function openActorDetail(person){
   if(!id){const words=person.name.trim().split(/\s+/),last=words.pop(),first=words.join(' ');const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1)throw Error('Identité ambiguë : impossible de choisir cet acteur avec certitude.');id=matches[0].id;person.id=id;}
   const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(id));if(!r.ok)throw Error('Fiche indisponible');const p=await r.json();actorContent.replaceChildren();
   const profile=document.createElement('div');profile.className='actor-profile';const photo=document.createElement('div');if(p.profile_path||person.photo){const img=document.createElement('img');img.alt='Portrait de '+p.name;const path=p.profile_path||person.photo;img.src=String(path).startsWith('http')?path:'https://image.tmdb.org/t/p/w342'+path;photo.append(img)}else photo.textContent='Photographie indisponible';profile.append(photo);
-  const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);const wikidataPlace=document.createElement('div');facts.append(wikidataPlace);
+  const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);
   for(const [label,value] of [['Naissance',p.birthday?actorDate(p.birthday):null],['Lieu de naissance',p.place_of_birth],['Décès',p.deathday?actorDate(p.deathday):null],['Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department]])if(value){const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value));facts.append(line)}profile.append(facts);actorContent.append(profile);
-   // Compléments Wikidata non bloquants : la fiche TMDB reste utilisable.
-   bioWikidata(id).then(data=>{
-    if(!data||!wikidataPlace.isConnected)return;
-    bioAjouterWikidata(wikidataPlace,data);
-   }).catch(()=>{});
   const biography=actorSection('BIOGRAPHIE');biography.classList.add('bio-readable');
   // Conserver le texte TMDB, ses paragraphes et ses sauts de ligne.
   // Si TMDB fournit un seul bloc très long, l'aérer entre les phrases sans modifier les mots.
