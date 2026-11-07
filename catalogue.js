@@ -3151,5 +3151,42 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Matrix Revolutions",
+    "kind": "Film",
+    "year": 2003,
+    "period": "2003",
+    "genre": "Action, Thriller, Science-Fiction",
+    "description": "Description à compléter.",
+    "poster": "affiches/matrix-revolutions.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Matrix%20Revolutions",
+    "summary": "La longue quête de liberté des rebelles culmine en une bataille finale explosive. Tandis que l'armée des Machines sème la désolation sur Sion, ses citoyens organisent une défense acharnée. Mais pourront-ils retenir les nuées implacables des Sentinelles en attendant que Neo s'approprie l'ensemble de ses pouvoirs et mette fin à la guerre ? L'agent Smith est quant à lui parvenu à prendre possession de l'esprit de Bane, l'un des membres de l'équipage de l'aéroglisseur. De plus en plus puissant, il est désormais incontrôlable et n'obéit plus aux Machines : il menace de détruire leur empire ainsi que le monde réel et la Matrice…",
+    "directors": [
+      "Lilly Wachowski",
+      "Lana Wachowski"
+    ],
+    "cast": [
+      {
+        "name": "Keanu Reeves",
+        "character": "Neo"
+      },
+      {
+        "name": "Laurence Fishburne",
+        "character": "Morpheus"
+      },
+      {
+        "name": "Carrie-Anne Moss",
+        "character": "Trinity"
+      },
+      {
+        "name": "Hugo Weaving",
+        "character": "Agent Smith"
+      },
+      {
+        "name": "Jada Pinkett Smith",
+        "character": "Niobe"
+      }
+    ]
   }
 ];
