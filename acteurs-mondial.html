@@ -29,6 +29,14 @@
 .cm-actor-panel.cm-actor-admin{grid-column:1/-1;order:10}
 @media(max-width:850px){.actor-content-grid{grid-template-columns:1fr}.actor-content-grid>.actor-profile{grid-template-columns:170px 1fr}.cm-actor-panel.cm-actor-filmography .actor-tickets{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){.actor-content-grid>.actor-profile{grid-template-columns:1fr}.actor-content-grid>.actor-profile>div:first-child{min-height:0}.actor-content-grid>.actor-profile img{max-width:230px}.cm-actor-panel.cm-actor-filmography .actor-tickets{grid-template-columns:1fr}.cm-actor-panel .cm-family-line{grid-template-columns:90px 1fr}}
+</style><style id="cm-family-awards-stack-20261107">
+/* Colonne droite compacte : famille puis distinctions, sans hauteur étirée. */
+.cm-actor-side{display:flex;flex-direction:column;gap:14px;min-width:0;align-self:start}
+.cm-actor-side>.cm-actor-panel{margin:0;padding:13px 17px;min-height:0;flex:0 0 auto}
+.cm-actor-side>.cm-actor-panel h3{font-size:clamp(19px,1.9vw,26px);margin-bottom:8px;padding-bottom:7px}
+.cm-actor-side .cm-family-line{padding:3px 0;grid-template-columns:105px minmax(0,1fr)}
+.cm-actor-side .cm-actor-panel p{line-height:1.4}
+@media(max-width:850px){.cm-actor-side{grid-column:1}}
 </style></head><body><header><h1>CINÉMA MONDIAL</h1><p>ACTEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html" aria-current="page">ACTEURS</a><a href="realisateurs-mondial.html">RÉALISATEURS</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='actor', all=window.CINEMALAND_CATALOGUE;
@@ -268,7 +276,8 @@ function cmArrangeActorProfile(actorId){
  filmography.classList.add('cm-actor-panel','cm-actor-filmography');filmography.querySelector('h3').textContent='Filmographie';
  const admin=[...actorContent.children].find(x=>x.style?.background==='rgb(9, 37, 29)'||x.querySelector?.('button')?.textContent?.includes('SUPPRIMER DE CINEMALAND'));
  if(admin)admin.classList.add('cm-actor-panel','cm-actor-admin');
- grid.append(profile,biography,family,awards,filmography);if(admin)grid.append(admin);actorContent.append(grid);
+ const side=document.createElement('div');side.className='cm-actor-side';side.append(family,awards);
+ grid.append(profile,biography,side,filmography);if(admin)grid.append(admin);actorContent.append(grid);
  cmActorFamily(actorId,family);cmActorAwards(actorId,awards);
 }
 
