@@ -3147,6 +3147,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Julie-Marie Parmentier",
         "character": "Jeanne"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];
