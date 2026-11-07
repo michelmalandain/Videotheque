@@ -32,7 +32,7 @@ window.CINEMALAND_CATALOGUE = [
       }
     ],
     "production_countries": [
-      "GB"
+      "France"
     ]
   },
   {
