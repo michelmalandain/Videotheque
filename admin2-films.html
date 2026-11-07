@@ -71,20 +71,24 @@ function render(data){
   const actions=document.createElement('div');actions.className='field-actions';wrap.append(actions);
   let readValue;
   if(Array.isArray(val)&&key==='production_countries'){
-    // Un seul choix de pays, son code ISO est déduit automatiquement.
-    const select=document.createElement('select');
+    // Colonne code ISO — colonne nom ; seule la valeur ISO est sauvegardée.
     const codes={'France':'FR','Belgique':'BE','Suisse':'CH','Canada':'CA','États-Unis':'US','Royaume-Uni':'GB','Italie':'IT','Espagne':'ES','Allemagne':'DE','Australie':'AU','Autriche':'AT','Brésil':'BR','Chine':'CN','Corée du Sud':'KR','Danemark':'DK','Grèce':'GR','Inde':'IN','Irlande':'IE','Japon':'JP','Luxembourg':'LU','Maroc':'MA','Mexique':'MX','Norvège':'NO','Pays-Bas':'NL','Pologne':'PL','Portugal':'PT','Suède':'SE','Turquie':'TR'};
-    select.add(new Option('Choisir un pays',''));
-    for(const country of COUNTRIES)select.add(new Option(country,country));
-    const currentName=val.length===1?normalizeCountry(val[0]):'';
-    if(currentName&&!COUNTRIES.includes(currentName))select.add(new Option(currentName,currentName));
-    select.value=currentName;
+    const namesByCode=Object.fromEntries(Object.entries(codes).map(([name,code])=>[code,name]));
+    const raw=val.length===1?normalizeCountry(val[0]):'';
+    const currentCode=codes[raw]||String(raw).toUpperCase();
+    const select=document.createElement('select');
+    select.add(new Option('Code ISO — Pays',''));
+    for(const [name,code] of Object.entries(codes))select.add(new Option(code+' — '+name,code));
+    if(currentCode&&!namesByCode[currentCode])select.add(new Option(currentCode+' — Pays non répertorié',currentCode));
+    select.value=currentCode;
     actions.append(select);
     readValue=()=>{
-     const name=select.value;if(!name)throw Error('Choisissez un pays de production.');
-     const sample=val.find(x=>x&&typeof x==='object');
-     if(sample){const item={...sample,name};if('iso_3166_1' in item)item.iso_3166_1=codes[name]||'';return [item]}
-     return [name];
+      const code=select.value;if(!code)throw Error('Choisissez un pays de production.');
+      // Le catalogue utilise le code ISO : jamais le libellé français.
+      // Convertir aussi les anciennes valeurs textuelles même sans changer la sélection.
+      const sample=val.find(x=>x&&typeof x==='object');
+      if(sample)return [{...sample,name:namesByCode[code]||sample.name||code,iso_3166_1:code}];
+      return [code];
     };
    }else if(Array.isArray(val)&&(key==='cast'||key==='directors'||key==='director')){
     const editor=document.createElement('div');editor.className='list-editor';actions.append(editor);actions.style.display='block';
