@@ -146,7 +146,8 @@ function render(data){
  if(kind()==='catalogue'){
    const saveAll=document.createElement('button');saveAll.type='button';saveAll.id='save-all';saveAll.textContent='VALIDER LES MODIFICATIONS';
    saveAll.style.marginTop='20px';
-   root.after(saveAll);
+   const previousSave=$('save-all');if(previousSave)previousSave.remove();
+   $('film-editor').append(saveAll);
    saveAll.onclick=async()=>{
      if(saving)return;
      const group=kind(),currentIndex=index,currentId=personId;
