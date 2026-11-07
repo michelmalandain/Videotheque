@@ -3093,5 +3093,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Man"
       }
     ]
+  },
+  {
+    "title": "Sheitan",
+    "kind": "Film",
+    "year": 2006,
+    "period": "2006",
+    "genre": "Comédie, Horreur, Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/sheitan.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Sheitan",
+    "summary": "La veille de Noël, Bart, Ladj, Thai, Yasmine et Eve quittent une soirée qui a mal tournée. Eve, très allumeuse, les invite chez elle. Mais lorsque la jeunesse des villes se retrouve dans les griffes de Joseph, l’étrange gardien de sa maison de campagne, la rencontre bascule dans le conte sanglant…",
+    "directors": [
+      "Kim Chapiron"
+    ],
+    "cast": [
+      {
+        "name": "Vincent Cassel",
+        "character": "Joseph"
+      },
+      {
+        "name": "Olivier Barthélémy",
+        "character": "Bart"
+      },
+      {
+        "name": "Roxane Mesquida",
+        "character": "Eve"
+      },
+      {
+        "name": "Leïla Bekhti",
+        "character": "Yasmine"
+      },
+      {
+        "name": "Julie-Marie Parmentier",
+        "character": "Jeanne"
+      }
+    ]
   }
 ];
