@@ -3271,6 +3271,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Chris Tucker",
         "character": "Ruby Rhod"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];
