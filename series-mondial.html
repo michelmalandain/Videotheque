@@ -1102,4 +1102,61 @@ function openBioProposal(title,year,kind){
 @media(max-width:850px){#person-dialog #person-films{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:600px){#person-dialog .cm-harmonie-profile{grid-template-columns:1fr!important}#person-dialog .cm-harmonie-profile img{max-width:210px!important}#person-dialog #person-films{grid-template-columns:1fr!important}}
 #person-dialog .cm-panel h3::before,#person-dialog .cm-panel h3::after{background:transparent!important;background-image:none!important}
-</style></body></html>
+</style><style id="cm-fiche-series-reorganisation-20261107">
+/* Seule la fiche détaillée est réorganisée : aucun style des listes modifié. */
+#film-dialog .cm-section-title{font:small-caps bold 22px Georgia,serif;color:#f5cc7b;letter-spacing:.04em;margin:20px 32px 9px;border-bottom:1px solid #9d743d;padding-bottom:7px}
+#film-dialog .cm-synopsis{margin:18px 32px 0;padding:16px 22px;border:1px solid #856133;border-radius:8px;background:#211019d9}
+#film-dialog .cm-synopsis #film-summary{margin:0;line-height:1.65;white-space:pre-line}
+#film-dialog .fiche-infos-complementaires{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 24px;margin-top:8px}
+#film-dialog .fiche-infos-complementaires p{min-width:0;overflow-wrap:anywhere}
+#film-dialog .fiche-infos-complementaires .fiche-recompenses{grid-column:1/-1}
+#film-dialog .cm-credits{margin:12px 32px;padding:16px 22px;border:1px solid #856133;border-radius:8px;background:#211019d9}
+#film-dialog .cm-credits h3{color:#f5cc7b;margin:6px 0 10px}
+#film-dialog .cm-credits #film-cast{margin-left:0;margin-right:0}
+#film-dialog .cm-credits #film-director{margin-bottom:16px}
+@media(max-width:650px){#film-dialog .fiche-infos-complementaires{grid-template-columns:1fr}#film-dialog .cm-section-title{margin:16px 18px 8px}#film-dialog .cm-synopsis,#film-dialog .cm-credits{margin-left:18px;margin-right:18px;padding:12px}}
+</style>
+<script id="cm-fiche-series-reorganisation-20261107-js">
+(function(){
+ const dlg=document.getElementById('film-dialog');
+ const info=dlg?.querySelector('.fiche-infos-complementaires');
+ const summary=document.getElementById('film-summary');
+ const directorTitle=document.getElementById('director-label');
+ const director=document.getElementById('film-director');
+ const cast=document.getElementById('film-cast');
+ if(!dlg||!info||!summary||!directorTitle||!director||!cast||typeof window.openFilm!=='function')return;
+ const sectionTitle=(name)=>{const h=document.createElement('h3');h.className='cm-section-title';h.textContent=name;return h};
+ const synopsis=document.createElement('section');synopsis.className='cm-synopsis';
+ const synopsisTitle=sectionTitle('Synopsis');summary.before(synopsisTitle);synopsisTitle.after(synopsis);synopsis.append(summary);
+ const techTitle=sectionTitle('Fiche technique');synopsis.after(techTitle);techTitle.after(info);
+ const credits=document.createElement('section');credits.className='cm-credits';
+ const castTitle=cast.previousElementSibling;
+ info.after(credits);credits.append(directorTitle,director,castTitle,cast);
+ const creditsTitle=sectionTitle('Création et distribution');credits.before(creditsTitle);
+ const rows={};
+ function row(label){const p=document.createElement('p');const b=document.createElement('strong');b.textContent=label+' : ';p.append(b);info.append(p);return p}
+ rows.original=row('Titre original');rows.first=row('Première diffusion');rows.last=row('Dernière diffusion');rows.seasons=row('Saisons');rows.episodes=row('Épisodes');rows.tmdb=row('Référence TMDB');
+ const labels={original:'Titre original',first:'Première diffusion',last:'Dernière diffusion',seasons:'Saisons',episodes:'Épisodes',tmdb:'Référence TMDB'};
+ function set(key,value){const p=rows[key];p.replaceChildren();const b=document.createElement('strong');b.textContent=labels[key]+' : ';p.append(b,document.createTextNode(value===0?'0':value||'Non renseigné'))}
+ function date(value){const m=String(value||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?m[3]+'/'+m[2]+'/'+m[1]:value||''}
+ let serial=0;const previous=window.openFilm;
+ window.openFilm=function(x){
+  const token=++serial;
+  const id=x.tmdb_id||x.tmdbId||x.tmdb?.id||x.tmdb_tv_id;
+  set('original',x.original_name||x.original_title||x.originalName||'');set('first',date(x.first_air_date||''));set('last',date(x.last_air_date||''));set('seasons',x.number_of_seasons||'');set('episodes',x.number_of_episodes||'');set('tmdb',String(id||''));
+  const result=previous.apply(this,arguments);
+  const params=new URLSearchParams({type:'tv',title:x.title||'',year:String(x.year||'').match(/\d{4}/)?.[0]||''});if(id)params.set('id',id);
+  fetch('https://videotheque-admin.michelmalandain.workers.dev/details?'+params)
+   .then(r=>r.ok?r.json():null).then(data=>{if(token!==serial||!data)return;const d=data.details||data;
+     set('original',d.original_name||d.original_title||x.original_name||x.original_title||'');
+     set('first',date(d.first_air_date||x.first_air_date||''));
+     set('last',date(d.last_air_date||x.last_air_date||''));
+     set('seasons',d.number_of_seasons||x.number_of_seasons||'');
+     set('episodes',d.number_of_episodes||x.number_of_episodes||'');
+     set('tmdb',String(d.id||id||''));
+   }).catch(()=>{});
+  return result;
+ };
+})();
+</script>
+</body></html>
