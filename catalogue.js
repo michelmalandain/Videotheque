@@ -3236,5 +3236,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Le Cinquième Élément",
+    "kind": "Film",
+    "year": 1997,
+    "period": "1997",
+    "genre": "Science-Fiction, Action, Aventure",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-cinquieme-element.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Cinqui%C3%A8me%20%C3%89l%C3%A9ment",
+    "summary": "New York, XXIIIe siècle. Une boule de feu fonce sur la Terre. Pour l'arrêter il faut retrouver le Cinquième Élément, l'être suprême, qui, associé aux quatre éléments vitaux - l'air, l'eau, le feu et la terre - peut seul repousser Le Mal. Cornélius reçoit l'aide de Korben, taxi et ancien agent secret, et de Leeloo, extraterrestre qui a pris la forme d'une jeune femme aux cheveux oranges.",
+    "directors": [
+      "Luc Besson"
+    ],
+    "cast": [
+      {
+        "name": "Bruce Willis",
+        "character": "Korben Dallas"
+      },
+      {
+        "name": "Milla Jovovich",
+        "character": "Leeloo"
+      },
+      {
+        "name": "Gary Oldman",
+        "character": "Zorg"
+      },
+      {
+        "name": "Ian Holm",
+        "character": "Cornelius"
+      },
+      {
+        "name": "Chris Tucker",
+        "character": "Ruby Rhod"
+      }
+    ]
   }
 ];
