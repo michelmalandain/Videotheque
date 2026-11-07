@@ -3018,5 +3018,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Le Pacte des loups",
+    "kind": "Film",
+    "year": 2001,
+    "period": "2001",
+    "genre": "Aventure, Horreur, Histoire",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-pacte-des-loups.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Pacte%20des%20loups",
+    "summary": "Délégué par le roi Louis XV, le chevalier Grégoire de Fronsac, accompagné de son vieil ami Mani, un Indien de la tribu des Mohawk, arrive dans le pays du Gévaudan afin d'élucider le mystère de la Bête, qui saigne les campagnes locales depuis plus d'un an. Les premières investigations du chevalier ne tardent pas à mettre au jour des éléments troublants.",
+    "directors": [
+      "Christophe Gans"
+    ],
+    "cast": [
+      {
+        "name": "Samuel Le Bihan",
+        "character": "Grégoire de Fronsac"
+      },
+      {
+        "name": "Vincent Cassel",
+        "character": "Jean-François de Morangias"
+      },
+      {
+        "name": "Émilie Dequenne",
+        "character": "Marianne de Morangias"
+      },
+      {
+        "name": "Monica Bellucci",
+        "character": "Sylvia"
+      },
+      {
+        "name": "Jérémie Renier",
+        "character": "Thomas d'Apcher"
+      }
+    ]
   }
 ];
