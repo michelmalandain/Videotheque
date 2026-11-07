@@ -2838,6 +2838,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Juliet Lemonnier",
         "character": "Pamela Moreau"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
