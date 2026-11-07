@@ -3108,6 +3108,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Philippe Nahon",
         "character": "Man"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
