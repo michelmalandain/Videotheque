@@ -217,17 +217,38 @@ async function openActorDetail(person){
 
 // CINEMALAND : enrichissement facultatif par identifiant TMDB, sans rapprochement par homonyme.
 async function cmActorFamily(actorId,host){
- const line=(label,values)=>{if(!values.length)return;const row=document.createElement('div');row.className='cm-family-line';const heading=document.createElement('strong');heading.textContent=label;const content=document.createElement('span');values.forEach((v,i)=>{if(i)content.append(document.createTextNode(', '));if(v.tmdb){const b=document.createElement('button');b.type='button';b.className='cm-family-link';b.textContent=v.name;b.title='Ouvrir la fiche de '+v.name;b.onclick=()=>{actorDialog.close();openActorDetail({name:v.name,id:v.tmdb,photo:null,films:new Set()})};content.append(b)}else content.append(document.createTextNode(v.name))});row.append(heading,content);host.append(row)};
  const message=document.createElement('p');message.className='cm-family-note';message.textContent='Recherche des informations familiales publiques…';host.append(message);
+ const safeId=String(actorId).replace(/[^0-9]/g,'');
+ const query=`SELECT DISTINCT ?relation ?person ?personLabel ?tmdb ?start ?end WHERE {
+   ?subject wdt:P4985 "${safeId}" .
+   { VALUES (?property ?relation) {(wdt:P22 "Père") (wdt:P25 "Mère") (wdt:P40 "Enfant") (wdt:P3373 "Fratrie")}
+     ?subject ?property ?person . }
+   UNION { VALUES (?statementProperty ?valueProperty ?relation) {(p:P26 ps:P26 "Conjoint") (p:P451 ps:P451 "Compagne ou compagnon")}
+     ?subject ?statementProperty ?statement . ?statement ?valueProperty ?person .
+     OPTIONAL { ?statement pq:P580 ?start . } OPTIONAL { ?statement pq:P582 ?end . } }
+   UNION { ?person wdt:P40 ?subject . ?person wdt:P21 ?gender .
+     BIND(IF(?gender=wd:Q6581097,"Père",IF(?gender=wd:Q6581072,"Mère","Parent")) AS ?relation) }
+   OPTIONAL { ?person wdt:P4985 ?tmdb . }
+   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" . }
+ } LIMIT 100`;
+ function year(value){const match=String(value||'').match(/^[+-]?(\d{4})/);return match?match[1]:''}
+ function render(label,values){if(!values.length)return;const row=document.createElement('div');row.className='cm-family-line';const heading=document.createElement('strong');heading.textContent=label;const content=document.createElement('span');values.forEach((v,i)=>{if(i)content.append(document.createTextNode(', '));if(v.tmdb){const b=document.createElement('button');b.type='button';b.className='cm-family-link';b.textContent=v.name;b.title='Ouvrir la fiche de '+v.name;b.onclick=()=>{actorDialog.close();openActorDetail({name:v.name,id:v.tmdb,photo:null,films:new Set()})};content.append(b)}else content.append(document.createTextNode(v.name));const dates=[year(v.start),year(v.end)];if(dates.some(Boolean))content.append(document.createTextNode(' ('+(dates[0]||'?')+'–'+(dates[1]||'')+')'))});row.append(heading,content);host.append(row)}
  try{
-  const query=`SELECT ?relation ?personLabel ?tmdb WHERE { ?subject wdt:P4985 "${String(actorId).replace(/[^0-9]/g,'')}" . VALUES (?property ?relation) {(wdt:P22 "Père") (wdt:P25 "Mère") (wdt:P26 "Conjoint") (wdt:P40 "Enfant") (wdt:P3373 "Fratrie")} ?subject ?property ?person . OPTIONAL { ?person wdt:P4985 ?tmdb . } SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". } } LIMIT 45`;
-  const response=await fetch('https://query.wikidata.org/sparql?'+new URLSearchParams({query,format:'json'}),{headers:{Accept:'application/sparql-results+json'},signal:AbortSignal.timeout(7000)});
-  if(!response.ok)throw Error('Source indisponible');
-  const data=await response.json();if(!host.isConnected)return;
-  const groups=new Map();for(const row of data.results?.bindings||[]){const type=row.relation?.value,name=row.personLabel?.value;if(!type||!name||/^Q\d+$/.test(name))continue;const values=groups.get(type)||[];if(!values.some(x=>x.name===name))values.push({name,tmdb:row.tmdb?.value});groups.set(type,values)}
-  message.remove();for(const type of ['Père','Mère','Fratrie','Conjoint','Enfant'])line(type,groups.get(type)||[]);
+  const response=await fetch('https://query.wikidata.org/sparql?'+new URLSearchParams({query,format:'json'}),{headers:{Accept:'application/sparql-results+json'},signal:AbortSignal.timeout(12000)});
+  if(!response.ok)throw Error('Source indisponible');const data=await response.json();if(!host.isConnected)return;
+  const groups=new Map();
+  for(const row of data.results?.bindings||[]){const type=row.relation?.value,name=row.personLabel?.value,personId=row.person?.value;if(!type||!name||/^Q\d+$/.test(name))continue;
+   const values=groups.get(type)||[];const key=personId||name;const current=values.find(v=>v.key===key);const item={key,name,tmdb:row.tmdb?.value,start:row.start?.value,end:row.end?.value};
+   if(!current)values.push(item);else {current.tmdb ||=item.tmdb;current.start ||=item.start;current.end ||=item.end}groups.set(type,values);
+  }
+  message.remove();
+  for(const type of ['Père','Mère','Parent','Fratrie'])render(type,groups.get(type)||[]);
+  for(const [type,oldLabel,otherLabel] of [['Conjoint','Anciens conjoints','Conjoints (situation non précisée)'],['Compagne ou compagnon','Anciennes compagnes et anciens compagnons','Compagnes et compagnons (situation non précisée)']]){
+   const values=groups.get(type)||[];render(oldLabel,values.filter(v=>v.end));render(otherLabel,values.filter(v=>!v.end));
+  }
+  render('Enfant',groups.get('Enfant')||[]);
   if(!groups.size){message.textContent='Aucun lien familial vérifié disponible dans Wikidata.';host.append(message)}
- }catch(e){if(host.isConnected){message.textContent='Informations familiales indisponibles pour le moment.'}}
+ }catch(e){if(host.isConnected)message.textContent='Informations familiales indisponibles pour le moment.'}
 }
 async function cmActorAwards(actorId,host){
  try{
