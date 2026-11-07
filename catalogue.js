@@ -2918,6 +2918,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "André Thorent",
         "character": "Juré n°9"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
