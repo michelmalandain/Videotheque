@@ -76,15 +76,17 @@ function render(data){
     const codes={'France':'FR','Belgique':'BE','Suisse':'CH','Canada':'CA','États-Unis':'US','Royaume-Uni':'GB','Italie':'IT','Espagne':'ES','Allemagne':'DE','Australie':'AU','Autriche':'AT','Brésil':'BR','Chine':'CN','Corée du Sud':'KR','Danemark':'DK','Grèce':'GR','Inde':'IN','Irlande':'IE','Japon':'JP','Luxembourg':'LU','Maroc':'MA','Mexique':'MX','Norvège':'NO','Pays-Bas':'NL','Pologne':'PL','Portugal':'PT','Suède':'SE','Turquie':'TR'};
     select.add(new Option('Choisir un pays',''));
     for(const country of COUNTRIES)select.add(new Option(country,country));
-    const currentName=val.length===1?normalizeCountry(val[0]):'';
+    const codeToName=Object.fromEntries(Object.entries(codes).map(([name,code])=>[code,name]));
+    const existing=val.length===1?normalizeCountry(val[0]):'';
+    const currentName=codeToName[existing]||existing;
     if(currentName&&!COUNTRIES.includes(currentName))select.add(new Option(currentName,currentName));
     select.value=currentName;
     actions.append(select);
     readValue=()=>{
      const name=select.value;if(!name)throw Error('Choisissez un pays de production.');
-     const sample=val.find(x=>x&&typeof x==='object');
-     if(sample){const item={...sample,name};if('iso_3166_1' in item)item.iso_3166_1=codes[name]||'';return [item]}
-     return [name];
+     const code=codes[name]||(/^[A-Z]{2}$/.test(name)?name:'');
+     if(!code)throw Error('Code pays non reconnu : '+name);
+     return [code];
     };
    }else if(Array.isArray(val)&&(key==='cast'||key==='directors'||key==='director')){
     const editor=document.createElement('div');editor.className='list-editor';actions.append(editor);actions.style.display='block';
