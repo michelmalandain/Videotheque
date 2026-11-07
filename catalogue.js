@@ -2032,7 +2032,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Série",
     "year": 2026,
     "period": "2026",
-    "genre": "Mystère",
+    "genre": "Mystère, Drame",
     "description": "Description à compléter.",
     "poster": "affiches/un-job-mortel.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20job%20mortel",
@@ -2977,6 +2977,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Cloris Leachman",
         "character": "Frau Blücher"
+      }
+    ]
+  },
+  {
+    "title": "La Haine",
+    "kind": "Film",
+    "year": 1995,
+    "period": "1995",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-haine.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Haine",
+    "summary": "Trois copains d'une banlieue ordinaire traînent leur ennui et leur jeunesse qui se perd. Ils vont vivre la journée la plus importante de leur vie après une nuit d'émeutes provoquée par le passage à tabac d'Abdel Ichah par un inspecteur de police lors d'un interrogatoire.",
+    "directors": [
+      "Mathieu Kassovitz"
+    ],
+    "cast": [
+      {
+        "name": "Vincent Cassel",
+        "character": "Vinz"
+      },
+      {
+        "name": "Hubert Koundé",
+        "character": "Hubert"
+      },
+      {
+        "name": "Saïd Taghmaoui",
+        "character": "Saïd"
+      },
+      {
+        "name": "Abdel Ahmed Ghili",
+        "character": "Abdel"
+      },
+      {
+        "name": "Solo",
+        "character": "Santo"
       }
     ]
   }
