@@ -3275,5 +3275,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "La bella estate",
+    "kind": "Film",
+    "year": 2023,
+    "period": "2023",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-bella-estate.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20bella%20estate",
+    "summary": "1938, à Turin. Ginia a quitté avec son frère le foyer familial pour trouver du travail en ville. Elle se montre particulièrement créative pour la couture dans l'atelier où elle est employée tandis qu'elle est fascinée par sa rencontre avec une jeune femme modèle pour des artistes.",
+    "directors": [
+      "Laura Luchetti"
+    ],
+    "cast": [
+      {
+        "name": "Yile Yara Vianello",
+        "character": "Ginia"
+      },
+      {
+        "name": "Deva Cassel",
+        "character": "Amelia"
+      },
+      {
+        "name": "Nicolas Maupas",
+        "character": "Severino"
+      },
+      {
+        "name": "Alessandro Piavani",
+        "character": "Guido"
+      },
+      {
+        "name": "Adrien Dewitte",
+        "character": "Rodrigues"
+      }
+    ]
   }
 ];
