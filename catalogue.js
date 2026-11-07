@@ -3188,5 +3188,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Niobe"
       }
     ]
+  },
+  {
+    "title": "Léon",
+    "kind": "Film",
+    "year": 1994,
+    "period": "1994",
+    "genre": "Crime, Drame, Action",
+    "description": "Description à compléter.",
+    "poster": "affiches/leon.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L%C3%A9on",
+    "summary": "Léon est un tueur professionnel redoutable et insaisissable. Il vit seul à New York avec sa plante verte et ses habitudes jusqu'au jour où une petite Mathilda de douze ans sonne à sa porte et fait irruption dans sa vie.",
+    "directors": [
+      "Luc Besson"
+    ],
+    "cast": [
+      {
+        "name": "Jean Reno",
+        "character": "Léon Montana"
+      },
+      {
+        "name": "Natalie Portman",
+        "character": "Mathilda Lando"
+      },
+      {
+        "name": "Gary Oldman",
+        "character": "Norman Stansfield"
+      },
+      {
+        "name": "Danny Aiello",
+        "character": "Old Tony"
+      },
+      {
+        "name": "Peter Appel",
+        "character": "Agent Malky"
+      }
+    ]
   }
 ];
