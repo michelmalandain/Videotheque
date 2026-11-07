@@ -3057,5 +3057,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Irréversible",
+    "kind": "Film",
+    "year": 2002,
+    "period": "2002",
+    "genre": "Drame, Thriller, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/irreversible.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Irr%C3%A9versible",
+    "summary": "Une jeune femme, Alex, se fait violer par un inconnu dans un tunnel. Son compagnon Marcus et son ex-petit ami Pierre décident de faire justice eux-mêmes.",
+    "directors": [
+      "Gaspar Noé"
+    ],
+    "cast": [
+      {
+        "name": "Monica Bellucci",
+        "character": "Alex"
+      },
+      {
+        "name": "Vincent Cassel",
+        "character": "Marcus"
+      },
+      {
+        "name": "Albert Dupontel",
+        "character": "Pierre"
+      },
+      {
+        "name": "Jo Prestia",
+        "character": "The Tapeworm"
+      },
+      {
+        "name": "Philippe Nahon",
+        "character": "Man"
+      }
+    ]
   }
 ];
