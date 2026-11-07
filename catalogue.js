@@ -3311,5 +3311,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Rodrigues"
       }
     ]
+  },
+  {
+    "title": "Buffalo Soldiers",
+    "kind": "Film",
+    "year": 1997,
+    "period": "1997",
+    "genre": "Drame, Histoire, Téléfilm, Western",
+    "description": "Description à compléter.",
+    "poster": "affiches/buffalo-soldiers.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Buffalo%20Soldiers",
+    "summary": "L'histoire de la traque d'un guerrier Apache nommé Vittorio, qui abattait sans scrupule les colons du Nouveau-Mexique.",
+    "directors": [
+      "Charles Haid"
+    ],
+    "cast": [
+      {
+        "name": "Danny Glover",
+        "character": "Sgt. Washington Wyatt"
+      },
+      {
+        "name": "Mykelti Williamson",
+        "character": "Cpl. William Christy"
+      },
+      {
+        "name": "Glynn Turman",
+        "character": "Sgt. Joshua 'Joyu' Judges Ruth"
+      },
+      {
+        "name": "Carl Lumbly",
+        "character": "John Horse"
+      },
+      {
+        "name": "Lamont Bentley",
+        "character": "Cpl. Sea"
+      }
+    ]
   }
 ];
