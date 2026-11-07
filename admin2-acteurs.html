@@ -1,10 +1,10 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Modification acteurs et réalisateurs — CINEMALAND</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#12533b,#062a20 58%,#031811);color:#f9e9c9;font:16px Georgia,serif}header{text-align:center;padding:22px 12px;border-bottom:2px solid #d8b268}h1{font-size:clamp(26px,3vw,42px);color:#f9dba0;margin:0}header p{margin:8px 0 0;color:#e5c88f}main{max-width:1700px;margin:22px auto;padding:0 16px}.panels{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(450px,1.5fr);gap:14px;align-items:start}.panel{min-width:0;background:linear-gradient(145deg,#07503a,#043224 65%,#03251d);border:3px double #d6b06a;border-radius:13px;padding:18px;box-shadow:0 8px 26px #0008}.panel h2{text-align:center;font-size:clamp(19px,1.5vw,26px);margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid #d8b268;color:#ffe2a7}label{display:block;margin:12px 0 5px;color:#ffe0a3}input,select,textarea{width:100%;min-width:0;padding:9px 10px;border:1px solid #c99e5b;border-radius:4px;background:#f7e8ca;color:#1d241e;font:15px Georgia,serif}textarea{min-height:105px;resize:vertical}button{cursor:pointer;background:linear-gradient(#16734f,#06472e);color:#ffe5b0;border:2px solid #e1b970;border-radius:6px;padding:11px 15px;font:bold 15px Georgia,serif;margin-top:14px;width:100%}button:hover{filter:brightness(1.2)}.note{font-size:13px;line-height:1.45;color:#e3cda7}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}.field{min-width:0}.field.wide{grid-column:1/-1}.field label{font-size:14px;margin:6px 0 4px}.field img{display:block;max-width:120px;max-height:140px;margin-top:7px}.hint{font-size:12px;color:#dfc99f}.editor{display:none;border-top:1px solid #9d854c;margin-top:20px;padding-top:10px}.editor h3{color:#ffdda0;overflow-wrap:anywhere}#msg{white-space:pre-wrap;color:#ffe5ad;font-size:14px;min-height:35px}#remember{width:auto;margin-right:8px;accent-color:#14895d}.remember-label{display:flex;align-items:center;font-size:14px}footer{text-align:center;padding:25px}footer a{color:#f5d18c}.field input[readonly]{background:#bcb9aa}.field-actions{display:flex;align-items:center;gap:7px}.field-actions>input,.field-actions>select,.field-actions>textarea{flex:1;min-width:0}.field-actions>button{width:auto;flex:none;margin:0;padding:9px 12px;font-size:12px}.field-actions>button:disabled{opacity:.5}.field-status{font-size:12px;color:#ffe0a3;min-height:14px}.list-editor{display:grid;gap:6px}.list-row{display:flex;gap:6px;align-items:center}.list-row input,.list-row select{flex:1}.list-row button{width:auto;margin:0;padding:6px 10px}.list-add{display:flex;gap:6px}.list-add input,.list-add select{flex:1}.list-add button{width:auto;margin:0}@media(max-width:1100px){.panels{grid-template-columns:1fr 1fr}.panel:first-child{grid-column:auto}}@media(max-width:680px){.panels{grid-template-columns:1fr}.panel:first-child{grid-column:auto}.fields{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#12533b,#062a20 58%,#031811);color:#f9e9c9;font:16px Georgia,serif}header{text-align:center;padding:22px 12px;border-bottom:2px solid #d8b268}h1{font-size:clamp(26px,3vw,42px);color:#f9dba0;margin:0}header p{margin:8px 0 0;color:#e5c88f}main{max-width:1700px;margin:22px auto;padding:0 16px}.panels{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(450px,1.5fr);gap:14px;align-items:start}.panel{min-width:0;background:linear-gradient(145deg,#07503a,#043224 65%,#03251d);border:3px double #d6b06a;border-radius:13px;padding:18px;box-shadow:0 8px 26px #0008}.panel h2{text-align:center;font-size:clamp(19px,1.5vw,26px);margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid #d8b268;color:#ffe2a7}label{display:block;margin:12px 0 5px;color:#ffe0a3}input,select,textarea{width:100%;min-width:0;padding:9px 10px;border:1px solid #c99e5b;border-radius:4px;background:#f7e8ca;color:#1d241e;font:15px Georgia,serif}textarea{min-height:105px;resize:vertical}button{cursor:pointer;background:linear-gradient(#16734f,#06472e);color:#ffe5b0;border:2px solid #e1b970;border-radius:6px;padding:11px 15px;font:bold 15px Georgia,serif;margin-top:14px;width:100%}button:hover{filter:brightness(1.2)}.note{font-size:13px;line-height:1.45;color:#e3cda7}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}.field{min-width:0}.field.wide{grid-column:1/-1}.field label{font-size:14px;margin:6px 0 4px}.field img{display:block;max-width:160px;max-height:220px;margin-top:7px;object-fit:contain}.field img[hidden]{display:none}.hint{font-size:12px;color:#dfc99f}.editor{display:none;border-top:1px solid #9d854c;margin-top:20px;padding-top:10px}.editor h3{color:#ffdda0;overflow-wrap:anywhere}#msg{white-space:pre-wrap;color:#ffe5ad;font-size:14px;min-height:35px}#remember{width:auto;margin-right:8px;accent-color:#14895d}.remember-label{display:flex;align-items:center;font-size:14px}footer{text-align:center;padding:25px}footer a{color:#f5d18c}.field input[readonly]{background:#bcb9aa}.field-actions{display:flex;align-items:center;gap:7px}.field-actions>input,.field-actions>select,.field-actions>textarea{flex:1;min-width:0}.field-actions>button{width:auto;flex:none;margin:0;padding:9px 12px;font-size:12px}.field-actions>button:disabled{opacity:.5}.field-status{font-size:12px;color:#ffe0a3;min-height:14px}.list-editor{display:grid;gap:6px}.list-row{display:flex;gap:6px;align-items:center}.list-row input,.list-row select{flex:1}.list-row button{width:auto;margin:0;padding:6px 10px}.list-add{display:flex;gap:6px}.list-add input,.list-add select{flex:1}.list-add button{width:auto;margin:0}@media(max-width:1100px){.panels{grid-template-columns:1fr 1fr}.panel:first-child{grid-column:auto}}@media(max-width:680px){.panels{grid-template-columns:1fr}.panel:first-child{grid-column:auto}.fields{grid-template-columns:1fr}}
 .search-results{display:none;max-height:270px;overflow-y:auto;margin-top:5px;border:1px solid #c99e5b;border-radius:4px;background:#092f25}.search-results button{display:block;width:100%;text-align:left;margin:0;border:0;border-bottom:1px solid #6b7753;border-radius:0;padding:10px 12px;background:#0b4935;color:#ffe6b4;font:15px Georgia,serif}.search-results button:hover,.search-results button:focus{background:#17664b}.search-results .no-result{padding:10px;color:#f5d6a0;font-size:14px}.catalogue-counts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 16px}.catalogue-count{border:1px solid #d6b06a;border-radius:7px;padding:10px 18px;text-align:center;min-width:140px;background:#043224}.catalogue-count strong{display:block;font-size:27px;color:#ffe2a7}.catalogue-count span{font-size:13px;color:#e3cda7}</style></head><body><header><h1>CINEMALAND — ACTEURS ET RÉALISATEURS</h1><p>Modification des acteurs et réalisateurs</p></header><main><div class="panels">
 <section class="panel"><h2>ACCÈS ADMINISTRATEUR</h2><label for="pass">Mot de passe administrateur</label><input type="password" id="pass" autocomplete="off"><label class="remember-label"><input type="checkbox" id="remember">Mémoriser sur cet ordinateur</label><p class="note">Attention : la mémorisation conserve le mot de passe dans ce navigateur. À éviter sur un ordinateur partagé.</p><p id="msg">Saisissez votre mot de passe, puis chargez une catégorie.</p></section>
-<section class="panel" style="display:none" aria-hidden="true"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><div id="film-results" class="search-results" role="listbox" aria-label="Résultats films et séries"></div><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
-<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des noms distincts présents dans les crédits du catalogue (identifiants TMDB à confirmer).</p><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche parmi les personnes du catalogue. Identification sur TMDB avant toute modification ; aucune attribution automatique aux homonymes.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="people-fields" class="fields"></div><p class="note">Chaque bouton VALIDER enregistre uniquement le champ correspondant.</p></div></section>
+<section class="panel" style="display:none" aria-hidden="true"><h2>GESTION DES FILMS ET SÉRIES</h2><label for="media-kind">Catégorie</label><select id="media-kind"><option value="Film">Films</option><option value="Série">Séries</option></select><button id="load-films">CHARGER LES TITRES</button><label for="film-search">Rechercher un titre</label><input id="film-search" placeholder="Titre du film ou de la série"><div id="film-results" class="search-results" role="listbox" aria-label="Résultats films et séries"></div><div id="film-editor" class="editor"><h3 id="film-heading">Fiche</h3><p class="note">Tous les champs présents dans cette fiche sont modifiables, sauf les identifiants TMDB.</p><div id="film-fields" class="fields"></div><p class="note">Modifiez les champs souhaités, puis cliquez sur le bouton unique VALIDER LES MODIFICATIONS.</p></div></section>
+<section class="panel"><h2>GESTION DES ACTEURS ET RÉALISATEURS</h2><div class="catalogue-counts" aria-live="polite"><div class="catalogue-count"><strong id="count-actors">—</strong><span>ACTEURS</span></div><div class="catalogue-count"><strong id="count-directors">—</strong><span>RÉALISATEURS</span></div></div><p class="note" id="count-note">Compteurs des noms distincts présents dans les crédits du catalogue (identifiants TMDB à confirmer).</p><label for="people-search">Rechercher une personne</label><input id="people-search" placeholder="Nom ou prénom"><div id="people-results" class="search-results" role="listbox" aria-label="Résultats personnes"></div><p class="note">Recherche parmi les personnes du catalogue. Identification sur TMDB avant toute modification ; aucune attribution automatique aux homonymes.</p><div id="people-editor" class="editor"><h3 id="people-heading">Fiche</h3><p class="note">Tous les champs disponibles sont modifiables, sauf les identifiants TMDB. Les corrections de personnes sont enregistrées séparément ; leur affichage public dépend du raccordement des pages.</p><div id="sync-indicator" role="status" aria-live="polite" style="padding:10px 12px;margin:10px 0;border:1px solid #d6b06a;border-radius:5px;background:#123e2b;color:#ffe2a7;font-weight:bold">ENREGISTREMENT : prêt — vérification après validation</div><div id="people-fields" class="fields"></div><p class="note">Modifiez les champs souhaités, puis cliquez sur le bouton unique VALIDER LES MODIFICATIONS.</p></div></section>
 </div><footer><a href="https://videotheque-admin.michelmalandain.workers.dev/">RETOUR À L’ADMINISTRATION</a></footer></main><script>
 const $=id=>document.getElementById(id);
 const WORKER='https://videotheque-admin.michelmalandain.workers.dev';
@@ -67,10 +67,15 @@ async function openPerson(id,name){
   }catch(e){msg('Erreur TMDB : '+e.message)}
   return;
  }
- let x=people[personId];
- if(!x){
-  try{msg('Chargement de la fiche TMDB…');const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');const info=j.person||j.details||j;x={name:info.name||'',first_name:'',last_name:'',birthday:info.birthday||'',place_of_birth:info.place_of_birth||'',nationality:'',deathday:info.deathday||'',biography:info.biography||'',profile_path:info.profile_path||''};}catch(e){msg('Erreur : '+e.message);return}
- }
+  let x=people[personId]||{};
+  try{
+    msg('Chargement de la fiche TMDB et des corrections…');
+    const r=await fetch(WORKER+'/person-detail?id='+encodeURIComponent(personId));
+    const j=await r.json();if(!r.ok)throw Error(j.message||'Fiche indisponible');
+    const info=j.person||j.details||j;
+    const base={name:info.name||'',first_name:'',last_name:'',birthday:info.birthday||'',place_of_birth:info.place_of_birth||'',nationality:'',deathday:info.deathday||'',biography:info.biography||'',profile_path:info.profile_path||''};
+    x={...base,...x};
+  }catch(e){if(!Object.keys(x).length){msg('Erreur : '+e.message);return}msg('TMDB indisponible : corrections enregistrées chargées.');}
  $('people-heading').textContent=(x.name||'Personne du catalogue')+' — TMDB '+personId;render(x);msg('Fiche chargée : '+$('people-heading').textContent);
 }
 // Les noms sans ID restent consultables, mais une identité TMDB doit être choisie avant toute correction.
@@ -172,7 +177,7 @@ function render(data){
     if(typeof val==='boolean')return raw.toLowerCase()==='true';
     return val===null&&raw.trim()===''?null:raw;
    };
-   if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
+   if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('photos/'))url=location.origin+'/'+url;else if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
   }
   let chosenPhoto=null;
   if(kind()==='people'&&key==='profile_path'){
@@ -184,42 +189,64 @@ function render(data){
     const url=URL.createObjectURL(file);chosenPhoto={file,preview:url};preview.src=url;preview.hidden=false;
    };
   }
-  const save=document.createElement('button');save.type='button';save.textContent='VALIDER';actions.append(save);
-  const status=document.createElement('div');status.className='field-status';wrap.append(status);
-  save.onclick=async()=>{
-   if(saving)return;
-   try{
-    let value=readValue();
-    const before=getAt(original,full);
-    if(!chosenPhoto&&JSON.stringify(before)===JSON.stringify(value)){status.textContent='Aucun changement.';return}
-    const group=kind(),currentIndex=index,currentId=personId;
-    const data=copyValue(original);putAt(data,full,value);
-    if(!confirm('Enregistrer uniquement « '+human(key)+' » dans CINEMALAND ?'))return;
-    saving=true;save.disabled=true;status.textContent='Enregistrement…';
-    if(chosenPhoto){
-     status.textContent='Envoi de la photo sur GitHub…';
-     const file=chosenPhoto.file;
-     const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(Error('Lecture de la photo impossible.'));reader.readAsDataURL(file)});
-     const response=await fetch(WORKER+'/admin2-photo',{method:'POST',headers:{Authorization:'Bearer '+$('pass').value,'Content-Type':'application/json'},body:JSON.stringify({id:currentId,name:data.name||'',mime:file.type,content:encoded})});
-     const result=await response.json();if(!response.ok)throw Error(result.message||'Envoi impossible.');
-     value=result.path;putAt(data,full,value);status.textContent='Photo envoyée. Enregistrement de la fiche…';
-    }
-    await api('POST',group,{sha,index:currentIndex,id:currentId,data});
-     putAt(original,full,copyValue(value));
-     status.textContent='Enregistré.';
-     msg('« '+human(key)+' » enregistré. Actualisation des données…');
-     // Actualiser le SHA sans fermer la fiche ni perdre le choix TMDB.
-     const fresh=await api('GET',group);
-     states[group==='people'?'people':'catalogue']={...states[group==='people'?'people':'catalogue'],entries:fresh.entries,sha:fresh.sha};
-     sha=fresh.sha;
-     if(group==='people')people=fresh.entries||{};
-     msg('« '+human(key)+' » enregistré. Vous pouvez modifier un autre champ.');
-   }catch(e){status.textContent='Erreur : '+e.message;msg('Erreur : '+e.message)}
-   finally{saving=false;if(!status.textContent.startsWith('Enregistré'))save.disabled=false}
-  };
+   controls.push({full,readValue,getPhoto:()=>chosenPhoto,key});
   return wrap;
  }
  for(const key of Object.keys(data))root.append(field(data,key,[]));
+  if(kind()==='people'){
+    const old=$('save-all-people');if(old)old.remove();
+    const saveAll=document.createElement('button');saveAll.type='button';saveAll.id='save-all-people';saveAll.textContent='VALIDER LES MODIFICATIONS';saveAll.style.marginTop='20px';
+    $('people-editor').append(saveAll);
+    saveAll.onclick=async()=>{
+      if(saving)return;
+      const currentId=personId;
+      const indicator=$('sync-indicator');
+      let data=copyValue(original),changes=[];
+      try{
+        for(const c of controls){
+          const value=c.readValue(),before=c.full.reduce((o,k)=>o?.[k],original);
+          if(JSON.stringify(value)!==JSON.stringify(before)||c.getPhoto()){
+            putAt(data,c.full,value);changes.push({control:c,value});
+          }
+        }
+        if(!changes.length){msg('Aucune modification à enregistrer.');return}
+        if(!confirm('Enregistrer les '+changes.length+' modification(s) de cette personne ?'))return;
+        saving=true;saveAll.disabled=true;msg('Enregistrement en cours…');
+        if(indicator)indicator.textContent='ENREGISTREMENT EN COURS…';
+        for(const change of changes){
+          const photo=change.control.getPhoto();if(!photo)continue;
+          const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(Error('Lecture de la photo impossible.'));reader.readAsDataURL(photo.file)});
+          const response=await fetch(WORKER+'/admin2-photo',{method:'POST',headers:{Authorization:'Bearer '+$('pass').value,'Content-Type':'application/json'},body:JSON.stringify({id:currentId,name:data.name||'',mime:photo.file.type,content:encoded})});
+          const result=await response.json();if(!response.ok)throw Error(result.message||'Envoi de la photo impossible.');
+          putAt(data,change.control.full,result.path);change.value=result.path;
+        }
+        // Une photo est stockée dans GitHub séparément. Le SHA des corrections
+        // est relu juste avant l'enregistrement de la fiche complète.
+        const beforeSave=await api('GET','people');
+        const existing=beforeSave.entries?.[currentId]||{};
+        // Ne pas effacer d'éventuels champs supplémentaires enregistrés précédemment.
+        data={...existing,...data};
+        await api('POST','people',{sha:beforeSave.sha,id:currentId,data});
+        if(indicator)indicator.textContent='VÉRIFICATION — rechargement des corrections…';
+        let fresh,actual;
+        for(let attempt=0;attempt<8;attempt++){
+          if(attempt)await new Promise(r=>setTimeout(r,1500));
+          fresh=await api('GET','people');actual=fresh.entries?.[currentId];
+          if(actual&&changes.every(({control,value})=>JSON.stringify(control.full.reduce((o,k)=>o?.[k],actual))===JSON.stringify(value)))break;
+          actual=null;
+        }
+        if(!actual)throw Error('Modification non confirmée après relecture des corrections.');
+        states.people={...states.people,entries:fresh.entries,sha:fresh.sha};
+        people=fresh.entries;sha=fresh.sha;
+        original=copyValue(actual);
+        saveAll.remove();render(actual);
+        if(indicator){indicator.textContent='CONFIRMÉ — '+changes.length+' modification(s) enregistrée(s) et vérifiée(s).';indicator.style.background='#145c37';indicator.style.borderColor='#6bdf93'}
+        msg('Modifications enregistrées et vérifiées. Vous pouvez continuer.');
+      }catch(e){msg('Erreur : '+e.message);if(indicator)indicator.textContent='ÉCHEC — '+e.message}
+      finally{saving=false;saveAll.disabled=false}
+    };
+  }
+
  $(kind()==='people'?'people-editor':'film-editor').style.display='block';
 }
 const states={catalogue:null,people:null};
