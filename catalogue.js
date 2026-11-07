@@ -3014,6 +3014,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Solo",
         "character": "Santo"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   }
 ];
