@@ -165,10 +165,22 @@ function render(data){
     redraw();readValue=()=>copyValue(current);
   }else{
    const multiline=Array.isArray(val)||longKey(key)||typeof val==='string'&&val.length>140;
-   const choices={kind:['Film','Série'],nationality:['Française','Belge','Suisse','Canadienne','Américaine','Britannique','Italienne','Espagnole','Allemande','Autre']};
-   const useSelect=!multiline&&typeof val==='string'&&choices[key]?.includes(val);
+   const choices={kind:['Film','Série']};
+   const useSelect=key==='nationality'||(!multiline&&typeof val==='string'&&choices[key]?.includes(val));
    const input=document.createElement(multiline?'textarea':useSelect?'select':'input');
-   if(useSelect){for(const choice of choices[key])input.add(new Option(choice,choice))}
+   if(key==='nationality'){
+     const regions=new Intl.DisplayNames(['fr'],{type:'region'});
+     const codes=[];
+     for(let a=65;a<=90;a++)for(let b=65;b<=90;b++){
+       const code=String.fromCharCode(a,b),label=regions.of(code);
+       if(label&&label!==code&&!/^[A-Z]{2}$/.test(label))codes.push([code,label]);
+     }
+     codes.sort((a,b)=>a[1].localeCompare(b[1],'fr'));
+     input.add(new Option('— Choisir un pays —',''));
+     for(const [code,label] of codes)input.add(new Option(code+' | '+label,code));
+     const current=String(val||'').trim();
+     if(current&&!codes.some(([code])=>code===current))input.add(new Option(current+' (ancienne valeur)',current));
+   }else if(useSelect){for(const choice of choices[key])input.add(new Option(choice,choice))}
    else if(!multiline)input.type=typeof val==='number'?'number':'text';
    input.value=Array.isArray(val)?JSON.stringify(val,null,2):val==null?'':String(val);actions.append(input);
    readValue=()=>{const raw=input.value;
