@@ -103,7 +103,7 @@ const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
 // Affichage local des codes ISO et résolution des photos hébergées sur CINEMALAND.
 function cmNationalite(value){
  const v=String(value?.iso_3166_1||value?.code||value||'').trim();if(!v)return '';
- const map={FR:'française',BE:'belge',CH:'suisse',CA:'canadienne',US:'américaine',GB:'britannique',IT:'italienne',ES:'espagnole',DE:'allemande',PT:'portugaise',NL:'néerlandaise',LU:'luxembourgeoise',IE:'irlandaise',AU:'australienne',AT:'autrichienne',BR:'brésilienne',CN:'chinoise',JP:'japonaise',KR:'sud-coréenne',MA:'marocaine',MX:'mexicaine',PL:'polonaise',SE:'suédoise',NO:'norvégienne',DK:'danoise',GR:'grecque',IN:'indienne',TR:'turque'};
+ const map={FR:'française',FX:'française',BE:'belge',CH:'suisse',CA:'canadienne',US:'américaine',GB:'britannique',IT:'italienne',ES:'espagnole',DE:'allemande',PT:'portugaise',NL:'néerlandaise',LU:'luxembourgeoise',IE:'irlandaise',AU:'australienne',AT:'autrichienne',BR:'brésilienne',CN:'chinoise',JP:'japonaise',KR:'sud-coréenne',MA:'marocaine',MX:'mexicaine',PL:'polonaise',SE:'suédoise',NO:'norvégienne',DK:'danoise',GR:'grecque',IN:'indienne',TR:'turque'};
  return map[v.toUpperCase()]||v;
 }
 function cmPhotoUrl(value,size='w342'){
