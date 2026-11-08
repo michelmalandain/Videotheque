@@ -189,7 +189,7 @@ function render(data){
     if(typeof val==='boolean')return raw.toLowerCase()==='true';
     return val===null&&raw.trim()===''?null:raw;
    };
-   if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('photos/'))url=location.origin+'/'+url;else if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
+   if(imageKey(key)){const img=document.createElement('img');img.alt='Aperçu';img.hidden=true;wrap.append(img);const update=()=>{let url=input.value.trim();if(url.startsWith('photos/')||url.startsWith('/photos/'))url=location.origin+'/'+url.replace(/^\//,'');else if(url.startsWith('/'))url='https://image.tmdb.org/t/p/w500'+url;img.hidden=!/^https:\/\//i.test(url);if(!img.hidden)img.src=url};input.addEventListener('input',update);update()}
   }
   let chosenPhoto=null;
   if(kind()==='people'&&key==='profile_path'){
@@ -252,8 +252,8 @@ function render(data){
         people=fresh.entries;sha=fresh.sha;
         original=copyValue(actual);
         saveAll.remove();render(actual);
-        if(indicator){indicator.textContent='CONFIRMÉ — '+changes.length+' modification(s) enregistrée(s) et vérifiée(s).';indicator.style.background='#145c37';indicator.style.borderColor='#6bdf93'}
-        msg('Modifications enregistrées et vérifiées. Vous pouvez continuer.');
+        if(indicator){indicator.textContent='Base mise à jour';indicator.style.background='#145c37';indicator.style.borderColor='#6bdf93'}
+        msg('Base mise à jour');
       }catch(e){msg('Erreur : '+e.message);if(indicator)indicator.textContent='ÉCHEC — '+e.message}
       finally{saving=false;saveAll.disabled=false}
     };
