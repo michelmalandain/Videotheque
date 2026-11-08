@@ -52,13 +52,13 @@ function add(person,film){
  if(person && typeof person==='object'){
   row.id ||=person.tmdb_id||person.id||null;
   row.photo ||=person.profile_path||person.photo||null;
+   row.nationality ||=person.nationality||person.nationalite||null;
  }
  row.films.add([film.kind||film.type||'',film.title||'',film.year||''].join('|'));
 }
 if(Array.isArray(all)){
  for(const f of all){
   const film=f||{};
-  if(!Array.isArray(film.production_countries)||!film.production_countries.includes('FR'))continue;
   if(ROLE==='actor'){for(const p of (film.cast||film.actors||[]))add(p,film);}
   else {for(const p of [...(film.directors||[]),...(film.creators||[])])add(p,film);}
  }
@@ -76,7 +76,7 @@ const people=[...entries.values()].sort((a,b)=>clePatronyme(a.name).localeCompar
 function draw(){
  const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
  cards.replaceChildren();
- const matching=people.filter(x=>x.name.toLocaleLowerCase('fr').includes(term));
+ const matching=people.filter(x=>cmEstFrancais(x.nationality)&&x.name.toLocaleLowerCase('fr').includes(term));
  counter.textContent=matching.length+' acteurs';
  for(const person of matching){
   const b=document.createElement('button');b.type='button';b.className='card';
