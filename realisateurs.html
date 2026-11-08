@@ -16,7 +16,7 @@ function add(person,film){
  const rawId=person&&typeof person==='object'?(person.tmdb_id||person.id):null;
   const key=/^[1-9]\d*$/.test(String(rawId||''))?'tmdb:'+rawId:'name:'+name.trim().toLocaleLowerCase('fr');
  let row=entries.get(key);
- if(!row){row={name:name.trim(),id:null,photo:null,films:new Set()};entries.set(key,row)}
+ if(!row){row={name:name.trim(),id:null,photo:null,nationality:null,films:new Set()};entries.set(key,row)}
  if(person && typeof person==='object'){
   row.id ||=person.tmdb_id||person.id||null;
   row.photo ||=person.profile_path||person.photo||null;
@@ -69,6 +69,31 @@ draw();
 // L'identifiant TMDB prime toujours sur les homonymes ; ne jamais attribuer
 // une photographie à une personne si le nom exact est ambigu.
 const PERSON_API='https://videotheque-admin.michelmalandain.workers.dev';
+
+// La liste française est déterminée par la nationalité de la personne,
+// indépendamment des pays de production des œuvres.
+function cmEstFrancais(value){
+ const v=String(value?.iso_3166_1||value?.code||value||'').trim().toLowerCase();
+ return ['fr','fra','france','français','française','french'].includes(v);
+}
+async function cmCompleterNationalites(){
+ const pending=people.filter(p=>!p.nationality&&p.id);
+ let index=0,done=0;
+ await Promise.all(Array.from({length:Math.min(5,pending.length)},async()=>{
+  while(index<pending.length){
+   const person=pending[index++];
+   try{
+    const response=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(person.id));
+    if(response.ok){const info=await response.json();const detail=info.person||info.details||info;person.nationality=detail.nationality||detail.nationalite||null;}
+   }catch(e){}
+   done++;
+   if(done%15===0||done===pending.length){draw();status.textContent='Vérification des nationalités : '+done+'/'+pending.length;}
+  }
+ }));
+ status.textContent='';draw();
+}
+cmCompleterNationalites();
+
 const normalized=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
 function setPhoto(person,profile){
  if(!profile)return false;
