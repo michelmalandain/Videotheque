@@ -43,7 +43,7 @@
 .cm-pagination button{font:inherit;background:linear-gradient(#20523f,#103326);color:#f9e4b7;border:1px solid #c9a56a;border-radius:6px;padding:11px 20px;cursor:pointer}
 .cm-pagination button:hover:not(:disabled){filter:brightness(1.18)}
 .cm-pagination button:disabled{opacity:.4;cursor:default}
-.cm-pagination span{color:#f5d596;font-weight:bold}
+.cm-pagination span{color:#f5d596;font-weight:bold}.cm-pagination button[aria-current="page"]{opacity:1;background:#d6b36d;color:#09271b;border-color:#f5df9d;font-weight:bold;cursor:default}
 </style></head><body><header><h1>CINÉMA MONDIAL</h1><p>ACTEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html" aria-current="page">ACTEURS</a><a href="realisateurs-mondial.html">RÉALISATEURS</a><a href="admin2-acteurs.html">ADMINISTRATION</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='actor', all=window.CINEMALAND_CATALOGUE;
@@ -91,12 +91,27 @@ function cmRenderPagination(total){
  cmCurrentPage=Math.min(Math.max(cmCurrentPage,1),pages);
  if(pages===1){cmPagination.hidden=true;return;}
  cmPagination.hidden=false;
+ const goToPage=(page)=>{cmCurrentPage=page;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
  const previous=document.createElement('button');previous.type='button';previous.textContent='Précédent';previous.disabled=cmCurrentPage===1;
- previous.onclick=()=>{cmCurrentPage--;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
- const label=document.createElement('span');label.textContent='Page '+cmCurrentPage+' / '+pages;
+ previous.onclick=()=>goToPage(cmCurrentPage-1);
+ cmPagination.append(previous);
+ // Afficher les pages proches, la première et la dernière, sans encombrer la barre.
+ const visible=[];
+ for(let page=1;page<=pages;page++){
+  if(page===1||page===pages||Math.abs(page-cmCurrentPage)<=2)visible.push(page);
+ }
+ let last=0;
+ for(const page of visible){
+  if(last&&page>last+1){const dots=document.createElement('span');dots.textContent='…';cmPagination.append(dots);}
+  const number=document.createElement('button');number.type='button';number.textContent=String(page);
+  number.setAttribute('aria-label','Page '+page);
+  if(page===cmCurrentPage){number.setAttribute('aria-current','page');number.disabled=true;}
+  else number.onclick=()=>goToPage(page);
+  cmPagination.append(number);last=page;
+ }
  const next=document.createElement('button');next.type='button';next.textContent='Suivant';next.disabled=cmCurrentPage===pages;
- next.onclick=()=>{cmCurrentPage++;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
- cmPagination.append(previous,label,next);
+ next.onclick=()=>goToPage(cmCurrentPage+1);
+ cmPagination.append(next);
 }
 function draw(){
  const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
@@ -165,9 +180,7 @@ async function resolvePortrait(person){
     if(setPhoto(person,info.profile_path||info.photo||info.profile))return;
    }
   }
-  const parts=person.name.trim().split(/\s+/);
-  const last=parts.pop(),first=parts.join(' ');
-  const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams(first?{first,last}:{last}));
+  const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({name:person.name.trim()}));
   if(!response.ok)return;
   const data=await response.json();
   const exact=(data.people||[]).filter(p=>normalized(p.name)===normalized(person.name));
@@ -200,7 +213,7 @@ async function openActorDetail(person){
  actorContent.replaceChildren();const waiting=document.createElement('p');waiting.textContent='Chargement de la fiche…';actorContent.append(waiting);actorDialog.showModal();
  try{
   let id=person.id;
-  if(!id){const words=person.name.trim().split(/\s+/),last=words.pop(),first=words.join(' ');const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams(first?{first,last}:{last}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1){
+  if(!id){const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({name:person.name.trim()}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1){
     actorContent.replaceChildren();
     const heading=document.createElement('h2');heading.textContent=person.name;actorContent.append(heading);
     const note=document.createElement('p');note.textContent=matches.length?'Plusieurs fiches TMDB portent ce nom. Choisissez la bonne personne :':'Aucune fiche TMDB certaine pour ce nom. Les informations du catalogue restent conservées.';actorContent.append(note);
