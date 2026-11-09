@@ -3311,6 +3311,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Adrien Dewitte",
         "character": "Rodrigues"
       }
+    ],
+    "production_countries": [
+      "IT"
     ]
   },
   {
