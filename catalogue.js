@@ -3347,6 +3347,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Lamont Bentley",
         "character": "Cpl. Sea"
       }
+    ],
+    "production_countries": [
+      "US"
     ]
   }
 ];
