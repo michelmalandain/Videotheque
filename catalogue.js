@@ -1706,7 +1706,8 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "Bourvil",
+        "name": "André Raimbourg",
+        "tmdb_id": 37131,
         "character": "Antoine Maréchal"
       },
       {
@@ -1963,7 +1964,8 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "Bourvil",
+        "name": "André Raimbourg",
+        "tmdb_id": 37131,
         "character": "Augustin Bouvet"
       },
       {
