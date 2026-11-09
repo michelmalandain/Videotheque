@@ -37,6 +37,13 @@
 .cm-actor-side .cm-family-line{padding:3px 0;grid-template-columns:105px minmax(0,1fr)}
 .cm-actor-side .cm-actor-panel p{line-height:1.4}
 @media(max-width:850px){.cm-actor-side{grid-column:1}}
+</style><style id="cm-pagination-style">
+.cm-pagination{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:30px auto 35px;padding:10px;background:transparent!important;border:0!important;position:static!important}
+.cm-pagination[hidden]{display:none!important}
+.cm-pagination button{font:inherit;background:linear-gradient(#20523f,#103326);color:#f9e4b7;border:1px solid #c9a56a;border-radius:6px;padding:11px 20px;cursor:pointer}
+.cm-pagination button:hover:not(:disabled){filter:brightness(1.18)}
+.cm-pagination button:disabled{opacity:.4;cursor:default}
+.cm-pagination span{color:#f5d596;font-weight:bold}
 </style></head><body><header><h1>CINÉMA FRANÇAIS</h1><p>ACTEURS DU CINÉMA FRANÇAIS</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="index.html?hall=1">HALL</a><a href="films.html">FILMS</a><a href="series.html">SÉRIES</a><a href="acteurs.html" aria-current="page">ACTEURS</a><a href="realisateurs.html">RÉALISATEURS</a><a href="admin2-acteurs.html">ADMINISTRATION</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='actor', all=window.CINEMALAND_CATALOGUE;
@@ -74,12 +81,32 @@ function clePatronyme(nom){
  return mots.slice(debut).join(' ')+' '+mots.slice(0,debut).join(' ');
 }
 const people=[...entries.values()].sort((a,b)=>clePatronyme(a.name).localeCompare(clePatronyme(b.name),'fr',{sensitivity:'base'})||a.name.localeCompare(b.name,'fr',{sensitivity:'base'}));
+const CM_PAGE_SIZE=36;
+let cmCurrentPage=1;
+const cmPagination=document.createElement('nav');
+cmPagination.className='cm-pagination';
+cmPagination.setAttribute('aria-label','Pagination des personnes');
+cards.insertAdjacentElement('afterend',cmPagination);
+function cmRenderPagination(total){
+ cmPagination.replaceChildren();
+ const pages=Math.max(1,Math.ceil(total/CM_PAGE_SIZE));
+ cmCurrentPage=Math.min(Math.max(cmCurrentPage,1),pages);
+ if(pages===1){cmPagination.hidden=true;return;}
+ cmPagination.hidden=false;
+ const previous=document.createElement('button');previous.type='button';previous.textContent='Précédent';previous.disabled=cmCurrentPage===1;
+ previous.onclick=()=>{cmCurrentPage--;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
+ const label=document.createElement('span');label.textContent='Page '+cmCurrentPage+' / '+pages;
+ const next=document.createElement('button');next.type='button';next.textContent='Suivant';next.disabled=cmCurrentPage===pages;
+ next.onclick=()=>{cmCurrentPage++;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
+ cmPagination.append(previous,label,next);
+}
 function draw(){
  const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
  cards.replaceChildren();
  const matching=people.filter(x=>(cmEstFrancais(x.nationality)||(!x.nationality&&x.frProduction))&&x.name.toLocaleLowerCase('fr').includes(term));
  counter.textContent=matching.length+' acteurs';
- for(const person of matching){
+ cmRenderPagination(matching.length);
+ for(const person of matching.slice((cmCurrentPage-1)*CM_PAGE_SIZE,cmCurrentPage*CM_PAGE_SIZE)){
   const b=document.createElement('button');b.type='button';b.className='card';
   const name=document.createElement('strong');name.textContent=person.name;
   const sub=document.createElement('small');sub.textContent=person.films.size+' titre(s) dans notre vidéothèque';
@@ -95,7 +122,7 @@ function draw(){
   cards.append(b);
  }
 }
-document.getElementById('filter').addEventListener('input',draw);
+document.getElementById('filter').addEventListener('input',()=>{cmCurrentPage=1;draw();});
 status.textContent=Array.isArray(all)?(people.length?'':'Aucune personne trouvée dans les crédits du catalogue.'):'Catalogue indisponible : placer catalogue.js avec ces pages.';
 draw();
 // Compléter les photos manquantes depuis le service TMDB déjà utilisé par CINEMALAND.

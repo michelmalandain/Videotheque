@@ -5,6 +5,13 @@
 .actor-dialog{width:min(1200px,96vw);max-height:94vh;overflow:auto;border:2px solid #d7b36d;border-radius:12px;background:linear-gradient(140deg,#164c39,#071e17);color:#f5e6c5;padding:25px;box-shadow:0 20px 80px #000c}.actor-dialog::backdrop{background:#000c}.actor-close{float:right;padding:10px 20px;background:#235941;color:#ffe6af;border:1px solid #d7b36d;border-radius:5px;cursor:pointer;font:inherit}.actor-profile{display:grid;grid-template-columns:230px 1fr;gap:25px;align-items:start;clear:both;padding-top:15px}.actor-profile img{width:100%;max-height:330px;object-fit:cover;border:2px solid #d7b36d}.actor-profile h2{font-size:32px;color:#ffe0a0;margin:0 0 16px}.actor-section{margin-top:24px}.actor-section h3{color:#f9d38c;border-bottom:1px solid #b99459;padding-bottom:9px}.actor-tickets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.actor-ticket{display:grid;grid-template-columns:54px 1fr 52px;gap:8px;align-items:center;min-height:83px;padding:8px;border:2px solid #b99558;border-radius:6px;background:linear-gradient(125deg,#25674b,#103829);color:#ffe9bf;text-align:left;font:inherit}.actor-ticket-year{color:#f4cc81;font-weight:bold}.actor-ticket img{width:50px;height:68px;object-fit:cover}.actor-ticket strong{overflow-wrap:anywhere;font-size:15px}.actor-ticket.present{outline:2px solid #e8c17b}.actor-ticket small{grid-column:2 / 4;color:#d9e5d6;font-size:11px}@media(max-width:850px){.actor-tickets{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.actor-profile{grid-template-columns:1fr}.actor-profile img{max-width:210px}.actor-tickets{grid-template-columns:1fr}}
  .bio-link{color:#ffe0a0;text-decoration:underline;text-underline-offset:3px}.bio-link:hover{color:white}
 .actor-section.bio-readable{max-width:100%;}.bio-readable p{font-size:18px;line-height:1.75;margin:0 0 1.15em;max-width:100%;font-weight:normal}.bio-readable h3{margin-bottom:18px}
+</style><style id="cm-pagination-style">
+.cm-pagination{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:30px auto 35px;padding:10px;background:transparent!important;border:0!important;position:static!important}
+.cm-pagination[hidden]{display:none!important}
+.cm-pagination button{font:inherit;background:linear-gradient(#20523f,#103326);color:#f9e4b7;border:1px solid #c9a56a;border-radius:6px;padding:11px 20px;cursor:pointer}
+.cm-pagination button:hover:not(:disabled){filter:brightness(1.18)}
+.cm-pagination button:disabled{opacity:.4;cursor:default}
+.cm-pagination span{color:#f5d596;font-weight:bold}
 </style></head><body><header><h1>CINÉMA MONDIAL</h1><p>RÉALISATEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html">ACTEURS</a><a href="realisateurs-mondial.html" aria-current="page">RÉALISATEURS</a><a href="admin2-acteurs.html">ADMINISTRATION</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='director', all=window.CINEMALAND_CATALOGUE;
@@ -40,12 +47,32 @@ function clePatronyme(nom){
  return mots.slice(debut).join(' ')+' '+mots.slice(0,debut).join(' ');
 }
 const people=[...entries.values()].sort((a,b)=>clePatronyme(a.name).localeCompare(clePatronyme(b.name),'fr',{sensitivity:'base'})||a.name.localeCompare(b.name,'fr',{sensitivity:'base'}));
+const CM_PAGE_SIZE=36;
+let cmCurrentPage=1;
+const cmPagination=document.createElement('nav');
+cmPagination.className='cm-pagination';
+cmPagination.setAttribute('aria-label','Pagination des personnes');
+cards.insertAdjacentElement('afterend',cmPagination);
+function cmRenderPagination(total){
+ cmPagination.replaceChildren();
+ const pages=Math.max(1,Math.ceil(total/CM_PAGE_SIZE));
+ cmCurrentPage=Math.min(Math.max(cmCurrentPage,1),pages);
+ if(pages===1){cmPagination.hidden=true;return;}
+ cmPagination.hidden=false;
+ const previous=document.createElement('button');previous.type='button';previous.textContent='Précédent';previous.disabled=cmCurrentPage===1;
+ previous.onclick=()=>{cmCurrentPage--;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
+ const label=document.createElement('span');label.textContent='Page '+cmCurrentPage+' / '+pages;
+ const next=document.createElement('button');next.type='button';next.textContent='Suivant';next.disabled=cmCurrentPage===pages;
+ next.onclick=()=>{cmCurrentPage++;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
+ cmPagination.append(previous,label,next);
+}
 function draw(){
  const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
  cards.replaceChildren();
  const matching=people.filter(x=>x.name.toLocaleLowerCase('fr').includes(term));
  counter.textContent=matching.length+' réalisateurs';
- for(const person of matching){
+ cmRenderPagination(matching.length);
+ for(const person of matching.slice((cmCurrentPage-1)*CM_PAGE_SIZE,cmCurrentPage*CM_PAGE_SIZE)){
   const b=document.createElement('button');b.type='button';b.className='card';
   const name=document.createElement('strong');name.textContent=person.name;
   const sub=document.createElement('small');sub.textContent=person.films.size+' titre(s) dans notre vidéothèque';
@@ -61,7 +88,7 @@ function draw(){
   cards.append(b);
  }
 }
-document.getElementById('filter').addEventListener('input',draw);
+document.getElementById('filter').addEventListener('input',()=>{cmCurrentPage=1;draw();});
 status.textContent=Array.isArray(all)?(people.length?'':'Aucune personne trouvée dans les crédits du catalogue.'):'Catalogue indisponible : placer catalogue.js avec ces pages.';
 draw();
 // Compléter les photos manquantes depuis le service TMDB déjà utilisé par CINEMALAND.
