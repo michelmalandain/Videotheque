@@ -1706,9 +1706,15 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "André Raimbourg",
+        "name": "Bourvil",
         "tmdb_id": 37131,
-        "character": "Antoine Maréchal"
+        "character": "Antoine Maréchal",
+        "birthday": "1917-07-27",
+        "place_of_birth": "Prétot-Vicquemare, Seine-Inférieure [now Seine-Maritime], France",
+        "nationality": "FR",
+        "deathday": "1970-09-23",
+        "biography": "Bourvil, de son vrai nom André-Robert Raimbourg, doit son appellation de scène à Bourville, village normand dans lequel il s’installe dès l’âge de trois ans avec sa mère. Adolescent, il commence à travailler comme boulanger, mais le chant le passionne davantage. Il reprend d’abord à son compte le répertoire de Fernandel avant de composer des titres de son propre cru. Monté à Paris avec son épouse, il participe, à la veille de la Seconde Guerre mondiale, à des radio-crochets, puis, démobilisé en 1940, il écume les cabarets et se fait également connaître sur les ondes de Radio Luxembourg.\n\nSa première apparition marquante au cinéma, il la doit au film La Ferme du pendu (1945) de Jean Dréville, et surtout à la chanson Les Crayons qu’il y interprète benoîtement. Très vite, Bourvil va se retrouver cantonné dans des personnages qui se distinguent par leur gentillesse, leur bonhommie, voire leur naïveté. C’est notamment le cas dans Le Passe-muraille (1951) et Le Trou normand (1952), comédies toutes deux réalisées par Jean Boyer, ainsi que dans des films de cape et d’épée où il peut servir de solide faire-valoir : Les Trois Mousquetaires (1953), Cadet-Rousselle (1954), Le Bossu (1960) ou encore Le Capitan (id.). Mais il est également capable de jolies prestations à contre-emploi : mesquin et oppressant à l’égard de Michèle Morgan dans Le Miroir à deux faces (1958), il est tout aussi fourbe en Thénardier dans la version des Misérables (1957) de Jean-Paul Le Chanois.",
+        "profile_path": "/h9eYqmgnBhRoccnTFKo0Y05dI8b.jpg"
       },
       {
         "name": "Louis de Funès",
@@ -1964,9 +1970,15 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "André Raimbourg",
+        "name": "Bourvil",
         "tmdb_id": 37131,
-        "character": "Augustin Bouvet"
+        "character": "Augustin Bouvet",
+        "birthday": "1917-07-27",
+        "place_of_birth": "Prétot-Vicquemare, Seine-Inférieure [now Seine-Maritime], France",
+        "nationality": "FR",
+        "deathday": "1970-09-23",
+        "biography": "Bourvil, de son vrai nom André-Robert Raimbourg, doit son appellation de scène à Bourville, village normand dans lequel il s’installe dès l’âge de trois ans avec sa mère. Adolescent, il commence à travailler comme boulanger, mais le chant le passionne davantage. Il reprend d’abord à son compte le répertoire de Fernandel avant de composer des titres de son propre cru. Monté à Paris avec son épouse, il participe, à la veille de la Seconde Guerre mondiale, à des radio-crochets, puis, démobilisé en 1940, il écume les cabarets et se fait également connaître sur les ondes de Radio Luxembourg.\n\nSa première apparition marquante au cinéma, il la doit au film La Ferme du pendu (1945) de Jean Dréville, et surtout à la chanson Les Crayons qu’il y interprète benoîtement. Très vite, Bourvil va se retrouver cantonné dans des personnages qui se distinguent par leur gentillesse, leur bonhommie, voire leur naïveté. C’est notamment le cas dans Le Passe-muraille (1951) et Le Trou normand (1952), comédies toutes deux réalisées par Jean Boyer, ainsi que dans des films de cape et d’épée où il peut servir de solide faire-valoir : Les Trois Mousquetaires (1953), Cadet-Rousselle (1954), Le Bossu (1960) ou encore Le Capitan (id.). Mais il est également capable de jolies prestations à contre-emploi : mesquin et oppressant à l’égard de Michèle Morgan dans Le Miroir à deux faces (1958), il est tout aussi fourbe en Thénardier dans la version des Misérables (1957) de Jean-Paul Le Chanois.",
+        "profile_path": "/h9eYqmgnBhRoccnTFKo0Y05dI8b.jpg"
       },
       {
         "name": "Louis de Funès",
