@@ -1211,7 +1211,7 @@ window.CINEMALAND_CATALOGUE = [
       }
     ],
     "production_countries": [
-      "France"
+      "FR"
     ]
   },
   {
@@ -1604,7 +1604,7 @@ window.CINEMALAND_CATALOGUE = [
       }
     ],
     "production_countries": [
-      "France"
+      "FR"
     ]
   },
   {
@@ -2335,7 +2335,7 @@ window.CINEMALAND_CATALOGUE = [
       }
     ],
     "production_countries": [
-      "France"
+      "FR"
     ]
   },
   {
