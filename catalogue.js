@@ -1706,7 +1706,7 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "André Raimbourg",
+        "name": "Bourvil",
         "tmdb_id": 37131,
         "character": "Antoine Maréchal"
       },
@@ -1886,7 +1886,7 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "Michel Colucci",
+        "name": "Coluche",
         "tmdb_id": 18881,
         "character": "L'inspecteur Charbonnier"
       },
@@ -1965,7 +1965,7 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "cast": [
       {
-        "name": "André Raimbourg",
+        "name": "Bourvil",
         "tmdb_id": 37131,
         "character": "Augustin Bouvet"
       },
