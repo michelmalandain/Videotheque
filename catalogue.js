@@ -1707,7 +1707,6 @@ window.CINEMALAND_CATALOGUE = [
     "cast": [
       {
         "name": "Bourvil",
-        "tmdb_id": 37131,
         "character": "Antoine Maréchal"
       },
       {
@@ -1966,7 +1965,6 @@ window.CINEMALAND_CATALOGUE = [
     "cast": [
       {
         "name": "Bourvil",
-        "tmdb_id": 37131,
         "character": "Augustin Bouvet"
       },
       {
@@ -3349,45 +3347,6 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Lamont Bentley",
         "character": "Cpl. Sea"
       }
-    ]
-  },
-  {
-    "title": "Banzaï",
-    "kind": "Film",
-    "year": 1983,
-    "period": "1983",
-    "genre": "Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/banzai.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Banza%C3%AF",
-    "summary": "Michel Bernardin est employé à Planète Assistance, société d'assurances pour les voyageurs à l'Étranger. D'après son expérience tous les pays étrangers offrent ses dangers, maladies, aux polices corrompues, aux prisons systématiques. Sa fiancée Isabelle va quitter son emploi d’hôtesse de l’air pour passer plus de temps avec lui. Son amie Sophia, qui dirige une agence de voyages, l'a prise avec elle, à l'agence. Michel ne pouvait concevoir que sa future femme aille si loin aux devants de tous les dangers des autres pays. Mais Isabelle doit un préavis, et doit effectuer des derniers vols. Elle choisi de ne pas le dire à Michel. Lui-même, doit aussi faire des « extras » en rapatriements sur demande de son président. Chacun cache la vérité à l'autre. Mais comment vont-il bien pouvoir manœuvrer ?",
-    "directors": [
-      "Claude Zidi"
-    ],
-    "cast": [
-      {
-        "name": "Coluche",
-        "character": "Michel Bernardin"
-      },
-      {
-        "name": "Valérie Mairesse",
-        "character": "Isabelle Morizet, fiancée de Michel"
-      },
-      {
-        "name": "Marthe Villalonga",
-        "character": "Mme Bernardin, mère de Michel"
-      },
-      {
-        "name": "Rabah Loucif",
-        "character": "Rachid"
-      },
-      {
-        "name": "Didier Kaminka",
-        "character": "Paul, le cousin de Michel"
-      }
-    ],
-    "production_countries": [
-      "FR"
     ]
   }
 ];

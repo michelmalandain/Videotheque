@@ -92,6 +92,15 @@ function peopleDirectory(catalogue){
   map.get(key).roles.add(role);
  };
  for(const film of catalogue||[]){collect(film.cast,'Acteur');collect(film.actors,'Acteur');collect(film.director,'Réalisateur');collect(film.directors,'Réalisateur');collect(film.creators,'Réalisateur')}
+  // Fusionner l'entrée sans ID avec l'unique identité TMDB du même nom.
+  // En présence de plusieurs identifiants, conserver les homonymes séparés.
+  for(const [key,item] of [...map]){
+   if(!key.startsWith('nom:'))continue;
+   const matches=[...map.entries()].filter(([k,p])=>k.startsWith('id:')&&norm(p.name)===norm(item.name));
+   if(matches.length!==1)continue;
+   for(const role of item.roles)matches[0][1].roles.add(role);
+   map.delete(key);
+  }
  return [...map.values()].map(x=>({id:x.id,name:x.name,label:x.name+' — '+[...x.roles].join(' / ')+(String(x.id).startsWith('nom:')?' (ID à confirmer)':'')})).sort((a,b)=>alphabetique(a.label,b.label));
 }
 function updatePeopleCounters(catalogue){

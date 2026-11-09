@@ -80,6 +80,27 @@ function clePatronyme(nom){
  while(debut>0&&/^(de|du|des|del|della|di|da|van|von|der|den|le|la|les|al|el|bin)$/i.test(mots[debut-1]))debut--;
  return mots.slice(debut).join(' ')+' '+mots.slice(0,debut).join(' ');
 }
+// Rapprocher les crédits sans identifiant d'une fiche TMDB déjà identifiée,
+// uniquement si un seul identifiant existe pour ce nom. Ne jamais fusionner les homonymes.
+const cmIdsParNom=new Map();
+for(const [cle,fiche] of entries){
+ if(!cle.startsWith('tmdb:'))continue;
+ const nom=fiche.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
+ if(!cmIdsParNom.has(nom))cmIdsParNom.set(nom,[]);
+ cmIdsParNom.get(nom).push(fiche);
+}
+for(const [cle,fiche] of [...entries]){
+ if(!cle.startsWith('name:'))continue;
+ const nom=fiche.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
+ const candidats=cmIdsParNom.get(nom)||[];
+ if(candidats.length!==1)continue;
+ const cible=candidats[0];
+ for(const film of fiche.films)cible.films.add(film);
+ cible.photo ||=fiche.photo;
+ cible.nationality ||=fiche.nationality;
+ cible.frProduction ||=fiche.frProduction;
+ entries.delete(cle);
+}
 const people=[...entries.values()].sort((a,b)=>clePatronyme(a.name).localeCompare(clePatronyme(b.name),'fr',{sensitivity:'base'})||a.name.localeCompare(b.name,'fr',{sensitivity:'base'}));
 const CM_PAGE_SIZE=36;
 let cmCurrentPage=1;
@@ -237,10 +258,11 @@ document.getElementById('actor-close').onclick=()=>actorDialog.close();
 const actorDate=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:(v||'Non renseignée')};
 function actorSection(title){const sec=document.createElement('section');sec.className='actor-section';const h=document.createElement('h3');h.textContent=title;sec.append(h);actorContent.append(sec);return sec}
 async function openActorDetail(person){
- actorContent.replaceChildren();const waiting=document.createElement('p');waiting.textContent='Chargement de la fiche…';actorContent.append(waiting);actorDialog.showModal();
+ actorContent.replaceChildren();const waiting=document.createElement('p');waiting.textContent='Chargement de la fiche…';actorContent.append(waiting);
  try{
   let id=person.id;
   if(!id){const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({name:person.name.trim()}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1){
+    if(!actorDialog.open)actorDialog.showModal();
     actorContent.replaceChildren();
     const heading=document.createElement('h2');heading.textContent=person.name;actorContent.append(heading);
     const note=document.createElement('p');note.textContent=matches.length?'Plusieurs fiches TMDB portent ce nom. Choisissez la bonne personne :':'Aucune fiche TMDB certaine pour ce nom. Les informations du catalogue restent conservées.';actorContent.append(note);
@@ -254,7 +276,7 @@ async function openActorDetail(person){
     return;
    }
    id=matches[0].id;person.id=id;}
-  const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(id));if(!r.ok)throw Error('Fiche indisponible');const p=await r.json();actorContent.replaceChildren();
+  const r=await fetch(PERSON_API+'/person-detail?id='+encodeURIComponent(id));if(!r.ok)throw Error('Fiche indisponible');const p=await r.json();if(!actorDialog.open)actorDialog.showModal();actorContent.replaceChildren();
   const profile=document.createElement('div');profile.className='actor-profile';const photo=document.createElement('div');if(p.profile_path||p.photo||p.profile||person.photo){const img=document.createElement('img');img.alt='Portrait de '+p.name;const candidates=[p.photo,p.profile,person.photo,p.profile_path].filter(Boolean);const path=candidates.find(v=>/^\/?photos\//i.test(String(v)))||candidates[0];img.src=cmPhotoUrl(path,'w342');photo.append(img)}else photo.textContent='Photographie indisponible';profile.append(photo);
   const facts=document.createElement('div');const h=document.createElement('h2');h.textContent=p.name||person.name;facts.append(h);
   for(const [label,value] of [['Naissance',p.birthday?actorDate(p.birthday):null],['Lieu de naissance',p.place_of_birth],['Nationalité',cmNationalite(p.nationality||p.nationalite)],['Décès',p.deathday?actorDate(p.deathday):null],['Profession',p.known_for_department==='Acting'?'Acteur / Actrice':p.known_for_department]]){const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(value??''));facts.append(line)}profile.append(facts);actorContent.append(profile);
@@ -296,7 +318,7 @@ async function openActorDetail(person){
    for(const credit of data.credits){const ticket=document.createElement('div');ticket.className='actor-ticket';ticket.tabIndex=0;ticket.setAttribute('role','button');ticket.title='Ouvrir la fiche de cette œuvre';ticket.style.cursor='pointer';ticket.addEventListener('click',()=>ouvrirOeuvreFilmographie(credit,credit.title||credit.name||'Sans titre'));ticket.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ouvrirOeuvreFilmographie(credit,credit.title||credit.name||'Sans titre')}});const year=document.createElement('span');year.className='actor-ticket-year';year.textContent=String(credit.date||'').slice(0,4)||'—';const name=document.createElement('strong');name.textContent=credit.title||credit.name||'Sans titre';ticket.append(year,name);if(credit.poster_path){const img=document.createElement('img');img.loading='lazy';img.alt='Affiche de '+name.textContent;img.src='https://image.tmdb.org/t/p/w154'+credit.poster_path;ticket.append(img)}else ticket.append(document.createElement('span'));if(localNames.has(normalized(name.textContent))){ticket.classList.add('present');const badge=document.createElement('small');badge.textContent='Dans notre vidéothèque';ticket.append(badge)}grid.append(ticket)}
   }catch(e){status.textContent=e.message}
    cmArrangeActorProfile(id);
- }catch(e){actorContent.replaceChildren();const error=document.createElement('p');error.textContent=e.message;actorContent.append(error)}
+ }catch(e){actorContent.replaceChildren();if(actorDialog.open)actorDialog.close();console.warn('CINEMALAND : fiche non chargée pour',person.name,e)}
 }
 
 
