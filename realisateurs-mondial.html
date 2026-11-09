@@ -122,9 +122,8 @@ async function resolvePortrait(person){
    }
   }
   const parts=person.name.trim().split(/\s+/);
-  if(parts.length<2)return;
   const last=parts.pop(),first=parts.join(' ');
-  const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));
+  const response=await fetch(PERSON_API+'/person-search?'+new URLSearchParams(first?{first,last}:{last}));
   if(!response.ok)return;
   const data=await response.json();
   const exact=(data.people||[]).filter(p=>normalized(p.name)===normalized(person.name));
@@ -157,7 +156,7 @@ async function openActorDetail(person){
  actorContent.replaceChildren();const waiting=document.createElement('p');waiting.textContent='Chargement de la fiche…';actorContent.append(waiting);actorDialog.showModal();
  try{
   let id=person.id;
-  if(!id){const words=person.name.trim().split(/\s+/),last=words.pop(),first=words.join(' ');const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams({first,last}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1){
+  if(!id){const words=person.name.trim().split(/\s+/),last=words.pop(),first=words.join(' ');const r=await fetch(PERSON_API+'/person-search?'+new URLSearchParams(first?{first,last}:{last}));if(!r.ok)throw Error('Recherche indisponible');const d=await r.json();const matches=(d.people||[]).filter(x=>normalized(x.name)===normalized(person.name));if(matches.length!==1){
     actorContent.replaceChildren();
     const heading=document.createElement('h2');heading.textContent=person.name;actorContent.append(heading);
     const note=document.createElement('p');note.textContent=matches.length?'Plusieurs fiches TMDB portent ce nom. Choisissez la bonne personne :':'Aucune fiche TMDB certaine pour ce nom. Les informations du catalogue restent conservées.';actorContent.append(note);
