@@ -3460,5 +3460,40 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Dean Whooly"
       }
     ]
+  },
+  {
+    "title": "Balkanika: Tamna strana",
+    "kind": "Film",
+    "year": 2025,
+    "period": "2025",
+    "genre": "Action, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/balkanika-tamna-strana.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Balkanika%3A%20Tamna%20strana",
+    "directors": [
+      "Marin Mamuza"
+    ],
+    "cast": [
+      {
+        "name": "Luka Mamuza",
+        "character": "Struja"
+      },
+      {
+        "name": "Goran Grgic",
+        "character": "Dora"
+      },
+      {
+        "name": "Ana Popović",
+        "character": "Layla"
+      },
+      {
+        "name": "Ivan Šagolj",
+        "character": "Bakar"
+      },
+      {
+        "name": "Mirvad Kurić",
+        "character": "Tarik"
+      }
+    ]
   }
 ];
