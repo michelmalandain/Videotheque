@@ -3388,5 +3388,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR"
     ]
+  },
+  {
+    "title": "Tueur d'élite",
+    "kind": "Film",
+    "year": 1975,
+    "period": "1975",
+    "genre": "Crime, Action, Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/tueur-d-elite.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Tueur%20d'%C3%A9lite",
+    "summary": "Mike Locken travaille comme tueur d'élite avec son ami George Hansen pour une mystérieuse compagnie d'espionnage rattachée à la CIA. Après une mission, Hansen retourne sa veste. Il ne tue pas Locken mais lui tire dans le genou, l'handicapant définitivement. Mais Locken n'a qu'une idée en tête : se venger...",
+    "directors": [
+      "Sam Peckinpah"
+    ],
+    "cast": [
+      {
+        "name": "James Caan",
+        "character": "Mike Locken"
+      },
+      {
+        "name": "Robert Duvall",
+        "character": "George Hansen"
+      },
+      {
+        "name": "Arthur Hill",
+        "character": "Cap Collis"
+      },
+      {
+        "name": "Bo Hopkins",
+        "character": "Jerome Miller"
+      },
+      {
+        "name": "Mako",
+        "character": "Yuen Chung"
+      }
+    ]
   }
 ];
