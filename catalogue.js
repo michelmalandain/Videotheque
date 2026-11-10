@@ -2886,45 +2886,6 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
-    "title": "Douze hommes en colère",
-    "kind": "Film",
-    "year": 2010,
-    "period": "2010",
-    "genre": "Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/douze-hommes-en-colere.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Douze%20hommes%20en%20col%C3%A8re",
-    "summary": "Un jury doit statuer sur le cas d'un jeune homme de 18 ans, issu d’un quartier difficile, accusé du meurtre de son père. Les preuves sont accablantes, les hommes sont pressés d'en finir, mais il faut l'unanimité des votes pour condamner l'accusé. Or sur les douze jurés, un d’entre eux a un doute sur sa culpabilité. Commence alors un vif débat au cours duquel chacun devra défendre ses convictions.",
-    "directors": [
-      "Stephan Meldegg"
-    ],
-    "cast": [
-      {
-        "name": "Alain Doutey",
-        "character": "Juré n°1"
-      },
-      {
-        "name": "François Gamard",
-        "character": "Juré n°6"
-      },
-      {
-        "name": "Michel Leeb",
-        "character": "Juré n°8"
-      },
-      {
-        "name": "Pierre Santini",
-        "character": "Juré n°3"
-      },
-      {
-        "name": "André Thorent",
-        "character": "Juré n°9"
-      }
-    ],
-    "production_countries": [
-      "FR"
-    ]
-  },
-  {
     "title": "2001 : L'Odyssée de l'espace",
     "kind": "Film",
     "year": 1968,
