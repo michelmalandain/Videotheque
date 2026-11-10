@@ -3580,5 +3580,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Laurie"
       }
     ]
+  },
+  {
+    "title": "Un bon avocat",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Thriller, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/un-bon-avocat.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20bon%20avocat",
+    "summary": "Léonard Landry, un avocat pénaliste flamboyant, fait une overdose en pleine plaidoirie. Après sa cure de désintoxication, il ne dispose que d'une semaine pour sauver sa carrière et préparer son propre procès, assisté à contrecœur par un stagiaire tenace nommé Noé. Commence alors une folle course contre la montre, ponctuée de manœuvres juridiques, de tentations et de rebondissements.",
+    "directors": [
+      "Tristan Séguéla"
+    ],
+    "cast": [
+      {
+        "name": "Laurent Lafitte",
+        "character": "Léonard Landry"
+      },
+      {
+        "name": "Anthony Bajon",
+        "character": "Noé"
+      },
+      {
+        "name": "Mélanie Laurent",
+        "character": "Iris Saint Didier"
+      },
+      {
+        "name": "Carole Bouquet",
+        "character": "Anne Lamarck"
+      },
+      {
+        "name": "Gwendal Kerdelhue",
+        "character": "L'homme de main"
+      }
+    ]
   }
 ];
