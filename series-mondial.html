@@ -357,20 +357,7 @@ body .toolbar select{background:linear-gradient(#28664d,#103d30)!important;color
 </style>
 <style id="mondial-tapis-style">
 .mondial-tapis{position:relative;overflow:hidden;background:linear-gradient(100deg,#061c16,#15523b 50%,#061c16);border-top:2px solid #c9a669;border-bottom:2px solid #c9a669;padding:10px 0;min-height:140px}.mondial-tapis-track{display:flex;align-items:center;gap:12px;width:max-content;animation:mondial-roule 95s linear infinite}.mondial-tapis:hover .mondial-tapis-track,.mondial-tapis:focus-within .mondial-tapis-track{animation-play-state:paused}.mondial-tapis-item{flex:0 0 auto;width:82px;height:118px;border:1px solid #c9a669;border-radius:3px;overflow:hidden;display:block;background:#09271f;box-shadow:0 2px 8px #0008}.mondial-tapis-item img{width:100%;height:100%;object-fit:cover;display:block}.mondial-tapis-item:focus-visible{outline:3px solid #fff0b9;outline-offset:2px}@keyframes mondial-roule{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mondial-tapis-track{animation:none;max-width:100vw;overflow-x:auto}}@media(max-width:600px){.mondial-tapis-item{width:62px;height:92px}.mondial-tapis{min-height:110px}}
-</style><style>.cm-pagination{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin:25px auto 32px;color:#f4d69b;font:17px Georgia,serif}.cm-pagination button{background:#153d2d;color:#f5d58c;border:1px solid #c9a35d;border-radius:5px;padding:10px 18px;cursor:pointer;font:inherit}.cm-pagination button:hover:not(:disabled){filter:brightness(1.2)}.cm-pagination button:disabled{opacity:.4;cursor:default}@media(max-width:700px){.cm-pagination{gap:8px;font-size:14px}.cm-pagination button{padding:9px 12px}}</style><style id="cm-harmonisation-fiches-20261109">
-/* Fiches personnes : même disposition que les pages Acteurs / Réalisateurs. */
-#person-dialog .cm-scroll.cm-fiche-grille{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:15px!important;align-items:start!important}
-#person-dialog .cm-fiche-grille>.cm-harmonie-profile{grid-column:1/-1!important;margin:0!important}
-#person-dialog .cm-fiche-grille>.cm-bio-pave,#person-dialog .cm-fiche-grille>.cm-fiche-cote>section{border:1px solid #b99459!important;border-radius:9px!important;background:linear-gradient(145deg,#063324,#031b13)!important;padding:15px 20px!important;min-width:0!important}
-#person-dialog .cm-fiche-grille>.cm-fiche-cote{display:flex!important;flex-direction:column!important;gap:14px!important}
-#person-dialog .cm-fiche-grille h3{font:bold 29px Georgia,serif!important;color:#f9d38c!important;margin:0 0 12px!important;padding:0 0 7px!important;border-bottom:1px solid #b99459!important}
-#person-dialog .cm-fiche-grille .cm-harmonie-biographie{margin:0!important;line-height:1.55!important}
-#person-dialog .cm-fiche-grille .cm-harmonie-profile>div:last-child{border:1px solid #b99459!important;border-radius:9px!important;padding:17px 20px!important;background:linear-gradient(145deg,#063324,#031b13)!important;min-height:330px!important}
-#person-dialog .cm-fiche-grille .cm-harmonie-profile>div:first-child{border:1px solid #b99459!important;border-radius:9px!important;overflow:hidden!important}
-#person-dialog .cm-fiche-grille .cm-harmonie-profile img{border:0!important;display:block!important}
-#person-dialog .cm-fiche-grille .cm-fiche-cote p{margin:7px 0!important}
-@media(max-width:750px){#person-dialog .cm-scroll.cm-fiche-grille{grid-template-columns:1fr!important}#person-dialog .cm-fiche-grille>.cm-harmonie-profile{grid-column:1!important}}
-</style></head><body><div class="curtain" aria-hidden="true"></div><header><div><h1>CINÉMA MONDIAL</h1><p>SÉRIES DU MONDE ENTIER</p></div></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a class="admin-link" href="hallmondial.html">HALL MONDIAL</a><a class="cinemaland-recherche-personne" href="acteurs-mondial.html">ACTEURS</a><a class="cinemaland-recherche-personne" href="realisateurs-mondial.html">RÉALISATEURS</a><a class="admin-link" href="films-mondial.html">FILMS MONDIAUX</a><a href="admin2-films.html">ADMINISTRATION</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="year-filter" aria-label="Année"><option value="">Toutes les années</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><nav id="cm-pagination" class="cm-pagination" aria-label="Pagination des titres"><button type="button" id="cm-page-prev">Précédent</button><span id="cm-page-info" aria-live="polite"></span><button type="button" id="cm-page-next">Suivant</button></nav><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
+</style><style>.cm-pagination{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin:25px auto 32px;color:#f4d69b;font:17px Georgia,serif}.cm-pagination button{background:#153d2d;color:#f5d58c;border:1px solid #c9a35d;border-radius:5px;padding:10px 18px;cursor:pointer;font:inherit}.cm-pagination button:hover:not(:disabled){filter:brightness(1.2)}.cm-pagination button:disabled{opacity:.4;cursor:default}@media(max-width:700px){.cm-pagination{gap:8px;font-size:14px}.cm-pagination button{padding:9px 12px}}</style></head><body><div class="curtain" aria-hidden="true"></div><header><div><h1>CINÉMA MONDIAL</h1><p>SÉRIES DU MONDE ENTIER</p></div></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a class="admin-link" href="hallmondial.html">HALL MONDIAL</a><a class="cinemaland-recherche-personne" href="acteurs-mondial.html">ACTEURS</a><a class="cinemaland-recherche-personne" href="realisateurs-mondial.html">RÉALISATEURS</a><a class="admin-link" href="films-mondial.html">FILMS MONDIAUX</a><a href="admin2-films.html">ADMINISTRATION</a></nav><main class="wrap"><div class="toolbar"><input id="search" aria-label="Rechercher" placeholder="Rechercher une série…"><select id="genre" aria-label="Genre"><option value="">Tous les genres</option><option>Historique</option><option>Policier</option><option>Action</option><option>Drame</option></select><select id="year-filter" aria-label="Année"><option value="">Toutes les années</option></select><select id="sort" aria-label="Tri"><option value="title">Titre A → Z</option><option value="year">Année</option></select></div><div class="cards" id="cards"></div><nav id="cm-pagination" class="cm-pagination" aria-label="Pagination des titres"><button type="button" id="cm-page-prev">Précédent</button><span id="cm-page-info" aria-live="polite"></span><button type="button" id="cm-page-next">Suivant</button></nav><p id="empty">Aucun titre trouvé.</p></main><footer>♥ Le cinéma des Malandain · Le cinéma est un rêve qui ne finit jamais…</footer><dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title"><button class="close" id="close-film" type="button">Fermer</button><h2 id="film-title"></h2><p id="film-meta"></p><p id="film-summary"></p><h3 id="director-label">🎬 Réalisation</h3><p id="film-director" class="credit"></p><h3>⭐ Acteurs principaux</h3><ol id="film-cast" class="cast"></ol><p id="film-source"></p></dialog><dialog id="person-dialog" class="film-dialog" aria-labelledby="person-title"><button type="button" class="close" id="close-person">Fermer</button><h2 id="person-title"></h2><p id="person-count"></p><div id="person-films"></div><p class="person-note">Filmographie limitée aux films et séries présents dans notre collection.</p></dialog><style>#person-films{display:grid;gap:12px}.person-film{display:flex;align-items:center;gap:18px;text-align:left;width:100%;padding:10px;background:#1b1215;border:1px solid #bd9353;color:#f6e8cf;cursor:pointer;border-radius:6px}.person-film:hover{background:#42202a}.person-film img{width:62px;height:85px;object-fit:contain}.person-film strong,.person-film small{display:block}.person-film strong{font-size:19px;color:#f5cc7b}.person-film small{margin-top:7px}.person-note{font-size:13px;color:#d9bb87}</style><script>document.write('<script src="catalogue.js?fresh='+Date.now()+'"><\/script>');</script><script>
 /* CINEMALAND : vérification discrète du catalogue toutes les 20 secondes. */
 (function(){
  const initial=JSON.stringify(window.CINEMALAND_CATALOGUE || []);
@@ -472,7 +459,7 @@ function cinemalandPaysProduction(x){
  const names=raw.map(v=>{const code=typeof v==='string'?v:(v?.iso_3166_1||'');const name=typeof v==='string'?v:(v?.name||'');return codes[String(code).toUpperCase()]||name||code}).filter(Boolean);
  return [...new Set(names)].join(', ')||'Non renseigné';
 }
-function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre+' · Pays de production : '+cinemalandPaysProduction(x);document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[],x);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,10)){const li=document.createElement('li');li.append(filmographyLink(a,x,'actor'));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal();cinemalandRemplirDistribution(x,cast,'li');window.cinemalandAfficherAvisFiche?.(x);window.cinemalandLienGerer?.(x)}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
+function openFilm(x){const d=document.getElementById('film-dialog');d.dataset.currentTitle=x.title;d.dataset.cmDeleteIndex=String(catalogue.indexOf(x));document.getElementById('film-title').textContent=x.title;document.getElementById('film-meta').textContent=x.period+' · '+x.genre+' · Pays de production : '+cinemalandPaysProduction(x);document.getElementById('film-summary').textContent=x.summary||x.description||'';document.getElementById('director-label').textContent=x.kind==='Série'?'🎬 Création':'🎬 Réalisation';appendNames(document.getElementById('film-director'),x.directors||[],x);const cast=document.getElementById('film-cast');cast.replaceChildren();for(const a of (x.cast||[]).slice(0,10)){const li=document.createElement('li');li.append(filmographyLink(a,x,'actor'));if(typeof a!=='string'&&a.character)li.append(document.createTextNode(' — '+a.character));cast.append(li)}if(!cast.children.length){const li=document.createElement('li');li.textContent='Informations à compléter depuis TMDB';cast.append(li)}document.getElementById('film-source').textContent=x.directors||x.cast?'Crédits : TMDB':'Crédits TMDB en attente de synchronisation';d.showModal();cinemalandRemplirDistribution(x,cast,'li');window.cinemalandAfficherAvisFiche?.(x);window.cinemalandLienGerer?.(x)}document.getElementById('close-film').addEventListener('click',()=>document.getElementById('film-dialog').close());
 /* Décors TMDB chargés à la demande, avec cache de session et sans modifier le catalogue. */
 const cinemaDecorCache=new Map();
 const cinemaDecorObserver=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{
@@ -1050,20 +1037,8 @@ function openBioProposal(title,year,kind){
    if(!value)continue;const line=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+' : ';line.append(strong,document.createTextNode(value));facts.append(line);
   }
   profile.append(photo,facts);bioText.replaceChildren(profile);
-  // La fiche issue d'un film/série reprend les pavés des pages Acteurs.
-  bioText.classList.add('cm-fiche-grille');
-  const biographyPanel=document.createElement('section');biographyPanel.className='cm-bio-pave';
-  const heading=document.createElement('h3');heading.textContent='Biographie et carrière';biographyPanel.append(heading);
-  const story=document.createElement('p');story.className='cm-harmonie-biographie';story.textContent=personData.biography||'Biographie non disponible sur TMDB.';biographyPanel.append(story);
-  const side=document.createElement('div');side.className='cm-fiche-cote';
-  const family=document.createElement('section');const familyHeading=document.createElement('h3');familyHeading.textContent='Famille et vie personnelle';family.append(familyHeading);
-  const awards=document.createElement('section');const awardsHeading=document.createElement('h3');awardsHeading.textContent='Distinctions';awards.append(awardsHeading);
-  // Afficher uniquement les données déjà disponibles, sans ajout de source extérieure.
-  const familyFields=[['Père',personData.father],['Mère',personData.mother],['Conjoint',personData.spouse],['Anciens conjoints',personData.former_spouses],['Enfants',personData.children]];
-  for(const [label,value] of familyFields){const values=Array.isArray(value)?value.map(x=>typeof x==='string'?x:x?.name).filter(Boolean).join(', '):(typeof value==='string'?value:'');if(values){const line=document.createElement('p');const bold=document.createElement('strong');bold.textContent=label+' : ';line.append(bold,document.createTextNode(values));family.append(line)}}
-  const distinctions=personData.awards||personData.distinctions;
-  if(distinctions){const line=document.createElement('p');line.textContent=Array.isArray(distinctions)?distinctions.map(x=>typeof x==='string'?x:x?.name).filter(Boolean).join(' · '):String(distinctions);awards.append(line)}
-  side.append(family,awards);bioText.append(biographyPanel,side);
+  const heading=document.createElement('h3');heading.textContent='BIOGRAPHIE';bioText.append(heading);
+  const story=document.createElement('p');story.className='cm-harmonie-biographie';story.textContent=personData.biography||'Biographie non disponible sur TMDB.';bioText.append(story);
  }
  else p(bioText,'Biographie indisponible pour cette recherche.');
  };
@@ -1182,6 +1157,49 @@ function openBioProposal(title,year,kind){
    }).catch(()=>{});
   return result;
  };
+})();
+</script>
+
+<style id="cm-admin-delete-style">
+#film-dialog .cm-admin-delete{background:#16432e!important;color:#f8e5b7!important;border:1px solid #c9a35c!important;border-radius:6px!important;padding:10px 16px!important;cursor:pointer!important}
+#film-dialog .cm-admin-delete:disabled{opacity:.55;cursor:wait!important}
+</style>
+<script id="cm-admin-delete-script">
+(function(){
+  // Mode administration volontaire : ajouter ?admin=1 à l'adresse de la page.
+  if(new URLSearchParams(location.search).get('admin')!=='1')return;
+  const dialog=document.getElementById('film-dialog');
+  if(!dialog)return;
+  const actions=dialog.querySelector('.fiche-actions');
+  if(!actions)return;
+  const btn=document.createElement('button');btn.type='button';btn.className='cm-admin-delete';btn.textContent='Supprimer ce titre';
+  actions.insertBefore(btn,actions.lastElementChild);
+  btn.addEventListener('click',async()=>{
+    const title=dialog.dataset.currentTitle||'';
+    const index=Number(dialog.dataset.cmDeleteIndex);
+    if(!title||!Number.isInteger(index)||index<0){alert('Impossible d’identifier ce titre.');return;}
+    if(!confirm('Confirmez-vous la suppression définitive de « '+title+' » de CINEMALAND ?'))return;
+    const password=prompt('Mot de passe administrateur CINEMALAND :');
+    if(password===null)return;
+    if(!password){alert('Mot de passe obligatoire.');return;}
+    btn.disabled=true;btn.textContent='Suppression en cours…';
+    try{
+      const endpoint='https://videotheque-admin.michelmalandain.workers.dev/admin2-data';
+      const headers={'Authorization':'Bearer '+password};
+      const read=await fetch(endpoint,{headers,cache:'no-store'});
+      const state=await read.json();
+      if(!read.ok)throw Error(state.message||'Authentification ou lecture impossible.');
+      const item=state.entries?.[index];
+      if(!item||item.title!==title)throw Error('Le catalogue a changé. Actualisez la page avant de supprimer.');
+      const payload={action:'delete',index,sha:state.sha,expected:{title:item.title,kind:item.kind,year:item.year,tmdb_id:item.tmdb_id??item.tmdbId??item.tmdb?.id??null}};
+      const result=await fetch(endpoint,{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(payload),cache:'no-store'});
+      const answer=await result.json();
+      if(!result.ok)throw Error(answer.message||'Suppression non enregistrée.');
+      alert('Suppression effectuée avec succès.');
+      location.reload();
+    }catch(err){alert('Suppression non effectuée : '+(err.message||err));}
+    finally{btn.disabled=false;btn.textContent='Supprimer ce titre';}
+  });
 })();
 </script>
 </body></html>
