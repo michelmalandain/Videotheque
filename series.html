@@ -1421,53 +1421,74 @@ function openBioProposal(title,year,kind){
 #film-dialog .cm-admin-delete{background:#16432e!important;color:#f8e5b7!important;border:1px solid #c9a35c!important;border-radius:6px!important;padding:10px 16px!important;cursor:pointer!important}
 #film-dialog .cm-admin-delete:disabled{opacity:.55;cursor:wait!important}
 </style>
+<style id="cm-admin-delete-progress-style">
+#film-dialog .cm-delete-progress{margin:10px 0;padding:12px 15px;border:1px solid #c9a35c;border-radius:6px;background:#103b2a;color:#f8e5b7;font:15px Georgia,serif;line-height:1.5}
+#film-dialog .cm-delete-progress[hidden]{display:none!important}
+#film-dialog .cm-delete-progress.busy:before{content:' ';display:inline-block;width:12px;height:12px;margin-right:10px;border:2px solid #e8c478;border-right-color:transparent;border-radius:50%;animation:cm-delete-spin .8s linear infinite;vertical-align:middle}
+@keyframes cm-delete-spin{to{transform:rotate(360deg)}}
+</style>
 <script id="cm-admin-delete-script">
 (function(){
-  // Bouton visible sur chaque fiche ; seul le mot de passe administrateur autorise l'opération.
-  const dialog=document.getElementById('film-dialog');
-  const actions=dialog?.querySelector('.fiche-actions');
-  if(!actions)return;
-  const btn=document.createElement('button');
-  btn.type='button';btn.className='cm-admin-delete';btn.textContent='Supprimer ce titre';
-  actions.insertBefore(btn,actions.lastElementChild);
-  btn.addEventListener('click',async()=>{
-    const title=dialog.dataset.currentTitle||'';
-    const localIndex=Number(dialog.dataset.cmDeleteIndex);
-    if(!title||!Number.isInteger(localIndex)||localIndex<0){alert('Impossible d’identifier ce titre.');return;}
-    // Étape 1 : demander et vérifier le mot de passe, sans confirmer la suppression avant.
-    const password=prompt('Mot de passe administrateur CINEMALAND :');
-    if(password===null)return;
-    if(!password){alert('Mot de passe obligatoire.');return;}
-    btn.disabled=true;btn.textContent='Vérification…';
-    try{
-      const endpoint='https://videotheque-admin.michelmalandain.workers.dev/admin2-data';
-      const headers={'Authorization':'Bearer '+password};
-      const read=await fetch(endpoint,{headers,cache:'no-store'});
-      const state=await read.json();
-      if(!read.ok)throw Error(state.message||'Mot de passe incorrect ou lecture impossible.');
-      const local=window.CINEMALAND_CATALOGUE?.[localIndex];
-      const yearOf=x=>String(x?.year||x?.period||x?.release_date||'').match(/\b(?:18|19|20)\d{2}\b/)?.[0]||'';
-      const idOf=x=>String(x?.tmdb_id??x?.tmdbId??x?.tmdb?.id??'');
-      // Identifier l'entrée dans la version courante du catalogue GitHub.
-      const candidates=(state.entries||[]).map((item,index)=>({item,index})).filter(({item})=>
-        item.title===title && (!local?.kind||item.kind===local.kind) &&
-        (!yearOf(local)||yearOf(item)===yearOf(local)) &&
-        (!idOf(local)||idOf(item)===idOf(local)));
-      if(candidates.length!==1)throw Error('Impossible d’identifier ce titre de manière unique. Actualisez la page.');
-      const {item,index}=candidates[0];
-      const year=yearOf(item)||'année non renseignée';
-      // Étape 2 : récapitulatif et confirmation explicite.
-      if(!confirm('SUPPRESSION DÉFINITIVE\n\nTitre : '+item.title+'\nAnnée : '+year+'\n\nConfirmer la suppression de CINEMALAND ?'))return;
-      btn.textContent='Suppression en cours…';
-      const payload={action:'delete',index,sha:state.sha,expected:{title:item.title,kind:item.kind,year:item.year,tmdb_id:item.tmdb_id??item.tmdbId??item.tmdb?.id??null}};
-      const result=await fetch(endpoint,{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(payload),cache:'no-store'});
-      const answer=await result.json();
-      if(!result.ok)throw Error(answer.message||'Suppression non enregistrée.');
-      alert('Suppression effectuée avec succès.');
-      location.reload();
-    }catch(err){alert('Suppression non effectuée : '+(err.message||err));}
-    finally{btn.disabled=false;btn.textContent='Supprimer ce titre';}
-  });
+ const dialog=document.getElementById('film-dialog');
+ const actions=dialog?.querySelector('.fiche-actions');
+ if(!actions)return;
+ const btn=document.createElement('button');
+ btn.type='button';btn.className='cm-admin-delete';btn.textContent='Supprimer ce titre';
+ actions.insertBefore(btn,actions.lastElementChild);
+ const panel=document.createElement('div');
+ panel.className='cm-delete-progress';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');
+ panel.hidden=true;actions.insertBefore(panel,btn.nextSibling);
+ const show=(message,busy=true)=>{panel.hidden=false;panel.classList.toggle('busy',busy);panel.textContent=message;};
+ const endpoint='https://videotheque-admin.michelmalandain.workers.dev/admin2-data';
+ const yearOf=x=>String(x?.year||x?.period||x?.release_date||'').match(/\b(?:18|19|20)\d{2}\b/)?.[0]||'';
+ const idOf=x=>String(x?.tmdb_id??x?.tmdbId??x?.tmdb?.id??'');
+ async function jsonResponse(url,options){
+   const response=await fetch(url,options);
+   let data;try{data=await response.json()}catch{throw Error('Réponse du Worker illisible (HTTP '+response.status+').');}
+   if(!response.ok)throw Error(data.message||'Erreur HTTP '+response.status);
+   return data;
+ }
+ const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ btn.addEventListener('click',async()=>{
+   const title=dialog.dataset.currentTitle||'';
+   const localIndex=Number(dialog.dataset.cmDeleteIndex);
+   if(!title||!Number.isInteger(localIndex)||localIndex<0){show('Impossible d’identifier ce titre.',false);return;}
+   const password=prompt('Mot de passe administrateur CINEMALAND :');
+   if(password===null)return;
+   if(!password){show('Mot de passe obligatoire.',false);return;}
+   btn.disabled=true;
+   try{
+     const headers={'Authorization':'Bearer '+password};
+     show('Vérification du mot de passe administrateur…');
+     const state=await jsonResponse(endpoint,{headers,cache:'no-store'});
+     const local=window.CINEMALAND_CATALOGUE?.[localIndex];
+     const candidates=(state.entries||[]).map((item,index)=>({item,index})).filter(({item})=>
+       item.title===title && (!local?.kind||item.kind===local.kind) &&
+       (!yearOf(local)||yearOf(item)===yearOf(local)) &&
+       (!idOf(local)||idOf(item)===idOf(local)));
+     if(candidates.length!==1)throw Error('Titre introuvable ou ambigu dans GitHub. Actualisez la page.');
+     const {item,index}=candidates[0];
+     const year=yearOf(item)||'année non renseignée';
+     show('Titre vérifié : '+item.title+' ('+year+'). En attente de confirmation.',false);
+     if(!confirm('SUPPRESSION DÉFINITIVE\n\nTitre : '+item.title+'\nAnnée : '+year+'\n\nConfirmer la suppression de CINEMALAND ?')){panel.hidden=true;return;}
+     show('Suppression en cours sur GitHub…');
+     const expected={title:item.title,kind:item.kind,year:item.year,tmdb_id:item.tmdb_id??item.tmdbId??item.tmdb?.id??null};
+     const result=await jsonResponse(endpoint,{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({action:'delete',index,sha:state.sha,expected}),cache:'no-store'});
+     show('GitHub a répondu. Vérification de l’enregistrement…');
+     let verified=false;
+     for(let attempt=0;attempt<8;attempt++){
+       const fresh=await jsonResponse(endpoint+'?verification='+Date.now(),{headers,cache:'no-store'});
+       if(result.sha && fresh.sha===result.sha && fresh.entries?.length===state.entries.length-1){verified=true;break;}
+       if(!result.sha && fresh.sha!==state.sha && fresh.entries?.length===state.entries.length-1){verified=true;break;}
+       await wait(1500);
+     }
+     if(!verified)throw Error('GitHub a répondu, mais la suppression n’est pas encore vérifiable. Vérifiez le catalogue avant de recommencer.');
+     show('Suppression effectuée avec succès. Actualisation de la page…',false);
+     await wait(1200);
+     location.reload();
+   }catch(err){show('Suppression non confirmée : '+(err.message||err),false);}
+   finally{btn.disabled=false;btn.textContent='Supprimer ce titre';}
+ });
 })();
 </script>
 </body></html>
