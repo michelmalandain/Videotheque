@@ -631,29 +631,89 @@ async function ouvrirPersonneDepuisLien(){
 window.addEventListener('load',ouvrirPersonneDepuisLien);
 function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu auras choisi la page.');}
 (function(){
- function majCompteursHall(){
-  const items=window.CINEMALAND_CATALOGUE;
-  if(!Array.isArray(items))return false;
-  const films=new Set(),series=new Set(),acteurs=new Set(),realisateurs=new Set();
-  const norm=x=>String(x||'').trim().toLocaleLowerCase('fr');
-  const add=(set,arr)=>{for(const p of Array.isArray(arr)?arr:[]){const n=norm(typeof p==='string'?p:p?.name);if(n)set.add(n)}};
-  for(const item of items){
-   if(!item||!item.title||!Array.isArray(item.production_countries)||!item.production_countries.includes('FR'))continue;
-   const cle=norm(item.title)+'|'+String(item.year||'');
-   const kind=norm(item.kind||item.type);
+ // Compteurs des personnes : mêmes critères que les listes françaises.
+ const items=window.CINEMALAND_CATALOGUE;
+ if(!Array.isArray(items))return;
+ const norm=x=>String(x||'').trim().toLocaleLowerCase('fr');
+ const francais=value=>{
+  const v=norm(value?.iso_3166_1||value?.code||value);
+  return ['fr','fx','fra','france','français','française','french'].includes(v);
+ };
+ const films=new Set(),series=new Set();
+ const personnes={actor:new Map(),director:new Map()};
+ function ajouter(role,p,frProduction){
+  const name=typeof p==='string'?p:(p?.name||'');
+  if(!String(name).trim())return;
+  const id=typeof p==='object'&&p?(p.tmdb_id||p.id):null;
+  const key=/^[1-9]\d*$/.test(String(id||''))?'tmdb:'+id:'name:'+norm(name);
+  let row=personnes[role].get(key);
+  if(!row){row={name:String(name).trim(),id:null,nationality:null,frProduction:false};personnes[role].set(key,row)}
+  if(p&&typeof p==='object'){
+   row.id ||=p.tmdb_id||p.id||null;
+   row.nationality ||=p.nationality||p.nationalite||null;
+  }
+  row.frProduction ||=frProduction;
+ }
+ for(const item of items){
+  if(!item||!item.title)continue;
+  const pays=Array.isArray(item.production_countries)?item.production_countries:[];
+  const fr=pays.some(c=>String(c?.iso_3166_1||c?.code||c).toUpperCase()==='FR');
+  const cle=norm(item.title)+'|'+String(item.year||'');
+  const kind=norm(item.kind||item.type);
+  if(fr){
    if(kind==='film'||kind==='movie')films.add(cle);
    else if(['série','serie','series','tv'].includes(kind))series.add(cle);
-   add(acteurs,item.cast||item.actors);
-   add(realisateurs,item.directors);
-   add(realisateurs,item.creators);
   }
+  for(const p of (item.cast||item.actors||[]))ajouter('actor',p,fr);
+  for(const p of [...(item.directors||[]),...(item.creators||[])])ajouter('director',p,fr);
+ }
+ // Comme dans acteurs.html : fusionner les crédits sans ID uniquement si
+ // un seul identifiant TMDB correspond au nom (jamais les homonymes).
+ function fusionner(map){
+  const parNom=new Map();
+  for(const [key,row] of map){
+   if(!key.startsWith('tmdb:'))continue;
+   const n=norm(row.name.normalize('NFD').replace(/[\u0300-\u036f]/g,''));
+   if(!parNom.has(n))parNom.set(n,[]);
+   parNom.get(n).push(row);
+  }
+  for(const [key,row] of [...map]){
+   if(!key.startsWith('name:'))continue;
+   const n=norm(row.name.normalize('NFD').replace(/[\u0300-\u036f]/g,''));
+   const matches=parNom.get(n)||[];
+   if(matches.length!==1)continue;
+   const target=matches[0];
+   target.nationality ||=row.nationality;
+   target.frProduction ||=row.frProduction;
+   map.delete(key);
+  }
+ }
+ fusionner(personnes.actor);fusionner(personnes.director);
+ const actors=[...personnes.actor.values()],directors=[...personnes.director.values()];
+ function afficher(){
+  const eligible=p=>francais(p.nationality)||(!p.nationality&&p.frProduction);
   document.getElementById('hallFilms').textContent=films.size.toLocaleString('fr-FR');
   document.getElementById('hallSeries').textContent=series.size.toLocaleString('fr-FR');
-  document.getElementById('hallActeurs').textContent=acteurs.size.toLocaleString('fr-FR');
-  document.getElementById('hallRealisateurs').textContent=realisateurs.size.toLocaleString('fr-FR');
-  return true;
+  document.getElementById('hallActeurs').textContent=actors.filter(eligible).length.toLocaleString('fr-FR');
+  document.getElementById('hallRealisateurs').textContent=directors.filter(eligible).length.toLocaleString('fr-FR');
  }
- if(!majCompteursHall()){let n=0;const timer=setInterval(()=>{if(majCompteursHall()||++n>15)clearInterval(timer)},500)}
+ afficher();
+ // Même vérification des nationalités manquantes que sur les pages personnes.
+ const pending=[...actors,...directors].filter(p=>!p.nationality&&p.id);
+ let index=0;
+ Promise.all(Array.from({length:Math.min(5,pending.length)},async()=>{
+  while(index<pending.length){
+   const person=pending[index++];
+   try{
+    const response=await fetch('https://videotheque-admin.michelmalandain.workers.dev/person-detail?id='+encodeURIComponent(person.id));
+    if(response.ok){
+     const info=await response.json(),detail=info.person||info.details||info;
+     person.nationality=detail.nationality||detail.nationalite||null;
+    }
+   }catch(e){/* Le catalogue reste affiché si le service est indisponible. */}
+   afficher();
+  }
+ })).then(afficher);
 })();
 </script>
 </body>
