@@ -3426,42 +3426,6 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
-    "title": "Au service de Satan",
-    "kind": "Film",
-    "year": 2005,
-    "period": "2005",
-    "genre": "Horreur, Comédie",
-    "description": "Description à compléter.",
-    "poster": "affiches/au-service-de-satan.jpg",
-    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Au%20service%20de%20Satan",
-    "summary": "Douglas Whooly est un jeune garçon dingue de jeux vidéo. Le jour d'Halloween, il décide d'endosser le costume du héros de son jeu favori, le Satan's Little Helper, dont le but consiste à aider Satan à répandre le Mal sur Terre. Alors qu'il collecte des friandises dans son quartier, il croise sur sa route un homme déguisé en Satan. Ravi de cette rencontre inespérée, le jeune Douglas va lui proposer ses services...",
-    "directors": [
-      "Jeff Lieberman"
-    ],
-    "cast": [
-      {
-        "name": "Alexander Brickel",
-        "character": "Douglas \"Dougie\" Whooly"
-      },
-      {
-        "name": "Katheryn Winnick",
-        "character": "Jenna Whooly"
-      },
-      {
-        "name": "Stephen Graham",
-        "character": "Alex Martin"
-      },
-      {
-        "name": "Amanda Plummer",
-        "character": "Merrill Whooly"
-      },
-      {
-        "name": "Wass Stevens",
-        "character": "Dean Whooly"
-      }
-    ]
-  },
-  {
     "title": "Balkanika: Tamna strana",
     "kind": "Film",
     "year": 2025,
