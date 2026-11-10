@@ -3495,5 +3495,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Tarik"
       }
     ]
+  },
+  {
+    "title": "Raison et Sentiments",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/raison-et-sentiments.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Raison%20et%20Sentiments",
+    "summary": "Une irrésistible nouvelle version du roman culte de Jane Austin, Raison et Sentiments, qui suit deux sœurs à travers leurs amours, leurs chagrins et le lien qui les unit d'une façon magistrale et profondément proche de nous.",
+    "directors": [
+      "Georgia Oakley"
+    ],
+    "cast": [
+      {
+        "name": "Daisy Edgar-Jones",
+        "character": "Elinor Dashwood"
+      },
+      {
+        "name": "Esmé Creed-Miles",
+        "character": "Marianne Dashwood"
+      },
+      {
+        "name": "Caitríona Balfe",
+        "character": "Mrs. Dashwood"
+      },
+      {
+        "name": "Frank Dillane",
+        "character": "John Willoughby"
+      },
+      {
+        "name": "Herbert Nordrum",
+        "character": "Colonel Brandon"
+      }
+    ]
   }
 ];
