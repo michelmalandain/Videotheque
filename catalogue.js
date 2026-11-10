@@ -2343,7 +2343,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/blade-runner-2099.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Blade%20Runner%202099",
-    "summary": "Dans le Los Angeles de 2099, Cora a vécu toute sa vie en cavale, un caméléon forcé d'adopter de nombreuses identités. Pour assurer un avenir stable à son frère, elle prend une dernière identité et est contrainte de s'associer à Olwen, une Blade Runner confrontée à la fin de sa vie. Les deux sont entraînés dans une conspiration grandissante qui représente une menace existentielle pour une ville qui lutte pour renaître.",
+    "summary": "Cora, une fugitive devenue Blade Runner, fait équipe avec Olwen, une Réplicante mourante, pour traquer un fugitif dans un Los Angeles qui a retrouvé un nouveau souffle. Ensemble, elles découvrent une vérité qui menace de détruire leur fragile cité.",
     "directors": [
       "Silka Luisa"
     ],
@@ -3341,6 +3341,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Lamont Bentley",
         "character": "Cpl. Sea"
+      }
+    ]
+  },
+  {
+    "title": "L'Aile ou la Cuisse",
+    "kind": "Film",
+    "year": 1976,
+    "period": "1976",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/l-aile-ou-la-cuisse.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=L'Aile%20ou%20la%20Cuisse",
+    "summary": "Charles Duchemin, l'éditeur d'une revue gastronomique de renom, voudrait que son fils, Gérard, lui succède. Mais celui-ci préfère faire le clown dans un cirque. Charles lance un défi à Tricatel, le roi de la cuisine industrielle en le conviant à une émission télé. Mais Charles perd le goût et l'odorat…",
+    "directors": [
+      "Claude Zidi"
+    ],
+    "cast": [
+      {
+        "name": "Louis de Funès",
+        "character": "Charles Duchemin"
+      },
+      {
+        "name": "Coluche",
+        "character": "Gérard Duchemin"
+      },
+      {
+        "name": "Ann Zacharias",
+        "character": "Marguerite"
+      },
+      {
+        "name": "Julien Guiomar",
+        "character": "Jacques Tricatel"
+      },
+      {
+        "name": "Raymond Bussières",
+        "character": "Henri"
       }
     ]
   }
