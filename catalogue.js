@@ -1871,6 +1871,41 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
+    "title": "Les vécés étaient fermés de l’intérieur",
+    "kind": "Film",
+    "year": 1976,
+    "period": "1976",
+    "genre": "Crime, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-veces-etaient-fermes-de-l-interieur.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20v%C3%A9c%C3%A9s%20%C3%A9taient%20ferm%C3%A9s%20de%20l%E2%80%99int%C3%A9rieur",
+    "summary": "Le commissaire Pichard et l'inspecteur Charbonnier mènent une enquête extravagante sur un crime commis sans mobile apparent. Un poinçonneur d'autobus est retrouvé mort dans ses wc, victime d'un assassinat. Détail surprenant : le verrou était fermé de l'intérieur. S'ensuit une enquête pour le moins loufoque, dans laquelle les deux policiers se lancent sur des pistes improbables, avant que le commissaire Pichard ne parvienne finalement à faire la lumière sur cette affaire.",
+    "directors": [
+      "Patrice Leconte"
+    ],
+    "cast": [
+      {
+        "name": "Jean Rochefort",
+        "character": "Le commissaire Pichard"
+      },
+      {
+        "name": "Roland Dubillard",
+        "character": "Gazul"
+      },
+      {
+        "name": "Danièle Evenou",
+        "character": "Gwendoline"
+      },
+      {
+        "name": "Robert Berri",
+        "character": "René"
+      }
+    ],
+    "production_countries": [
+      "FR"
+    ]
+  },
+  {
     "title": "37°2 Le Matin",
     "kind": "Film",
     "year": 1986,
@@ -2846,6 +2881,45 @@ window.CINEMALAND_CATALOGUE = [
     ]
   },
   {
+    "title": "Douze hommes en colère",
+    "kind": "Film",
+    "year": 2010,
+    "period": "2010",
+    "genre": "Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/douze-hommes-en-colere.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Douze%20hommes%20en%20col%C3%A8re",
+    "summary": "Un jury doit statuer sur le cas d'un jeune homme de 18 ans, issu d’un quartier difficile, accusé du meurtre de son père. Les preuves sont accablantes, les hommes sont pressés d'en finir, mais il faut l'unanimité des votes pour condamner l'accusé. Or sur les douze jurés, un d’entre eux a un doute sur sa culpabilité. Commence alors un vif débat au cours duquel chacun devra défendre ses convictions.",
+    "directors": [
+      "Stephan Meldegg"
+    ],
+    "cast": [
+      {
+        "name": "Alain Doutey",
+        "character": "Juré n°1"
+      },
+      {
+        "name": "François Gamard",
+        "character": "Juré n°6"
+      },
+      {
+        "name": "Michel Leeb",
+        "character": "Juré n°8"
+      },
+      {
+        "name": "Pierre Santini",
+        "character": "Juré n°3"
+      },
+      {
+        "name": "André Thorent",
+        "character": "Juré n°9"
+      }
+    ],
+    "production_countries": [
+      "FR"
+    ]
+  },
+  {
     "title": "2001 : L'Odyssée de l'espace",
     "kind": "Film",
     "year": 1968,
@@ -3232,9 +3306,6 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Adrien Dewitte",
         "character": "Rodrigues"
       }
-    ],
-    "production_countries": [
-      "IT"
     ]
   },
   {
@@ -3271,9 +3342,6 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Lamont Bentley",
         "character": "Cpl. Sea"
       }
-    ],
-    "production_countries": [
-      "US"
     ]
   }
 ];
