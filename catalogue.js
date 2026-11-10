@@ -3495,5 +3495,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Colonel Brandon"
       }
     ]
+  },
+  {
+    "title": "Larry Flynt",
+    "kind": "Film",
+    "year": 1996,
+    "period": "1996",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/larry-flynt.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Larry%20Flynt",
+    "summary": "Evocation de la vie de Larry Flynt, pornographe, et plus particulièrement de son combat, qu'il a gagné, pour faire appliquer le premier amendement de la Constitution américaine sur la libre circulation des idées et la liberté de parole.",
+    "directors": [
+      "Miloš Forman"
+    ],
+    "cast": [
+      {
+        "name": "Woody Harrelson",
+        "character": "Larry Flynt"
+      },
+      {
+        "name": "Courtney Love",
+        "character": "Althea Leasure"
+      },
+      {
+        "name": "Edward Norton",
+        "character": "Alan Isaacman"
+      },
+      {
+        "name": "Brett Harrelson",
+        "character": "Jimmy Flynt"
+      },
+      {
+        "name": "Donna Hanover",
+        "character": "Ruth Carter Stapleton"
+      }
+    ]
   }
 ];
