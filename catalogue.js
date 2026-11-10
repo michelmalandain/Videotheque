@@ -3544,5 +3544,41 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "US"
     ]
+  },
+  {
+    "title": "Serpico",
+    "kind": "Film",
+    "year": 1973,
+    "period": "1973",
+    "genre": "Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/serpico.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Serpico",
+    "summary": "Policier intègre, Serpico lutte contre la corruption généralisée au sein de la police new-yorkaise. Détesté de tous, collègues comme supérieurs, il ne pourra compter que sur lui-même pour mener à bien sa croisade pour la justice.",
+    "directors": [
+      "Sidney Lumet"
+    ],
+    "cast": [
+      {
+        "name": "Al Pacino",
+        "character": "Officer Frank Serpico"
+      },
+      {
+        "name": "John Randolph",
+        "character": "Sidney Green"
+      },
+      {
+        "name": "Jack Kehoe",
+        "character": "Tom Keough"
+      },
+      {
+        "name": "Biff McGuire",
+        "character": "Captain McClain"
+      },
+      {
+        "name": "Barbara Eda-Young",
+        "character": "Laurie"
+      }
+    ]
   }
 ];
