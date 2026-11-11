@@ -12,7 +12,7 @@
 .cm-pagination button:hover:not(:disabled){filter:brightness(1.18)}
 .cm-pagination button:disabled{opacity:.4;cursor:default}
 .cm-pagination span{color:#f5d596;font-weight:bold}.cm-pagination button[aria-current="page"]{opacity:1;background:#d6b36d;color:#09271b;border-color:#f5df9d;font-weight:bold;cursor:default}
-</style></head><body><header><h1>CINÉMA MONDIAL</h1><p>RÉALISATEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html">ACTEURS</a><a href="realisateurs-mondial.html" aria-current="page">RÉALISATEURS</a><a href="admin2-acteurs.html">ADMINISTRATION</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
+</style><style id="cinemaland-pagination-dix-20261111">.cm-pagination{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:20px auto 25px}.cm-pagination button{min-width:34px;padding:8px 11px;background:#153d2d;color:#f5d58c;border:1px solid #c9a35d;border-radius:5px;cursor:pointer;font:inherit}.cm-pagination button[aria-current="page"]{background:#e8b85b!important;color:#102a20!important;border-color:#ffe2a0!important;opacity:1!important;font-weight:bold;cursor:default}.cm-pagination button:disabled:not([aria-current="page"]){opacity:.4;cursor:default}.cm-pagination button:hover:not(:disabled){filter:brightness(1.2)}.cm-pagination[hidden]{display:none!important}@media(max-width:700px){.cm-pagination{gap:5px}.cm-pagination button{min-width:28px;padding:7px 8px;font-size:13px}}</style></head><body><header><h1>CINÉMA MONDIAL</h1><p>RÉALISATEURS DU MONDE ENTIER</p></header><div class="mondial-tapis" aria-label="Affiches de la vidéothèque en défilement"><div class="mondial-tapis-track" id="mondial-tapis-track"></div></div><nav><a href="hallmondial.html">HALL MONDIAL</a><a href="films-mondial.html">FILMS MONDIAUX</a><a href="series-mondial.html">SÉRIES MONDIALES</a><a href="acteurs-mondial.html">ACTEURS</a><a href="realisateurs-mondial.html" aria-current="page">RÉALISATEURS</a><a href="admin2-acteurs.html">ADMINISTRATION</a></nav><main><div class="controls"><input id="filter" placeholder="Filtrer la liste par nom" aria-label="Filtrer par nom"><span id="count"></span></div><p id="status">Chargement du catalogue…</p><div id="cards" class="cards"></div></main><dialog id="actor-detail" class="actor-dialog"><button type="button" class="actor-close" id="actor-close">RETOUR</button><div id="actor-content"></div></dialog><script src="catalogue.js"></script>
 <script>
 const ROLE='director', all=window.CINEMALAND_CATALOGUE;
 const cards=document.getElementById('cards'), status=document.getElementById('status'), counter=document.getElementById('count');
@@ -74,33 +74,25 @@ const cmPagination=document.createElement('nav');
 cmPagination.className='cm-pagination';
 cmPagination.setAttribute('aria-label','Pagination des personnes');
 cards.insertAdjacentElement('afterend',cmPagination);
+const cmPaginationTop=document.createElement('nav');cmPaginationTop.className='cm-pagination';cmPaginationTop.setAttribute('aria-label','Pagination en haut des personnes');cards.insertAdjacentElement('beforebegin',cmPaginationTop);
 function cmRenderPagination(total){
- cmPagination.replaceChildren();
  const pages=Math.max(1,Math.ceil(total/CM_PAGE_SIZE));
  cmCurrentPage=Math.min(Math.max(cmCurrentPage,1),pages);
- if(pages===1){cmPagination.hidden=true;return;}
- cmPagination.hidden=false;
- const goToPage=(page)=>{cmCurrentPage=page;draw();document.querySelector('.controls').scrollIntoView({block:'start'});};
- const previous=document.createElement('button');previous.type='button';previous.textContent='Précédent';previous.disabled=cmCurrentPage===1;
- previous.onclick=()=>goToPage(cmCurrentPage-1);
- cmPagination.append(previous);
- // Afficher les pages proches, la première et la dernière, sans encombrer la barre.
- const visible=[];
- for(let page=1;page<=pages;page++){
-  if(page===1||page===pages||Math.abs(page-cmCurrentPage)<=2)visible.push(page);
+ cmPagination.hidden=cmPaginationTop.hidden=(pages===1);
+ cmPagination.replaceChildren();cmPaginationTop.replaceChildren();
+ if(pages===1)return;
+ const goToPage=(page)=>{cmCurrentPage=page;draw();cmPaginationTop.scrollIntoView({block:'start'});};
+ const start=Math.floor((cmCurrentPage-1)/10)*10+1;
+ function fill(nav){
+  const previous=document.createElement('button');previous.type='button';previous.textContent='Précédent';previous.disabled=cmCurrentPage===1;previous.onclick=()=>goToPage(cmCurrentPage-1);nav.append(previous);
+  for(let page=start;page<=Math.min(start+9,pages);page++){
+   const number=document.createElement('button');number.type='button';number.textContent=String(page);number.setAttribute('aria-label','Page '+page);
+   if(page===cmCurrentPage){number.setAttribute('aria-current','page');number.disabled=true;}else number.onclick=()=>goToPage(page);
+   nav.append(number);
+  }
+  const next=document.createElement('button');next.type='button';next.textContent='Suivant';next.disabled=cmCurrentPage===pages;next.onclick=()=>goToPage(cmCurrentPage+1);nav.append(next);
  }
- let last=0;
- for(const page of visible){
-  if(last&&page>last+1){const dots=document.createElement('span');dots.textContent='…';cmPagination.append(dots);}
-  const number=document.createElement('button');number.type='button';number.textContent=String(page);
-  number.setAttribute('aria-label','Page '+page);
-  if(page===cmCurrentPage){number.setAttribute('aria-current','page');number.disabled=true;}
-  else number.onclick=()=>goToPage(page);
-  cmPagination.append(number);last=page;
- }
- const next=document.createElement('button');next.type='button';next.textContent='Suivant';next.disabled=cmCurrentPage===pages;
- next.onclick=()=>goToPage(cmCurrentPage+1);
- cmPagination.append(next);
+ fill(cmPaginationTop);fill(cmPagination);
 }
 function draw(){
  const term=document.getElementById('filter').value.trim().toLocaleLowerCase('fr');
