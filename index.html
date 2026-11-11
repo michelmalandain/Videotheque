@@ -134,7 +134,7 @@ dialog input,dialog textarea{display:block;width:100%;margin:7px 0 14px;padding:
 
 /* SCENE KURSAAL — zones interactives sur photographie validée */
 body{justify-content:flex-start;background:#080e19}
-.scene{width:min(100vw,1846px);aspect-ratio:1846/852;background-image:url("kursaal.png");background-size:100% 100%;box-shadow:0 0 50px #000;flex-shrink:0}
+.scene{width:min(100vw,1846px);aspect-ratio:1846/852;background-image:url("Cin%C3%A9ma%20Kursaal%20sous%20le%20ciel%20bleu.png?v=20261111");background-size:100% 100%;box-shadow:0 0 50px #000;flex-shrink:0}
 .scene .zone,.scene .person-buttons,.scene .compteurs,.scene .admin-small{display:none!important}
 .hotspot{position:absolute;display:block;z-index:5;background:transparent;border:0;border-radius:4px;cursor:pointer;color:transparent;text-decoration:none;font-size:0}
 .hotspot:hover{box-shadow:none;background:radial-gradient(ellipse at center,rgba(255,240,160,.34) 0%,rgba(255,220,110,.13) 48%,transparent 75%);filter:drop-shadow(0 0 13px rgba(255,225,135,.8));transition:filter .2s ease,background .2s ease}
@@ -275,25 +275,11 @@ body.inside .foot{display:none!important}
 #bioCard .bio-profile .bio-photo{border:3px solid #d5a346!important}
 #bioCard .bio-story,#bioCard .bio-inline-films{border-top-color:#c99b4c!important}
 </style>
-<style id="kursaal-portraits-discrets">
-/* Ruban discret, sans altérer kursaal.png. */
-#kursaal-portraits{position:absolute;left:36.5%;top:39.1%;width:31%;height:7.1%;z-index:4;overflow:hidden;pointer-events:none}
-#kursaal-portraits .portraits-track{display:flex;height:100%;animation:kursaal-defilement 32s linear infinite;will-change:transform}
-#kursaal-portraits .portraits-groupe{flex:0 0 auto;min-width:0;height:100%;display:flex;justify-content:space-around;align-items:center}
-#kursaal-portraits a{display:flex;align-items:center;justify-content:center;width:17%;height:100%;min-width:0;pointer-events:auto;background:transparent;text-decoration:none}
-#kursaal-portraits img{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(.9);transition:filter .2s}
-#kursaal-portraits a:hover img,#kursaal-portraits a:focus-visible img{filter:brightness(1.18) drop-shadow(0 0 3px #e9c77a)}
-#kursaal-portraits:has(a:hover) .portraits-track,#kursaal-portraits:has(a:focus-visible) .portraits-track{animation-play-state:paused}
-@keyframes kursaal-defilement{to{transform:translateX(-50%)}}
-body.inside #kursaal-portraits{display:none}
-@media(prefers-reduced-motion:reduce){#kursaal-portraits .portraits-track{animation:none}}
-</style>
 </head>
 <body>
 <div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
 <h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
-<div id="kursaal-portraits" aria-label="Portraits des derniers acteurs et réalisateurs"></div>
 <button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
 <button class="hotspot librairie" type="button" aria-label="Librairie Malandain — Almanach de la Révolution française" title="Librairie Malandain" onclick="window.open('https://archive.org/details/@michel_malandain', '_blank', 'noopener')">Librairie Malandain</button>
 <a class="hotspot salon-fenetre" href="salon.html" aria-label="Entrer dans le salon des répliques célèbres" title="Salon des répliques célèbres">Salon vidéo</a>
@@ -728,50 +714,6 @@ function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu 
    afficher();
   }
  })).then(afficher);
-})();
-</script>
-<script id="kursaal-portraits-discrets-script">
-(function(){
- const zone=document.getElementById('kursaal-portraits');if(!zone)return;
- let lastSignature='';
- function portrait(p){
-  const a=document.createElement('a');
-  a.href='index.html?personne='+encodeURIComponent(p.name)+'&person_id='+encodeURIComponent(p.id);
-  a.title=p.name+' — ouvrir la fiche';a.setAttribute('aria-label','Ouvrir la fiche de '+p.name);
-  const img=document.createElement('img');img.alt=p.name;img.loading='eager';
-  img.src=p.photo.startsWith('https://')?p.photo:'https://image.tmdb.org/t/p/w185'+p.photo;
-  a.append(img);return a;
- }
- async function charger(){
-  try{
-   const r=await fetch('https://videotheque-admin.michelmalandain.workers.dev/dernieres-personnes',{cache:'no-store'});
-   if(!r.ok)return;
-   const data=await r.json();
-   const people=(Array.isArray(data.people)?data.people:[]).filter(p=>p&&p.id&&p.name&&p.photo).slice(0,24);
-   if(!people.length)return;
-   const signature=people.map(p=>p.id+':'+p.photo).join('|');
-   if(signature===lastSignature)return;
-   lastSignature=signature;
-   const track=document.createElement('div');track.className='portraits-track';
-   const pages=[];
-   for(let i=0;i<people.length;i+=4){
-    const page=people.slice(i,i+4);
-    while(page.length<4)page.push(people[(i+page.length)%people.length]);
-    pages.push(page);
-   }
-   const count=pages.length;
-   track.style.width=(count*2*100)+'%';
-   for(let copy=0;copy<2;copy++)for(const page of pages){
-    const group=document.createElement('div');group.className='portraits-groupe';
-    group.style.width=(100/(count*2))+'%';
-    for(const p of page)group.append(portrait(p));
-    track.append(group);
-   }
-   track.style.animationDuration=Math.max(18,count*9)+'s';
-   zone.replaceChildren(track);
-  }catch(e){/* Aucun impact sur le décor en cas d'indisponibilité. */}
- }
- charger();setInterval(()=>{if(!document.hidden)charger()},180000);
 })();
 </script>
 </body>
