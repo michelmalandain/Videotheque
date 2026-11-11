@@ -3590,7 +3590,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/un-bon-avocat.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Un%20bon%20avocat",
-    "summary": "Léonard Landry, un avocat pénaliste flamboyant, fait une overdose en pleine plaidoirie. Après sa cure de désintoxication, il ne dispose que d'une semaine pour sauver sa carrière et préparer son propre procès, assisté à contrecœur par un stagiaire tenace nommé Noé. Commence alors une folle course contre la montre, ponctuée de manœuvres juridiques, de tentations et de rebondissements.",
+    "summary": "De retour de cure de désintoxication après une overdose en pleine plaidoirie, un avocat a une semaine pour préparer son propre procès, avec l'aide d'un stagiaire tenace.",
     "directors": [
       "Tristan Séguéla"
     ],
@@ -3614,6 +3614,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Gwendal Kerdelhue",
         "character": "L'homme de main"
+      }
+    ]
+  },
+  {
+    "title": "Les Spécialistes",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Action, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-specialistes.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Sp%C3%A9cialistes",
+    "summary": "Rachel, recouvreuse de dettes de haut vol, exerce un métier dangereux. C'est pourquoi elle s'entoure des meilleurs, Sid et Bronco, pour l'accompagner et la protéger dans ses négociations. Mais même pour ces spécialistes, récupérer le milliard de dollars de leur prochain contrat pourrait être mission impossible. Sauf qu'impossible ne fait pas partie de leur vocabulaire…",
+    "directors": [
+      "Guy Ritchie"
+    ],
+    "cast": [
+      {
+        "name": "Henry Cavill",
+        "character": "Sid"
+      },
+      {
+        "name": "Jake Gyllenhaal",
+        "character": "Bronco"
+      },
+      {
+        "name": "Eiza González",
+        "character": "Rachel"
+      },
+      {
+        "name": "Carlos Bardem",
+        "character": "Manny Salazar"
+      },
+      {
+        "name": "Michael Vu",
+        "character": "Ed Glover"
       }
     ]
   }
