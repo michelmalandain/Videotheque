@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Actualités — GTA VI | Le Carnet de Leonida</title>
+<meta name="description" content="Actualités et annonces GTA VI — Le Carnet de Leonida.">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#11071f;color:#ffe9f6;font-family:Georgia,serif}a{color:inherit}
+.decor{position:relative;width:100%;max-width:1672px;margin:0 auto;aspect-ratio:1602/982;background:#160922 url('actualites-vice-city-dynamique.png') center/100% 100% no-repeat;box-shadow:0 0 50px #0008}
+.zone{position:absolute;display:block;background:transparent;border:0;color:transparent;font-size:0;text-decoration:none;cursor:pointer;z-index:2}
+.zone:hover{background:rgba(255,92,201,.08);filter:drop-shadow(0 0 12px #ff5dcc)}.zone:focus-visible{outline:3px solid #ffb5ea;outline-offset:-3px}
+.nav0{left:1.248%;top:27.0%;width:11.049%;height:5.6%}.nav1{left:12.297%;top:27.0%;width:11.548%;height:5.6%}.nav2{left:23.845%;top:27.0%;width:10.924%;height:5.6%}.nav3{left:34.769%;top:27.0%;width:10.674%;height:5.6%}.nav4{left:45.443%;top:27.0%;width:9.363%;height:5.6%}.nav5{left:54.806%;top:27.0%;width:10.674%;height:5.6%}.nav6{left:65.481%;top:27.0%;width:10.549%;height:5.6%}.nav7{left:76.030%;top:27.0%;width:9.176%;height:5.6%}.nav8{left:85.206%;top:27.0%;width:11.735%;height:5.6%}
+.news-slot{position:absolute;z-index:4;left:21.5%;width:48.5%;height:15.3%;display:flex;align-items:center;padding:0 1%;overflow:hidden;text-decoration:none;color:#fff1d8;border-radius:7px}.news-slot:nth-of-type(1){top:42%}.news-slot:nth-of-type(2){top:59.6%}.news-slot:nth-of-type(3){top:77.1%}.news-slot:hover,.news-slot:focus-visible{background:rgba(225,79,170,.13);outline:2px solid #ffb8eb}.slot-content{display:block;width:100%;text-shadow:0 2px 3px #090215}.slot-date{display:block;font:700 clamp(9px,1.05vw,17px) Arial,sans-serif;color:#ffa8dc;margin-bottom:3px}.slot-title{display:block;font:bold clamp(13px,1.7vw,27px)/1.12 Georgia,serif;margin-bottom:4px}.slot-summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:clamp(10px,1.06vw,17px)/1.25 Arial,sans-serif}.slot-read{display:block;margin-top:5px;font:bold clamp(9px,.95vw,15px) Arial,sans-serif;color:#ffe4a3}.news-empty{position:absolute;z-index:4;left:22%;top:46%;width:47%;font:clamp(12px,1.4vw,20px) Arial,sans-serif;color:#ffe4c8}.archive article:target{background:#321638;outline:2px solid #ff91d7;scroll-margin-top:18px;padding:20px;border-radius:8px}@media(max-width:700px){.slot-summary{display:none}.slot-read{display:none}.news-slot{left:21%;width:49%}.slot-title{font-size:clamp(9px,2.1vw,15px)}.slot-date{font-size:clamp(7px,1.5vw,10px)}}
+.archive{width:min(1050px,92vw);margin:45px auto 65px}.archive h2{color:#ffc5e9;font-size:clamp(24px,3vw,36px);font-style:italic;margin:0 0 18px}.archive article{padding:19px 0;border-bottom:1px solid #a64a95}.archive time{font:700 13px Arial,sans-serif;color:#ff9cdd;letter-spacing:.1em}.archive h3{font-size:clamp(20px,2.5vw,27px);margin:9px 0}.archive p{font:16px/1.65 Arial,sans-serif;color:#ecd5e7;margin:0}.archive .back{display:inline-block;margin-top:28px;padding:10px 20px;border:1px solid #ff81d9;border-radius:6px;text-decoration:none}.archive .back:hover{background:#68245d}footer{text-align:center;padding:20px;color:#d7b2ce;font:13px Arial,sans-serif}
+@media(max-width:700px){.archive{margin-top:28px}.zone:hover{filter:none}}
+</style></head><body>
+<main>
+<div class="decor" role="group" aria-label="Actualités GTA VI : décor Vice City, Lucia et Jason, Morticia au transat, articles et menu interactif">
+<a class="zone nav0" href="index.html" aria-label="Accueil">Accueil</a><a class="zone nav1" href="actualites.html" aria-label="Actualités" aria-current="page">Actualités</a><a class="zone nav2" href="missions.html" aria-label="Missions principales">Missions</a><a class="zone nav3" href="quetes.html" aria-label="Quêtes annexes">Quêtes</a><a class="zone nav4" href="carte.html" aria-label="Carte de Leonida">Carte</a><a class="zone nav5" href="vehicules.html" aria-label="Véhicules">Véhicules</a><a class="zone nav6" href="secrets.html" aria-label="Secrets et astuces">Secrets</a><a class="zone nav7" href="videos.html" aria-label="Vidéos SNIR">Vidéos</a><a class="zone nav8" href="progression.html" aria-label="Ma progression">Progression</a>
+<div id="une-dynamique" aria-label="Les trois dernières actualités"><span class="news-empty">Chargement des actualités…</span></div>
+</div>
+<section class="archive" aria-labelledby="archives-title"><h2 id="archives-title">Articles et mises à jour</h2>
+<p id="etat-actualites" role="status" aria-live="polite">Chargement des actualités…</p>
+<div id="articles-dynamiques"></div>
+<noscript>Activez JavaScript pour consulter les actualités publiées.</noscript>
+<a class="back" href="index.html">Retour à l'accueil</a></section>
+</main>
+<script>
+const GTA6_API='https://gta6worker.michelmalandain.workers.dev';
+const zoneArticles=document.getElementById('articles-dynamiques');
+const etat=document.getElementById('etat-actualites');
+function dateFR(value){const [y,m,d]=value.split('-').map(Number);return new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(y,m-1,d));}
+async function afficherActualites(){
+ try{
+  const r=await fetch(GTA6_API+'/actualites',{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const data=await r.json();if(!Array.isArray(data.articles))throw new Error('Réponse inattendue');
+  zoneArticles.replaceChildren();
+  const une=document.getElementById('une-dynamique');une.replaceChildren();
+  if(!data.articles.length){const empty=document.createElement('span');empty.className='news-empty';empty.textContent='Aucune actualité publiée pour le moment.';une.append(empty);}
+  data.articles.slice(0,3).forEach((a,i)=>{
+   const link=document.createElement('a');link.className='news-slot';link.style.top=[42,59.6,77.1][i]+'%';link.href='#actualite-'+encodeURIComponent(a.id);link.setAttribute('aria-label','Lire : '+a.title);
+   const content=document.createElement('span');content.className='slot-content';
+   const date=document.createElement('time');date.className='slot-date';date.dateTime=a.date;date.textContent=dateFR(a.date);
+   const title=document.createElement('strong');title.className='slot-title';title.textContent=a.title;
+   const excerpt=document.createElement('span');excerpt.className='slot-summary';excerpt.textContent=a.summary.slice(0,135)+(a.summary.length>135?'…':'');
+   const read=document.createElement('span');read.className='slot-read';read.textContent='Lire l’article ›';
+   content.append(date,title,excerpt,read);link.append(content);une.append(link);
+  });
+  data.articles.forEach((a,i)=>{
+   const article=document.createElement('article');article.id='actualite-'+a.id;
+   const time=document.createElement('time');time.dateTime=a.date;time.textContent=dateFR(a.date);
+   const h=document.createElement('h3');h.textContent=a.title;
+   const desc=document.createElement('p');desc.textContent=a.summary;
+   article.append(time,h,desc);
+   if(a.image&&/^[a-zA-Z0-9_./-]+$/.test(a.image)&&!a.image.startsWith('/')&&!a.image.includes('..')){
+    const img=document.createElement('img');img.src=a.image;img.alt='Illustration : '+a.title;img.loading='lazy';img.style.cssText='display:block;max-width:100%;max-height:380px;object-fit:contain;margin-top:14px;border-radius:8px';article.append(img);
+   }
+   zoneArticles.append(article);
+  });
+  etat.textContent=data.articles.length?'': 'Aucune actualité publiée pour le moment.';
+
+ }catch(e){etat.textContent='Impossible de charger les actualités pour le moment.';document.getElementById('une-dynamique').innerHTML='<span class="news-empty">Actualités indisponibles.</span>';console.error('GTA6 actualités',e)}
+}
+afficherActualites();
+</script><footer>GTA VI — Le Carnet de Leonida · Site de fans non officiel</footer></body></html>
