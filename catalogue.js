@@ -3652,5 +3652,38 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Ed Glover"
       }
     ]
+  },
+  {
+    "title": "Anesthésie",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/anesthesie.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Anesth%C3%A9sie",
+    "summary": "Après une opération audacieuse qui a échoué, un médecin de talent quitte une prestigieuse clinique pour exercer dans un petit hôpital, tout en essayant de reprendre sa vie en main.",
+    "cast": [
+      {
+        "name": "Leszek Lichota",
+        "character": "Dr. Dawid Łazarz"
+      },
+      {
+        "name": "Aleksandra Popławska",
+        "character": "Jagoda Wilk"
+      },
+      {
+        "name": "Karolina Gruszka",
+        "character": "Basia Łazarz"
+      },
+      {
+        "name": "Masza Wągrocka",
+        "character": "Ada Dąbrowska"
+      },
+      {
+        "name": "Karol Biskup",
+        "character": "Zawisza"
+      }
+    ]
   }
 ];
