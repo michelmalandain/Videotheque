@@ -3723,5 +3723,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Olive"
       }
     ]
+  },
+  {
+    "title": "Le Sang des Templiers",
+    "kind": "Film",
+    "year": 2011,
+    "period": "2011",
+    "genre": "Romance, Aventure, Action, Histoire",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-sang-des-templiers.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Sang%20des%20Templiers",
+    "summary": "En 1215, le roi d’Angleterre, Jean, a été contraint de signer la Magna Carta, un document qui assure la liberté du peuple et constitue désormais la base du droit commun en Angleterre. Furieux d’y avoir été forcé, il lève une armée de mercenaires et commence à piller le pays pour reprendre le pouvoir. Il est sur le point d’atteindre Londres et de remporter la victoire, mais un dernier obstacle se dresse encore sur sa route : le château de Rochester. De part et d’autre de la muraille, les deux camps sont prêts à tout pour l’emporter et l’heure de l’affrontement approche...",
+    "directors": [
+      "Jonathan English"
+    ],
+    "cast": [
+      {
+        "name": "James Purefoy",
+        "character": "Thomas Marshall"
+      },
+      {
+        "name": "Kate Mara",
+        "character": "Lady Isabel"
+      },
+      {
+        "name": "Jason Flemyng",
+        "character": "Becket"
+      },
+      {
+        "name": "Paul Giamatti",
+        "character": "King John"
+      },
+      {
+        "name": "Brian Cox",
+        "character": "Albany"
+      }
+    ]
   }
 ];
