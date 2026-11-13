@@ -3685,5 +3685,43 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Zawisza"
       }
     ]
+  },
+  {
+    "title": "Small Prophets",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie, Drame, Mystère",
+    "description": "Description à compléter.",
+    "poster": "affiches/small-prophets.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Small%20Prophets",
+    "summary": "Depuis la mystérieuse disparition de sa compagne il y a sept ans, la vie de Michael est en pause. Mais une recette trouvée dans un vieux grimoire pourrait bien lui apporter des réponses.",
+    "directors": [
+      "Emma Lawson",
+      "Mackenzie Crook",
+      "Lisa Thomas"
+    ],
+    "cast": [
+      {
+        "name": "Pearce Quigley",
+        "character": "Michael Sleep"
+      },
+      {
+        "name": "Michael Palin",
+        "character": "Brian"
+      },
+      {
+        "name": "Lauren Patel",
+        "character": "Kacey"
+      },
+      {
+        "name": "Mackenzie Crook",
+        "character": "Gordon"
+      },
+      {
+        "name": "Shola Adewusi",
+        "character": "Olive"
+      }
+    ]
   }
 ];
