@@ -277,11 +277,21 @@ body.inside .foot{display:none!important}
 #bioCard .bio-profile .bio-photo{border:3px solid #d5a346!important}
 #bioCard .bio-story,#bioCard .bio-inline-films{border-top-color:#c99b4c!important}
 </style>
+<style id="gta-pegi-transition-20261113">
+/* Transition GTA : ajout isolé, sans modifier le décor du KURSAAL. */
+#gta-pegi-overlay{position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;background:#050505;color:#fff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .85s ease,visibility 0s linear .85s;text-align:center;padding:24px}
+#gta-pegi-overlay.visible{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .85s ease}
+#gta-pegi-overlay .pegi-badge{display:flex;align-items:center;justify-content:center;width:160px;height:190px;background:#e3000b;color:white;border:8px solid #fff;font:bold 116px/1 Arial,Helvetica,sans-serif;letter-spacing:-8px;padding-right:9px}
+#gta-pegi-overlay .pegi-label{font:bold 20px Arial,Helvetica,sans-serif;letter-spacing:.12em}
+#gta-pegi-overlay .pegi-warning{font:clamp(17px,2.5vw,26px) Georgia,serif;line-height:1.45;max-width:640px}
+@media(prefers-reduced-motion:reduce){#gta-pegi-overlay{transition:none}}
+</style>
 </head>
 <body>
 <div id="kursaal-transition" aria-live="polite" aria-hidden="true"><div class="bienvenue">Bienvenue au cinéma KURSAAL</div></div>
+<div id="gta-pegi-overlay" aria-hidden="true" role="status"><div class="pegi-badge" aria-label="18 ans et plus">18</div><div class="pegi-label">PEGI 18</div><div class="pegi-warning">Contenu réservé aux adultes — 18 ans et plus</div></div>
 <main aria-label="KURSAAL : devant le cinéma" class="scene" id="exterieur">
-<a class="hotspot gta-vi" href="https://michelmalandain.github.io/GTA6/" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir notre site GTA VI dans un nouvel onglet" title="GTA VI — Ouvrir le site">GTA VI</a>
+<a class="hotspot gta-vi" href="https://michelmalandain.github.io/GTA6/" aria-label="Accéder à notre site GTA VI après avertissement 18 ans et plus" title="GTA VI — Ouvrir le site">GTA VI</a>
 <h1 class="visually-hidden">CINEMALAND — Cinéma KURSAAL, Le Havre</h1>
 <button class="hotspot entree" type="button" aria-label="Entrer dans le cinéma KURSAAL" title="ENTRÉE — KURSAAL" onclick="entrerKursaal()">Entrée du cinéma</button>
 <button class="hotspot librairie" type="button" aria-label="Librairie Malandain — Almanach de la Révolution française" title="Librairie Malandain" onclick="window.open('https://archive.org/details/@michel_malandain', '_blank', 'noopener')">Librairie Malandain</button>
@@ -717,6 +727,25 @@ function destinationAttente(nom){alert(nom+' : destination à relier lorsque tu 
    afficher();
   }
  })).then(afficher);
+})();
+</script>
+<script id="gta-pegi-navigation-20261113">
+(function(){
+ const link=document.querySelector('.hotspot.gta-vi');
+ const overlay=document.getElementById('gta-pegi-overlay');
+ if(!link||!overlay)return;
+ let active=false;
+ link.addEventListener('click',function(event){
+  if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();
+  if(active)return;
+  active=true;
+  overlay.setAttribute('aria-hidden','false');
+  overlay.classList.add('visible');
+  const destination=link.href;
+  window.setTimeout(function(){window.location.assign(destination);},3000);
+ });
+ window.addEventListener('pageshow',function(){active=false;overlay.classList.remove('visible');overlay.setAttribute('aria-hidden','true');});
 })();
 </script>
 </body>
