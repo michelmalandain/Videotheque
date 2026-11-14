@@ -3797,5 +3797,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Mia, eine enge Vertraute von Cosmo"
       }
     ]
+  },
+  {
+    "title": "Les Enfants du marais",
+    "kind": "Film",
+    "year": 1999,
+    "period": "1999",
+    "genre": "Comédie, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-enfants-du-marais.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Enfants%20du%20marais",
+    "summary": "« On est des gagne-misère, mais on n'est pas des peigne-culs », telle est la philosophie de Garris, homme simple, ancien de la « der des der », généreux et quelque peu poète qui vit au bord d'un étang, dans le marais, avec son ami Henri dit Riton, qui élève trois enfants issus de son second mariage. Riton, souvent mélancolique, noie son chagrin dans le vin rouge en pensant et radotant sur son ex-femme, Barbara, partie sans crier garde. Autour d'eux il y a également Amédée, un rentier, rêveur passionné de lecture et de musique, Hyacinthe dit Pépé, un ancien du marais devenu riche et Tane, le conducteur du petit train local. Un jour, Garris rencontre une jeune femme, Marie et Riton s'en prend au champion de boxe Joseph « Jo » Sardi qui ne cultive pas le pardon...",
+    "directors": [
+      "Jean Becker"
+    ],
+    "cast": [
+      {
+        "name": "Jacques Villeret",
+        "character": "Henri Pignol, aka Riton"
+      },
+      {
+        "name": "Jacques Gamblin",
+        "character": "Garriss"
+      },
+      {
+        "name": "André Dussollier",
+        "character": "Amédée"
+      },
+      {
+        "name": "Michel Serrault",
+        "character": "Hyacinthe Richard, aka 'Pépé la Rainette'"
+      },
+      {
+        "name": "Isabelle Carré",
+        "character": "Marie"
+      }
+    ]
   }
 ];
