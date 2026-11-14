@@ -2496,7 +2496,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Film",
     "year": 2026,
     "period": "2026",
-    "genre": "Histoire, Comédie, Drame",
+    "genre": "Histoire, Drame",
     "description": "Description à compléter.",
     "poster": "affiches/notre-salut.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Notre%20salut",
@@ -3831,6 +3831,43 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Isabelle Carré",
         "character": "Marie"
+      }
+    ]
+  },
+  {
+    "title": "La Délicatesse",
+    "kind": "Film",
+    "year": 2011,
+    "period": "2011",
+    "genre": "Drame, Comédie, Romance",
+    "description": "Description à compléter.",
+    "poster": "affiches/la-delicatesse.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20D%C3%A9licatesse",
+    "summary": "Nathalie a tout pour être heureuse. Elle est jeune, belle, et file le parfait amour. La mort accidentelle de son mari va couper son élan. Pendant des années, elle va s'investir dans son travail, se sentir en parenthèse de sa vie sensuelle. Cependant, subitement, sans qu'elle comprenne vraiment pourquoi, elle embrasse un de ses collègues. Markus, un homme très atypique. S'ensuit alors la valse sentimentale de ce couple hautement improbable.",
+    "directors": [
+      "David Foenkinos",
+      "Stéphane Foenkinos"
+    ],
+    "cast": [
+      {
+        "name": "Audrey Tautou",
+        "character": "Nathalie Kerr"
+      },
+      {
+        "name": "François Damiens",
+        "character": "Markus Lundell"
+      },
+      {
+        "name": "Mélanie Bernier",
+        "character": "Chloé"
+      },
+      {
+        "name": "Joséphine de Meaux",
+        "character": "Sophie"
+      },
+      {
+        "name": "Pio Marmaï",
+        "character": "François"
       }
     ]
   }
