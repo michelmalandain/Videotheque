@@ -2144,7 +2144,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/mascarade.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Mascarade",
-    "summary": "Loris Giuliano vous invite à rejoindre \"Mascarade\", sa grande soirée d’anniversaire durant laquelle il va devoir deviner quelles stars du cinéma français se cachent derrière ses convives : 8 grandes actrices et acteurs du cinéma français entièrement transformés physiquement et vocalement grâce à des technologies innovantes. François Damiens, Marina Foïs, Laurent Lafitte, Géraldine Nakache, Pierre Niney, Raphaël Quenard, Alison Wheeler et Jean-Pascal Zadi vont débarquer dans cette soirée avec une seule mission : être le dernier à se faire démasquer par Loris avant le lever du jour pour remporter la partie... Mais eux non plus ne savent pas qui se cachent derrière ces personnages d’un soir et ils vont devoir faire preuve d’imagination pour protéger leur propre identité et rester dans la course jusqu’au bout de cet incroyable anniversaire ! Car cette soirée organisée par Alfredo, le majordome de Loris, leur réserve bien des surprises. De révélations en trahisons, ils s’apprêtent à déco...",
+    "summary": "Ils ont joué dans plein de films, il n'en a vu aucun. Voici Mascarade, le jeu où Monsieur Loris doit démasquer des figures du cinéma français.",
     "directors": [
       "Loris Giuliano"
     ],
@@ -3757,6 +3757,44 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Brian Cox",
         "character": "Albany"
+      }
+    ]
+  },
+  {
+    "title": "ChiaroScuro",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Comédie, Crime",
+    "description": "Description à compléter.",
+    "poster": "affiches/chiaroscuro.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=ChiaroScuro",
+    "summary": "Après la découverte d’un corps dans un musée romain, un expert en art doit faire appel à son instinct et à ses compétences pour aider la police à élucider un mystère lié à son propre passé.",
+    "directors": [
+      "Umberto Gnoli",
+      "Michela Straniero",
+      "Francesco Arlanch"
+    ],
+    "cast": [
+      {
+        "name": "Pierpaolo Spollon",
+        "character": "Kunstberater Cosmo Speranza"
+      },
+      {
+        "name": "Andrea Lattanzi",
+        "character": "Polizeiinspektor Angelo Tiberi"
+      },
+      {
+        "name": "Romana Maggiora Vergano",
+        "character": "Gerichtsmedizinerin Eleonora"
+      },
+      {
+        "name": "Matilde Gioli",
+        "character": "Leda, die entfremdete Halbschwester von Cosmo"
+      },
+      {
+        "name": "Aurora Giovinazzo",
+        "character": "Mia, eine enge Vertraute von Cosmo"
       }
     ]
   }
