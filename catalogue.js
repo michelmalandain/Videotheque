@@ -3475,7 +3475,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/raison-et-sentiments.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Raison%20et%20Sentiments",
-    "summary": "Une irrésistible nouvelle version du roman culte de Jane Austin, Raison et Sentiments, qui suit deux sœurs à travers leurs amours, leurs chagrins et le lien qui les unit d'une façon magistrale et profondément proche de nous.",
+    "summary": "Une irrésistible nouvelle version du roman culte de Jane Austen, Raison et Sentiments, qui suit deux sœurs à travers leurs amours, leurs chagrins et le lien qui les unit d'une façon magistrale et profondément proche de nous.",
     "directors": [
       "Georgia Oakley"
     ],
@@ -3868,6 +3868,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Pio Marmaï",
         "character": "François"
+      }
+    ]
+  },
+  {
+    "title": "Les Misérables",
+    "kind": "Série",
+    "year": 2000,
+    "period": "2000",
+    "genre": "Drame, War & Politics",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-miserables.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Mis%C3%A9rables",
+    "summary": "Après avoir purgé sa peine, l'ancien forçat Jean Valjean sort du bagne et change d'identité. Mais le tenace inspecteur Javert est toujours à ses trousses. Après avoir arraché la petite Cosette des mains des Thénardier, il s'installe à Paris, bien décidé à offrir à sa fille une vie meilleure…",
+    "directors": [
+      "Josée Dayan"
+    ],
+    "cast": [
+      {
+        "name": "Gérard Depardieu",
+        "character": "Jean Valjean"
+      },
+      {
+        "name": "John Malkovich",
+        "character": "Javert"
+      },
+      {
+        "name": "Christian Clavier",
+        "character": "Thénardier"
+      },
+      {
+        "name": "Asia Argento",
+        "character": "Éponine Thénardier"
+      },
+      {
+        "name": "Charlotte Gainsbourg",
+        "character": "Fantine"
       }
     ]
   }
