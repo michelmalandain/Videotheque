@@ -3906,5 +3906,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Fantine"
       }
     ]
+  },
+  {
+    "title": "Désiré Landru",
+    "kind": "Film",
+    "year": 2005,
+    "period": "2005",
+    "genre": "Crime, Téléfilm",
+    "description": "Description à compléter.",
+    "poster": "affiches/desire-landru.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=D%C3%A9sir%C3%A9%20Landru",
+    "summary": "Henri Désiré Landru est un personnage ambigu. Marié et père de famille, il est à la fois un grand séducteur et un petit escroc : il séduit les femmes pour les voler. Maniaque, Landru consigne minutieusement ses méfaits dans un petit carnet qui révélera à la police le nom de 283 femmes qu'il aurait abusées. Il sera condamné à mort pour avoir tué 11 d'entre elles. Son procès déchaîna haine et passion, à l'image de sa personnalité double.",
+    "directors": [
+      "Pierre Boutron"
+    ],
+    "cast": [
+      {
+        "name": "Patrick Timsit",
+        "character": "Désiré Landru"
+      },
+      {
+        "name": "Julie Delarme",
+        "character": "Rolande (rôle représentant Fernande Segret)"
+      },
+      {
+        "name": "Catherine Arditi",
+        "character": "Marie-Catherine"
+      },
+      {
+        "name": "Danièle Lebrun",
+        "character": "Mme Cuchet"
+      },
+      {
+        "name": "Catherine Jacob",
+        "character": "Mme Marchadier"
+      }
+    ]
   }
 ];
