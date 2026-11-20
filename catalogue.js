@@ -3982,5 +3982,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Alan 'Hippy' Carnes"
       }
     ]
+  },
+  {
+    "title": "Protection (très) rapprochée",
+    "kind": "Film",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Romance, Comédie",
+    "description": "Description à compléter.",
+    "poster": "affiches/protection-tres-rapprochee.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Protection%20(tr%C3%A8s)%20rapproch%C3%A9e",
+    "summary": "Quand une garde du corps intraitable est chargée de protéger une star de cinéma, les étincelles fusent, des secrets éclatent au grand jour et Noël devient soudain très compliqué.",
+    "directors": [
+      "Elizabeth Allen Rosenbaum"
+    ],
+    "cast": [
+      {
+        "name": "Leighton Meester",
+        "character": "Hannah"
+      },
+      {
+        "name": "Jared Padalecki",
+        "character": "Jack"
+      },
+      {
+        "name": "Andie MacDowell",
+        "character": "Connie Stapleton"
+      },
+      {
+        "name": "Walker Hayes",
+        "character": "Sheriff Sanderson"
+      },
+      {
+        "name": "Noah LaLonde",
+        "character": "Hank Stapleton"
+      }
+    ]
   }
 ];
