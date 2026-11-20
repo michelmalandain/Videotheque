@@ -4089,6 +4089,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Benicio del Toro",
         "character": "Juan Primo"
       }
+    ],
+    "production_countries": [
+      "GB",
+      "US"
     ]
   },
   {
