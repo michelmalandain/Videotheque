@@ -3934,6 +3934,11 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Charlotte Gainsbourg",
         "character": "Fantine"
       }
+    ],
+    "production_countries": [
+      "DE",
+      "FR",
+      "IT"
     ]
   },
   {
