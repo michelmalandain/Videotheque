@@ -3583,6 +3583,10 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Barbara Eda-Young",
         "character": "Laurie"
       }
+    ],
+    "production_countries": [
+      "IT",
+      "US"
     ]
   },
   {
