@@ -3978,6 +3978,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Catherine Jacob",
         "character": "Mme Marchadier"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
