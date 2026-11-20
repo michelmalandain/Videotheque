@@ -2133,6 +2133,10 @@ window.CINEMALAND_CATALOGUE = [
     "production_countries": [
       "FR",
       "US"
+    ],
+    "directors": [
+      "Gaia Guasti",
+      "Djibril Glissant"
     ]
   },
   {
@@ -2140,7 +2144,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Série",
     "year": 2026,
     "period": "2026",
-    "genre": "À compléter",
+    "genre": "Comédie",
     "description": "Description à compléter.",
     "poster": "affiches/mascarade.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Mascarade",
@@ -2461,7 +2465,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/moulin.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Moulin",
-    "summary": "Jean Moulin est parachuté en France occupée pour unifier les réseaux de la Résistance, sous l’égide du général de Gaulle. Malgré ses efforts pour rester dans l’ombre, Moulin est trahi puis livré à la Gestapo à Lyon, dirigée par l’impitoyable Klaus Barbie. Torturé sans relâche, il ne cède jamais. Sa détermination silencieuse contribuera à galvaniser les forces de la Résistance et à faire naître un nouvel esprit de combat et de liberté en France…",
+    "summary": "Juin 1943, Jean Moulin, chef de la Résistance, est arrêté alors qu’il tente de réunifier les forces de l’Armée Secrète Interrogé par Klaus Barbie, le chef de la Gestapo de Lyon, Moulin est entraîné dans une confrontation implacable. Son ultime combat face à la manipulation et la brutalité commence. Le destin de la France libre en dépend.",
     "directors": [
       "Lászlo Nemes"
     ],
@@ -3940,6 +3944,42 @@ window.CINEMALAND_CATALOGUE = [
       {
         "name": "Catherine Jacob",
         "character": "Mme Marchadier"
+      }
+    ]
+  },
+  {
+    "title": "Abyss",
+    "kind": "Film",
+    "year": 1989,
+    "period": "1989",
+    "genre": "Aventure, Thriller, Science-Fiction",
+    "description": "Description à compléter.",
+    "poster": "affiches/abyss.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Abyss",
+    "summary": "Un commando de la Marine américaine débarque à bord de la station de forage sous-marine DeepCore afin de porter secours à un sous-marin échoué dans les profondeurs. Alors que les travaux de récupération commencent autour du submersible naufragé, l'équipage de DeepCore doit faire face à des phénomènes inexpliqués.",
+    "directors": [
+      "James Cameron"
+    ],
+    "cast": [
+      {
+        "name": "Ed Harris",
+        "character": "Virgil 'Bud' Brigman"
+      },
+      {
+        "name": "Mary Elizabeth Mastrantonio",
+        "character": "Lindsey Brigman"
+      },
+      {
+        "name": "Michael Biehn",
+        "character": "Lieutenant Hiram Coffey"
+      },
+      {
+        "name": "Leo Burmester",
+        "character": "Catton ‘Catfish’ De Vries"
+      },
+      {
+        "name": "Todd Graff",
+        "character": "Alan 'Hippy' Carnes"
       }
     ]
   }
