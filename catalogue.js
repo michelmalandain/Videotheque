@@ -3623,6 +3623,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Gwendal Kerdelhue",
         "character": "L'homme de main"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
