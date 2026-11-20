@@ -4054,5 +4054,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Juan Primo"
       }
     ]
+  },
+  {
+    "title": "Les Nerfs à vif",
+    "kind": "Film",
+    "year": 1991,
+    "period": "1991",
+    "genre": "Drame, Crime, Thriller",
+    "description": "Description à compléter.",
+    "poster": "affiches/les-nerfs-a-vif.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Les%20Nerfs%20%C3%A0%20vif",
+    "summary": "Condamné à quatorze ans de prison pour viol et voie de fait sur une mineure, Max Cady n'a jamais pardonné à son avocat Sam Bowden de l'avoir abandonné. Tout au long de sa peine, il s'est employé à discipliner son corps et son esprit, se fixant pour unique but de châtier Bowden, de briser les siens. Et aujourd'hui, Max Cady est libre…",
+    "directors": [
+      "Martin Scorsese"
+    ],
+    "cast": [
+      {
+        "name": "Nick Nolte",
+        "character": "Sam Bowden"
+      },
+      {
+        "name": "Robert De Niro",
+        "character": "Max Cady"
+      },
+      {
+        "name": "Jessica Lange",
+        "character": "Leigh Bowden"
+      },
+      {
+        "name": "Juliette Lewis",
+        "character": "Danielle Bowden"
+      },
+      {
+        "name": "Joe Don Baker",
+        "character": "Claude Kersek"
+      }
+    ]
   }
 ];
