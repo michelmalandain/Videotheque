@@ -3700,6 +3700,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Karol Biskup",
         "character": "Zawisza"
       }
+    ],
+    "production_countries": [
+      "PL"
     ]
   },
   {
