@@ -3858,6 +3858,9 @@ window.CINEMALAND_CATALOGUE = [
         "name": "Isabelle Carré",
         "character": "Marie"
       }
+    ],
+    "production_countries": [
+      "FR"
     ]
   },
   {
