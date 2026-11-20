@@ -4018,5 +4018,41 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Hank Stapleton"
       }
     ]
+  },
+  {
+    "title": "Le Fan",
+    "kind": "Film",
+    "year": 1996,
+    "period": "1996",
+    "genre": "Thriller, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/le-fan.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Le%20Fan",
+    "summary": "Divorcé, Gil Renard n'a plus qu'une passion : le base-ball. Il voue un tel culte à ce sport qu'il en néglige son travail de commercial dans la coutellerie familiale. Son idole est Bobby Rayburn, un joueur récemment engagé par son club favori, les San Francisco Giants, avec un contrat faramineux de quarante millions de dollars. Rayburn, cependant, accumule les mauvais résultats. Gil est désorienté. Se pourrait-il que son idole ne soit pas à la hauteur ? Il décide de lui venir en aide coûte que coûte. Ne parvenant pas à convaincre le joueur qui a hérité du numéro onze de le rendre à Bobby, dont c'est le chiffre fétiche, il décide d'employer les grands moyens...",
+    "directors": [
+      "Tony Scott"
+    ],
+    "cast": [
+      {
+        "name": "Robert De Niro",
+        "character": "Gil Renard"
+      },
+      {
+        "name": "Wesley Snipes",
+        "character": "Bobby Rayburn"
+      },
+      {
+        "name": "Ellen Barkin",
+        "character": "Jewel Stern"
+      },
+      {
+        "name": "John Leguizamo",
+        "character": "Manny"
+      },
+      {
+        "name": "Benicio del Toro",
+        "character": "Juan Primo"
+      }
+    ]
   }
 ];
