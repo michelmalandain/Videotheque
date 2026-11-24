@@ -2107,7 +2107,7 @@ window.CINEMALAND_CATALOGUE = [
     "description": "Description à compléter.",
     "poster": "affiches/la-comtesse-de-monte-cristo.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=La%20Comtesse%20de%20Monte-Cristo",
-    "summary": "Marseille, 1815. Mercédès Herrera est prête à tout pour l’homme qu’elle aime, Edmond Dantès, un marin promis à un avenir brillant. Mais leur bonheur est cruellement brisé par une trahison impitoyable. Edmond, accusé à tort, est arraché à Mercédès et jeté dans les profondeurs du Château d'If, sans espoir de retour. Dévastée mais déterminée, Mercédès se lance dans une course effrénée pour le sauver, mais Edmond est tué lors de leur tentative d’évasion et elle-même se retrouve enfermée, condamnée à languir dans une cellule voisine de celle qui a abrité l’amour de sa vie.\n\nDans ce gouffre de douleur, tout semble perdu. Mercédès n'a désormais plus qu'un but, prendre sa revanche sur ceux qui ont détruit sa vie : Fernand, son propre cousin, secrètement amoureux d’elle ; Danglars, un manipulateur ambitieux ; et surtout Héloïse de Villefort, la femme implacable du procureur de la ville...",
+    "summary": "Marseille, 1815. Mercédès Herrera est prête à tout pour l’homme qu’elle aime, Edmond Dantès, un marin promis à un avenir brillant. Mais leur bonheur est cruellement brisé par une trahison impitoyable. Edmond, accusé à tort, est arraché à Mercédès et jeté dans les profondeurs du Château d'If, sans espoir de retour. Dévastée mais déterminée, Mercédès se lance dans une course effrénée pour le sauver, mais Edmond est tué lors de leur tentative d’évasion et elle-même se retrouve enfermée, condamnée à languir dans une cellule voisine de celle qui a abrité l’amour de sa vie. Dans ce gouffre de douleur, tout semble perdu. Mercédès n'a désormais plus qu'un but, prendre sa revanche sur ceux qui ont détruit sa vie : Fernand, son propre cousin, secrètement amoureux d’elle; Danglars, un manipulateur ambitieux; et surtout Héloïse de Villefort, la femme implacable du procureur de la ville.",
     "cast": [
       {
         "name": "Audrey Fleurot",
@@ -2144,7 +2144,7 @@ window.CINEMALAND_CATALOGUE = [
     "kind": "Série",
     "year": 2026,
     "period": "2026",
-    "genre": "Comédie",
+    "genre": "Comédie, Reality",
     "description": "Description à compléter.",
     "poster": "affiches/mascarade.jpg",
     "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Mascarade",
@@ -4141,6 +4141,42 @@ window.CINEMALAND_CATALOGUE = [
     ],
     "production_countries": [
       "US"
+    ]
+  },
+  {
+    "title": "The Altruists",
+    "kind": "Série",
+    "year": 2026,
+    "period": "2026",
+    "genre": "Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/the-altruists.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=The%20Altruists",
+    "summary": "Jeunes, idéalistes et soudain milliardaires, ils voulaient faire le bien... avant de se pousser au pire. Un amour toxique sur fond d'escroquerie réelle.",
+    "directors": [
+      "Graham Moore"
+    ],
+    "cast": [
+      {
+        "name": "Julia Garner",
+        "character": "Caroline Ellison"
+      },
+      {
+        "name": "Anthony Boyle",
+        "character": "Sam Bankman-Fried"
+      },
+      {
+        "name": "Alex Lawther",
+        "character": "Sam Trabucco"
+      },
+      {
+        "name": "Karan Soni",
+        "character": "Nishad Singh"
+      },
+      {
+        "name": "Madison Hu",
+        "character": "Constance Wang"
+      }
     ]
   }
 ];
