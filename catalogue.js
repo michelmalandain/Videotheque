@@ -4178,5 +4178,42 @@ window.CINEMALAND_CATALOGUE = [
         "character": "Constance Wang"
       }
     ]
+  },
+  {
+    "title": "Ozark",
+    "kind": "Série",
+    "year": 2017,
+    "period": "2017",
+    "genre": "Crime, Drame",
+    "description": "Description à compléter.",
+    "poster": "affiches/ozark.jpg",
+    "wiki": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Recherche?search=Ozark",
+    "summary": "Un conseiller financier embarque sa famille au fin fond du Missouri. Il doit y blanchir 500 millions de dollars en cinq ans pour calmer la fureur d'un baron de la drogue.",
+    "directors": [
+      "Bill Dubuque",
+      "Mark Williams"
+    ],
+    "cast": [
+      {
+        "name": "Jason Bateman",
+        "character": "Marty Byrde"
+      },
+      {
+        "name": "Laura Linney",
+        "character": "Wendy Byrde"
+      },
+      {
+        "name": "Sofia Hublitz",
+        "character": "Charlotte Byrde"
+      },
+      {
+        "name": "Skylar Gaertner",
+        "character": "Jonah Byrde"
+      },
+      {
+        "name": "Julia Garner",
+        "character": "Ruth Langmore"
+      }
+    ]
   }
 ];
